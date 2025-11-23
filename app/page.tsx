@@ -58,7 +58,7 @@ export default function HomePage() {
                     {t(locale, "hero.cta.start")}
                   </Button>
                 </Link>
-                <Link href="/shop">
+                <Link href="/packages">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent">
                     <ShoppingBag className="mr-2 h-5 w-5" />
                     {t(locale, "hero.cta.browse")}

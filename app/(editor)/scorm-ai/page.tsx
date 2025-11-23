@@ -1,10 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useState, FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { useLocale } from "@/hooks/use-locale"
+import { t } from "@/lib/translations"
 import {
   Save,
   Eye,
@@ -27,6 +29,7 @@ type ChatMessage = {
 }
 
 export default function ScormAIPage() {
+  const { locale } = useLocale()
   const [packageName, setPackageName] = useState("Untitled Package")
   const [status] = useState<Status>("draft")
 
@@ -35,8 +38,7 @@ export default function ScormAIPage() {
     {
       id: 1,
       role: "assistant",
-      content:
-        "Hi! Describe the lesson you want (grade, topic, activities) and I’ll help you build the package below.",
+      content: t(locale, "scorm.ai.welcome"),
     },
   ])
 
@@ -44,10 +46,7 @@ export default function ScormAIPage() {
     e.preventDefault()
     if (!chatInput.trim()) return
 
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now(), role: "user", content: chatInput.trim() },
-    ])
+    setMessages((prev) => [...prev, { id: Date.now(), role: "user", content: chatInput.trim() }])
 
     // later: call your AI backend here
     setChatInput("")
@@ -60,13 +59,9 @@ export default function ScormAIPage() {
         <div className="px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
           {/* Left: name + status */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <Input
-              value={packageName}
-              onChange={(e) => setPackageName(e.target.value)}
-              className="max-w-xs"
-            />
+            <Input value={packageName} onChange={(e) => setPackageName(e.target.value)} className="max-w-xs" />
             <Badge variant={status === "draft" ? "secondary" : "default"}>
-              {status === "draft" ? "Draft" : "Published"}
+              {status === "draft" ? t(locale, "scorm.topbar.status.draft") : t(locale, "scorm.topbar.status.published")}
             </Badge>
           </div>
 
@@ -74,15 +69,15 @@ export default function ScormAIPage() {
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm">
               <Eye className="mr-2 h-4 w-4" />
-              Preview
+              {t(locale, "scorm.topbar.preview")}
             </Button>
             <Button variant="outline" size="sm">
               <Save className="mr-2 h-4 w-4" />
-              Save
+              {t(locale, "scorm.topbar.save")}
             </Button>
             <Button size="sm">
               <Download className="mr-2 h-4 w-4" />
-              Export SCORM
+              {t(locale, "scorm.topbar.export")}
             </Button>
           </div>
         </div>
@@ -94,21 +89,17 @@ export default function ScormAIPage() {
         <section className="bg-card border border-border rounded-xl p-3 sm:p-4">
           <div className="flex items-center justify-between gap-3 mb-3">
             <div className="min-w-0">
-              <h2 className="text-sm font-semibold truncate">Live Package Preview</h2>
-              <p className="text-xs text-muted-foreground">
-                This is a preview of what learners will see. It updates when you change the canvas.
-              </p>
+              <h2 className="text-sm font-semibold truncate">{t(locale, "scorm.preview.title")}</h2>
+              <p className="text-xs text-muted-foreground">{t(locale, "scorm.preview.desc")}</p>
             </div>
             <Button variant="outline" size="sm">
               <Eye className="mr-2 h-4 w-4" />
-              Open in new tab
+              {t(locale, "scorm.preview.open")}
             </Button>
           </div>
 
           <div className="h-40 sm:h-52 lg:h-60 rounded-lg border border-dashed border-accent/60 bg-accent/30 flex items-center justify-center">
-            <span className="text-xs sm:text-sm text-muted-foreground">
-              SCORM player / iframe goes here
-            </span>
+            <span className="text-xs sm:text-sm text-muted-foreground">{t(locale, "scorm.preview.player")}</span>
           </div>
         </section>
 
@@ -123,22 +114,15 @@ export default function ScormAIPage() {
                   <MessageCircle className="h-4 w-4 text-primary" />
                 </span>
                 <div>
-                  <h3 className="text-sm font-semibold">EduPack AI</h3>
-                  <p className="text-xs text-muted-foreground">
-                    Chat with the assistant to generate pages, questions and media in the canvas below.
-                  </p>
+                  <h3 className="text-sm font-semibold">{t(locale, "scorm.ai.title")}</h3>
+                  <p className="text-xs text-muted-foreground">{t(locale, "scorm.ai.desc")}</p>
                 </div>
               </div>
 
               {/* messages area */}
               <div className="h-32 sm:h-40 overflow-y-auto rounded-lg border border-border/60 bg-background/70 p-2 space-y-2 text-xs sm:text-sm">
                 {messages.map((m) => (
-                  <div
-                    key={m.id}
-                    className={`flex ${
-                      m.role === "user" ? "justify-end" : "justify-start"
-                    }`}
-                  >
+                  <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
                       className={`max-w-[80%] px-3 py-2 rounded-2xl ${
                         m.role === "user"
@@ -157,11 +141,11 @@ export default function ScormAIPage() {
                 <Input
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder="e.g. Create a 10-question quiz on fractions for grade 5 with feedback..."
+                  placeholder={t(locale, "scorm.ai.placeholder")}
                   className="text-xs sm:text-sm"
                 />
                 <Button type="submit" size="sm">
-                  Send
+                  {t(locale, "scorm.ai.send")}
                 </Button>
               </form>
             </div>
@@ -170,16 +154,11 @@ export default function ScormAIPage() {
             <div className="flex-1 overflow-hidden">
               <div className="h-full overflow-auto px-4 py-4 flex items-center justify-center">
                 <div className="max-w-xl text-center space-y-3">
-                  <h2 className="text-base sm:text-lg font-semibold">
-                    Authoring Canvas
-                  </h2>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
-                    The AI will populate this canvas with pages, questions, and media based on your
-                    chat. You can also insert blocks manually using the tools below.
-                  </p>
+                  <h2 className="text-base sm:text-lg font-semibold">{t(locale, "scorm.canvas.title")}</h2>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{t(locale, "scorm.canvas.desc")}</p>
                   <Button variant="outline" size="sm" type="button">
                     <MousePointerClick className="mr-2 h-4 w-4" />
-                    Start from empty page
+                    {t(locale, "scorm.canvas.start")}
                   </Button>
                 </div>
               </div>
@@ -189,20 +168,22 @@ export default function ScormAIPage() {
             <div className="border-t border-border/60 bg-card/90 px-3 py-2">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
-                  Content tools
+                  {t(locale, "scorm.tools.title")}
                 </span>
                 <span className="hidden sm:inline text-[11px] text-muted-foreground">
-                  Click a tool to insert it into the current page. Tools can also respond to the last AI
-                  message.
+                  {t(locale, "scorm.tools.desc")}
                 </span>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                <ToolButton icon={<Type className="h-4 w-4" />} label="Text" />
-                <ToolButton icon={<ImageIcon className="h-4 w-4" />} label="Image" />
-                <ToolButton icon={<Video className="h-4 w-4" />} label="Video" />
-                <ToolButton icon={<FileQuestion className="h-4 w-4" />} label="Quiz" />
-                <ToolButton icon={<MousePointerClick className="h-4 w-4" />} label="Interactive" />
-                <ToolButton icon={<Upload className="h-4 w-4" />} label="Upload" />
+                <ToolButton icon={<Type className="h-4 w-4" />} label={t(locale, "scorm.tools.text")} />
+                <ToolButton icon={<ImageIcon className="h-4 w-4" />} label={t(locale, "scorm.tools.image")} />
+                <ToolButton icon={<Video className="h-4 w-4" />} label={t(locale, "scorm.tools.video")} />
+                <ToolButton icon={<FileQuestion className="h-4 w-4" />} label={t(locale, "scorm.tools.quiz")} />
+                <ToolButton
+                  icon={<MousePointerClick className="h-4 w-4" />}
+                  label={t(locale, "scorm.tools.interactive")}
+                />
+                <ToolButton icon={<Upload className="h-4 w-4" />} label={t(locale, "scorm.tools.upload")} />
               </div>
             </div>
           </div>

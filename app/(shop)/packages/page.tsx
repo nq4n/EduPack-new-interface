@@ -5,9 +5,12 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { useLocale } from "@/hooks/use-locale"
+import { t } from "@/lib/translations"
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function ShopPage() {
+  const { locale } = useLocale()
   const [searchQuery, setSearchQuery] = useState("")
 
   // Mock packages data
@@ -79,8 +82,8 @@ export default function ShopPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Package Shop</h1>
-          <p className="text-muted-foreground">Browse and download ready-made SCORM packages for your LMS</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">{t(locale, "shop.title")}</h1>
+          <p className="text-muted-foreground">{t(locale, "shop.desc")}</p>
         </div>
 
         {/* Filter Bar */}
@@ -90,7 +93,7 @@ export default function ShopPage() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search packages..."
+                  placeholder={t(locale, "shop.search")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -98,19 +101,19 @@ export default function ShopPage() {
               </div>
             </div>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
-              <option>All Grades</option>
+              <option>{t(locale, "shop.filter.grades")}</option>
               <option>Elementary</option>
               <option>Middle School</option>
               <option>High School</option>
             </select>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
-              <option>All Subjects</option>
+              <option>{t(locale, "shop.filter.subjects")}</option>
               <option>Mathematics</option>
               <option>Science</option>
               <option>Literature</option>
             </select>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
-              <option>Most Popular</option>
+              <option>{t(locale, "shop.filter.sort")}</option>
               <option>Newest</option>
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>
@@ -118,14 +121,14 @@ export default function ShopPage() {
           </div>
           <div className="flex gap-2 mt-4">
             <Button variant="outline" size="sm">
-              Free
+              {t(locale, "shop.filter.free")}
             </Button>
             <Button variant="outline" size="sm">
-              Paid
+              {t(locale, "shop.filter.paid")}
             </Button>
             <Button variant="outline" size="sm">
               <Filter className="mr-2 h-4 w-4" />
-              More Filters
+              {t(locale, "shop.filter.more")}
             </Button>
           </div>
         </div>
@@ -133,7 +136,7 @@ export default function ShopPage() {
         {/* Packages Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {packages.map((pkg) => (
-            <PackageCard key={pkg.id} package={pkg} />
+            <PackageCard key={pkg.id} package={pkg} locale={locale} />
           ))}
         </div>
 
@@ -158,7 +161,7 @@ export default function ShopPage() {
   )
 }
 
-function PackageCard({ package: pkg }: { package: any }) {
+function PackageCard({ package: pkg, locale }: { package: any; locale: "en" | "ar" }) {
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-shadow">
       <img src={pkg.thumbnail || "/placeholder.svg"} alt={pkg.title} className="w-full h-48 object-cover" />
@@ -179,7 +182,7 @@ function PackageCard({ package: pkg }: { package: any }) {
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-primary">{pkg.price}</span>
           <Link href={`/packages/${pkg.id}`}>
-            <Button size="sm">View Details</Button>
+            <Button size="sm">{t(locale, "shop.view")}</Button>
           </Link>
         </div>
       </div>

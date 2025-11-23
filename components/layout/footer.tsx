@@ -42,7 +42,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="text-sm text-muted-foreground hover:text-primary">
+                <Link href="/packages" className="text-sm text-muted-foreground hover:text-primary">
                   {t(locale, "nav.shop")}
                 </Link>
               </li>

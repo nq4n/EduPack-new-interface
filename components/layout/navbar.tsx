@@ -32,7 +32,7 @@ export function Navbar() {
             <Link href="/scorm-ai" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.scorm-ai")}
             </Link>
-            <Link href="/shop" className="text-foreground hover:text-primary transition-colors">
+            <Link href="/packages" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.shop")}
             </Link>
             <Link href="/pricing" className="text-foreground hover:text-primary transition-colors">
@@ -74,7 +74,7 @@ export function Navbar() {
             <Link href="/scorm-ai" className="block text-foreground hover:text-primary">
               {t(locale, "nav.scorm-ai")}
             </Link>
-            <Link href="/shop" className="block text-foreground hover:text-primary">
+            <Link href="/packages" className="block text-foreground hover:text-primary">
               {t(locale, "nav.shop")}
             </Link>
             <Link href="/pricing" className="block text-foreground hover:text-primary">
