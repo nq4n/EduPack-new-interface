@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/XML/1998/namespace" targetNamespace="http://www.w3.org/XML/1998/namespace" xml:lang="en">
+  <xsd:annotation>
+    <xsd:documentation>XSD for xml:base attribute</xsd:documentation>
+  </xsd:annotation>
+  <xsd:attribute name="base" type="xsd:anyURI"/>
+  <xsd:attribute name="lang" type="xsd:language"/>
+  <xsd:attribute name="space">
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:NCName">
+        <xsd:enumeration value="default"/>
+        <xsd:enumeration value="preserve"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:attribute>
+</xsd:schema>

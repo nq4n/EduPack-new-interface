@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.adlnet.org/xsd/adlseq_v1p3" targetNamespace="http://www.adlnet.org/xsd/adlseq_v1p3" version="ADL SEQ 1.3">
+  <xsd:annotation>
+    <xsd:documentation>XSD for ADL Sequencing 1.3</xsd:documentation>
+  </xsd:annotation>
+  <xsd:attribute name="objectivesGlobalToSystem" type="xsd:boolean" default="true"/>
+</xsd:schema>

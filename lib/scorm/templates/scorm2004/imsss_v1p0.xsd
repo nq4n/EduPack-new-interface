@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.imsglobal.org/xsd/imsss" targetNamespace="http://www.imsglobal.org/xsd/imsss" version="IMS SSS 1.0">
+  <xsd:annotation>
+    <xsd:documentation>XSD for IMS Simple Sequencing 1.0</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="sequencing">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

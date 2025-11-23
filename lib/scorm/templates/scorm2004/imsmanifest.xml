@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="[[IDENTIFIER]]" version="1.3" 
+    xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" 
+    xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" 
+    xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" 
+    xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" 
+    xmlns:imsss="http://www.imsglobal.org/xsd/imsss" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd">
+    <metadata>
+        <schema>ADL SCORM</schema>
+        <schemaversion>2004 4th Edition</schemaversion>
+        <lom xmlns="http://ltsc.ieee.org/xsd/LOM">
+            <general>
+                <title>
+                    <string language="en">[[TITLE]]</string>
+                </title>
+            </general>
+            <technical>
+                <format>text/html</format>
+                <location>index.html</location>
+            </technical>
+        </lom>
+    </metadata>
+    <organizations default="[[ORGANIZATION_ID]]">
+        <organization identifier="[[ORGANIZATION_ID]]" adlseq:objectivesGlobalToSystem="false">
+            <title>[[TITLE]]</title>
+            <item identifier="item_1" identifierref="resource_1">
+                <title>[[TITLE]]</title>
+            </item>
+        </organization>
+    </organizations>
+    <resources>
+        <resource identifier="resource_1" type="webcontent" adlcp:scormType="sco" href="index.html">
+            [[FILES]]
+        </resource>
+    </resources>
+</manifest>

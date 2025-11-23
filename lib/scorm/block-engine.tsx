@@ -1,92 +1,140 @@
-// lib/scorm/block-engine.ts
+import { useState } from 'react';
+import { EditorBlock, TextBlock, ImageBlock, VideoBlock, QuizBlock, InteractiveBlock } from './types'
+import { Button } from '@/components/ui/button';
+import { CheckCircle, XCircle } from 'lucide-react';
 
-import type { EditorBlock, TextBlock, ImageBlock, VideoBlock, QuizBlock, InteractiveBlock } from "./types"
-
-export function renderBlock(block: EditorBlock): string {
+export function BlockRenderer({ block }: { block: EditorBlock }) {
   switch (block.type) {
-    case "text":
-      return renderTextBlock(block)
-    case "image":
-      return renderImageBlock(block)
-    case "video":
-      return renderVideoBlock(block)
-    case "quiz":
-      return renderQuizBlock(block)
-    case "interactive":
-      return renderInteractiveBlock(block)
+    case 'text':
+      return <TextBlockRenderer block={block} />
+    case 'image':
+      return <ImageBlockRenderer block={block} />
+    case 'video':
+      return <VideoBlockRenderer block={block} />
+    case 'quiz':
+      return <QuizBlockRenderer block={block} />
+    case 'interactive':
+      return <InteractiveBlockRenderer block={block} />
     default:
-      return ""
+      return <p>Unsupported block type</p>
   }
 }
 
-function renderTextBlock(block: TextBlock): string {
-  return `
-<section class="block block-text">
-  ${block.html}
-</section>
-`
+function TextBlockRenderer({ block }: { block: TextBlock }) {
+  return <div className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
 }
 
-function renderImageBlock(block: ImageBlock): string {
-  const alt = block.alt ?? ""
-  return `
-<section class="block block-image">
-  <img src="${block.src}" alt="${escapeHtml(alt)}" />
-</section>
-`
+function ImageBlockRenderer({ block }: { block: ImageBlock }) {
+  return (
+    <figure className="my-4">
+      <img src={block.src} alt={block.alt || ''} className="max-w-full h-auto rounded-lg shadow-md border border-border" />
+      {block.alt && <figcaption className="text-center text-sm text-muted-foreground mt-2">{block.alt}</figcaption>}
+    </figure>
+  );
 }
 
-function renderVideoBlock(block: VideoBlock): string {
-  return `
-<section class="block block-video">
-  <video controls>
-    <source src="${block.src}" />
-    Your browser does not support the video tag.
-  </video>
-</section>
-`
+function VideoBlockRenderer({ block }: { block: VideoBlock }) {
+  return <video src={block.src} controls className="max-w-full rounded-lg shadow-md border border-border w-full" />
 }
 
-function renderQuizBlock(block: QuizBlock): string {
-  const optionsHtml = block.options
-    .map(
-      (opt) => `
-<li class="quiz-option">
-  <label>
-    <input type="radio" name="quiz-${block.id}" value="${escapeHtml(opt.id)}" />
-    <span>${escapeHtml(opt.label)}</span>
-  </label>
-</li>`,
-    )
-    .join("\n")
+function QuizBlockRenderer({ block }: { block: QuizBlock }) {
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
-  return `
-<section class="block block-quiz" data-quiz-id="${block.id}">
-  <h3 class="quiz-question">${escapeHtml(block.question)}</h3>
-  <ul class="quiz-options">
-    ${optionsHtml}
-  </ul>
-</section>
-`
+  const selectedOption = submitted ? block.options.find(opt => opt.id === selectedOptionId) : null;
+  const isCorrect = selectedOption?.correct;
+
+  const handleSubmit = () => {
+    if (selectedOptionId) {
+      setSubmitted(true);
+    }
+  };
+
+  const handleReset = () => {
+    setSelectedOptionId(null);
+    setSubmitted(false);
+  }
+
+  const getOptionClass = (option: typeof block.options[0]) => {
+    if (!submitted) return 'border-border bg-card hover:bg-muted/50';
+    if (option.correct) return 'border-green-500 bg-green-50/50 dark:bg-green-900/30 text-green-900 dark:text-green-200';
+    if (option.id === selectedOptionId && !option.correct) return 'border-red-500 bg-red-50/50 dark:bg-red-900/30 text-red-900 dark:text-red-200';
+    return 'border-border bg-card';
+  }
+  
+  const getIcon = (option: typeof block.options[0]) => {
+    if (!submitted) return <div className="h-5 w-5" />; // placeholder for alignment
+    if (option.correct) return <CheckCircle className="h-5 w-5 text-green-600" />;
+    if (option.id === selectedOptionId && !option.correct) return <XCircle className="h-5 w-5 text-red-600" />;
+    return <div className="h-5 w-5" />; // placeholder for alignment
+  }
+
+  return (
+    <div className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4">
+      <p className="font-semibold mb-4 text-foreground text-base sm:text-lg">{block.question}</p>
+      <div className="space-y-3">
+        {block.options.map((option) => (
+          <label 
+            key={option.id} 
+            htmlFor={option.id}
+            className={`flex items-center p-3 border-2 rounded-lg transition-all duration-200 ${getOptionClass(option)} ${submitted ? 'cursor-default' : 'cursor-pointer'}`}
+          >
+            <input
+              type="radio"
+              name={block.id}
+              id={option.id}
+              className="h-4 w-4 text-primary focus:ring-primary border-muted-foreground"
+              onChange={(e) => setSelectedOptionId(e.target.id)}
+              checked={selectedOptionId === option.id}
+              disabled={submitted}
+            />
+            <span className="flex-1 text-sm sm:text-base text-foreground ml-3">{option.label}</span>
+            {getIcon(option)}
+          </label>
+        ))}
+      </div>
+      <div className="mt-6 flex items-center justify-between min-h-[40px]">
+        {!submitted ? (
+          <Button onClick={handleSubmit} disabled={!selectedOptionId}>
+            Check Answer
+          </Button>
+        ) : (
+          <div className="flex flex-col">
+             <div className={`flex items-center font-semibold text-base ${isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                {isCorrect ? (
+                    <CheckCircle className="mr-2 h-5 w-5" />
+                ) : (
+                    <XCircle className="mr-2 h-5 w-5" />
+                )}
+                <span>{isCorrect ? 'Correct!' : 'Incorrect'}</span>
+             </div>
+             {!isCorrect && (
+                <p className="text-xs text-muted-foreground mt-1 pl-7">
+                    The correct answer is highlighted in green.
+                </p>
+             )}
+          </div>
+        )}
+
+        {submitted && (
+            <Button variant="outline" onClick={handleReset}>
+                Try Again
+            </Button>
+        )}
+      </div>
+    </div>
+  );
 }
 
-function renderInteractiveBlock(block: InteractiveBlock): string {
-  // for now, we just dump some placeholder content
-  return `
-<section class="block block-interactive" data-interactive-id="${block.id}">
-  <div class="interactive-placeholder">
-    Interactive block: ${escapeHtml(block.description ?? "Custom interaction")}
-  </div>
-</section>
-`
-}
 
-// basic HTML escaping for text fields
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;")
+function InteractiveBlockRenderer({ block }: { block: InteractiveBlock }) {
+  return (
+    <div className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700">
+      <p className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Interactive Element</p>
+      <p className="text-sm text-blue-700 dark:text-blue-300">{block.description || 'Interact with the content below.'}</p>
+      <div className="mt-2 p-4 bg-white dark:bg-black/20 border rounded-md">
+        <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(block.config, null, 2)}</pre>
+      </div>
+    </div>
+  )
 }

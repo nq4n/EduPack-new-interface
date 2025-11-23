@@ -209,6 +209,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/api/scorm/chat/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scorm/chat">> = Specific
+  const handler = {} as typeof import("../../../app/api/scorm/chat/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/api/scorm/export/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/scorm/export">> = Specific
