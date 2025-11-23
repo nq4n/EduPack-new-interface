@@ -1,16 +1,42 @@
+"use client"
+
 import type React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs } from "@/components/ui/tabs"
 import { Play, FileText, GraduationCap, Building2, Sparkles, ShoppingBag, Boxes, Cloud } from "lucide-react"
+import { useLocale } from "@/hooks/use-locale"
+import { t } from "@/lib/translations"
 
 export default function HomePage() {
+  const { locale } = useLocale()
+
   const previewTabs = [
-    { label: "Name", value: "name", content: <PreviewContent title="Introduction to Fractions - Grade 5" /> },
-    { label: "Grade/Stage", value: "grade", content: <PreviewContent title="Grade 5 - Elementary" /> },
-    { label: "Subject", value: "subject", content: <PreviewContent title="Mathematics" /> },
-    { label: "Measure", value: "measure", content: <PreviewContent title="Interactive Lesson + Quiz" /> },
-    { label: "Language", value: "language", content: <PreviewContent title="English" /> },
+    {
+      label: t(locale, "preview.name"),
+      value: "name",
+      content: <PreviewContent title={t(locale, "preview.title.name")} locale={locale} />,
+    },
+    {
+      label: t(locale, "preview.grade"),
+      value: "grade",
+      content: <PreviewContent title={t(locale, "preview.title.grade")} locale={locale} />,
+    },
+    {
+      label: t(locale, "preview.subject"),
+      value: "subject",
+      content: <PreviewContent title={t(locale, "preview.title.subject")} locale={locale} />,
+    },
+    {
+      label: t(locale, "preview.measure"),
+      value: "measure",
+      content: <PreviewContent title={t(locale, "preview.title.measure")} locale={locale} />,
+    },
+    {
+      label: t(locale, "preview.language"),
+      value: "language",
+      content: <PreviewContent title={t(locale, "preview.title.language")} locale={locale} />,
+    },
   ]
 
   return (
@@ -22,27 +48,26 @@ export default function HomePage() {
             {/* Left Column */}
             <div>
               <h1 className="text-4xl lg:text-5xl font-extrabold text-foreground mb-6 leading-tight text-balance">
-                Build and Share Interactive SCORM Packages in Minutes
+                {t(locale, "hero.title")}
               </h1>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Create professional e-learning content with AI assistance. No advanced technical skills needed. Export
-                to SCORM/xAPI and deploy to any LMS instantly.
-              </p>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">{t(locale, "hero.description")}</p>
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <Link href="/scorm-ai">
                   <Button size="lg" className="w-full sm:w-auto">
                     <Sparkles className="mr-2 h-5 w-5" />
-                    Start with SCORM AI
+                    {t(locale, "hero.cta.start")}
                   </Button>
                 </Link>
                 <Link href="/shop">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent">
                     <ShoppingBag className="mr-2 h-5 w-5" />
-                    Browse Packages
+                    {t(locale, "hero.cta.browse")}
                   </Button>
                 </Link>
               </div>
-              <p className="text-sm text-muted-foreground">No credit card required • Free trial available</p>
+              <p className="text-sm text-muted-foreground">
+                {t(locale, "hero.no-card")} • {t(locale, "hero.free-trial")}
+              </p>
             </div>
 
             {/* Right Column - Preview Card */}
@@ -59,23 +84,23 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard
               icon={<Boxes className="h-8 w-8 text-primary" />}
-              title="Easy SCORM Creation"
-              description="Create SCORM/xAPI packages with our intuitive drag-and-drop interface"
+              title={t(locale, "feature.scorm.title")}
+              description={t(locale, "feature.scorm.desc")}
             />
             <FeatureCard
               icon={<Sparkles className="h-8 w-8 text-primary" />}
-              title="AI-Assisted Content"
-              description="Generate engaging educational content with AI-powered suggestions"
+              title={t(locale, "feature.ai.title")}
+              description={t(locale, "feature.ai.desc")}
             />
             <FeatureCard
               icon={<ShoppingBag className="h-8 w-8 text-primary" />}
-              title="Package Marketplace"
-              description="Buy and sell ready-made SCORM packages in our growing marketplace"
+              title={t(locale, "feature.marketplace.title")}
+              description={t(locale, "feature.marketplace.desc")}
             />
             <FeatureCard
               icon={<Cloud className="h-8 w-8 text-primary" />}
-              title="LMS Compatible"
-              description="Works with Moodle, Canvas, Blackboard, and all major learning platforms"
+              title={t(locale, "feature.lms.title")}
+              description={t(locale, "feature.lms.desc")}
             />
           </div>
         </div>
@@ -84,26 +109,26 @@ export default function HomePage() {
       {/* Who It's For */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">Built for Educators and Institutions</h2>
+          <h2 className="text-3xl font-bold text-center text-foreground mb-12">{t(locale, "audience.title")}</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <AudienceCard
               icon={<GraduationCap className="h-12 w-12 text-primary" />}
-              title="For Teachers & Instructors"
+              title={t(locale, "audience.teachers.title")}
               points={[
-                "Create interactive lessons without coding",
-                "Save time with AI-generated content",
-                "Share and monetize your teaching materials",
-                "Track student engagement and progress",
+                t(locale, "audience.teachers.point1"),
+                t(locale, "audience.teachers.point2"),
+                t(locale, "audience.teachers.point3"),
+                t(locale, "audience.teachers.point4"),
               ]}
             />
             <AudienceCard
               icon={<Building2 className="h-12 w-12 text-primary" />}
-              title="For EdTech Teams & Institutions"
+              title={t(locale, "audience.institutions.title")}
               points={[
-                "Standardize content creation across teams",
-                "Reduce development costs and time",
-                "Ensure SCORM compliance automatically",
-                "Scale e-learning programs efficiently",
+                t(locale, "audience.institutions.point1"),
+                t(locale, "audience.institutions.point2"),
+                t(locale, "audience.institutions.point3"),
+                t(locale, "audience.institutions.point4"),
               ]}
             />
           </div>
@@ -113,11 +138,11 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6">Ready to Transform Your E-Learning?</h2>
-          <p className="text-lg mb-8 opacity-90">Join thousands of educators creating better learning experiences</p>
+          <h2 className="text-3xl lg:text-4xl font-bold mb-6">{t(locale, "cta.title")}</h2>
+          <p className="text-lg mb-8 opacity-90">{t(locale, "cta.description")}</p>
           <Link href="/register">
             <Button size="lg" variant="secondary">
-              Get Started Free
+              {t(locale, "cta.button")}
             </Button>
           </Link>
         </div>
@@ -126,7 +151,7 @@ export default function HomePage() {
   )
 }
 
-function PreviewContent({ title }: { title: string }) {
+function PreviewContent({ title, locale }: { title: string; locale: "en" | "ar" }) {
   return (
     <div className="bg-accent/20 rounded-xl p-8 min-h-[300px] flex flex-col items-center justify-center border-2 border-accent/50">
       <div className="text-center space-y-4">
@@ -134,16 +159,16 @@ function PreviewContent({ title }: { title: string }) {
           <Play className="h-8 w-8 text-foreground" />
         </div>
         <h3 className="text-xl font-semibold text-foreground">{title}</h3>
-        <p className="text-sm text-muted-foreground">Package Preview Area</p>
+        <p className="text-sm text-muted-foreground">{t(locale, "preview.area")}</p>
       </div>
       <div className="mt-8 flex gap-3">
         <Button variant="outline" size="sm">
           <Play className="mr-2 h-4 w-4" />
-          Play Sample
+          {t(locale, "preview.play")}
         </Button>
         <Button variant="outline" size="sm">
           <FileText className="mr-2 h-4 w-4" />
-          View Outline
+          {t(locale, "preview.view")}
         </Button>
       </div>
     </div>

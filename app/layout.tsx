@@ -5,9 +5,10 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
+import { LocaleProvider } from "@/components/layout/locale-provider"
 
 const cairo = Cairo({
-  subsets: ["latin"],
+  subsets: ["latin", "arabic"],
   display: "swap",
 })
 
@@ -42,9 +43,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${cairo.className} font-sans antialiased`}>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <LocaleProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </LocaleProvider>
         <Analytics />
       </body>
     </html>

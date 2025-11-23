@@ -123,3 +123,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* RTL support styles for Arabic language */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Fix icon spacing in RTL */
+[dir="rtl"] .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* Improve Arabic text rendering */
+.font-arabic {
+  font-feature-settings: "liga" 1, "calt" 1;
+  letter-spacing: normal;
+}
