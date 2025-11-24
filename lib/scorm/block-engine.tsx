@@ -3,41 +3,48 @@ import { EditorBlock, TextBlock, ImageBlock, VideoBlock, QuizBlock, InteractiveB
 import { Button } from '@/components/ui/button';
 import { CheckCircle, XCircle } from 'lucide-react';
 
-export function BlockRenderer({ block }: { block: EditorBlock }) {
+interface BlockRendererProps {
+  block: EditorBlock;
+  onClick: (block: EditorBlock) => void;
+}
+
+export function BlockRenderer({ block, onClick }: BlockRendererProps) {
+  const props = { block, onClick, key: block.id };
+
   switch (block.type) {
     case 'text':
-      return <TextBlockRenderer block={block} />
+      return <TextBlockRenderer {...props} />
     case 'image':
-      return <ImageBlockRenderer block={block} />
+      return <ImageBlockRenderer {...props} />
     case 'video':
-      return <VideoBlockRenderer block={block} />
+      return <VideoBlockRenderer {...props} />
     case 'quiz':
-      return <QuizBlockRenderer block={block} />
+      return <QuizBlockRenderer {...props} />
     case 'interactive':
-      return <InteractiveBlockRenderer block={block} />
+      return <InteractiveBlockRenderer {...props} />
     default:
       return <p>Unsupported block type</p>
   }
 }
 
-function TextBlockRenderer({ block }: { block: TextBlock }) {
-  return <div className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
+function TextBlockRenderer({ block, onClick }: { block: TextBlock; onClick: (block: EditorBlock) => void }) {
+  return <div onClick={() => onClick(block)} className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
 }
 
-function ImageBlockRenderer({ block }: { block: ImageBlock }) {
+function ImageBlockRenderer({ block, onClick }: { block: ImageBlock; onClick: (block: EditorBlock) => void }) {
   return (
-    <figure className="my-4">
+    <figure onClick={() => onClick(block)} className="my-4">
       <img src={block.src} alt={block.alt || ''} className="max-w-full h-auto rounded-lg shadow-md border border-border" />
       {block.alt && <figcaption className="text-center text-sm text-muted-foreground mt-2">{block.alt}</figcaption>}
     </figure>
   );
 }
 
-function VideoBlockRenderer({ block }: { block: VideoBlock }) {
-  return <video src={block.src} controls className="max-w-full rounded-lg shadow-md border border-border w-full" />
+function VideoBlockRenderer({ block, onClick }: { block: VideoBlock; onClick: (block: EditorBlock) => void }) {
+  return <video src={block.src} controls onClick={() => onClick(block)} className="max-w-full rounded-lg shadow-md border border-border w-full" />
 }
 
-function QuizBlockRenderer({ block }: { block: QuizBlock }) {
+function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (block: EditorBlock) => void }) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -70,7 +77,7 @@ function QuizBlockRenderer({ block }: { block: QuizBlock }) {
   }
 
   return (
-    <div className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4">
+    <div onClick={() => onClick(block)} className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4">
       <p className="font-semibold mb-4 text-foreground text-base sm:text-lg">{block.question}</p>
       <div className="space-y-3">
         {block.options.map((option) => (
@@ -127,9 +134,9 @@ function QuizBlockRenderer({ block }: { block: QuizBlock }) {
 }
 
 
-function InteractiveBlockRenderer({ block }: { block: InteractiveBlock }) {
+function InteractiveBlockRenderer({ block, onClick }: { block: InteractiveBlock, onClick: (block: EditorBlock) => void }) {
   return (
-    <div className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700">
+    <div onClick={() => onClick(block)} className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700">
       <p className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Interactive Element</p>
       <p className="text-sm text-blue-700 dark:text-blue-300">{block.description || 'Interact with the content below.'}</p>
       <div className="mt-2 p-4 bg-white dark:bg-black/20 border rounded-md">
