@@ -17,61 +17,61 @@ export default function ShopPage() {
   const packages = [
     {
       id: 1,
-      title: "Introduction to Fractions",
-      grade: "Grade 5",
-      subject: "Mathematics",
-      language: "English",
-      description: "Interactive lesson covering fraction basics with visual aids and practice quizzes",
-      price: "Free",
+      title: t(locale, "shop.packages.1.title"),
+      grade: t(locale, "shop.packages.1.grade"),
+      subject: t(locale, "shop.packages.1.subject"),
+      language: t(locale, "shop.packages.1.language"),
+      description: t(locale, "shop.packages.1.description"),
+      price: t(locale, "shop.packages.1.price"),
       thumbnail: "/math-fractions-classroom.jpg",
     },
     {
       id: 2,
-      title: "Solar System Explorer",
-      grade: "Grade 7",
-      subject: "Science",
-      language: "English",
-      description: "Journey through our solar system with interactive 3D models and activities",
+      title: t(locale, "shop.packages.2.title"),
+      grade: t(locale, "shop.packages.2.grade"),
+      subject: t(locale, "shop.packages.2.subject"),
+      language: t(locale, "shop.packages.2.language"),
+      description: t(locale, "shop.packages.2.description"),
       price: "$12.99",
       thumbnail: "/solar-system-space-planets.jpg",
     },
     {
       id: 3,
-      title: "Shakespeare: Romeo & Juliet",
-      grade: "High School",
-      subject: "Literature",
-      language: "English",
-      description: "Comprehensive study guide with character analysis and interactive scenes",
+      title: t(locale, "shop.packages.3.title"),
+      grade: t(locale, "shop.packages.3.grade"),
+      subject: t(locale, "shop.packages.3.subject"),
+      language: t(locale, "shop.packages.3.language"),
+      description: t(locale, "shop.packages.3.description"),
       price: "$9.99",
       thumbnail: "/shakespeare-theatre-literature.jpg",
     },
     {
       id: 4,
-      title: "Basic Chemistry Reactions",
-      grade: "Grade 9",
-      subject: "Chemistry",
-      language: "English",
-      description: "Virtual lab experiments demonstrating fundamental chemical reactions safely",
+      title: t(locale, "shop.packages.4.title"),
+      grade: t(locale, "shop.packages.4.grade"),
+      subject: t(locale, "shop.packages.4.subject"),
+      language: t(locale, "shop.packages.4.language"),
+      description: t(locale, "shop.packages.4.description"),
       price: "$14.99",
       thumbnail: "/chemistry-lab-science-education.jpg",
     },
     {
       id: 5,
-      title: "World Geography Quiz",
-      grade: "Grade 6",
-      subject: "Geography",
-      language: "English",
-      description: "Interactive maps and quizzes covering continents, countries, and capitals",
-      price: "Free",
+      title: t(locale, "shop.packages.5.title"),
+      grade: t(locale, "shop.packages.5.grade"),
+      subject: t(locale, "shop.packages.5.subject"),
+      language: t(locale, "shop.packages.5.language"),
+      description: t(locale, "shop.packages.5.description"),
+      price: t(locale, "shop.packages.5.price"),
       thumbnail: "/world-map-geography-education.jpg",
     },
     {
       id: 6,
-      title: "Python Programming Basics",
-      grade: "High School",
-      subject: "Computer Science",
-      language: "English",
-      description: "Learn Python fundamentals with interactive coding exercises and projects",
+      title: t(locale, "shop.packages.6.title"),
+      grade: t(locale, "shop.packages.6.grade"),
+      subject: t(locale, "shop.packages.6.subject"),
+      language: t(locale, "shop.packages.6.language"),
+      description: t(locale, "shop.packages.6.description"),
       price: "$19.99",
       thumbnail: "/coding-programming-computer-education.jpg",
     },
@@ -102,21 +102,21 @@ export default function ShopPage() {
             </div>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
               <option>{t(locale, "shop.filter.grades")}</option>
-              <option>Elementary</option>
-              <option>Middle School</option>
-              <option>High School</option>
+              <option>{t(locale, "shop.filter.elementary")}</option>
+              <option>{t(locale, "shop.filter.middleSchool")}</option>
+              <option>{t(locale, "shop.filter.highSchool")}</option>
             </select>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
               <option>{t(locale, "shop.filter.subjects")}</option>
-              <option>Mathematics</option>
-              <option>Science</option>
-              <option>Literature</option>
+              <option>{t(locale, "shop.filter.mathematics")}</option>
+              <option>{t(locale, "shop.filter.science")}</option>
+              <option>{t(locale, "shop.filter.literature")}</option>
             </select>
             <select className="px-3 py-2 rounded-lg border border-input bg-background text-sm">
               <option>{t(locale, "shop.filter.sort")}</option>
-              <option>Newest</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
+              <option>{t(locale, "shop.filter.newest")}</option>
+              <option>{t(locale, "shop.filter.priceLowHigh")}</option>
+              <option>{t(locale, "shop.filter.priceHighLow")}</option>
             </select>
           </div>
           <div className="flex gap-2 mt-4">

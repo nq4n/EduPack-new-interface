@@ -30,7 +30,8 @@ export function useLocale() {
   const { locale, setLocale } = useLocaleStore()
 
   // Create a translation function that's pre-bound to the current locale
-  const t = (key: TranslationKey) => translate(locale, key)
+  const t = (key: TranslationKey, values?: Record<string, string | number>) =>
+    translate(locale, key, values)
 
   // Return the locale, setter, and the bound translation function
   return { locale, setLocale, t }

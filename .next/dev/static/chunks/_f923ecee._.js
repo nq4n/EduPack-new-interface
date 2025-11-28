@@ -93,28 +93,361 @@ __turbopack_context__.s([
 ]);
 const translations = {
     en: {
-        // ... (existing translations) ...
+        "nav.home": "Home",
+        "nav.scorm-ai": "SCORM AI",
+        "nav.features": "Features",
+        "nav.pricing": "Pricing",
+        "nav.upload": "Upload",
+        "nav.login": "Login",
+        "nav.register": "Register",
+        "nav.account": "Account",
+        "nav.about": "About",
+        "nav.resources": "Resources",
+        "nav.privacy": "Privacy",
+        "nav.terms": "Terms",
+        "nav.shop": "Packages",
+        "nav.switchLanguage": "Switch Language",
+        "hero.title": "Create SCORM packages with AI",
+        "hero.description": "The easiest way to build modern, interactive, and beautiful SCORM packages for your LMS. Leverage AI to generate content, quizzes, and more.",
+        "hero.cta.start": "Start Creating for Free",
+        "hero.cta.browse": "Browse Packages",
+        "hero.no-card": "No credit card required",
+        "hero.free-trial": "14-day free trial",
+        "preview.name": "Name",
+        "preview.title.name": "Name your course",
+        "preview.grade": "Grade",
+        "preview.title.grade": "Assign a grade level",
+        "preview.subject": "Subject",
+        "preview.title.subject": "Choose a subject",
+        "preview.measure": "Measure",
+        "preview.title.measure": "Define success metrics",
+        "preview.language": "Language",
+        "preview.title.language": "Select the language",
+        "preview.area": "This is a preview of the content you can generate.",
+        "preview.play": "Play",
+        "preview.view": "View Content",
+        "featured-packages.title": "Featured Packages",
+        "feature.scorm.title": "SCORM 1.2 & 2004",
+        "feature.scorm.desc": "Export your courses to the most popular SCORM standards.",
+        "feature.ai.title": "AI-Powered Content",
+        "feature.ai.desc": "Generate engaging and interactive content with the help of AI.",
+        "feature.marketplace.title": "Marketplace",
+        "feature.marketplace.desc": "Buy and sell pre-built SCORM packages from other creators.",
+        "feature.lms.title": "LMS Agnostic",
+        "feature.lms.desc": "Our packages work with any SCORM-compliant Learning Management System.",
+        "audience.title": "Who is it for?",
+        "audience.teachers.title": "Teachers & Educators",
+        "audience.teachers.point1": "Create engaging lessons and quizzes.",
+        "audience.teachers.point2": "Save time on content creation.",
+        "audience.teachers.point3": "Easily share with your students.",
+        "audience.teachers.point4": "Track student progress and performance.",
+        "audience.institutions.title": "Institutions & Companies",
+        "audience.institutions.point1": "Standardize your training materials.",
+        "audience.institutions.point2": "Deploy content across your organization.",
+        "audience.institutions.point3": "Ensure compliance and consistency.",
+        "audience.institutions.point4": "Integrate with your existing LMS.",
+        "cta.title": "Ready to get started?",
+        "cta.description": "Create your first SCORM package today and see how easy it can be.",
+        "cta.button": "Sign Up for Free",
+        "footer.proudly": "Proudly made in 🇵🇸",
+        "footer.product": "Product",
+        "footer.support": "Support",
+        "footer.company": "Company",
+        "footer.about": "About",
+        "footer.privacy": "Privacy",
+        "footer.terms": "Terms",
+        "footer.rights": "All rights reserved.",
+        "footer.help": "Help Center",
+        "footer.contact": "Contact",
         "scorm.props.title": "Properties",
         "scorm.props.desc": "Edit the properties of the selected block.",
         "scorm.props.block.text.html": "HTML Content",
         "scorm.props.block.image.src": "Image Source URL",
         "scorm.props.block.image.alt": "Alt Text",
         "scorm.props.block.video.src": "Video Source URL",
-        "scorm.props.block.quiz.question": "Question"
+        "scorm.props.block.quiz.question": "Question",
+        "scorm.ai.untitledProject": "Untitled Project",
+        "scorm.ai.introduction": "Introduction",
+        "scorm.ai.notConfigured": "AI connection is not configured yet. This is just a UI placeholder.",
+        "scorm.ai.projectSaved": "Project saved to local storage!",
+        "scorm.ai.exportFailed": "Export failed",
+        "scorm.ai.exportError": "Error exporting project. See console for details.",
+        "scorm.ai.newTextBlock": "<p>New text block. Edit me!</p>",
+        "scorm.ai.placeholderImage": "Placeholder image",
+        "scorm.ai.newQuestion": "New Question",
+        "scorm.ai.option1": "Option 1",
+        "scorm.ai.option2": "Option 2",
+        "scorm.ai.projectLoaded": "Project loaded from file.",
+        "scorm.ai.invalidProjectFile": "Invalid project file.",
+        "scorm.ai.media": "Media",
+        "scorm.choice.title": "Create a New SCORM Package",
+        "scorm.choice.description": "Choose how you want to start building your learning package.",
+        "scorm.choice.aiAssistant": "Build with AI Assistant",
+        "scorm.choice.aiAssistantDesc": "Let AI help create your course content.",
+        "scorm.choice.blankPage": "Start from a Blank Page",
+        "scorm.choice.blankPageDesc": "Build everything manually from scratch.",
+        "scorm.nav.hide": "Hide navigation bar",
+        "scorm.nav.show": "Show navigation bar",
+        "scorm.ai.close": "✕",
+        "scorm.tools.ai": "AI",
+        "scorm.alerts.interactiveSoon": "Interactive elements will be available soon.",
+        "scorm.alerts.settingsLater": "Package settings will be designed later.",
+        "shop.title": "SCORM Packages Marketplace",
+        "shop.desc": "Browse and purchase high-quality SCORM packages created by our community.",
+        "shop.search": "Search for packages...",
+        "shop.filter.grades": "All Grades",
+        "shop.filter.subjects": "All Subjects",
+        "shop.filter.sort": "Sort by",
+        "shop.filter.free": "Free",
+        "shop.filter.paid": "Paid",
+        "shop.filter.more": "More Filters",
+        "shop.view": "View",
+        "shop.packages.1.title": "Introduction to Fractions",
+        "shop.packages.1.grade": "Grade 5",
+        "shop.packages.1.subject": "Mathematics",
+        "shop.packages.1.language": "English",
+        "shop.packages.1.description": "Interactive lesson covering fraction basics with visual aids and practice quizzes",
+        "shop.packages.1.price": "Free",
+        "shop.packages.2.title": "Solar System Explorer",
+        "shop.packages.2.grade": "Grade 7",
+        "shop.packages.2.subject": "Science",
+        "shop.packages.2.language": "English",
+        "shop.packages.2.description": "Journey through our solar system with interactive 3D models and activities",
+        "shop.packages.3.title": "Shakespeare: Romeo & Juliet",
+        "shop.packages.3.grade": "High School",
+        "shop.packages.3.subject": "Literature",
+        "shop.packages.3.language": "English",
+        "shop.packages.3.description": "Comprehensive study guide with character analysis and interactive scenes",
+        "shop.packages.4.title": "Basic Chemistry Reactions",
+        "shop.packages.4.grade": "Grade 9",
+        "shop.packages.4.subject": "Chemistry",
+        "shop.packages.4.language": "English",
+        "shop.packages.4.description": "Virtual lab experiments demonstrating fundamental chemical reactions safely",
+        "shop.packages.5.title": "World Geography Quiz",
+        "shop.packages.5.grade": "Grade 6",
+        "shop.packages.5.subject": "Geography",
+        "shop.packages.5.language": "English",
+        "shop.packages.5.description": "Interactive maps and quizzes covering continents, countries, and capitals",
+        "shop.packages.5.price": "Free",
+        "shop.packages.6.title": "Python Programming Basics",
+        "shop.packages.6.grade": "High School",
+        "shop.packages.6.subject": "Computer Science",
+        "shop.packages.6.language": "English",
+        "shop.packages.6.description": "Learn Python fundamentals with interactive coding exercises and projects",
+        "shop.filter.elementary": "Elementary",
+        "shop.filter.middleSchool": "Middle School",
+        "shop.filter.highSchool": "High School",
+        "shop.filter.mathematics": "Mathematics",
+        "shop.filter.science": "Science",
+        "shop.filter.literature": "Literature",
+        "shop.filter.newest": "Newest",
+        "shop.filter.priceLowHigh": "Price: Low to High",
+        "shop.filter.priceHighLow": "Price: High to Low",
+        "scorm.ai.previewTitle": "Preview: {{title}}",
+        "scorm.topbar.preview": "Preview",
+        "scorm.topbar.export": "Export",
+        "scorm.topbar.status.draft": "Draft",
+        "scorm.topbar.status.published": "Published",
+        "scorm.ai.title": "AI Assistant",
+        "scorm.ai.placeholder": "Ask AI to generate content...",
+        "scorm.ai.send": "Send",
+        "scorm.canvas.title": "Canvas",
+        "scorm.canvas.desc": "Start building your course by adding blocks.",
+        "scorm.canvas.start": "Start Building",
+        "scorm.tools.upload": "Upload",
+        "scorm.tools.interactive": "Interactive",
+        "scorm.tools.quiz": "Quiz",
+        "scorm.tools.pageEditor": "Page Editor",
+        "scorm.tools.media": "Media",
+        "scorm.tools.text": "Text",
+        "scorm.tools.settings": "Settings",
+        "scorm.tools.mediaPrompt": "Paste an image URL to insert as media:",
+        "scorm.tools.newPage": "Page {{number}}",
+        "scorm.tools.history": "Edit history (coming soon)",
+        "scorm.ai.welcome": "Welcome to the AI assistant! How can I help you build your course?"
     },
     ar: {
-        // ... (existing translations) ...
+        "nav.home": "الرئيسية",
+        "nav.scorm-ai": "SCORM AI",
+        "nav.features": "الميزات",
+        "nav.pricing": "الأسعار",
+        "nav.upload": "رفع",
+        "nav.login": "تسجيل الدخول",
+        "nav.register": "تسجيل",
+        "nav.account": "الحساب",
+        "nav.about": "حول",
+        "nav.resources": "المصادر",
+        "nav.privacy": "الخصوصية",
+        "nav.terms": "الشروط",
+        "nav.shop": "الباقات",
+        "hero.title": "أنشئ حزم SCORM بالذكاء الاصطناعي",
+        "hero.description": "أسهل طريقة لإنشاء حزم SCORM حديثة وتفاعلية وجميلة لنظام إدارة التعلم الخاص بك. استفد من الذكاء الاصطناعي لإنشاء المحتوى والاختبارات والمزيد.",
+        "hero.cta.start": "ابدأ في الإنشاء مجانًا",
+        "hero.cta.browse": "تصفح الباقات",
+        "hero.no-card": "لا يلزم وجود بطاقة ائتمان",
+        "hero.free-trial": "تجربة مجانية لمدة 14 يومًا",
+        "preview.name": "الاسم",
+        "preview.title.name": "قم بتسمية دورتك",
+        "preview.grade": "الصف",
+        "preview.title.grade": "حدد مستوى الصف",
+        "preview.subject": "الموضوع",
+        "preview.title.subject": "اختر موضوعًا",
+        "preview.measure": "القياس",
+        "preview.title.measure": "حدد مقاييس النجاح",
+        "preview.language": "اللغة",
+        "preview.title.language": "اختر اللغة",
+        "preview.area": "هذه معاينة للمحتوى الذي يمكنك إنشاؤه.",
+        "preview.play": "تشغيل",
+        "preview.view": "عرض المحتوى",
+        "featured-packages.title": "الباقات المميزة",
+        "feature.scorm.title": "SCORM 1.2 & 2004",
+        "feature.scorm.desc": "صدّر دوراتك إلى أشهر معايير SCORM.",
+        "feature.ai.title": "محتوى مدعوم بالذكاء الاصطناعي",
+        "feature.ai.desc": "أنشئ محتوى جذابًا وتفاعليًا بمساعدة الذكاء الاصطناعي.",
+        "feature.marketplace.title": "السوق",
+        "feature.marketplace.desc": "شراء وبيع حزم SCORM المعدة مسبقًا من منشئين آخرين.",
+        "feature.lms.title": "متوافق مع أي نظام إدارة تعلم",
+        "feature.lms.desc": "تعمل حزمنا مع أي نظام إدارة تعلم متوافق مع SCORM.",
+        "audience.title": "لمن هذا؟",
+        "audience.teachers.title": "المعلمين والمربين",
+        "audience.teachers.point1": "أنشئ دروسًا واختبارات جذابة.",
+        "audience.teachers.point2": "وفر الوقت في إنشاء المحتوى.",
+        "audience.teachers.point3": "شارك بسهولة مع طلابك.",
+        "audience.teachers.point4": "تتبع تقدم الطلاب وأدائهم.",
+        "audience.institutions.title": "المؤسسات والشركات",
+        "audience.institutions.point1": "توحيد المواد التدريبية الخاصة بك.",
+        "audience.institutions.point2": "نشر المحتوى عبر مؤسستك.",
+        "audience.institutions.point3": "ضمان الامتثال والاتساق.",
+        "audience.institutions.point4": "التكامل مع نظام إدارة التعلم الحالي الخاص بك.",
+        "cta.title": "هل أنت مستعد للبدء؟",
+        "cta.description": "أنشئ أول حزمة SCORM لك اليوم وشاهد مدى سهولة الأمر.",
+        "cta.button": "اشترك مجانا",
+        "footer.proudly": "صنع بفخر في 🇵🇸",
+        "footer.product": "المنتج",
+        "footer.support": "الدعم",
+        "footer.company": "الشركة",
+        "footer.about": "حول",
+        "footer.privacy": "الخصوصية",
+        "footer.terms": "الشروط",
+        "footer.rights": "جميع الحقوق محفوظة.",
+        "footer.help": "مركز المساعدة",
+        "footer.contact": "اتصل بنا",
         "scorm.props.title": "الخصائص",
         "scorm.props.desc": "تعديل خصائص الكتلة المحددة.",
         "scorm.props.block.text.html": "محتوى HTML",
         "scorm.props.block.image.src": "رابط مصدر الصورة",
         "scorm.props.block.image.alt": "النص البديل",
         "scorm.props.block.video.src": "رابط مصدر الفيديو",
-        "scorm.props.block.quiz.question": "السؤال"
+        "scorm.props.block.quiz.question": "السؤال",
+        "scorm.ai.untitledProject": "مشروع بدون عنوان",
+        "scorm.ai.introduction": "مقدمة",
+        "scorm.ai.notConfigured": "اتصال الذكاء الاصطناعي غير مهيأ بعد. هذا مجرد عنصر نائب لواجهة المستخدم.",
+        "scorm.ai.projectSaved": "تم حفظ المشروع في التخزين المحلي!",
+        "scorm.ai.exportFailed": "فشل التصدير",
+        "scorm.ai.exportError": "خطأ في تصدير المشروع. انظر وحدة التحكم للحصول على التفاصيل.",
+        "scorm.ai.newTextBlock": "<p>كتلة نصية جديدة. قم بتحريري!</p>",
+        "scorm.ai.placeholderImage": "صورة نائبة",
+        "scorm.ai.newQuestion": "سؤال جديد",
+        "scorm.ai.option1": "الخيار 1",
+        "scorm.ai.option2": "الخيار 2",
+        "scorm.ai.projectLoaded": "تم تحميل المشروع من الملف.",
+        "scorm.ai.invalidProjectFile": "ملف مشروع غير صالح.",
+        "scorm.ai.media": "وسائط",
+        "scorm.choice.title": "إنشاء حزمة SCORM جديدة",
+        "scorm.choice.description": "اختر كيف تريد البدء في بناء حزمة التعلم الخاصة بك.",
+        "scorm.choice.aiAssistant": "البناء بمساعدة الذكاء الاصطناعي",
+        "scorm.choice.aiAssistantDesc": "دع الذكاء الاصطناعي يساعد في إنشاء محتوى الدورة التدريبية الخاصة بك.",
+        "scorm.choice.blankPage": "البدء من صفحة فارغة",
+        "scorm.choice.blankPageDesc": "بناء كل شيء يدويًا من البداية.",
+        "scorm.nav.hide": "إخفاء شريط التنقل",
+        "scorm.nav.show": "إظهار شريط التنقل",
+        "scorm.ai.close": "✕",
+        "scorm.tools.ai": "الذكاء الاصطناعي",
+        "scorm.alerts.interactiveSoon": "العناصر التفاعلية ستكون متاحة قريبًا.",
+        "scorm.alerts.settingsLater": "سيتم تصميم إعدادات الحزمة لاحقًا.",
+        "shop.title": "سوق حزم SCORM",
+        "shop.desc": "تصفح وشراء حزم SCORM عالية الجودة التي أنشأها مجتمعنا.",
+        "shop.search": "البحث عن حزم...",
+        "shop.filter.grades": "كل المستويات",
+        "shop.filter.subjects": "كل المواضيع",
+        "shop.filter.sort": "ترتيب حسب",
+        "shop.filter.free": "مجاني",
+        "shop.filter.paid": "مدفوع",
+        "shop.filter.more": " المزيد من المرشحات",
+        "shop.view": "عرض",
+        "shop.packages.1.title": "مقدمة في الكسور",
+        "shop.packages.1.grade": "الصف الخامس",
+        "shop.packages.1.subject": "الرياضيات",
+        "shop.packages.1.language": "الإنجليزية",
+        "shop.packages.1.description": "درس تفاعلي يغطي أساسيات الكسور مع مساعدات بصرية ومسابقات تدريبية",
+        "shop.packages.1.price": "مجاني",
+        "shop.packages.2.title": "مستكشف النظام الشمسي",
+        "shop.packages.2.grade": "الصف السابع",
+        "shop.packages.2.subject": "العلوم",
+        "shop.packages.2.language": "الإنجليزية",
+        "shop.packages.2.description": "رحلة عبر نظامنا الشمسي بنماذج وأنشطة تفاعلية ثلاثية الأبعاد",
+        "shop.packages.3.title": "شكسبير: روميو وجولييت",
+        "shop.packages.3.grade": "المرحلة الثانوية",
+        "shop.packages.3.subject": "الأدب",
+        "shop.packages.3.language": "الإنجليزية",
+        "shop.packages.3.description": "دليل دراسة شامل مع تحليل الشخصيات ومشاهد تفاعلية",
+        "shop.packages.4.title": "تفاعلات الكيمياء الأساسية",
+        "shop.packages.4.grade": "الصف التاسع",
+        "shop.packages.4.subject": "الكيمياء",
+        "shop.packages.4.language": "الإنجليزية",
+        "shop.packages.4.description": "تجارب معملية افتراضية توضح التفاعلات الكيميائية الأساسية بأمان",
+        "shop.packages.5.title": "اختبار الجغرافيا العالمي",
+        "shop.packages.5.grade": "الصف السادس",
+        "shop.packages.5.subject": "الجغرافيا",
+        "shop.packages.5.language": "الإنجليزية",
+        "shop.packages.5.description": "خرائط تفاعلية ومسابقات تغطي القارات والدول والعواصم",
+        "shop.packages.5.price": "مجاني",
+        "shop.packages.6.title": "أساسيات برمجة بايثون",
+        "shop.packages.6.grade": "المرحلة الثانوية",
+        "shop.packages.6.subject": "علوم الحاسوب",
+        "shop.packages.6.language": "الإنجليزية",
+        "shop.packages.6.description": "تعلم أساسيات بايثون مع تمارين ومشاريع برمجية تفاعلية",
+        "shop.filter.elementary": "ابتدائي",
+        "shop.filter.middleSchool": "إعدادي",
+        "shop.filter.highSchool": "ثانوي",
+        "shop.filter.mathematics": "الرياضيات",
+        "shop.filter.science": "العلوم",
+        "shop.filter.literature": "الأدب",
+        "shop.filter.newest": "الأحدث",
+        "shop.filter.priceLowHigh": "السعر: من الأقل إلى الأعلى",
+        "shop.filter.priceHighLow": "السعر: من الأعلى إلى الأقل",
+        "scorm.ai.previewTitle": "معاينة: {{title}}",
+        "scorm.topbar.preview": "معاينة",
+        "scorm.topbar.export": "تصدير",
+        "scorm.topbar.status.draft": "مسودة",
+        "scorm.topbar.status.published": "منشور",
+        "scorm.ai.title": "مساعد الذكاء الاصطناعي",
+        "scorm.ai.placeholder": "اطلب من الذكاء الاصطناعي إنشاء محتوى...",
+        "scorm.ai.send": "إرسال",
+        "scorm.canvas.title": "لوحة الرسم",
+        "scorm.canvas.desc": "ابدأ في بناء دورتك بإضافة كتل.",
+        "scorm.canvas.start": "ابدأ البناء",
+        "scorm.tools.upload": "رفع",
+        "scorm.tools.interactive": "تفاعلي",
+        "scorm.tools.quiz": "اختبار",
+        "scorm.tools.pageEditor": "محرر الصفحات",
+        "scorm.tools.media": "وسائط",
+        "scorm.tools.text": "نص",
+        "scorm.tools.settings": "إعدادات",
+        "scorm.tools.mediaPrompt": "الصق رابط صورة لإدراجها كوسائط:",
+        "scorm.tools.newPage": "صفحة {{number}}",
+        "scorm.tools.history": "سجل التعديلات (قريباً)",
+        "scorm.ai.welcome": "أهلاً بك في مساعد الذكاء الاصطناعي! كيف يمكنني مساعدتك في بناء دورتك؟"
     }
 };
-function t(locale, key) {
-    return translations[locale][key] || key;
+function t(locale, key, values) {
+    let translation = translations[locale][key] || key;
+    if (values) {
+        Object.entries(values).forEach(([key, value])=>{
+            translation = translation.replace(`{{${key}}}`, String(value));
+        });
+    }
+    return translation;
 }
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
@@ -149,7 +482,7 @@ function useLocale() {
     // Get the current locale and the setter from the store
     const { locale, setLocale } = useLocaleStore();
     // Create a translation function that's pre-bound to the current locale
-    const t = (key)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, key);
+    const t = (key, values)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, key, values);
     // Return the locale, setter, and the bound translation function
     return {
         locale,
@@ -526,7 +859,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 function LanguageSwitcher() {
     _s();
-    const { locale, setLocale } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
+    const { locale, setLocale, t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenu"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuTrigger"], {
@@ -545,7 +878,7 @@ function LanguageSwitcher() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             className: "sr-only",
-                            children: "Switch language"
+                            children: t("nav.switchLanguage")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/language-switcher.tsx",
                             lineNumber: 17,
@@ -585,7 +918,7 @@ function LanguageSwitcher() {
         columnNumber: 5
     }, this);
 }
-_s(LanguageSwitcher, "Fo5P0XCsX2RYC5mXl+ijSeGkVFY=", false, function() {
+_s(LanguageSwitcher, "2rsPTuiNUmOzv71ev3zyLp3uIeQ=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"]
     ];
@@ -628,6 +961,7 @@ function Navbar() {
     const [isOpen, setIsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const { locale } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+        id: "main-navbar",
         className: "bg-white border-b border-border sticky top-0 z-50",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -646,12 +980,12 @@ function Navbar() {
                                         children: "E"
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/navbar.tsx",
-                                        lineNumber: 22,
+                                        lineNumber: 25,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 21,
+                                    lineNumber: 24,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -659,13 +993,13 @@ function Navbar() {
                                     children: "EduPack"
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 24,
+                                    lineNumber: 27,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 20,
+                            lineNumber: 23,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -677,7 +1011,7 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.home")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 29,
+                                    lineNumber: 32,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -686,7 +1020,7 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.scorm-ai")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 32,
+                                    lineNumber: 35,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -695,7 +1029,7 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.shop")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 35,
+                                    lineNumber: 38,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -704,7 +1038,7 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.pricing")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 38,
+                                    lineNumber: 41,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -713,7 +1047,7 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.features")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 41,
+                                    lineNumber: 44,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -722,13 +1056,13 @@ function Navbar() {
                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.resources")
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 44,
+                                    lineNumber: 47,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 28,
+                            lineNumber: 31,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -736,7 +1070,7 @@ function Navbar() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$layout$2f$language$2d$switcher$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["LanguageSwitcher"], {}, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 51,
+                                    lineNumber: 54,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -746,12 +1080,12 @@ function Navbar() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.login")
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/navbar.tsx",
-                                        lineNumber: 53,
+                                        lineNumber: 56,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 52,
+                                    lineNumber: 55,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -760,18 +1094,18 @@ function Navbar() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.register")
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/navbar.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 59,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 55,
+                                    lineNumber: 58,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 50,
+                            lineNumber: 53,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -779,27 +1113,27 @@ function Navbar() {
                             onClick: ()=>setIsOpen(!isOpen),
                             children: isOpen ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {}, void 0, false, {
                                 fileName: "[project]/components/layout/navbar.tsx",
-                                lineNumber: 62,
+                                lineNumber: 65,
                                 columnNumber: 23
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$menu$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__["Menu"], {}, void 0, false, {
                                 fileName: "[project]/components/layout/navbar.tsx",
-                                lineNumber: 62,
+                                lineNumber: 65,
                                 columnNumber: 31
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 61,
+                            lineNumber: 64,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layout/navbar.tsx",
-                    lineNumber: 18,
+                    lineNumber: 21,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layout/navbar.tsx",
-                lineNumber: 17,
+                lineNumber: 20,
                 columnNumber: 7
             }, this),
             isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -813,7 +1147,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.home")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 71,
+                            lineNumber: 74,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -822,7 +1156,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.scorm-ai")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 74,
+                            lineNumber: 77,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -831,7 +1165,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.shop")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 77,
+                            lineNumber: 80,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -840,7 +1174,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.pricing")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 80,
+                            lineNumber: 83,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -849,7 +1183,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.features")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 83,
+                            lineNumber: 86,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -858,7 +1192,7 @@ function Navbar() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.resources")
                         }, void 0, false, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 86,
+                            lineNumber: 89,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -873,12 +1207,12 @@ function Navbar() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.login")
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/navbar.tsx",
-                                        lineNumber: 91,
+                                        lineNumber: 94,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 90,
+                                    lineNumber: 93,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -889,36 +1223,36 @@ function Navbar() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.register")
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/navbar.tsx",
-                                        lineNumber: 96,
+                                        lineNumber: 99,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/navbar.tsx",
-                                    lineNumber: 95,
+                                    lineNumber: 98,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/navbar.tsx",
-                            lineNumber: 89,
+                            lineNumber: 92,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layout/navbar.tsx",
-                    lineNumber: 70,
+                    lineNumber: 73,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/layout/navbar.tsx",
-                lineNumber: 69,
+                lineNumber: 72,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/layout/navbar.tsx",
         lineNumber: 16,
-        columnNumber: 5
+        columnNumber: 7
     }, this);
 }
 _s(Navbar, "Wy+q8Liqjoenn3X12HaXUFsyHOw=", false, function() {
@@ -1127,7 +1461,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/resources#help",
                                                 className: "text-sm text-muted-foreground hover:text-primary",
-                                                children: "Help Center"
+                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "footer.help")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/footer.tsx",
                                                 lineNumber: 62,
@@ -1142,7 +1476,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/resources#contact",
                                                 className: "text-sm text-muted-foreground hover:text-primary",
-                                                children: "Contact"
+                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "footer.contact")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/footer.tsx",
                                                 lineNumber: 67,
@@ -1182,7 +1516,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/about",
                                                 className: "text-sm text-muted-foreground hover:text-primary",
-                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "footer.about")
+                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.about")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/footer.tsx",
                                                 lineNumber: 79,
@@ -1197,7 +1531,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/privacy",
                                                 className: "text-sm text-muted-foreground hover:text-primary",
-                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "footer.privacy")
+                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.privacy")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/footer.tsx",
                                                 lineNumber: 84,
@@ -1212,7 +1546,7 @@ function Footer() {
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/terms",
                                                 className: "text-sm text-muted-foreground hover:text-primary",
-                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "footer.terms")
+                                                children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["t"])(locale, "nav.terms")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/footer.tsx",
                                                 lineNumber: 89,

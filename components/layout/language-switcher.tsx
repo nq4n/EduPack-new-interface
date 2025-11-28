@@ -7,14 +7,14 @@ import { useLocale } from "@/hooks/use-locale"
 import { locales, getLocaleLabel } from "@/lib/i18n"
 
 export function LanguageSwitcher() {
-  const { locale, setLocale } = useLocale()
+  const { locale, setLocale, t } = useLocale()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9">
           <Globe className="h-4 w-4" />
-          <span className="sr-only">Switch language</span>
+          <span className="sr-only">{t("nav.switchLanguage")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

@@ -1,63 +1,60 @@
-[00:00:07.931] Server  LOG      ✓ Ready in 5.4s
-[00:01:12.794] Server  LOG      ○ Compiling / ...
-[00:04:44.796] Server  WARN     ⚠ Cross origin request detected from 9000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:14.647] Server  LOG      ✓ Ready in 10.7s
+[00:00:14.651] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:04:44.998] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:04:44.998] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:04:44.998] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://9000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/?monospaceUid=869322 color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://9000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/?monospaceUid=869322","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764311375664}
-[00:04:51.039] Server  LOG      ○ Compiling /scorm-ai ...
-[00:04:58.474] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:7:1
-Module not found: Can't resolve '@/components/ui/checkbox'
-   5 | import { Label } from '@/components/ui/label'
-   6 | import { Button } from '@/components/ui/button'
->  7 | import { Checkbox } from '@/components/ui/checkbox'
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   8 | import { useLocale } from '@/hooks/use-locale'
-   9 |
-  10 | interface PropertiesPanelProps {
+[00:00:17.947] Server  LOG      ○ Compiling /scorm-ai ...
+[00:00:36.956] Server  ERROR    ⨯ ReferenceError: t is not defined
+[00:00:43.784] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:45.026] Browser ERROR   uncaughtError: ReferenceError: t is not defined
+[00:01:05.187] Server  ERROR    ⨯ ReferenceError: t is not defined
+[00:01:08.980] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:09.267] Browser ERROR   uncaughtError: ReferenceError: t is not defined
+[00:04:51.335] Server  LOG      ✓ Compiled in 177ms
+[00:04:51.806] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:04:58.822] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:58.822] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
-Import map: aliased to relative './components/ui/checkbox' inside of [project]/
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-Import traces:
-  Client Component Browser:
-    ./components/scorm/properties-panel.tsx [Client Component Browser]
-    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
-    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+https://react.dev/link/hydration-mismatch
 
-  Client Component SSR:
-    ./components/scorm/properties-panel.tsx [Client Component SSR]
-    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
-    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="scorm-ai/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/scorm-ai" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="(editor)/s...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function ScormAIPage} serverProvidedParams={{...}}>
+                          <ScormAIPage params={Promise} searchParams={Promise}>
++                           <input
++                             ref={{current:null}}
++                             type="file"
++                             accept="application/json"
++                             className="hidden"
++                             onChange={function handleFileChange}
++                           >
+-                           <div
+-                             className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50"
+-                           >
+                            ...
+                      ...
+                    ...
+          ...
 
-https://nextjs.org/docs/messages/module-not-found
-
-
-[00:05:10.089] Browser ERROR   {"name":"Error"}
-[00:05:10.089] Browser ERROR   uncaughtError: Error: ./components/scorm/properties-panel.tsx:7:1
-Module not found: Can't resolve '@/components/ui/checkbox'
-   5 | import { Label } from '@/components/ui/label'
-   6 | import { Button } from '@/components/ui/button'
->  7 | import { Checkbox } from '@/components/ui/checkbox'
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   8 | import { useLocale } from '@/hooks/use-locale'
-   9 |
-  10 | interface PropertiesPanelProps {
-
-Import map: aliased to relative './components/ui/checkbox' inside of [project]/
-
-
-Import traces:
-  Client Component Browser:
-    ./components/scorm/properties-panel.tsx [Client Component Browser]
-    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
-    ./app/(editor)/scorm-ai/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/scorm/properties-panel.tsx [Client Component SSR]
-    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
-    ./app/(editor)/scorm-ai/page.tsx [Server Component]
-
-https://nextjs.org/docs/messages/module-not-found
-
-
+[00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764342808439}
+[00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764342808439}
+[00:07:31.645] Browser LOG     Project saved! {"id":"proj-1764315715891","language":"en","pages":[{"blocks":[{"html":"<p style=\"direction: rtl;\">العربية .</p>","id":"block-1764315795473","type":"text"},{"alt":"Placeholder image","id":"block-1764315797097","src":"https://rtlstyling.com/img/flexbox-axis.jpg","type":"image"},{"id":"block-1764315799017","src":"https://www.w3schools.com/html/mov_bbb.mp4","type":"video"},{"id":"block-1764315802106","options":"[Array]","question":"fghfdgdfg","type":"quiz"},{"id":"block-1764326476028","options":"[Array]","question":"New Question","type":"quiz"},{"html":"<p>New text block. Edit me!</p>","id":"block-1764330065740","type":"text"}],"id":"page-1","title":"Introduction"},{"blocks":[{"html":"<p>New text block. Edit me!</p>","id":"block-1764323874212","type":"text"},{"id":"block-1764323883092","options":"[Array]","question":"New Question","type":"quiz"},{"html":"<p>New text block. Edit me!</p>","id":"block-1764323888956","type":"text"}],"id":"page-1764323869468","title":"scorm.tools.newPage"},{"blocks":[],"id":"page-1764323891852","title":"scorm.tools.newPage"}],"title":"Untitled Projectdsfsdfs","version":"1.0"}

@@ -60,12 +60,12 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/resources#help" className="text-sm text-muted-foreground hover:text-primary">
-                  Help Center
+                  {t(locale, "footer.help")}
                 </Link>
               </li>
               <li>
                 <Link href="/resources#contact" className="text-sm text-muted-foreground hover:text-primary">
-                  Contact
+                  {t(locale, "footer.contact")}
                 </Link>
               </li>
             </ul>
@@ -77,17 +77,17 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-sm text-muted-foreground hover:text-primary">
-                  {t(locale, "footer.about")}
+                  {t(locale, "nav.about")}
                 </Link>
               </li>
               <li>
                 <Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary">
-                  {t(locale, "footer.privacy")}
+                  {t(locale, "nav.privacy")}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary">
-                  {t(locale, "footer.terms")}
+                  {t(locale, "nav.terms")}
                 </Link>
               </li>
             </ul>

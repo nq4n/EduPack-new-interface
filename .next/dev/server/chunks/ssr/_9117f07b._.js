@@ -106,61 +106,61 @@ function ShopPage() {
     const packages = [
         {
             id: 1,
-            title: "Introduction to Fractions",
-            grade: "Grade 5",
-            subject: "Mathematics",
-            language: "English",
-            description: "Interactive lesson covering fraction basics with visual aids and practice quizzes",
-            price: "Free",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.description"),
+            price: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.1.price"),
             thumbnail: "/math-fractions-classroom.jpg"
         },
         {
             id: 2,
-            title: "Solar System Explorer",
-            grade: "Grade 7",
-            subject: "Science",
-            language: "English",
-            description: "Journey through our solar system with interactive 3D models and activities",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.2.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.2.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.2.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.2.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.2.description"),
             price: "$12.99",
             thumbnail: "/solar-system-space-planets.jpg"
         },
         {
             id: 3,
-            title: "Shakespeare: Romeo & Juliet",
-            grade: "High School",
-            subject: "Literature",
-            language: "English",
-            description: "Comprehensive study guide with character analysis and interactive scenes",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.3.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.3.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.3.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.3.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.3.description"),
             price: "$9.99",
             thumbnail: "/shakespeare-theatre-literature.jpg"
         },
         {
             id: 4,
-            title: "Basic Chemistry Reactions",
-            grade: "Grade 9",
-            subject: "Chemistry",
-            language: "English",
-            description: "Virtual lab experiments demonstrating fundamental chemical reactions safely",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.4.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.4.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.4.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.4.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.4.description"),
             price: "$14.99",
             thumbnail: "/chemistry-lab-science-education.jpg"
         },
         {
             id: 5,
-            title: "World Geography Quiz",
-            grade: "Grade 6",
-            subject: "Geography",
-            language: "English",
-            description: "Interactive maps and quizzes covering continents, countries, and capitals",
-            price: "Free",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.description"),
+            price: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.5.price"),
             thumbnail: "/world-map-geography-education.jpg"
         },
         {
             id: 6,
-            title: "Python Programming Basics",
-            grade: "High School",
-            subject: "Computer Science",
-            language: "English",
-            description: "Learn Python fundamentals with interactive coding exercises and projects",
+            title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.6.title"),
+            grade: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.6.grade"),
+            subject: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.6.subject"),
+            language: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.6.language"),
+            description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.packages.6.description"),
             price: "$19.99",
             thumbnail: "/coding-programming-computer-education.jpg"
         }
@@ -245,21 +245,21 @@ function ShopPage() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Elementary"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.elementary")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 105,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Middle School"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.middleSchool")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 106,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "High School"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.highSchool")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 107,
@@ -282,21 +282,21 @@ function ShopPage() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Mathematics"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.mathematics")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 111,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Science"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.science")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 112,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Literature"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.literature")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 113,
@@ -319,21 +319,21 @@ function ShopPage() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Newest"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.newest")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 117,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Price: Low to High"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.priceLowHigh")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 118,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                            children: "Price: High to Low"
+                                            children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, "shop.filter.priceHighLow")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(shop)/packages/page.tsx",
                                             lineNumber: 119,
