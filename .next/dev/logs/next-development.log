@@ -58,3 +58,2884 @@ https://react.dev/link/hydration-mismatch
 [00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764342808439}
 [00:04:58.822] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764342808439}
 [00:07:31.645] Browser LOG     Project saved! {"id":"proj-1764315715891","language":"en","pages":[{"blocks":[{"html":"<p style=\"direction: rtl;\">العربية .</p>","id":"block-1764315795473","type":"text"},{"alt":"Placeholder image","id":"block-1764315797097","src":"https://rtlstyling.com/img/flexbox-axis.jpg","type":"image"},{"id":"block-1764315799017","src":"https://www.w3schools.com/html/mov_bbb.mp4","type":"video"},{"id":"block-1764315802106","options":"[Array]","question":"fghfdgdfg","type":"quiz"},{"id":"block-1764326476028","options":"[Array]","question":"New Question","type":"quiz"},{"html":"<p>New text block. Edit me!</p>","id":"block-1764330065740","type":"text"}],"id":"page-1","title":"Introduction"},{"blocks":[{"html":"<p>New text block. Edit me!</p>","id":"block-1764323874212","type":"text"},{"id":"block-1764323883092","options":"[Array]","question":"New Question","type":"quiz"},{"html":"<p>New text block. Edit me!</p>","id":"block-1764323888956","type":"text"}],"id":"page-1764323869468","title":"scorm.tools.newPage"},{"blocks":[],"id":"page-1764323891852","title":"scorm.tools.newPage"}],"title":"Untitled Projectdsfsdfs","version":"1.0"}
+[00:29:33.474] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.511] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.570] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.607] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.769] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.818] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.854] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.878] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.913] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.942] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.954] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.969] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.979] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:33.995] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.011] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.043] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.084] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.106] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.132] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.157] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.173] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.195] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.222] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.240] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.262] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.290] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.313] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.341] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.371] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.384] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.390] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.395] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:29:34.396] Browser ERROR   ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:29:34.396] Browser ERROR   ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:31:50.360] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.363] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.367] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.372] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.376] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.379] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.383] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.389] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.397] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.404] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.408] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.413] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.417] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.421] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.424] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.428] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.433] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.435] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.438] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.441] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.445] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.448] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.453] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.457] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.467] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.478] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.486] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.495] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:31:50.518] Server  LOG      ✓ Compiled in 100ms
+[00:31:52.115] Browser ERROR   ./components/scorm/properties-panel.tsx:188:1
+Parsing ecmascript source code failed
+  186 |           />
+  187 |         </div>
+> 188 |
+      | ^
+
+Expected '</', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:31:52.115] Browser ERROR   ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { Badge } from "@/components/ui/badge"
+  10 | import { useLocale } from "@/hooks/use-locale"
+> 11 |
+     | ^
+> 12 | interface PropertiesPanelProps {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 13 |   selectedBlock: EditorBlock | null
+     | ^^^^^^^^^^^^^^^^^^^^
+  14 |   onBlockChange: (block: EditorBlock) => void
+  15 | }
+  16 |
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:32:09.043] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.063] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.076] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.086] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.158] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.188] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.215] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.241] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.274] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.295] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.311] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.320] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.328] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.335] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.343] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.349] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.358] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.365] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.375] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.379] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.390] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.396] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.404] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.409] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.425] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.443] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.452] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:09.464] Server  ERROR    ⨯ ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:32:10.093] Browser ERROR   ./components/scorm/properties-panel.tsx:11:1
+Module not found: Can't resolve '@/components/ui/separator'
+   9 | import { useLocale } from "@/hooks/use-locale"
+  10 | import { Badge } from "@/components/ui/badge"
+> 11 | import { Separator } from "@/components/ui/separator"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  12 |
+  13 | interface PropertiesPanelProps {
+  14 |   selectedBlock: EditorBlock | null
+
+Import map: aliased to relative './components/ui/separator' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[00:32:10.093] Browser ERROR   ./components/scorm/properties-panel.tsx:188:1
+Parsing ecmascript source code failed
+  186 |           />
+  187 |         </div>
+> 188 |
+      | ^
+
+Expected '</', got '<eof>'
+
+Import traces:
+  Client Component Browser:
+    ./components/scorm/properties-panel.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/scorm/properties-panel.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:32:51.001] Server  LOG      ✓ Compiled in 1096ms
+[00:37:43.414] Server  LOG      ✓ Compiled in 276ms
+[00:38:44.082] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:38:44.083] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="scorm-ai/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/scorm-ai" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="(editor)/s...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function ScormAIPage} serverProvidedParams={{...}}>
+                          <ScormAIPage params={Promise} searchParams={Promise}>
++                           <input
++                             ref={{current:null}}
++                             type="file"
++                             accept="application/json"
++                             className="hidden"
++                             onChange={function handleFileChange}
++                           >
+-                           <div
+-                             className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50"
+-                           >
+                            ...
+                      ...
+                    ...
+          ...
+
+[00:38:44.083] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:38:44.083] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:38:44.083] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:38:44.083] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764344833816}
+[00:38:44.083] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764344833816}
+[00:39:29.473] Server  LOG      ✓ Compiled in 394ms
+[00:43:29.461] Browser ERROR   {}
+[00:53:26.860] Server  LOG      ✓ Compiled in 341ms
+[00:53:35.221] Browser ERROR   {}
+[00:53:57.501] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:53:57.501] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="scorm-ai/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/scorm-ai" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="(editor)/s...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function ScormAIPage} serverProvidedParams={{...}}>
+                          <ScormAIPage params={Promise} searchParams={Promise}>
++                           <input
++                             ref={{current:null}}
++                             type="file"
++                             accept="image/*,video/*,application/json,text/csv"
++                             className="hidden"
++                             onChange={function handleFileChange}
++                           >
+-                           <div
+-                             className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50"
+-                           >
+                            ...
+                      ...
+                    ...
+          ...
+
+[00:53:57.501] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:53:57.501] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:53:57.501] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:53:57.501] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764345746825}
+[00:53:57.501] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764345746825}
+[00:54:08.996] Browser ERROR   {}
+[00:54:22.025] Server  LOG      ✓ Compiled in 412ms
+[00:54:25.174] Browser ERROR   uncaughtError: ReferenceError: handleFileChange is not defined
+[00:55:02.784] Server  LOG      ✓ Compiled in 939ms
+[00:55:05.016] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:55:05.632] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764345814816}
+[00:55:10.171] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:55:10.171] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LocaleProvider>
+      ...
+        <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
+          <DropdownMenuTrigger asChild={true}>
+            <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
+              <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+                <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                  <Primitive.div asChild={true} ref={function}>
+                    <Slot ref={function}>
+                      <SlotClone ref={function}>
+                        <Primitive.button type="button" id="radix-_R_5..." aria-haspopup="menu" aria-expanded={false} ...>
+                          <Slot type="button" id="radix-_R_5..." aria-haspopup="menu" aria-expanded={false} ...>
+                            <SlotClone type="button" id="radix-_R_5..." aria-haspopup="menu" aria-expanded={false} ...>
+                              <Button variant="ghost" size="icon" className="h-9 w-9" type="button" id="radix-_R_5..." ...>
+                                <button
+                                  data-slot="dropdown-menu-trigger"
+                                  className={"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded..."}
+                                  type="button"
++                                 id="radix-_R_5llb_"
+-                                 id="radix-_R_mllb_"
+                                  aria-haspopup="menu"
+                                  aria-expanded={false}
+                                  aria-controls={undefined}
+                                  data-state="closed"
+                                  data-disabled={undefined}
+                                  disabled={false}
+                                  onPointerDown={function handleEvent}
+                                  onKeyDown={function handleEvent}
+                                  ref={function}
+                                >
+          ...
+      ...
+        <ScrollAndFocusHandler segmentPath={[...]}>
+          <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+            <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+              <LoadingBoundary name="scorm-ai/" loading={null}>
+                <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                  <RedirectBoundary>
+                    <RedirectErrorBoundary router={{...}}>
+                      <InnerLayoutRouter url="/scorm-ai" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                        <SegmentViewNode type="page" pagePath="(editor)/s...">
+                          <SegmentTrieNode>
+                          <ClientPageRoot Component={function ScormAIPage} serverProvidedParams={{...}}>
+                            <ScormAIPage params={Promise} searchParams={Promise}>
++                             <input
++                               ref={{current:null}}
++                               type="file"
++                               accept="image/*,video/*,application/json,text/csv"
++                               className="hidden"
++                               onChange={function handleFileInputChange}
++                             >
+-                             <div
+-                               className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50"
+-                             >
+                              ...
+                        ...
+                      ...
+            ...
+      ...
+
+[00:55:10.171] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:55:10.171] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:55:10.171] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:55:10.171] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764345819751}
+[00:55:10.171] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764345819751}
+[00:56:28.217] Server  LOG      ✓ Compiled in 406ms
+[00:56:42.366] Browser LOG     {}
+[00:58:23.927] Server  LOG      ✓ Compiled in 387ms
+[00:58:40.830] Browser LOG     {}
+[01:04:13.051] Browser LOG     {}
+[01:04:13.925] Browser LOG     {}
+[01:16:41.635] Browser LOG     {}
+[01:16:41.790] Browser LOG     {}
+[01:16:42.100] Browser LOG     {}
+[01:16:42.100] Browser LOG     {}
+[01:16:42.575] Browser LOG     {}
+[01:16:42.735] Browser LOG     {}
+[01:16:42.921] Browser LOG     {}
+[01:16:43.111] Browser LOG     {}
+[01:16:44.300] Browser LOG     {}
+[01:16:44.985] Browser LOG     {}
+[01:16:45.200] Browser LOG     {}
+[01:16:45.800] Browser LOG     {}
+[01:16:45.955] Browser LOG     {}
+[01:19:07.140] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/features color: rgb(120, 120, 120) color: inherit {"dp":"/features","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/features","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764347257069}
+[01:20:10.465] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/pricing color: rgb(120, 120, 120) color: inherit {"dp":"/pricing","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/pricing","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764347320389}
+[01:20:12.000] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764347321568}
+[01:24:01.521] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:24:01.522] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndFocusHandler segmentPath={[...]}>
+        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="scorm-ai/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/scorm-ai" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="(editor)/s...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function ScormAIPage} serverProvidedParams={{...}}>
+                          <ScormAIPage params={Promise} searchParams={Promise}>
++                           <input
++                             ref={{current:null}}
++                             type="file"
++                             accept="image/*,video/*,application/json,text/csv"
++                             className="hidden"
++                             onChange={function handleFileInputChange}
++                           >
+-                           <div
+-                             className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50"
+-                           >
+                            ...
+                      ...
+                    ...
+          ...
+
+[01:24:01.522] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:24:01.522] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[01:24:01.522] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[01:24:01.522] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764347550822}
+[01:24:01.522] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1763884054369.cluster-hllxpfasbba62ri4b2ygaupuxu.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764347550823}

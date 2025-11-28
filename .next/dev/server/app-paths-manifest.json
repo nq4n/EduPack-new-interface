@@ -1,4 +1,7 @@
 {
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
-  "/page": "app/page.js"
+  "/(public)/features/page": "app/(public)/features/page.js",
+  "/(public)/pricing/page": "app/(public)/pricing/page.js",
+  "/page": "app/page.js",
+  "/resources/page": "app/resources/page.js"
 }

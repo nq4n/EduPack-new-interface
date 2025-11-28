@@ -85,6 +85,7 @@ export default function ScormAIPage() {
   }, [t, messages.length])
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   const [aiOpen, setAiOpen] = useState(false)
 
@@ -102,15 +103,6 @@ export default function ScormAIPage() {
       nav.style.display = "none"
     }
   }, [navVisible])
-
-  // auto-hide properties panel
-  useEffect(() => {
-    if (!selectedBlock) return
-    const timer = setTimeout(() => {
-      setSelectedBlock(null)
-    }, 10000)
-    return () => clearTimeout(timer)
-  }, [selectedBlock])
 
   useEffect(() => {
     const currentPage = project.pages.find((p) => p.id === activePage.id)
@@ -328,40 +320,119 @@ export default function ScormAIPage() {
     previewWindow?.document.close()
   }
 
+  const handleFileProcess = (file: File) => {
+    if (!file) return
+
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      const result = reader.result
+
+      if (file.type.startsWith("image/")) {
+        addBlock("image", { src: result as string, alt: file.name } as ImageBlock)
+      } else if (file.type.startsWith("video/")) {
+        addBlock("video", { src: result as string } as VideoBlock)
+      } else if (file.type === "application/json") {
+        try {
+          const parsedData = JSON.parse(result as string)
+          // Try to load as EditorProject
+          if (
+            parsedData.id &&
+            parsedData.title &&
+            Array.isArray(parsedData.pages)
+          ) {
+            setProject(parsedData as EditorProject)
+            setActivePage(parsedData.pages[0])
+            setSelectedBlock(null)
+            alert(t("scorm.ai.projectLoaded"))
+          }
+          // Try to load as QuizBlock
+          else if (parsedData.question && Array.isArray(parsedData.options)) {
+            addBlock("quiz", parsedData as QuizBlock)
+          } else {
+            console.error("Unknown JSON format:", parsedData)
+            alert(t("scorm.ai.invalidJsonFormat"))
+          }
+        } catch (err) {
+          console.error("Error parsing JSON file:", err)
+          alert(t("scorm.ai.invalidProjectFile"))
+        }
+      } else if (file.type === "text/csv") {
+        // For CSV, create a text block with preformatted content
+        addBlock("text", {
+          html: `<pre>${result as string}</pre>`,
+        } as TextBlock)
+      } else {
+        alert(t("scorm.ai.unsupportedFileType", { type: file.type }))
+      }
+    }
+
+    if (file.type.startsWith("image/") || file.type.startsWith("video/")) {
+      reader.readAsDataURL(file)
+    } else if (file.type === "application/json" || file.type === "text/csv") {
+      reader.readAsText(file)
+    } else {
+      alert(t("scorm.ai.unsupportedFileType", { type: file.type }))
+    }
+  }
+
   const handleUploadClick = () => {
     fileInputRef.current?.click()
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    if (!file) return
-
-    const reader = new FileReader()
-    reader.onload = () => {
-      try {
-        const data = JSON.parse(reader.result as string) as EditorProject
-        setProject(data)
-        setActivePage(data.pages[0])
-        setSelectedBlock(null)
-        alert(t("scorm.ai.projectLoaded"))
-      } catch (err) {
-        console.error(err)
-        alert(t("scorm.ai.invalidProjectFile"))
-      }
+    if (file) {
+      handleFileProcess(file)
     }
-    reader.readAsText(file)
-    event.target.value = ""
+    event.target.value = "" // Clear the input so same file can be uploaded again
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0]
+      handleFileProcess(file)
+      e.dataTransfer.clearData()
+    }
   }
 
   const handleAddMedia = () => {
     const url = window.prompt(t("scorm.tools.mediaPrompt")) || ""
     if (!url.trim()) return
 
-    addBlock("image", {
-      type: "image",
-      src: url.trim(),
-      alt: t("scorm.ai.media"),
-    } as ImageBlock)
+    const imageUrlRegex = /\.(jpeg|jpg|gif|png|webp|svg)$/i
+    const videoUrlRegex = /\.(mp4|webm|ogg)$/i
+
+    if (imageUrlRegex.test(url)) {
+      addBlock("image", {
+        type: "image",
+        src: url.trim(),
+        alt: t("scorm.ai.media"),
+      } as ImageBlock)
+    } else if (videoUrlRegex.test(url)) {
+      addBlock("video", {
+        type: "video",
+        src: url.trim(),
+      } as VideoBlock)
+    } else {
+      alert(t("scorm.ai.unsupportedMediaUrl"))
+    }
   }
 
   const handleAddPage = () => {
@@ -432,9 +503,9 @@ export default function ScormAIPage() {
       <input
         ref={fileInputRef}
         type="file"
-        accept="application/json"
+        accept="image/*,video/*,application/json,text/csv"
         className="hidden"
-        onChange={handleFileChange}
+        onChange={handleFileInputChange}
       />
 
       {/* navbar toggle button */}
@@ -560,8 +631,11 @@ export default function ScormAIPage() {
             {/* canvas + preview (takes all width) */}
             <div className="flex-1 flex items-stretch justify-center mt-4">
               <div
-                className="relative w-full"
+                className={`relative w-full ${isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""}`}
                 onClick={() => setSelectedBlock(null)}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
               >
                 <div className="bg-sky-50 rounded-[28px] border border-sky-100 shadow-inner px-6 py-6 min-h-[520px]">
                   <div className="flex items-center justify-between mb-4">
@@ -612,7 +686,7 @@ export default function ScormAIPage() {
                           return (
                             <div key={block.id} className="relative group">
                               {isSelected && (
-                                <div className="absolute -top-2 -left-2 z-20 max-w-xs">
+                                <div className="absolute -top-2 -left-2 z-20 max-w-xs" onClick={(e) => e.stopPropagation()}>
                                   <div className="rounded-2xl border border-slate-200 bg-white shadow-lg p-2">
                                     <PropertiesPanel
                                       selectedBlock={selectedBlock}

@@ -918,6 +918,10 @@
     height: 1.15rem;
   }
 
+  .h-\[1px\] {
+    height: 1px;
+  }
+
   .h-\[calc\(100\%-1px\)\] {
     height: calc(100% - 1px);
   }
@@ -1032,6 +1036,10 @@
 
   .w-48 {
     width: calc(var(--spacing) * 48);
+  }
+
+  .w-\[1px\] {
+    width: 1px;
   }
 
   .w-\[90\%\] {
@@ -1657,6 +1665,16 @@
     background-color: var(--card);
   }
 
+  .bg-card\/80 {
+    background-color: var(--card);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-card\/80 {
+      background-color: color-mix(in oklab, var(--card) 80%, transparent);
+    }
+  }
+
   .bg-card\/90 {
     background-color: var(--card);
   }
@@ -1735,6 +1753,16 @@
     }
   }
 
+  .bg-muted\/40 {
+    background-color: var(--muted);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-muted\/40 {
+      background-color: color-mix(in oklab, var(--muted) 40%, transparent);
+    }
+  }
+
   .bg-muted\/50 {
     background-color: var(--muted);
   }
@@ -1809,6 +1837,16 @@
 
   .bg-sky-50 {
     background-color: var(--color-sky-50);
+  }
+
+  .bg-sky-50\/20 {
+    background-color: #f0f9ff33;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-sky-50\/20 {
+      background-color: color-mix(in oklab, var(--color-sky-50) 20%, transparent);
+    }
   }
 
   .bg-sky-100 {
@@ -2094,6 +2132,10 @@
     padding-inline: calc(var(--spacing) * 8);
   }
 
+  .py-0 {
+    padding-block: calc(var(--spacing) * 0);
+  }
+
   .py-0\.5 {
     padding-block: calc(var(--spacing) * .5);
   }
@@ -2176,6 +2218,10 @@
 
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
+  }
+
+  .pb-4 {
+    padding-bottom: calc(var(--spacing) * 4);
   }
 
   .pl-7 {
