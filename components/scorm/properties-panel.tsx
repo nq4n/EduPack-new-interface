@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useLocale } from '@/hooks/use-locale'
 
 interface PropertiesPanelProps {
   selectedBlock: EditorBlock | null;
@@ -12,10 +13,12 @@ interface PropertiesPanelProps {
 }
 
 export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPanelProps) {
+  const { t } = useLocale();
+
   if (!selectedBlock) {
     return (
       <div className="p-4 text-sm text-muted-foreground">
-        <p>Select a block to edit its properties.</p>
+        <p>{t('scorm.props.desc')}</p>
       </div>
     );
   }
@@ -70,7 +73,7 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
       case 'text':
         return (
           <div>
-            <Label htmlFor="text-input">Text</Label>
+            <Label htmlFor="text-input">{t('scorm.props.block.text.html')}</Label>
             <Input id="text-input" value={(selectedBlock as TextBlock).html} onChange={handleTextChange} />
           </div>
         );
@@ -78,11 +81,11 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
         return (
           <div className="space-y-4">
             <div>
-              <Label htmlFor="image-src-input">Image URL</Label>
+              <Label htmlFor="image-src-input">{t('scorm.props.block.image.src')}</Label>
               <Input id="image-src-input" value={(selectedBlock as ImageBlock).src} onChange={handleImageSrcChange} />
             </div>
             <div>
-              <Label htmlFor="image-alt-input">Alt Text</Label>
+              <Label htmlFor="image-alt-input">{t('scorm.props.block.image.alt')}</Label>
               <Input id="image-alt-input" value={(selectedBlock as ImageBlock).alt} onChange={handleImageAltChange} />
             </div>
           </div>
@@ -90,7 +93,7 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
       case 'video':
         return (
           <div>
-            <Label htmlFor="video-src-input">Video URL</Label>
+            <Label htmlFor="video-src-input">{t('scorm.props.block.video.src')}</Label>
             <Input id="video-src-input" value={(selectedBlock as VideoBlock).src} onChange={handleVideoSrcChange} />
           </div>
         );
@@ -99,7 +102,7 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
         return (
           <div className="space-y-4">
             <div>
-              <Label htmlFor="quiz-question-input">Question</Label>
+              <Label htmlFor="quiz-question-input">{t('scorm.props.block.quiz.question')}</Label>
               <Input id="quiz-question-input" value={quizBlock.question} onChange={handleQuizQuestionChange} />
             </div>
             <div>
@@ -121,7 +124,7 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
 
   return (
     <div className="p-4">
-      <h3 className="text-lg font-semibold mb-4">Properties</h3>
+      <h3 className="text-lg font-semibold mb-4">{t('scorm.props.title')}</h3>
       {renderControls()}
     </div>
   );

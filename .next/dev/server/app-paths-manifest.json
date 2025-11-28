@@ -1,4 +1,6 @@
 {
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
   "/page": "app/page.js"
 }

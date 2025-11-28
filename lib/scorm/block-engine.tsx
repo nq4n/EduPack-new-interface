@@ -11,55 +11,67 @@ interface BlockRendererProps {
 export function BlockRenderer({ block, onClick }: BlockRendererProps) {
   const props = { block, onClick, key: block.id };
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClick(block);
+  }
+
   switch (block.type) {
     case 'text':
-      return <TextBlockRenderer {...props} />
+      return <TextBlockRenderer block={block} onClick={handleClick} />
     case 'image':
-      return <ImageBlockRenderer {...props} />
+      return <ImageBlockRenderer block={block} onClick={handleClick} />
     case 'video':
-      return <VideoBlockRenderer {...props} />
+      return <VideoBlockRenderer block={block} onClick={handleClick} />
     case 'quiz':
-      return <QuizBlockRenderer {...props} />
+      return <QuizBlockRenderer block={block} onClick={handleClick} />
     case 'interactive':
-      return <InteractiveBlockRenderer {...props} />
+      return <InteractiveBlockRenderer block={block} onClick={handleClick} />
     default:
-      return <p>Unsupported block type</p>
+      return <div onClick={handleClick}><p>Unsupported block type</p></div>
   }
 }
 
-function TextBlockRenderer({ block, onClick }: { block: TextBlock; onClick: (block: EditorBlock) => void }) {
-  return <div onClick={() => onClick(block)} className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
+function TextBlockRenderer({ block, onClick }: { block: TextBlock; onClick: (e: React.MouseEvent) => void }) {
+  return <div onClick={onClick} className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
 }
 
-function ImageBlockRenderer({ block, onClick }: { block: ImageBlock; onClick: (block: EditorBlock) => void }) {
+function ImageBlockRenderer({ block, onClick }: { block: ImageBlock; onClick: (e: React.MouseEvent) => void }) {
   return (
-    <figure onClick={() => onClick(block)} className="my-4">
+    <figure onClick={onClick} className="my-4 cursor-pointer">
       <img src={block.src} alt={block.alt || ''} className="max-w-full h-auto rounded-lg shadow-md border border-border" />
       {block.alt && <figcaption className="text-center text-sm text-muted-foreground mt-2">{block.alt}</figcaption>}
     </figure>
   );
 }
 
-function VideoBlockRenderer({ block, onClick }: { block: VideoBlock; onClick: (block: EditorBlock) => void }) {
-  return <video src={block.src} controls onClick={() => onClick(block)} className="max-w-full rounded-lg shadow-md border border-border w-full" />
+function VideoBlockRenderer({ block, onClick }: { block: VideoBlock; onClick: (e: React.MouseEvent) => void }) {
+  return <video src={block.src} controls onClick={onClick} className="max-w-full rounded-lg shadow-md border border-border w-full cursor-pointer" />
 }
 
-function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (block: EditorBlock) => void }) {
+function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (e: React.MouseEvent) => void }) {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const selectedOption = submitted ? block.options.find(opt => opt.id === selectedOptionId) : null;
   const isCorrect = selectedOption?.correct;
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (selectedOptionId) {
       setSubmitted(true);
     }
   };
 
-  const handleReset = () => {
+  const handleReset = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setSelectedOptionId(null);
     setSubmitted(false);
+  }
+
+  const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    setSelectedOptionId(e.target.id)
   }
 
   const getOptionClass = (option: typeof block.options[0]) => {
@@ -77,21 +89,22 @@ function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (blo
   }
 
   return (
-    <div onClick={() => onClick(block)} className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4">
+    <div onClick={onClick} className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4 cursor-pointer">
       <p className="font-semibold mb-4 text-foreground text-base sm:text-lg">{block.question}</p>
       <div className="space-y-3">
         {block.options.map((option) => (
           <label 
             key={option.id} 
             htmlFor={option.id}
-            className={`flex items-center p-3 border-2 rounded-lg transition-all duration-200 ${getOptionClass(option)} ${submitted ? 'cursor-default' : 'cursor-pointer'}`}
+            onClick={(e) => e.stopPropagation()} // prevent click from bubbling up to parent
+            className={`flex items-center p-3 border-2 rounded-lg transition-all duration-200 ${getOptionClass(option)} ${submitted ? 'cursor-default' : 'pointer'}`}
           >
             <input
               type="radio"
               name={block.id}
               id={option.id}
               className="h-4 w-4 text-primary focus:ring-primary border-muted-foreground"
-              onChange={(e) => setSelectedOptionId(e.target.id)}
+              onChange={handleOptionChange}
               checked={selectedOptionId === option.id}
               disabled={submitted}
             />
@@ -134,9 +147,9 @@ function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (blo
 }
 
 
-function InteractiveBlockRenderer({ block, onClick }: { block: InteractiveBlock, onClick: (block: EditorBlock) => void }) {
+function InteractiveBlockRenderer({ block, onClick }: { block: InteractiveBlock, onClick: (e: React.MouseEvent) => void }) {
   return (
-    <div onClick={() => onClick(block)} className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700">
+    <div onClick={onClick} className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700 cursor-pointer">
       <p className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Interactive Element</p>
       <p className="text-sm text-blue-700 dark:text-blue-300">{block.description || 'Interact with the content below.'}</p>
       <div className="mt-2 p-4 bg-white dark:bg-black/20 border rounded-md">

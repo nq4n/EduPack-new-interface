@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useLocale } from "@/hooks/use-locale"
-import { EditorBlock, EditorPage, EditorProject } from "@/lib/scorm/types"
+import { EditorBlock, EditorPage, EditorProject, TextBlock, ImageBlock, VideoBlock, QuizBlock } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
 import { useLocalStorage } from "@/hooks/use-local-storage"
+import { PropertiesPanel } from "@/components/scorm/properties-panel"
 import {
   Save,
   Eye,
@@ -53,6 +54,7 @@ export default function ScormAIPage() {
   const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(hasContent ? "ai" : "choice")
 
   const [activePage, setActivePage] = useState<EditorPage>(project.pages[0])
+  const [selectedBlock, setSelectedBlock] = useState<EditorBlock | null>(null)
 
   const [status, setStatus] = useState<Status>("draft")
 
@@ -77,6 +79,24 @@ export default function ScormAIPage() {
       setActivePage(currentPage)
     }
   }, [project, activePage.id])
+
+  const handleBlockClick = (block: EditorBlock) => {
+    setSelectedBlock(block)
+  }
+
+  const handleBlockChange = (updatedBlock: EditorBlock) => {
+    setProject((prevProject) => {
+      const updatedPages = prevProject.pages.map((p) => {
+        if (p.id === activePage.id) {
+          const updatedBlocks = p.blocks.map((b) => (b.id === updatedBlock.id ? updatedBlock : b))
+          return { ...p, blocks: updatedBlocks }
+        }
+        return p
+      })
+      return { ...prevProject, pages: updatedPages }
+    })
+    setSelectedBlock(updatedBlock)
+  }
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
@@ -166,28 +186,28 @@ export default function ScormAIPage() {
   }
 
   const addBlock = (type: EditorBlock["type"], data?: Partial<EditorBlock>) => {
-    let newBlock: EditorBlock = { id: `block-${Date.now()}`, type, ...(data as any) }
+    let newBlock: EditorBlock;
 
-    if (!data) {
-      switch (type) {
-        case "text":
-          ;(newBlock as any).html = "<p>New text block. Edit me!</p>"
-          break
-        case "image":
-          ;(newBlock as any).src = "https://via.placeholder.com/600x400"
-          ;(newBlock as any).alt = "Placeholder image"
-          break
-        case "video":
-          ;(newBlock as any).src = "https://www.w3schools.com/html/mov_bbb.mp4"
-          break
-        case "quiz":
-          ;(newBlock as any).question = "New Question"
-          ;(newBlock as any).options = [
-            { id: "1", label: "Option 1", correct: true },
-            { id: "2", label: "Option 2", correct: false },
-          ]
-          break
-      }
+    if (data) {
+        newBlock = { ...data, id: `block-${Date.now()}`, type } as EditorBlock;
+    } else {
+        const baseBlock = { id: `block-${Date.now()}` };
+        switch (type) {
+            case 'text':
+                newBlock = { ...baseBlock, type: 'text', html: '<p>New text block. Edit me!</p>' };
+                break;
+            case 'image':
+                newBlock = { ...baseBlock, type: 'image', src: 'https://via.placeholder.com/600x400', alt: 'Placeholder image' };
+                break;
+            case 'video':
+                newBlock = { ...baseBlock, type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4' };
+                break;
+            case 'quiz':
+                newBlock = { ...baseBlock, type: 'quiz', question: 'New Question', options: [{id: '1', label: 'Option 1', correct: true}, {id: '2', label: 'Option 2', correct: false}] };
+                break;
+            default:
+                return;
+        }
     }
 
     setProject((prevProject) => {
@@ -232,23 +252,24 @@ export default function ScormAIPage() {
               .map((block) => {
                 switch (block.type) {
                   case "text":
-                    return (block as any).html
+                    return (block as TextBlock).html
                   case "image":
-                    return `<figure><img src="${(block as any).src}" alt="${(block as any).alt || ""}"><figcaption>${
-                      (block as any).alt || ""
+                    return `<figure><img src="${(block as ImageBlock).src}" alt="${(block as ImageBlock).alt || ""}"><figcaption>${
+                      (block as ImageBlock).alt || ""
                     }</figcaption></figure>`
                   case "video":
-                    return `<video src="${(block as any).src}" controls></video>`
+                    return `<video src="${(block as VideoBlock).src}" controls></video>`
                   case "quiz":
+                    const quizBlock = block as QuizBlock;
                     return `
                   <form onsubmit="event.preventDefault();">
                     <fieldset>
-                      <legend>${(block as any).question}</legend>
-                      ${((block as any).options || [])
+                      <legend>${quizBlock.question}</legend>
+                      ${(quizBlock.options || [])
                         .map(
-                          (o: any) => `
+                          (o) => `
                         <div>
-                          <input type="radio" id="${o.id}" name="${block.id}" value="${o.id}">
+                          <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
                           <label for="${o.id}">${o.label}</label>
                         </div>
                       `,
@@ -346,9 +367,8 @@ export default function ScormAIPage() {
         </div>
       </header>
 
-      {/* ONE wrapped editor section: chat + real preview + tools */}
-      <main className="h-[calc(100vh-4rem-4rem)] px-2 sm:px-4 pb-3 pt-2 flex justify-center">
-        <section className="w-full max-w-6xl bg-card border border-border rounded-2xl flex flex-col overflow-hidden">
+      <main className="h-[calc(100vh-4rem-4rem)] flex gap-3 px-2 sm:px-4 pb-3 pt-2">
+        <div className="flex-1 bg-card border border-border rounded-xl flex flex-col">
           {/* Chat strip */}
           {editorMode === "ai" && (
             <div className="border-b border-border px-3 sm:px-4 py-3 space-y-2">
@@ -406,7 +426,9 @@ export default function ScormAIPage() {
             <div className="h-full overflow-auto rounded-2xl border border-dashed border-accent/60 bg-accent/10 px-4 py-6">
               <div className="max-w-3xl mx-auto space-y-4">
                 {activePage.blocks.length > 0 ? (
-                  activePage.blocks.map((block) => <BlockRenderer key={block.id} block={block} />)
+                  activePage.blocks.map((block) => (
+                    <BlockRenderer key={block.id} block={block} onClick={handleBlockClick} />
+                  ))
                 ) : (
                   <div className="text-center space-y-3 py-12">
                     <h2 className="text-base sm:text-lg font-semibold">{t("scorm.canvas.title")}</h2>
@@ -424,7 +446,7 @@ export default function ScormAIPage() {
           {/* Bottom toolbar */}
           <div className="border-t border-border/60 bg-card/90 px-3 py-2">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+              <span className="text-[11px] font-semibold tracking-wide text-muted-.foreground uppercase">
                 {t("scorm.tools.title")}
               </span>
               <span className="hidden sm:inline text-[11px] text-muted-foreground">
@@ -464,7 +486,11 @@ export default function ScormAIPage() {
               />
             </div>
           </div>
-        </section>
+        </div>
+
+        <aside className="w-80 bg-card border border-border rounded-xl flex flex-col">
+          <PropertiesPanel selectedBlock={selectedBlock} onBlockChange={handleBlockChange} />
+        </aside>
       </main>
     </div>
   )
