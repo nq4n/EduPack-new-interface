@@ -1,160 +1,237 @@
-import { useState } from 'react';
-import { EditorBlock, TextBlock, ImageBlock, VideoBlock, QuizBlock, InteractiveBlock } from './types'
-import { Button } from '@/components/ui/button';
-import { CheckCircle, XCircle } from 'lucide-react';
+"use client"
 
-interface BlockRendererProps {
-  block: EditorBlock;
-  onClick: (block: EditorBlock) => void;
+import React from "react"
+import { EditorBlock, TextBlock, ImageBlock, VideoBlock, QuizBlock } from "@/lib/scorm/types"
+
+interface RendererProps {
+  block: EditorBlock
+  onClick?: (b: EditorBlock) => void
 }
 
-export function BlockRenderer({ block, onClick }: BlockRendererProps) {
-  const props = { block, onClick, key: block.id };
-
+export function BlockRenderer({ block, onClick }: RendererProps) {
   const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onClick(block);
+    e.stopPropagation()
+    onClick?.(block)
   }
 
   switch (block.type) {
-    case 'text':
-      return <TextBlockRenderer block={block} onClick={handleClick} />
-    case 'image':
-      return <ImageBlockRenderer block={block} onClick={handleClick} />
-    case 'video':
-      return <VideoBlockRenderer block={block} onClick={handleClick} />
-    case 'quiz':
-      return <QuizBlockRenderer block={block} onClick={handleClick} />
-    case 'interactive':
-      return <InteractiveBlockRenderer block={block} onClick={handleClick} />
-    default:
-      return <div onClick={handleClick}><p>Unsupported block type</p></div>
-  }
-}
+    // ------------------------ TEXT ------------------------
+    case "text": {
+      const tb = block as TextBlock
+      const style = tb.style || {}
 
-function TextBlockRenderer({ block, onClick }: { block: TextBlock; onClick: (e: React.MouseEvent) => void }) {
-  return <div onClick={onClick} className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: block.html }} />
-}
+      const appliedStyle: React.CSSProperties = {
+        fontWeight: style.bold ? "bold" : "normal",
+        fontStyle: style.italic ? "italic" : "normal",
+        textDecoration: style.underline ? "underline" : "none",
+        textAlign: style.align || "left",
+        direction: style.direction || "ltr",
+        fontSize: style.size || "16px",
+        color: style.color || "#000000",
+        background: style.background || "transparent",
+        lineHeight: style.lineHeight || "1.6",
+        padding: style.padding || "8px",
+        borderRadius: style.radius || "0px",
+        whiteSpace: "pre-wrap",
+      }
 
-function ImageBlockRenderer({ block, onClick }: { block: ImageBlock; onClick: (e: React.MouseEvent) => void }) {
-  return (
-    <figure onClick={onClick} className="my-4 cursor-pointer">
-      <img src={block.src} alt={block.alt || ''} className="max-w-full h-auto rounded-lg shadow-md border border-border" />
-      {block.alt && <figcaption className="text-center text-sm text-muted-foreground mt-2">{block.alt}</figcaption>}
-    </figure>
-  );
-}
-
-function VideoBlockRenderer({ block, onClick }: { block: VideoBlock; onClick: (e: React.MouseEvent) => void }) {
-  return <video src={block.src} controls onClick={onClick} className="max-w-full rounded-lg shadow-md border border-border w-full cursor-pointer" />
-}
-
-function QuizBlockRenderer({ block, onClick }: { block: QuizBlock, onClick: (e: React.MouseEvent) => void }) {
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-
-  const selectedOption = submitted ? block.options.find(opt => opt.id === selectedOptionId) : null;
-  const isCorrect = selectedOption?.correct;
-
-  const handleSubmit = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedOptionId) {
-      setSubmitted(true);
+      return (
+        <div
+          onClick={handleClick}
+          style={appliedStyle}
+          dangerouslySetInnerHTML={{ __html: tb.html }}
+        />
+      )
     }
-  };
 
-  const handleReset = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setSelectedOptionId(null);
-    setSubmitted(false);
-  }
+    // ------------------------ IMAGE ------------------------
+    case "image": {
+      const ib = block as ImageBlock
+      const style = ib.style || {}
 
-  const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation();
-    setSelectedOptionId(e.target.id)
-  }
+      const containerStyle: React.CSSProperties = {
+        textAlign: style.align || "center",
+        padding: style.padding || "0px",
+        background: style.background || "transparent",
+      }
 
-  const getOptionClass = (option: typeof block.options[0]) => {
-    if (!submitted) return 'border-border bg-card hover:bg-muted/50';
-    if (option.correct) return 'border-green-500 bg-green-50/50 dark:bg-green-900/30 text-green-900 dark:text-green-200';
-    if (option.id === selectedOptionId && !option.correct) return 'border-red-500 bg-red-50/50 dark:bg-red-900/30 text-red-900 dark:text-red-200';
-    return 'border-border bg-card';
-  }
-  
-  const getIcon = (option: typeof block.options[0]) => {
-    if (!submitted) return <div className="h-5 w-5" />; // placeholder for alignment
-    if (option.correct) return <CheckCircle className="h-5 w-5 text-green-600" />;
-    if (option.id === selectedOptionId && !option.correct) return <XCircle className="h-5 w-5 text-red-600" />;
-    return <div className="h-5 w-5" />; // placeholder for alignment
-  }
+      if (style.shadow) {
+        containerStyle.boxShadow = "0 6px 20px rgba(15,23,42,0.18)"
+      }
 
-  return (
-    <div onClick={onClick} className="p-4 sm:p-6 border rounded-xl bg-card shadow-sm transition-all my-4 cursor-pointer">
-      <p className="font-semibold mb-4 text-foreground text-base sm:text-lg">{block.question}</p>
-      <div className="space-y-3">
-        {block.options.map((option) => (
-          <label 
-            key={option.id} 
-            htmlFor={option.id}
-            onClick={(e) => e.stopPropagation()} // prevent click from bubbling up to parent
-            className={`flex items-center p-3 border-2 rounded-lg transition-all duration-200 ${getOptionClass(option)} ${submitted ? 'cursor-default' : 'pointer'}`}
-          >
-            <input
-              type="radio"
-              name={block.id}
-              id={option.id}
-              className="h-4 w-4 text-primary focus:ring-primary border-muted-foreground"
-              onChange={handleOptionChange}
-              checked={selectedOptionId === option.id}
-              disabled={submitted}
-            />
-            <span className="flex-1 text-sm sm:text-base text-foreground ml-3">{option.label}</span>
-            {getIcon(option)}
-          </label>
-        ))}
-      </div>
-      <div className="mt-6 flex items-center justify-between min-h-[40px]">
-        {!submitted ? (
-          <Button onClick={handleSubmit} disabled={!selectedOptionId}>
-            Check Answer
-          </Button>
-        ) : (
-          <div className="flex flex-col">
-             <div className={`flex items-center font-semibold text-base ${isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                {isCorrect ? (
-                    <CheckCircle className="mr-2 h-5 w-5" />
-                ) : (
-                    <XCircle className="mr-2 h-5 w-5" />
-                )}
-                <span>{isCorrect ? 'Correct!' : 'Incorrect'}</span>
-             </div>
-             {!isCorrect && (
-                <p className="text-xs text-muted-foreground mt-1 pl-7">
-                    The correct answer is highlighted in green.
-                </p>
-             )}
+      const imgStyle: React.CSSProperties = {
+        display: "inline-block",
+        maxWidth: style.maxWidth || "800px",
+        width: style.width || "100%",
+        borderRadius: style.radius || "0px",
+      }
+
+      return (
+        <div onClick={handleClick} style={containerStyle}>
+          <img
+            src={ib.src}
+            alt={ib.alt || "Image"}
+            style={imgStyle}
+          />
+        </div>
+      )
+    }
+    //------------------------iteractive--------------------
+    case "interactive": {
+      const ib = block as any as import("@/lib/scorm/types").InteractiveBlock
+      const style = ib.style || {}
+    
+      const baseStyle: React.CSSProperties = {
+        padding: style.padding || "8px",
+        borderRadius: style.radius || (ib.variant === "button" ? "999px" : "10px"),
+        background:
+          style.background ||
+          (ib.variant === "button" ? "#0ea5e9" : "#eef2ff"),
+        display: ib.variant === "button" ? "inline-block" : "block",
+        cursor: ib.variant === "button" ? "pointer" : "default",
+      }
+    
+      if (style.shadow) {
+        baseStyle.boxShadow = "0 6px 20px rgba(15,23,42,0.18)"
+      }
+    
+      // ... existing button / callout / reveal code ...
+    
+      if (ib.variant === "custom") {
+        return (
+          <div
+            onClick={handleClick}
+            style={{ ...baseStyle, cursor: "pointer" /* just so it feels clickable */ }}
+            // ⚠️ You control the authoring tool, so this is for power users only
+            dangerouslySetInnerHTML={{
+              __html: ib.customHtml || "<em style='font-size:12px;color:#9ca3af;'>Empty custom HTML block</em>",
+            }}
+          />
+        )
+      }
+    
+      // Fallback
+      return (
+        <div onClick={handleClick} style={baseStyle}>
+          {ib.label || "Interactive element"}
+        </div>
+      )
+    }
+    
+    // ------------------------ VIDEO ------------------------
+    case "video": {
+      const vb = block as VideoBlock
+      const style = vb.style || {}
+
+      const containerStyle: React.CSSProperties = {
+        padding: style.padding || "0px",
+      }
+
+      if (style.background) {
+        containerStyle.background = style.background
+      }
+      if (style.shadow) {
+        containerStyle.boxShadow = "0 6px 20px rgba(15,23,42,0.18)"
+      }
+
+      const videoStyle: React.CSSProperties = {
+        width: style.width || "100%",
+        maxWidth: style.maxWidth || "800px",
+        borderRadius: style.radius || "0px",
+      }
+
+      return (
+        <div onClick={handleClick} style={containerStyle}>
+          <video
+            src={vb.src}
+            controls
+            style={videoStyle}
+          />
+        </div>
+      )
+    }
+
+    // ------------------------ QUIZ ------------------------
+    case "quiz": {
+      const qb = block as QuizBlock
+      const style = qb.style || {}
+      const optionStyle = qb.optionStyle || {}
+    
+      const containerStyle: React.CSSProperties = {
+        padding: style.padding || "12px",
+        borderRadius: style.radius || "8px",
+        background: style.background || "#f9fafb",
+      }
+    
+      if (style.shadow) {
+        containerStyle.boxShadow = "0 6px 20px rgba(15,23,42,0.18)"
+      }
+    
+      const questionHtml = qb.questionHtml || qb.question || ""
+      const questionStyle = qb.questionStyle || {}
+    
+      const questionCss: React.CSSProperties = {
+        fontWeight: questionStyle.bold ? "bold" : "normal",
+        fontStyle: questionStyle.italic ? "italic" : "normal",
+        textDecoration: questionStyle.underline ? "underline" : "none",
+        textAlign: questionStyle.align || "left",
+        direction: questionStyle.direction || "ltr",
+        fontSize: questionStyle.size || "16px",
+        color: questionStyle.color || "#111827",
+        background: questionStyle.background || "transparent",
+        lineHeight: questionStyle.lineHeight || "1.5",
+        padding: questionStyle.padding || "0",
+        borderRadius: questionStyle.radius || "0",
+        marginBottom: "8px",
+        whiteSpace: "pre-wrap",
+      }
+    
+      // ✅ Shared option text style
+      const optionCss: React.CSSProperties = {
+        fontWeight: optionStyle.bold ? "bold" : "normal",
+        fontStyle: optionStyle.italic ? "italic" : "normal",
+        textDecoration: optionStyle.underline ? "underline" : "none",
+        fontSize: optionStyle.size || "14px",
+        color: optionStyle.color || "#111827",
+        textAlign: optionStyle.align || "left",
+      }
+    
+      return (
+        <div onClick={handleClick} style={containerStyle}>
+          {/* Rich text question */}
+          <div
+            style={questionCss}
+            dangerouslySetInnerHTML={{ __html: questionHtml }}
+          />
+    
+          {/* Options */}
+          <div className="space-y-2">
+            {(qb.options || []).map((opt) => (
+              <label
+                key={opt.id}
+                className="flex items-center gap-2"
+                style={{ alignItems: "flex-start" }}
+              >
+                <input type="radio" disabled />
+                <span style={optionCss}>{opt.label}</span>
+              </label>
+            ))}
           </div>
-        )}
+        </div>
+      )
+    }
+    
+    
 
-        {submitted && (
-            <Button variant="outline" onClick={handleReset}>
-                Try Again
-            </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-
-function InteractiveBlockRenderer({ block, onClick }: { block: InteractiveBlock, onClick: (e: React.MouseEvent) => void }) {
-  return (
-    <div onClick={onClick} className="p-4 border rounded-lg bg-blue-50 my-4 dark:bg-blue-900/20 dark:border-blue-700 cursor-pointer">
-      <p className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Interactive Element</p>
-      <p className="text-sm text-blue-700 dark:text-blue-300">{block.description || 'Interact with the content below.'}</p>
-      <div className="mt-2 p-4 bg-white dark:bg-black/20 border rounded-md">
-        <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(block.config, null, 2)}</pre>
-      </div>
-    </div>
-  )
+    // ------------------------ DEFAULT ------------------------
+    default:
+      return (
+        <div
+          onClick={handleClick}
+          className="p-3 text-xs text-slate-400 border rounded"
+        >
+          Unknown block type: {block.type}
+        </div>
+      )
+  }
 }

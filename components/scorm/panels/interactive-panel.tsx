@@ -1,0 +1,209 @@
+"use client"
+
+import React from "react"
+import { InteractiveBlock, InteractiveVariant } from "@/lib/scorm/types"
+
+interface InteractivePanelProps {
+  block: InteractiveBlock
+  onChange: (updated: InteractiveBlock) => void
+}
+
+export default function InteractivePanel({ block, onChange }: InteractivePanelProps) {
+  const style = block.style || {}
+
+  const updateBlock = (partial: Partial<InteractiveBlock>) => {
+    onChange({
+      ...block,
+      ...partial,
+    })
+  }
+
+  const updateStyle = (key: string, value: any) => {
+    onChange({
+      ...block,
+      style: {
+        ...style,
+        [key]: value,
+      },
+    })
+  }
+
+  const handleVariantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const variant = e.target.value as InteractiveVariant
+    updateBlock({ variant })
+  }
+
+  return (
+    <div className="p-4 space-y-4 text-sm">
+      <p className="font-semibold text-slate-700">Interactive element</p>
+
+      {/* TYPE SELECT */}
+      <div>
+        <label className="block mb-1 text-xs">Type</label>
+        <select
+          className="w-full border rounded px-2 py-1 text-xs"
+          value={block.variant}
+          onChange={handleVariantChange}
+        >
+          <option value="button">Button</option>
+          <option value="callout">Callout box</option>
+          <option value="reveal">Reveal box</option>
+          <option value="custom">Custom HTML</option>
+        </select>
+      </div>
+
+      {/* SHARED LABEL (not really used for custom, but we keep it visible in all except maybe hide for custom if you want) */}
+      {block.variant !== "custom" && (
+        <div>
+          <label className="block mb-1 text-xs">
+            {block.variant === "button"
+              ? "Button text"
+              : block.variant === "reveal"
+                ? "Title (what learner clicks)"
+                : "Title"}
+          </label>
+          <input
+            type="text"
+            className="w-full border rounded px-2 py-1 text-xs"
+            value={block.label}
+            onChange={(e) => updateBlock({ label: e.target.value })}
+          />
+        </div>
+      )}
+
+      {/* BUTTON SETTINGS */}
+      {block.variant === "button" && (
+        <div>
+          <label className="block mb-1 text-xs">Link (optional)</label>
+          <input
+            type="text"
+            className="w-full border rounded px-2 py-1 text-xs"
+            placeholder="https://..."
+            value={block.url || ""}
+            onChange={(e) => updateBlock({ url: e.target.value })}
+          />
+          <p className="text-[11px] text-slate-400 mt-1">
+            If you leave this empty, the button will only look clickable and not open anything.
+          </p>
+        </div>
+      )}
+
+      {/* CALLOUT SETTINGS */}
+      {block.variant === "callout" && (
+        <div>
+          <label className="block mb-1 text-xs">Callout content</label>
+          <textarea
+            className="w-full border rounded px-2 py-2 text-xs h-24"
+            value={block.bodyHtml || ""}
+            onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
+          />
+          <label className="block mb-1 mt-2 text-xs">Tone</label>
+          <select
+            className="w-full border rounded px-2 py-1 text-xs"
+            value={block.tone || "info"}
+            onChange={(e) =>
+              updateBlock({ tone: e.target.value as InteractiveBlock["tone"] })
+            }
+          >
+            <option value="info">Info</option>
+            <option value="success">Success</option>
+            <option value="warning">Warning</option>
+            <option value="danger">Danger</option>
+          </select>
+        </div>
+      )}
+
+      {/* REVEAL SETTINGS */}
+      {block.variant === "reveal" && (
+        <div className="space-y-2">
+          <label className="block mb-1 text-xs">Title (clickable text)</label>
+          <input
+            type="text"
+            className="w-full border rounded px-2 py-1 text-xs"
+            value={block.label}
+            onChange={(e) => updateBlock({ label: e.target.value })}
+          />
+
+          <label className="block mb-1 text-xs">
+            Hidden content (shown after learner clicks)
+          </label>
+          <textarea
+            className="w-full border rounded px-2 py-2 text-xs h-24"
+            value={block.bodyHtml || ""}
+            onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
+          />
+          <label className="inline-flex items-center gap-2 text-xs mt-1">
+            <input
+              type="checkbox"
+              checked={block.initiallyOpen === true}
+              onChange={(e) => updateBlock({ initiallyOpen: e.target.checked })}
+            />
+            <span>Open by default</span>
+          </label>
+        </div>
+      )}
+
+      {/* CUSTOM HTML SETTINGS */}
+      {block.variant === "custom" && (
+        <div className="space-y-1">
+          <label className="block mb-1 text-xs">Custom HTML</label>
+          <textarea
+            className="w-full border rounded px-2 py-2 text-xs h-32 font-mono"
+            placeholder={`<div class="my-widget">\n  <!-- Your HTML here -->\n</div>`}
+            value={block.customHtml || ""}
+            onChange={(e) => updateBlock({ customHtml: e.target.value })}
+          />
+          <p className="text-[11px] text-slate-400">
+            For advanced users. Avoid using {"<script>"} tags. You can embed iframes, H5P,
+            simple widgets, etc.
+          </p>
+        </div>
+      )}
+
+      {/* APPEARANCE */}
+      <div className="space-y-2">
+        <p className="text-xs font-semibold">Appearance</p>
+
+        <label className="text-xs">Padding (px)</label>
+        <input
+          type="number"
+          className="w-full border rounded px-2 py-1 text-xs"
+          value={parseInt(style.padding || "8")}
+          onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
+        />
+
+        <label className="text-xs">Border radius (px)</label>
+        <input
+          type="number"
+          className="w-full border rounded px-2 py-1 text-xs"
+          value={parseInt(style.radius || (block.variant === "button" ? "999" : "10"))}
+          onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
+        />
+
+        <label className="text-xs">Background color</label>
+        <input
+          type="color"
+          className="w-full h-8 border rounded"
+          value={
+            style.background ||
+            (block.variant === "button"
+              ? "#0ea5e9"
+              : block.variant === "custom"
+                ? "#ffffff"
+                : "#eef2ff")
+          }
+          onChange={(e) => updateStyle("background", e.target.value)}
+        />
+
+        <div className="flex items-center gap-2 mt-1">
+          <input
+            type="checkbox"
+            checked={style.shadow === true}
+            onChange={(e) => updateStyle("shadow", e.target.checked)}
+          />
+          <span className="text-xs">Shadow</span>
+        </div>
+      </div>
+    </div>
+  )
+}

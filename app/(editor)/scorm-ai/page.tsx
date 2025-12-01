@@ -194,43 +194,67 @@ export default function ScormAIPage() {
       newBlock = { ...data, id: `block-${Date.now()}`, type } as EditorBlock
     } else {
       const baseBlock = { id: `block-${Date.now()}` }
-      switch (type) {
-        case "text":
-          newBlock = {
-            ...baseBlock,
-            type: "text",
-            html: t("scorm.ai.newTextBlock"),
-          }
-          break
-        case "image":
-          newBlock = {
-            ...baseBlock,
-            type: "image",
-            src: "https://via.placeholder.com/600x400",
-            alt: t("scorm.ai.placeholderImage"),
-          }
-          break
-        case "video":
-          newBlock = {
-            ...baseBlock,
-            type: "video",
-            src: "https://www.w3schools.com/html/mov_bbb.mp4",
-          }
-          break
-        case "quiz":
-          newBlock = {
-            ...baseBlock,
-            type: "quiz",
-            question: t("scorm.ai.newQuestion"),
-            options: [
-              { id: "1", label: t("scorm.ai.option1"), correct: true },
-              { id: "2", label: t("scorm.ai.option2"), correct: false },
-            ],
-          }
-          break
-        default:
-          return
-      }
+switch (type) {
+  case "text":
+    newBlock = {
+      ...baseBlock,
+      type: "text",
+      html: t("scorm.ai.newTextBlock"),
+    }
+    break
+  case "image":
+    newBlock = {
+      ...baseBlock,
+      type: "image",
+      src: "https://via.placeholder.com/600x400",
+      alt: t("scorm.ai.placeholderImage"),
+    }
+    break
+  case "video":
+    newBlock = {
+      ...baseBlock,
+      type: "video",
+      src: "https://www.w3schools.com/html/mov_bbb.mp4",
+    }
+    break
+  case "quiz":
+    newBlock = {
+      ...baseBlock,
+      type: "quiz",
+      question: t("scorm.ai.newQuestion"),
+      options: [
+        { id: "1", label: t("scorm.ai.option1"), correct: true },
+        { id: "2", label: t("scorm.ai.option2"), correct: false },
+      ],
+    }
+    break
+  case "interactive": {
+    const raw = t("scorm.ai.interactive.defaultLabel") as string
+    const label =
+      raw && raw !== "scorm.ai.interactive.defaultLabel"
+        ? raw
+        : "Interactive element"
+
+    newBlock = {
+      ...baseBlock,
+      type: "interactive",
+      variant: "button",
+      label,
+      url: "",
+      bodyHtml: "",
+      style: {
+        padding: "8px",
+        radius: "999px",
+        background: "#0ea5e9",
+        shadow: true,
+      },
+    } as EditorBlock
+    break
+  }
+  default:
+    return
+}
+
     }
 
     setProject((prevProject) => {
@@ -628,10 +652,13 @@ export default function ScormAIPage() {
               </div>
             )}
 
-            {/* canvas + preview (takes all width) */}
-            <div className="flex-1 flex items-stretch justify-center mt-4">
+            {/* canvas + properties side-by-side */}
+            <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
+              {/* Canvas (left) */}
               <div
-                className={`relative w-full ${isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""}`}
+                className={`relative flex-1 ${
+                  isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""
+                }`}
                 onClick={() => setSelectedBlock(null)}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -684,18 +711,7 @@ export default function ScormAIPage() {
                         {activePage.blocks.map((block) => {
                           const isSelected = selectedBlock?.id === block.id
                           return (
-                            <div key={block.id} className="relative group">
-                              {isSelected && (
-                                <div className="absolute -top-2 -left-2 z-20 max-w-xs" onClick={(e) => e.stopPropagation()}>
-                                  <div className="rounded-2xl border border-slate-200 bg-white shadow-lg p-2">
-                                    <PropertiesPanel
-                                      selectedBlock={selectedBlock}
-                                      onBlockChange={handleBlockChange}
-                                    />
-                                  </div>
-                                </div>
-                              )}
-
+                            <div key={block.id}>
                               <div
                                 className={`rounded-2xl border px-4 py-3 bg-white transition-shadow cursor-pointer ${
                                   isSelected
@@ -739,6 +755,16 @@ export default function ScormAIPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Properties panel (right) */}
+              <div className="w-full lg:w-[320px] xl:w-[360px]">
+                <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                  <PropertiesPanel
+                    selectedBlock={selectedBlock}
+                    onBlockChange={handleBlockChange}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -753,7 +779,7 @@ export default function ScormAIPage() {
             label="scorm.tools.upload"
           />
           <IconToolButton
-            onClick={() => alert(t("scorm.alerts.interactiveSoon"))}
+            onClick={() => addBlock("interactive")}
             icon={<MousePointerClick className="h-4 w-4" />}
             label="scorm.tools.interactive"
           />

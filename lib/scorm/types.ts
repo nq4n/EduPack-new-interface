@@ -61,21 +61,39 @@ export interface VideoBlock {
   src: string
 }
 
-export interface QuizBlock {
-  type: "quiz"
+export type QuizBlock = {
   id: string
+  type: "quiz"
   question: string
+  questionHtml?: string
+  questionStyle?: any
   options: {
     id: string
     label: string
-    correct: boolean
+    correct?: boolean
   }[]
+  style?: any          // container
+  optionStyle?: any    // 🔹 shared style for options
 }
 
-export interface InteractiveBlock {
-  type: "interactive"
+
+//
+
+export type InteractiveVariant = "button" | "callout" | "reveal" | "custom"
+
+export type InteractiveBlock = {
   id: string
-  description?: string
-  // keep it generic for now – you can refine later
-  config: Record<string, unknown>
+  type: "interactive"
+  variant: InteractiveVariant
+  label: string
+  url?: string
+  bodyHtml?: string
+  initiallyOpen?: boolean
+  tone?: "info" | "success" | "warning" | "danger"
+
+  // 🔹 NEW:
+  customHtml?: string
+
+  style?: any
 }
+
