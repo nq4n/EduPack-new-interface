@@ -14,6 +14,7 @@ import {
   ImageBlock,
   VideoBlock,
   QuizBlock,
+  InteractiveBlock
 } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
 import { useLocalStorage } from "@/hooks/use-local-storage"
@@ -295,38 +296,88 @@ switch (type) {
             (page) => `
           <article>
             <h2>${page.title}</h2>
-            ${page.blocks
+                        ${page.blocks
               .map((block) => {
                 switch (block.type) {
                   case "text":
                     return (block as TextBlock).html
-                  case "image":
-                    return `<figure><img src="${(block as ImageBlock).src}" alt="${
-                      (block as ImageBlock).alt || t("scorm.ai.placeholderImage")
-                    }"><figcaption>${
-                      (block as ImageBlock).alt || t("scorm.ai.placeholderImage")
-                    }</figcaption></figure>`
-                  case "video":
-                    return `<video src="${(block as VideoBlock).src}" controls></video>`
-                  case "quiz":
+
+                  case "image": {
+                    const img = block as ImageBlock
+                    const alt = img.alt || t("scorm.ai.placeholderImage")
+                    return `<figure><img src="${img.src}" alt="${alt}"><figcaption>${alt}</figcaption></figure>`
+                  }
+
+                  case "video": {
+                    const vid = block as VideoBlock
+                    return `<video src="${vid.src}" controls></video>`
+                  }
+
+                  case "quiz": {
                     const quizBlock = block as QuizBlock
                     return `
-                  <form onsubmit="event.preventDefault();">
-                    <fieldset>
-                      <legend>${quizBlock.question}</legend>
-                      ${(quizBlock.options || [])
-                        .map(
-                          (o) => `
-                        <div>
-                          <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
-                          <label for="${o.id}">${o.label}</label>
-                        </div>
-                      `,
-                        )
-                        .join("")}
-                    </fieldset>
-                  </form>
-                `
+                      <form onsubmit="event.preventDefault();">
+                        <fieldset>
+                          <legend>${quizBlock.question}</legend>
+                          ${(quizBlock.options || [])
+                            .map(
+                              (o) => `
+                              <div>
+                                <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
+                                <label for="${o.id}">${o.label}</label>
+                              </div>
+                            `,
+                            )
+                            .join("")}
+                        </fieldset>
+                      </form>
+                    `
+                  }
+
+                  case "interactive": {
+                    const ib = block as InteractiveBlock
+                    const style = ib.style || {}
+                    const bg = style.background || "#0ea5e9"
+                    const radius =
+                      style.radius ||
+                      (ib.variant === "button" ? "999px" : "12px")
+                    const padding =
+                      style.padding ||
+                      (ib.variant === "button" ? "8px 16px" : "10px")
+
+                    if (ib.variant === "button") {
+                      return `<button style="padding:${padding};border-radius:${radius};background:${bg};color:#fff;border:none;">${ib.label || "Interactive element"}</button>`
+                    }
+
+                    if (ib.variant === "callout") {
+                      return `<div style="padding:${padding};border-radius:${radius};background:${bg};border-left:4px solid #3b82f6;">
+                        ${ib.label ? `<p><strong>${ib.label}</strong></p>` : ""}
+                        ${
+                          ib.bodyHtml ||
+                          "<p style='font-size:11px;color:#6b7280;'>Add callout content from the editor.</p>"
+                        }
+                      </div>`
+                    }
+
+                    if (ib.variant === "reveal") {
+                      return `
+                        <details ${ib.initiallyOpen ? "open" : ""}>
+                          <summary>${ib.label || "Details"}</summary>
+                          ${
+                            ib.bodyHtml ||
+                            "<p style='font-size:11px;color:#6b7280;'>Add reveal content from the editor.</p>"
+                          }
+                        </details>
+                      `
+                    }
+
+                    if (ib.variant === "custom") {
+                      return ib.customHtml || ""
+                    }
+
+                    return ""
+                  }
+
                   default:
                     return ""
                 }

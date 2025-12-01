@@ -23,7 +23,6 @@ export default function MediaPanel({ block, onChange }: Props) {
 
   return (
     <div className="p-4 space-y-4 text-sm">
-
       {/* Title */}
       <p className="font-semibold text-slate-700">Image Settings</p>
 
@@ -49,7 +48,7 @@ export default function MediaPanel({ block, onChange }: Props) {
         />
       </div>
 
-      {/* WIDTH CONTROLS */}
+      {/* SIZE */}
       <div>
         <p className="text-xs font-semibold mb-1">Size</p>
 
@@ -58,9 +57,9 @@ export default function MediaPanel({ block, onChange }: Props) {
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
           value={parseInt(style.width || "100")}
-          onChange={(e) => updateStyle("width", `${e.target.value}%`)}
           min={10}
           max={100}
+          onChange={(e) => updateStyle("width", `${e.target.value}%`)}
         />
 
         <label className="text-xs mt-2">Max Width (px)</label>
@@ -78,6 +77,7 @@ export default function MediaPanel({ block, onChange }: Props) {
         <div className="flex gap-2">
           {["left", "center", "right"].map((a) => (
             <button
+              type="button"
               key={a}
               className={
                 "px-3 py-1 rounded border text-xs capitalize " +
@@ -91,7 +91,7 @@ export default function MediaPanel({ block, onChange }: Props) {
         </div>
       </div>
 
-      {/* RADIUS & PADDING */}
+      {/* APPEARANCE */}
       <div>
         <p className="text-xs font-semibold mb-1">Appearance</p>
 
@@ -103,7 +103,7 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">Padding (px)</label>
+        <label className="text-xs mt-2">Padding (px)</label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -111,7 +111,6 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        {/* BACKGROUND */}
         <label className="text-xs mt-3">Background Color</label>
         <input
           type="color"
@@ -130,7 +129,6 @@ export default function MediaPanel({ block, onChange }: Props) {
         />
         <label className="text-xs">Shadow</label>
       </div>
-
     </div>
   )
 }
