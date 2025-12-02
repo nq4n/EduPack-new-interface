@@ -1,6 +1,5 @@
 {
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
-  "/api/scorm/export/route": "app/api/scorm/export/route.js",
-  "/page": "app/page.js",
-  "/resources/page": "app/resources/page.js"
+  "/(shop)/packages/page": "app/(shop)/packages/page.js",
+  "/page": "app/page.js"
 }
