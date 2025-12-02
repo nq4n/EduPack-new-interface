@@ -1,39 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const item = window.localStorage.getItem(key);
-        return item ? JSON.parse(item) : initialValue;
-      }
-      return initialValue;
-    } catch (error) {
-      console.log(error);
-      return initialValue;
-    }
-  });
-
-  const setValue = (value: T) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, Dispatch<SetStateAction<T>>] {
+  const [value, setValue] = useState<T>(initialValue);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    // This effect runs only on the client, after hydration, to read from localStorage.
+    try {
       const item = window.localStorage.getItem(key);
       if (item) {
-        setStoredValue(JSON.parse(item));
+        setValue(JSON.parse(item));
       }
+    } catch (error) {
+      console.error(`Error reading localStorage key “${key}”:`, error);
     }
-  }, [key]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]); // Only re-run if key changes.
 
-  return [storedValue, setValue];
+  useEffect(() => {
+    // This effect runs on the client whenever the value changes, to save to localStorage.
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error(`Error writing to localStorage key “${key}”:`, error);
+    }
+  }, [key, value]);
+
+  return [value, setValue];
 }

@@ -1,7 +1,6 @@
-"use client"
-
 import React from "react"
 import {
+  EditorProject,
   EditorBlock,
   TextBlock,
   ImageBlock,
@@ -17,19 +16,39 @@ import { useLocale } from "@/hooks/use-locale"
 import TextPanel from "@/components/scorm/panels/text-panel"
 import MediaPanel from "@/components/scorm/panels/media-panel"
 import VideoPanel from "@/components/scorm/panels/video-panel"
-// If you have them, keep these imports – otherwise comment them out:
-// import QuizPanel from "@/components/scorm/panels/quiz-panel"
 import InteractivePanel from "@/components/scorm/panels/interactive-panel"
+import ProjectPanel from "@/components/scorm/panels/project-panel"
 
 interface PropertiesPanelProps {
+  project: EditorProject
+  onProjectChange: (project: EditorProject) => void
   selectedBlock: EditorBlock | null
   onBlockChange: (block: EditorBlock) => void
+  panelType: "block" | "project"
+  onAddPage: () => void
 }
 
-export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPanelProps) {
+export function PropertiesPanel({
+  project,
+  onProjectChange,
+  selectedBlock,
+  onBlockChange,
+  panelType,
+  onAddPage,
+}: PropertiesPanelProps) {
   const { t } = useLocale()
 
-  // --- Empty state ----------------------------------------------------------
+  if (panelType === "project") {
+    return (
+      <ProjectPanel
+        project={project}
+        onChange={onProjectChange}
+        onAddPage={onAddPage}
+      />
+    )
+  }
+
+  // --- Empty state (for block panel) -----------------------------------------
 
   if (!selectedBlock) {
     return (
@@ -57,7 +76,6 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
     image: t("scorm.props.block.image.label") || "Image block",
     video: t("scorm.props.block.video.label") || "Video block",
     quiz: t("scorm.props.block.quiz.label") || "Quiz block",
-    // If you add interactive type:
     interactive: t("scorm.props.block.interactive.label") || "Interactive block",
   }
 
@@ -90,13 +108,6 @@ export function PropertiesPanel({ selectedBlock, onBlockChange }: PropertiesPane
         )
 
       case "quiz":
-        // Uncomment when you have QuizPanel wired
-        // return (
-        //   <QuizPanel
-        //     block={selectedBlock as QuizBlock}
-        //     onChange={(updated) => onBlockChange(updated as EditorBlock)}
-        //   />
-        // )
         return (
           <div className="p-4 text-[11px] text-muted-foreground">
             Quiz editor panel not wired yet.

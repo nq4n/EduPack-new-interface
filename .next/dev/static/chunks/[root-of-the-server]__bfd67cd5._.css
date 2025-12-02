@@ -94,6 +94,7 @@
       --tw-backdrop-opacity: initial;
       --tw-backdrop-saturate: initial;
       --tw-backdrop-sepia: initial;
+      --tw-duration: initial;
       --tw-animation-delay: 0s;
       --tw-animation-direction: normal;
       --tw-animation-duration: initial;
@@ -116,6 +117,7 @@
 @layer theme {
   :root, :host {
     --color-red-500: #fb2c36;
+    --color-red-600: #e40014;
     --color-sky-50: #f0f9ff;
     --color-sky-100: #dff2fe;
     --color-sky-500: #00a5ef;
@@ -185,6 +187,7 @@
   @supports (color: lab(0% 0 0)) {
     :root, :host {
       --color-red-500: lab(55.4814% 75.0732 48.8528);
+      --color-red-600: lab(48.4493% 77.4328 61.5452);
       --color-sky-50: lab(97.3623% -2.33802 -4.13098);
       --color-sky-100: lab(94.3709% -4.56053 -8.23453);
       --color-sky-500: lab(63.3038% -18.433 -51.0407);
@@ -940,6 +943,10 @@
     min-height: 100vh;
   }
 
+  .w-0 {
+    width: calc(var(--spacing) * 0);
+  }
+
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -1103,6 +1110,18 @@
 
   .cursor-pointer {
     cursor: pointer;
+  }
+
+  .list-inside {
+    list-style-position: inside;
+  }
+
+  .list-decimal {
+    list-style-type: decimal;
+  }
+
+  .list-disc {
+    list-style-type: disc;
   }
 
   .auto-rows-min {
@@ -2018,6 +2037,10 @@
     padding: 3px;
   }
 
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
+  }
+
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -2118,6 +2141,14 @@
     padding-top: calc(var(--spacing) * 8);
   }
 
+  .pt-20 {
+    padding-top: calc(var(--spacing) * 20);
+  }
+
+  .pt-24 {
+    padding-top: calc(var(--spacing) * 24);
+  }
+
   .pr-1 {
     padding-right: calc(var(--spacing) * 1);
   }
@@ -2132,6 +2163,22 @@
 
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
+  }
+
+  .pb-4 {
+    padding-bottom: calc(var(--spacing) * 4);
+  }
+
+  .pl-2 {
+    padding-left: calc(var(--spacing) * 2);
+  }
+
+  .pl-4 {
+    padding-left: calc(var(--spacing) * 4);
+  }
+
+  .pl-6 {
+    padding-left: calc(var(--spacing) * 6);
   }
 
   .pl-8 {
@@ -2416,6 +2463,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .opacity-0 {
+    opacity: 0;
+  }
+
   .opacity-40 {
     opacity: .4;
   }
@@ -2434,6 +2485,10 @@
 
   .opacity-90 {
     opacity: .9;
+  }
+
+  .opacity-100 {
+    opacity: 1;
   }
 
   .shadow {
@@ -2551,6 +2606,11 @@
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+
+  .duration-300 {
+    --tw-duration: .3s;
+    transition-duration: .3s;
   }
 
   .outline-none {
@@ -2783,6 +2843,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:text-red-600:hover {
+      color: var(--color-red-600);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:text-slate-600:hover {
       color: var(--color-slate-600);
     }
@@ -2808,8 +2874,16 @@
     }
   }
 
+  .focus\:border-slate-300:focus {
+    border-color: var(--color-slate-300);
+  }
+
   .focus\:bg-accent:focus {
     background-color: var(--accent);
+  }
+
+  .focus\:bg-white:focus {
+    background-color: var(--color-white);
   }
 
   .focus\:text-accent-foreground:focus {
@@ -4023,6 +4097,11 @@
 }
 
 @property --tw-backdrop-sepia {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-duration {
   syntax: "*";
   inherits: false
 }

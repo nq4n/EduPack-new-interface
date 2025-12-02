@@ -30,7 +30,10 @@ export interface EditorProject {
   id: string
   title: string
   version?: SCORMVersion
-  language?: string
+  theme: {
+    direction: "ltr" | "rtl"
+    styles: any // For global styles
+  }
   pages: EditorPage[]
 }
 
@@ -46,6 +49,7 @@ export interface TextBlock {
   type: "text"
   id: string
   html: string // already sanitized HTML from your editor or AI
+  style?: any
 }
 
 export interface ImageBlock {
@@ -92,8 +96,15 @@ export type InteractiveBlock = {
   tone?: "info" | "success" | "warning" | "danger"
 
   // 🔹 NEW:
-  customHtml?: string
-
   style?: any
+}
+
+export interface BuildLessonResult {
+    project: EditorProject;
+    warnings: string[];
+    metadata: {
+        predictedDifficulty: "easy" | "medium" | "hard";
+        recommendedTags: string[];
+    };
 }
 

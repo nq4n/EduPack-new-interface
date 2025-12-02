@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import { useState, type FormEvent, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,7 +16,6 @@ import {
   InteractiveBlock
 } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
-import { useLocalStorage } from "@/hooks/use-local-storage"
 import { PropertiesPanel } from "@/components/scorm/properties-panel"
 import {
   Save,
@@ -49,8 +47,11 @@ export default function ScormAIPage() {
   const initialProject: EditorProject = {
     id: `proj-${Date.now()}`,
     title: t("scorm.ai.untitledProject"),
-    language: "en",
     version: "1.0",
+    theme: {
+      direction: "ltr",
+      styles: {},
+    },
     pages: [
       {
         id: "page-1",
@@ -60,7 +61,7 @@ export default function ScormAIPage() {
     ],
   }
 
-  const [project, setProject] = useLocalStorage<EditorProject>("scorm-project", initialProject)
+  const [project, setProject] = useState<EditorProject>(initialProject)
 
   const hasContent = project.pages.length > 1 || project.pages[0]?.blocks.length > 0
   const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(
@@ -90,7 +91,7 @@ export default function ScormAIPage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
-  const [aiOpen, setAiOpen] = useState(false)
+
 
   // navbar toggle
   const [navVisible, setNavVisible] = useState(false)
@@ -112,18 +113,20 @@ export default function ScormAIPage() {
   const selectedBlock =
     activePage.blocks.find((b) => b.id === selectedBlockId) ?? null
 
+  const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
+
   const handleBlockClick = useCallback((block: EditorBlock) => {
     setSelectedBlockId(block.id)
+    setRightPanel("block")
   }, [])
 
   const handleBlockChange = (updatedBlock: EditorBlock) => {
     setProject((prevProject) => {
       const updatedPages = prevProject.pages.map((p) => {
         if (p.id === activePageId) {
-          // Deep clone the updated block to ensure immutability and trigger re-render
-          const newBlock = JSON.parse(JSON.stringify(updatedBlock))
-
-          const updatedBlocks = p.blocks.map((b) => (b.id === newBlock.id ? newBlock : b))
+          const updatedBlocks = p.blocks.map((b) =>
+            b.id === updatedBlock.id ? updatedBlock : b
+          )
           return { ...p, blocks: updatedBlocks }
         }
         return p
@@ -132,26 +135,77 @@ export default function ScormAIPage() {
     })
   }
 
-  const handleSend = (e: FormEvent) => {
+  const handleSend = async (e: FormEvent) => {
     e.preventDefault()
-    if (!chatInput.trim()) return
+    const prompt = chatInput.trim()
+    if (!prompt) return
 
     const userMessage: ChatMessage = {
       id: Date.now(),
       role: "user",
-      content: chatInput.trim(),
+      content: prompt,
+    }
+
+    const thinkingMessage: ChatMessage = {
+      id: Date.now() + 1,
+      role: "assistant",
+      content: "Building your lesson, please wait...",
     }
 
     setChatInput("")
-    setMessages((prev) => [
-      ...prev,
-      userMessage,
-      {
-        id: Date.now() + 1,
+    setMessages((prev) => [...prev, userMessage, thinkingMessage])
+
+    try {
+      const response = await fetch('/api/ai/lesson/build', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt, language: 'en' }), // Language can be made dynamic later
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "An unknown error occurred.");
+      }
+
+      // Update project state with the result from the AI
+      setProject(result.project);
+      setActivePageId(result.project.pages[0]?.id || null);
+      setSelectedBlockId(null);
+      
+      const summary = `I've created a new lesson titled "${result.project.title}".
+      \n- **Difficulty**: ${result.metadata.predictedDifficulty}
+      \n- **Tags**: ${result.metadata.recommendedTags.join(', ')}
+      \n${result.warnings.length > 0 ? `\n**Warnings**:\n- ${result.warnings.join('\n- ')}` : ''}`;
+
+      const assistantMessage: ChatMessage = {
+        id: Date.now() + 2,
         role: "assistant",
-        content: t("scorm.ai.notConfigured"),
-      },
-    ])
+        content: summary,
+      };
+
+      setMessages((prev) => {
+        // Replace "thinking" message with the final one
+        const updated = [...prev];
+        updated[updated.length - 1] = assistantMessage;
+        return updated;
+      });
+
+
+    } catch (error: any) {
+      const errorMessage: ChatMessage = {
+        id: Date.now() + 2,
+        role: "assistant",
+        content: `Sorry, I ran into an error: ${error.message}`,
+      };
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = errorMessage;
+        return updated;
+      });
+    }
   }
 
   const handleSave = () => {
@@ -275,7 +329,7 @@ switch (type) {
   const handlePreview = () => {
     const htmlContent = `
       <!DOCTYPE html>
-      <html lang="${project.language || "en"}">
+      <html dir="${project.theme.direction}">
       <head>
         <meta charset="UTF-8">
         <title>${t("scorm.ai.previewTitle", { title: project.title })}</title>
@@ -301,8 +355,24 @@ switch (type) {
             ${page.blocks
               .map((block) => {
                 switch (block.type) {
-                  case "text":
-                    return (block as TextBlock).html
+                  case "text": {
+                    const textBlock = block as TextBlock
+                    const style = textBlock.style || {}
+                    const styleString = `
+                      font-weight: ${style.bold ? "bold" : "normal"};
+                      font-style: ${style.italic ? "italic" : "normal"};
+                      text-decoration: ${style.underline ? "underline" : "none"};
+                      font-size: ${style.size || "inherit"};
+                      text-align: ${style.align || "left"};
+                      direction: ${style.direction || "ltr"};
+                      color: ${style.color || "inherit"};
+                      background: ${style.background || "transparent"};
+                      padding: ${style.padding || "0"};
+                      border-radius: ${style.radius || "0"};
+                      line-height: ${style.lineHeight || "inherit"};
+                    `
+                    return `<div style="${styleString}">${textBlock.html}</div>`
+                  }
 
                   case "image": {
                     const img = block as ImageBlock
@@ -519,6 +589,10 @@ switch (type) {
     }
   }
 
+  const handleProjectChange = (updatedProject: EditorProject) => {
+    setProject(updatedProject)
+  }
+
   const handleAddPage = () => {
     const newPage: EditorPage = {
       id: `page-${Date.now()}`,
@@ -579,8 +653,6 @@ switch (type) {
     )
   }
 
-  const visibleMessages = messages.slice(-4) // activePage is now derived
-
   return (
     <>
       {/* hidden input for upload */}
@@ -603,7 +675,7 @@ switch (type) {
       </button>
 
       {/* full-page background */}
-      <div className="min-h-screen bg-slate-50 px-4 sm:px-8 py-6">
+      <div className="min-h-screen bg-slate-50 px-4 sm:px-8 pt-24 pb-4">
         {/* editor wrapper – no max width (takes full page) */}
         <div className="w-full h-full mx-auto flex flex-col">
           <div className="flex-1 relative flex flex-col">
@@ -646,85 +718,74 @@ switch (type) {
               </div>
             </div>
 
-            {/* AI popup */}
-            {aiOpen && (
-              <div className="absolute right-10 top-[90px] z-30 w-full max-w-sm">
-                <div className="rounded-2xl bg-white/95 border border-slate-200 shadow-xl px-4 py-3 backdrop-blur-md">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-100">
-                        <MessageCircle className="h-4 w-4 text-sky-700" />
-                      </span>
-                      <span className="text-sm font-semibold text-slate-800">
-                        {t("scorm.ai.title")}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      className="text-xs text-slate-400 hover:text-slate-600"
-                      onClick={() => setAiOpen(false)}
-                    >
-                      {t("scorm.ai.close")}
-                    </button>
-                  </div>
-                  <div className="max-h-40 overflow-y-auto text-[11px] rounded-xl bg-slate-50 px-3 py-2 border border-slate-100 mb-2">
-                    {visibleMessages.length > 0 ? (
-                      visibleMessages.map((m) => (
-                        <div
-                          key={m.id}
-                          className={`flex ${
-                            m.role === "user" ? "justify-end" : "justify-start"
-                          } mb-1`}
-                        >
-                          <div
-                            className={
-                              m.role === "user"
-                                ? "inline-block rounded-2xl rounded-br-sm bg-sky-600 text-white px-2.5 py-1"
-                                : "inline-block rounded-2xl rounded-bl-sm bg-white text-slate-800 px-2.5 py-1 border border-slate-100"
-                            }
-                          >
-                            {m.content}
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <span className="text-slate-400">
-                        {t("scorm.ai.welcome")}
-                      </span>
-                    )}
-                  </div>
-                  <form onSubmit={handleSend} className="flex items-center gap-2">
-                    <Input
-                      value={chatInput}
-                      onChange={(e) => setChatInput(e.target.value)}
-                      placeholder={t("scorm.ai.placeholder")}
-                      className="text-[11px] rounded-full h-8 bg-slate-50 border-slate-200"
-                    />
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="rounded-full h-8 px-3 text-xs bg-sky-600 hover:bg-sky-700"
-                    >
-                      {t("scorm.ai.send")}
-                    </Button>
-                  </form>
-                </div>
-              </div>
-            )}
-
             {/* canvas + properties side-by-side */}
             <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
-              {/* Canvas (left) */}
+              {/* Chat panel (left) */}
+              <div
+                className={`w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100`}
+              >
+                <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                  <div className="flex flex-col h-full">
+                    <div className="p-4 border-b flex items-center gap-2">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100">
+                            <MessageCircle className="h-5 w-5 text-sky-700" />
+                        </span>
+                        <h3 className="font-semibold text-base text-slate-800">{t("scorm.ai.title")}</h3>
+                    </div>
+                    <div className="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                        {messages.map((m) => (
+                          <div
+                            key={m.id}
+                            className={`flex ${
+                              m.role === "user" ? "justify-end" : "justify-start"
+                            }`}
+                          >
+                            <div
+                              className={
+                                m.role === "user"
+                                  ? "inline-block rounded-2xl rounded-br-sm bg-sky-600 text-white px-3 py-2"
+                                  : "inline-block rounded-2xl rounded-bl-sm bg-white text-slate-800 px-3 py-2 border border-slate-100"
+                              }
+                            >
+                              {m.content}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                    <div className="p-4 border-t bg-slate-50">
+                        <form onSubmit={handleSend} className="flex items-center gap-2">
+                            <Input
+                                value={chatInput}
+                                onChange={(e) => setChatInput(e.target.value)}
+                                placeholder={t("scorm.ai.placeholder")}
+                                className="flex-1 h-9 rounded-full bg-white border-slate-200"
+                            />
+                            <Button type="submit" size="sm" className="rounded-full h-9 px-4 bg-sky-600 hover:bg-sky-700">
+                                {t("scorm.ai.send")}
+                            </Button>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Canvas (center) */}
               <div
                 className={`relative flex-1 ${
                   isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""
                 }`}
-                onClick={() => setSelectedBlockId(null)}
+                onClick={() => {
+                  setSelectedBlockId(null)
+                  setRightPanel("block")
+                }}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
               >
-                <div className="bg-sky-50 rounded-[28px] border border-sky-100 shadow-inner px-6 py-6 min-h-[520px]">
+                <div
+                  dir={project.theme.direction}
+                  className="bg-white rounded-2xl px-6 py-6 min-h-[520px]"
+                >
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h2 className="text-sm font-semibold mr-2 text-slate-800">
@@ -783,7 +844,10 @@ switch (type) {
                                   handleBlockClick(block)
                                 }}
                               >
-                                <BlockRenderer block={block} />
+                                <BlockRenderer
+                                  block={block}
+                                  theme={project.theme}
+                                />
                               </div>
                             </div>
                           )
@@ -817,11 +881,17 @@ switch (type) {
               </div>
 
               {/* Properties panel (right) */}
-              <div className="w-full lg:w-[320px] xl:w-[360px]">
+              <div
+                className={`w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100`}
+              >
                 <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                   <PropertiesPanel
+                    project={project}
+                    onProjectChange={handleProjectChange}
                     selectedBlock={selectedBlock}
                     onBlockChange={handleBlockChange}
+                    panelType={rightPanel}
+                    onAddPage={handleAddPage}
                   />
                 </div>
               </div>
@@ -849,7 +919,10 @@ switch (type) {
             label="scorm.tools.quiz"
           />
           <IconToolButton
-            onClick={handleAddPage}
+            onClick={() => {
+              setRightPanel("project")
+              setSelectedBlockId(null)
+            }}
             icon={<LayoutDashboard className="h-4 w-4" />}
             label="scorm.tools.pageEditor"
           />
@@ -862,12 +935,6 @@ switch (type) {
             onClick={() => addBlock("text")}
             icon={<Type className="h-4 w-4" />}
             label="scorm.tools.text"
-          />
-          <IconToolButton
-            onClick={() => setAiOpen((v) => !v)}
-            icon={<MessageCircle className="h-4 w-4" />}
-            label="scorm.tools.ai"
-            emphasis
           />
           <IconToolButton
             onClick={() => alert(t("scorm.alerts.settingsLater"))}

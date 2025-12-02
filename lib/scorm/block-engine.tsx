@@ -3,31 +3,53 @@
 import React from "react";
 import {
   EditorBlock,
+  EditorProject,
   TextBlock,
   ImageBlock,
   VideoBlock,
   QuizBlock,
   InteractiveBlock,
-} from "@/lib/scorm/types";
+} from "@/lib/scorm/types"
 
 interface Props {
-  block: EditorBlock;
-  onClick?: (b: EditorBlock) => void;
+  block: EditorBlock
+  onClick?: (b: EditorBlock) => void
+  theme?: EditorProject["theme"]
 }
 
-export function BlockRenderer({ block, onClick }: Props) {
-  const select = () => onClick?.(block);
+export function BlockRenderer({ block, onClick, theme }: Props) {
+  const select = () => onClick?.(block)
 
   /* ========= TEXT ========= */
   if (block.type === "text") {
-    const b = block as TextBlock;
+    const b = block as TextBlock
+    const style = b.style || {}
+    const themeStyles = theme?.styles || {}
+
+    const styleObj: React.CSSProperties = {
+      ...themeStyles,
+      fontWeight: style.bold ? "bold" : "normal",
+      fontStyle: style.italic ? "italic" : "normal",
+      textDecoration: style.underline ? "underline" : "none",
+      fontSize: style.size || "inherit",
+      textAlign: style.align as React.CSSProperties["textAlign"],
+      direction: style.direction as React.CSSProperties["direction"],
+      color: style.color,
+      background: style.background,
+      padding: style.padding,
+      borderRadius: style.radius,
+      lineHeight: style.lineHeight,
+      ...style,
+    }
+
     return (
       <div
         onClick={select}
         className="prose prose-sm max-w-none"
+        style={styleObj}
         dangerouslySetInnerHTML={{ __html: b.html || "" }}
       />
-    );
+    )
   }
 
   /* ========= IMAGE ========= */
