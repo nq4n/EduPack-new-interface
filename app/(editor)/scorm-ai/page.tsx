@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, type FormEvent, useEffect, useRef } from "react"
+import { useState, type FormEvent, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -63,10 +63,12 @@ export default function ScormAIPage() {
   const [project, setProject] = useLocalStorage<EditorProject>("scorm-project", initialProject)
 
   const hasContent = project.pages.length > 1 || project.pages[0]?.blocks.length > 0
-  const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(hasContent ? "ai" : "choice")
+  const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(
+    hasContent ? "ai" : "choice"
+  )
 
-  const [activePage, setActivePage] = useState<EditorPage>(project.pages[0])
-  const [selectedBlock, setSelectedBlock] = useState<EditorBlock | null>(null)
+  const [activePageId, setActivePageId] = useState<string>(project.pages[0]?.id)
+  const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
 
   const [status, setStatus] = useState<Status>("draft")
 
@@ -105,29 +107,29 @@ export default function ScormAIPage() {
     }
   }, [navVisible])
 
-  useEffect(() => {
-    const currentPage = project.pages.find((p) => p.id === activePage.id)
-    if (currentPage) {
-      setActivePage(currentPage)
-    }
-  }, [project, activePage.id])
+  const activePage = project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
 
-  const handleBlockClick = (block: EditorBlock) => {
-    setSelectedBlock(block)
-  }
+  const selectedBlock =
+    activePage.blocks.find((b) => b.id === selectedBlockId) ?? null
+
+  const handleBlockClick = useCallback((block: EditorBlock) => {
+    setSelectedBlockId(block.id)
+  }, [])
 
   const handleBlockChange = (updatedBlock: EditorBlock) => {
     setProject((prevProject) => {
       const updatedPages = prevProject.pages.map((p) => {
-        if (p.id === activePage.id) {
-          const updatedBlocks = p.blocks.map((b) => (b.id === updatedBlock.id ? updatedBlock : b))
+        if (p.id === activePageId) {
+          // Deep clone the updated block to ensure immutability and trigger re-render
+          const newBlock = JSON.parse(JSON.stringify(updatedBlock))
+
+          const updatedBlocks = p.blocks.map((b) => (b.id === newBlock.id ? newBlock : b))
           return { ...p, blocks: updatedBlocks }
         }
         return p
       })
       return { ...prevProject, pages: updatedPages }
     })
-    setSelectedBlock(updatedBlock)
   }
 
   const handleSend = (e: FormEvent) => {
@@ -260,7 +262,7 @@ switch (type) {
 
     setProject((prevProject) => {
       const updatedPages = prevProject.pages.map((p) => {
-        if (p.id === activePage.id) {
+        if (p.id === activePageId) {
           const newBlocks = [...p.blocks, newBlock]
           return { ...p, blocks: newBlocks }
         }
@@ -296,7 +298,7 @@ switch (type) {
             (page) => `
           <article>
             <h2>${page.title}</h2>
-                        ${page.blocks
+            ${page.blocks
               .map((block) => {
                 switch (block.type) {
                   case "text":
@@ -326,7 +328,7 @@ switch (type) {
                                 <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
                                 <label for="${o.id}">${o.label}</label>
                               </div>
-                            `,
+                            `
                             )
                             .join("")}
                         </fieldset>
@@ -337,20 +339,22 @@ switch (type) {
                   case "interactive": {
                     const ib = block as InteractiveBlock
                     const style = ib.style || {}
-                    const bg = style.background || "#0ea5e9"
-                    const radius =
-                      style.radius ||
-                      (ib.variant === "button" ? "999px" : "12px")
-                    const padding =
-                      style.padding ||
-                      (ib.variant === "button" ? "8px 16px" : "10px")
+
+                    const styleString = `
+                      padding: ${style.padding || "10px"};
+                      border-radius: ${style.radius || (ib.variant === "button" ? "999px" : "12px")};
+                      background: ${style.background || (ib.variant === "button" ? "#0ea5e9" : ib.variant === "callout" ? "#eef2ff" : "#f1f5f9")};
+                      box-shadow: ${style.shadow ? "0 8px 20px rgba(0,0,0,0.15)" : "none"};
+                      color: ${style.background && (style.background as string).startsWith("#") ? (parseInt((style.background as string).substring(1), 16) > 0xffffff / 2 ? "#000" : "#fff") : "#fff"};
+                      border: none;
+                    `
 
                     if (ib.variant === "button") {
-                      return `<button style="padding:${padding};border-radius:${radius};background:${bg};color:#fff;border:none;">${ib.label || "Interactive element"}</button>`
+                      return `<button style="${styleString}">${ib.label || "Interactive element"}</button>`
                     }
 
                     if (ib.variant === "callout") {
-                      return `<div style="padding:${padding};border-radius:${radius};background:${bg};border-left:4px solid #3b82f6;">
+                      return `<div style="${styleString}">
                         ${ib.label ? `<p><strong>${ib.label}</strong></p>` : ""}
                         ${
                           ib.bodyHtml ||
@@ -361,7 +365,7 @@ switch (type) {
 
                     if (ib.variant === "reveal") {
                       return `
-                        <details ${ib.initiallyOpen ? "open" : ""}>
+                        <details ${ib.initiallyOpen ? "open" : ""} style="${styleString}">
                           <summary>${ib.label || "Details"}</summary>
                           ${
                             ib.bodyHtml ||
@@ -384,16 +388,21 @@ switch (type) {
               })
               .join("")}
           </article>
-        `,
+        `
           )
           .join("")}
       </body>
       </html>
     `
     const previewWindow = window.open("", "_blank")
-    previewWindow?.document.write(htmlContent)
-    previewWindow?.document.close()
+    if (previewWindow) {
+      previewWindow.document.write(htmlContent)
+      previewWindow.document.close()
+    } else {
+      alert(t("scorm.ai.popupBlocked"))
+    }
   }
+
 
   const handleFileProcess = (file: File) => {
     if (!file) return
@@ -417,8 +426,8 @@ switch (type) {
             Array.isArray(parsedData.pages)
           ) {
             setProject(parsedData as EditorProject)
-            setActivePage(parsedData.pages[0])
-            setSelectedBlock(null)
+            setActivePageId(parsedData.pages[0].id)
+            setSelectedBlockId(null)
             alert(t("scorm.ai.projectLoaded"))
           }
           // Try to load as QuizBlock
@@ -520,8 +529,8 @@ switch (type) {
       ...prev,
       pages: [...prev.pages, newPage],
     }))
-    setActivePage(newPage)
-    setSelectedBlock(null)
+    setActivePageId(newPage.id)
+    setSelectedBlockId(null)
   }
 
   // first screen: choice
@@ -570,7 +579,7 @@ switch (type) {
     )
   }
 
-  const visibleMessages = messages.slice(-4)
+  const visibleMessages = messages.slice(-4) // activePage is now derived
 
   return (
     <>
@@ -710,7 +719,7 @@ switch (type) {
                 className={`relative flex-1 ${
                   isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""
                 }`}
-                onClick={() => setSelectedBlock(null)}
+                onClick={() => setSelectedBlockId(null)}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -728,8 +737,8 @@ switch (type) {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation()
-                              setActivePage(page)
-                              setSelectedBlock(null)
+                              setActivePageId(page.id)
+                              setSelectedBlockId(null)
                             }}
                             className={
                               "px-3 py-1 rounded-full text-xs border transition-colors " +
@@ -757,7 +766,7 @@ switch (type) {
                   </div>
 
                   <div className="max-h-[600px] overflow-auto pr-1">
-                    {activePage.blocks.length > 0 ? (
+                    {activePage && activePage.blocks.length > 0 ? (
                       <div className="space-y-4">
                         {activePage.blocks.map((block) => {
                           const isSelected = selectedBlock?.id === block.id
@@ -774,7 +783,7 @@ switch (type) {
                                   handleBlockClick(block)
                                 }}
                               >
-                                <BlockRenderer block={block} onClick={handleBlockClick} />
+                                <BlockRenderer block={block} />
                               </div>
                             </div>
                           )

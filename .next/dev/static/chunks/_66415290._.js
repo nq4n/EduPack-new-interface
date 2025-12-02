@@ -2269,8 +2269,8 @@ function ScormAIPage() {
     const [project, setProject] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$local$2d$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocalStorage"])("scorm-project", initialProject);
     const hasContent = project.pages.length > 1 || project.pages[0]?.blocks.length > 0;
     const [editorMode, setEditorMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(hasContent ? "ai" : "choice");
-    const [activePage, setActivePage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(project.pages[0]);
-    const [selectedBlock, setSelectedBlock] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [activePageId, setActivePageId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(project.pages[0]?.id);
+    const [selectedBlockId, setSelectedBlockId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [status, setStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("draft");
     const [chatInput, setChatInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -2309,27 +2309,20 @@ function ScormAIPage() {
     }["ScormAIPage.useEffect"], [
         navVisible
     ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ScormAIPage.useEffect": ()=>{
-            const currentPage = project.pages.find({
-                "ScormAIPage.useEffect.currentPage": (p)=>p.id === activePage.id
-            }["ScormAIPage.useEffect.currentPage"]);
-            if (currentPage) {
-                setActivePage(currentPage);
-            }
+    const activePage = project.pages.find((p)=>p.id === activePageId) ?? project.pages[0];
+    const selectedBlock = activePage.blocks.find((b)=>b.id === selectedBlockId) ?? null;
+    const handleBlockClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "ScormAIPage.useCallback[handleBlockClick]": (block)=>{
+            setSelectedBlockId(block.id);
         }
-    }["ScormAIPage.useEffect"], [
-        project,
-        activePage.id
-    ]);
-    const handleBlockClick = (block)=>{
-        setSelectedBlock(block);
-    };
+    }["ScormAIPage.useCallback[handleBlockClick]"], []);
     const handleBlockChange = (updatedBlock)=>{
         setProject((prevProject)=>{
             const updatedPages = prevProject.pages.map((p)=>{
-                if (p.id === activePage.id) {
-                    const updatedBlocks = p.blocks.map((b)=>b.id === updatedBlock.id ? updatedBlock : b);
+                if (p.id === activePageId) {
+                    // Deep clone the updated block to ensure immutability and trigger re-render
+                    const newBlock = JSON.parse(JSON.stringify(updatedBlock));
+                    const updatedBlocks = p.blocks.map((b)=>b.id === newBlock.id ? newBlock : b);
                     return {
                         ...p,
                         blocks: updatedBlocks
@@ -2342,7 +2335,6 @@ function ScormAIPage() {
                 pages: updatedPages
             };
         });
-        setSelectedBlock(updatedBlock);
     };
     const handleSend = (e)=>{
         e.preventDefault();
@@ -2475,7 +2467,7 @@ function ScormAIPage() {
         }
         setProject((prevProject)=>{
             const updatedPages = prevProject.pages.map((p)=>{
-                if (p.id === activePage.id) {
+                if (p.id === activePageId) {
                     const newBlocks = [
                         ...p.blocks,
                         newBlock
@@ -2519,7 +2511,7 @@ function ScormAIPage() {
         ${project.pages.map((page)=>`
           <article>
             <h2>${page.title}</h2>
-                        ${page.blocks.map((block)=>{
+            ${page.blocks.map((block)=>{
                 switch(block.type){
                     case "text":
                         return block.html;
@@ -2555,21 +2547,26 @@ function ScormAIPage() {
                         {
                             const ib = block;
                             const style = ib.style || {};
-                            const bg = style.background || "#0ea5e9";
-                            const radius = style.radius || (ib.variant === "button" ? "999px" : "12px");
-                            const padding = style.padding || (ib.variant === "button" ? "8px 16px" : "10px");
+                            const styleString = `
+                      padding: ${style.padding || "10px"};
+                      border-radius: ${style.radius || (ib.variant === "button" ? "999px" : "12px")};
+                      background: ${style.background || (ib.variant === "button" ? "#0ea5e9" : ib.variant === "callout" ? "#eef2ff" : "#f1f5f9")};
+                      box-shadow: ${style.shadow ? "0 8px 20px rgba(0,0,0,0.15)" : "none"};
+                      color: ${style.background && style.background.startsWith("#") ? parseInt(style.background.substring(1), 16) > 0xffffff / 2 ? "#000" : "#fff" : "#fff"};
+                      border: none;
+                    `;
                             if (ib.variant === "button") {
-                                return `<button style="padding:${padding};border-radius:${radius};background:${bg};color:#fff;border:none;">${ib.label || "Interactive element"}</button>`;
+                                return `<button style="${styleString}">${ib.label || "Interactive element"}</button>`;
                             }
                             if (ib.variant === "callout") {
-                                return `<div style="padding:${padding};border-radius:${radius};background:${bg};border-left:4px solid #3b82f6;">
+                                return `<div style="${styleString}">
                         ${ib.label ? `<p><strong>${ib.label}</strong></p>` : ""}
                         ${ib.bodyHtml || "<p style='font-size:11px;color:#6b7280;'>Add callout content from the editor.</p>"}
                       </div>`;
                             }
                             if (ib.variant === "reveal") {
                                 return `
-                        <details ${ib.initiallyOpen ? "open" : ""}>
+                        <details ${ib.initiallyOpen ? "open" : ""} style="${styleString}">
                           <summary>${ib.label || "Details"}</summary>
                           ${ib.bodyHtml || "<p style='font-size:11px;color:#6b7280;'>Add reveal content from the editor.</p>"}
                         </details>
@@ -2590,8 +2587,12 @@ function ScormAIPage() {
       </html>
     `;
         const previewWindow = window.open("", "_blank");
-        previewWindow?.document.write(htmlContent);
-        previewWindow?.document.close();
+        if (previewWindow) {
+            previewWindow.document.write(htmlContent);
+            previewWindow.document.close();
+        } else {
+            alert(t("scorm.ai.popupBlocked"));
+        }
     };
     const handleFileProcess = (file)=>{
         if (!file) return;
@@ -2613,8 +2614,8 @@ function ScormAIPage() {
                     // Try to load as EditorProject
                     if (parsedData.id && parsedData.title && Array.isArray(parsedData.pages)) {
                         setProject(parsedData);
-                        setActivePage(parsedData.pages[0]);
-                        setSelectedBlock(null);
+                        setActivePageId(parsedData.pages[0].id);
+                        setSelectedBlockId(null);
                         alert(t("scorm.ai.projectLoaded"));
                     } else if (parsedData.question && Array.isArray(parsedData.options)) {
                         addBlock("quiz", parsedData);
@@ -2712,8 +2713,8 @@ function ScormAIPage() {
                     newPage
                 ]
             }));
-        setActivePage(newPage);
-        setSelectedBlock(null);
+        setActivePageId(newPage.id);
+        setSelectedBlockId(null);
     };
     // first screen: choice
     if (editorMode === "choice") {
@@ -2731,7 +2732,7 @@ function ScormAIPage() {
                         children: t("scorm.choice.title")
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 537,
+                        lineNumber: 546,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2739,7 +2740,7 @@ function ScormAIPage() {
                         children: t("scorm.choice.description")
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 540,
+                        lineNumber: 549,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2756,7 +2757,7 @@ function ScormAIPage() {
                                             className: "h-6 w-6 mb-1"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 546,
+                                            lineNumber: 555,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2764,7 +2765,7 @@ function ScormAIPage() {
                                             children: t("scorm.choice.aiAssistant")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 547,
+                                            lineNumber: 556,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2772,18 +2773,18 @@ function ScormAIPage() {
                                             children: t("scorm.choice.aiAssistantDesc")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 548,
+                                            lineNumber: 557,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                    lineNumber: 545,
+                                    lineNumber: 554,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 544,
+                                lineNumber: 553,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2798,7 +2799,7 @@ function ScormAIPage() {
                                             className: "h-6 w-6 mb-1"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 560,
+                                            lineNumber: 569,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2806,7 +2807,7 @@ function ScormAIPage() {
                                             children: t("scorm.choice.blankPage")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 561,
+                                            lineNumber: 570,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2814,39 +2815,40 @@ function ScormAIPage() {
                                             children: t("scorm.choice.blankPageDesc")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 562,
+                                            lineNumber: 571,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                    lineNumber: 559,
+                                    lineNumber: 568,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 553,
+                                lineNumber: 562,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 543,
+                        lineNumber: 552,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 536,
+                lineNumber: 545,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-            lineNumber: 535,
+            lineNumber: 544,
             columnNumber: 7
         }, this);
     }
-    const visibleMessages = messages.slice(-4);
+    const visibleMessages = messages.slice(-4) // activePage is now derived
+    ;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2857,7 +2859,7 @@ function ScormAIPage() {
                 onChange: handleFileInputChange
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 578,
+                lineNumber: 587,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2870,12 +2872,12 @@ function ScormAIPage() {
                     children: "☰"
                 }, void 0, false, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 593,
+                    lineNumber: 602,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 587,
+                lineNumber: 596,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2901,14 +2903,14 @@ function ScormAIPage() {
                                                         className: "h-4 w-4 mr-1"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 610,
+                                                        lineNumber: 619,
                                                         columnNumber: 19
                                                     }, this),
                                                     t("scorm.topbar.preview")
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 604,
+                                                lineNumber: 613,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2921,20 +2923,20 @@ function ScormAIPage() {
                                                         className: "h-4 w-4 mr-1"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 619,
+                                                        lineNumber: 628,
                                                         columnNumber: 19
                                                     }, this),
                                                     t("scorm.topbar.export")
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 613,
+                                                lineNumber: 622,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 603,
+                                        lineNumber: 612,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2946,7 +2948,7 @@ function ScormAIPage() {
                                                 children: status === "draft" ? t("scorm.topbar.status.draft") : t("scorm.topbar.status.published")
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 625,
+                                                lineNumber: 634,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2956,32 +2958,32 @@ function ScormAIPage() {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 634,
+                                                        lineNumber: 643,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: t("scorm.tools.history")
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 635,
+                                                        lineNumber: 644,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 633,
+                                                lineNumber: 642,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 624,
+                                        lineNumber: 633,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 602,
+                                lineNumber: 611,
                                 columnNumber: 13
                             }, this),
                             aiOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3001,12 +3003,12 @@ function ScormAIPage() {
                                                                 className: "h-4 w-4 text-sky-700"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 647,
+                                                                lineNumber: 656,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 646,
+                                                            lineNumber: 655,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3014,13 +3016,13 @@ function ScormAIPage() {
                                                             children: t("scorm.ai.title")
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 649,
+                                                            lineNumber: 658,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 645,
+                                                    lineNumber: 654,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3030,13 +3032,13 @@ function ScormAIPage() {
                                                     children: t("scorm.ai.close")
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 653,
+                                                    lineNumber: 662,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 644,
+                                            lineNumber: 653,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3048,24 +3050,24 @@ function ScormAIPage() {
                                                         children: m.content
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 670,
+                                                        lineNumber: 679,
                                                         columnNumber: 27
                                                     }, this)
                                                 }, m.id, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 664,
+                                                    lineNumber: 673,
                                                     columnNumber: 25
                                                 }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "text-slate-400",
                                                 children: t("scorm.ai.welcome")
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 682,
+                                                lineNumber: 691,
                                                 columnNumber: 23
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 661,
+                                            lineNumber: 670,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3079,7 +3081,7 @@ function ScormAIPage() {
                                                     className: "text-[11px] rounded-full h-8 bg-slate-50 border-slate-200"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 688,
+                                                    lineNumber: 697,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3089,24 +3091,24 @@ function ScormAIPage() {
                                                     children: t("scorm.ai.send")
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 694,
+                                                    lineNumber: 703,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 687,
+                                            lineNumber: 696,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                    lineNumber: 643,
+                                    lineNumber: 652,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 642,
+                                lineNumber: 651,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3114,7 +3116,7 @@ function ScormAIPage() {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: `relative flex-1 ${isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""}`,
-                                        onClick: ()=>setSelectedBlock(null),
+                                        onClick: ()=>setSelectedBlockId(null),
                                         onDragOver: handleDragOver,
                                         onDragLeave: handleDragLeave,
                                         onDrop: handleDrop,
@@ -3132,7 +3134,7 @@ function ScormAIPage() {
                                                                     children: t("scorm.canvas.title")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 721,
+                                                                    lineNumber: 730,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3141,25 +3143,25 @@ function ScormAIPage() {
                                                                             type: "button",
                                                                             onClick: (e)=>{
                                                                                 e.stopPropagation();
-                                                                                setActivePage(page);
-                                                                                setSelectedBlock(null);
+                                                                                setActivePageId(page.id);
+                                                                                setSelectedBlockId(null);
                                                                             },
                                                                             className: "px-3 py-1 rounded-full text-xs border transition-colors " + (page.id === activePage.id ? "bg-sky-600 text-white border-sky-600" : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"),
                                                                             children: page.title
                                                                         }, page.id, false, {
                                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                            lineNumber: 726,
+                                                                            lineNumber: 735,
                                                                             columnNumber: 27
                                                                         }, this))
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 724,
+                                                                    lineNumber: 733,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 720,
+                                                            lineNumber: 729,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3174,23 +3176,23 @@ function ScormAIPage() {
                                                                 className: "h-4 w-4 text-slate-700"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 755,
+                                                                lineNumber: 764,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 746,
+                                                            lineNumber: 755,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 719,
+                                                    lineNumber: 728,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "max-h-[600px] overflow-auto pr-1",
-                                                    children: activePage.blocks.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: activePage && activePage.blocks.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "space-y-4",
                                                         children: activePage.blocks.map((block)=>{
                                                             const isSelected = selectedBlock?.id === block.id;
@@ -3202,27 +3204,26 @@ function ScormAIPage() {
                                                                         handleBlockClick(block);
                                                                     },
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$scorm$2f$block$2d$engine$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BlockRenderer"], {
-                                                                        block: block,
-                                                                        onClick: handleBlockClick
+                                                                        block: block
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 777,
+                                                                        lineNumber: 786,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 766,
+                                                                    lineNumber: 775,
                                                                     columnNumber: 31
                                                                 }, this)
                                                             }, block.id, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 765,
+                                                                lineNumber: 774,
                                                                 columnNumber: 29
                                                             }, this);
                                                         })
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 761,
+                                                        lineNumber: 770,
                                                         columnNumber: 23
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "text-center space-y-3 py-12",
@@ -3232,7 +3233,7 @@ function ScormAIPage() {
                                                                 children: t("scorm.canvas.title")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 785,
+                                                                lineNumber: 794,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3240,7 +3241,7 @@ function ScormAIPage() {
                                                                 children: t("scorm.canvas.desc")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 788,
+                                                                lineNumber: 797,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3257,36 +3258,36 @@ function ScormAIPage() {
                                                                         className: "mr-2 h-4 w-4"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 801,
+                                                                        lineNumber: 810,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     t("scorm.canvas.start")
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 791,
+                                                                lineNumber: 800,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 784,
+                                                        lineNumber: 793,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 759,
+                                                    lineNumber: 768,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 718,
+                                            lineNumber: 727,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 709,
+                                        lineNumber: 718,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3298,39 +3299,39 @@ function ScormAIPage() {
                                                 onBlockChange: handleBlockChange
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 813,
+                                                lineNumber: 822,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 812,
+                                            lineNumber: 821,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 811,
+                                        lineNumber: 820,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 707,
+                                lineNumber: 716,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 600,
+                        lineNumber: 609,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 599,
+                    lineNumber: 608,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 597,
+                lineNumber: 606,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3344,13 +3345,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 829,
+                                lineNumber: 838,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.upload"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 827,
+                            lineNumber: 836,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3359,13 +3360,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 834,
+                                lineNumber: 843,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.interactive"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 832,
+                            lineNumber: 841,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3374,13 +3375,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 839,
+                                lineNumber: 848,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.quiz"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 837,
+                            lineNumber: 846,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3389,13 +3390,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 844,
+                                lineNumber: 853,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.pageEditor"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 842,
+                            lineNumber: 851,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3404,13 +3405,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 849,
+                                lineNumber: 858,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.media"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 847,
+                            lineNumber: 856,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3419,13 +3420,13 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 854,
+                                lineNumber: 863,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.text"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 852,
+                            lineNumber: 861,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3434,14 +3435,14 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 859,
+                                lineNumber: 868,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.ai",
                             emphasis: true
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 857,
+                            lineNumber: 866,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -3450,30 +3451,30 @@ function ScormAIPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 865,
+                                lineNumber: 874,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.settings"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 863,
+                            lineNumber: 872,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 826,
+                    lineNumber: 835,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 825,
+                lineNumber: 834,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(ScormAIPage, "CExcj59CwiXBFGWBy2Vpy5faDeQ=", false, function() {
+_s(ScormAIPage, "PMHJ5FVXfE8djyaz1qQyCOzqCus=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"],
         __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$local$2d$storage$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocalStorage"]
@@ -3497,13 +3498,13 @@ function IconToolButton({ icon, label, onClick, emphasis }) {
                 children: translatedLabel
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 899,
+                lineNumber: 908,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-        lineNumber: 888,
+        lineNumber: 897,
         columnNumber: 5
     }, this);
 }
