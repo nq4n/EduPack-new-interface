@@ -107,16 +107,20 @@ export default function ScormAIPage() {
   const [navVisible, setNavVisible] = useState(false)
 
   useEffect(() => {
-    if (typeof document === "undefined") return
-    const nav = document.getElementById("main-navbar") as HTMLElement | null
-    if (!nav) return
+    const nav = document.getElementById("main-navbar")
+    if (!nav) return;
 
+    const originalDisplay = nav.style.display;
     if (navVisible) {
-      nav.style.display = ""
+      nav.style.display = originalDisplay || "";
     } else {
-      nav.style.display = "none"
+      nav.style.display = "none";
     }
-  }, [navVisible])
+
+    return () => {
+      nav.style.display = originalDisplay || "";
+    };
+  }, [navVisible]);
 
   const activePage = project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
 
@@ -570,7 +574,7 @@ switch (type) {
 
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50">
-        <div className="text-center max-w-lg bg-white/80 border border-slate-200 rounded-3xl shadow-sm px-8 py-10">
+        <div className="text-center w-full max-w-2xl bg-white/80 border border-slate-200 rounded-3xl shadow-sm px-4 sm:px-8 py-10">
           <h1 className="text-3xl font-semibold tracking-tight mb-2">
             {t("scorm.choice.title")}
           </h1>

@@ -1,7 +1,16 @@
 {
   "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
+  "/(public)/features/page": "app/(public)/features/page.js",
+  "/(public)/pricing/page": "app/(public)/pricing/page.js",
   "/(shop)/packages/page": "app/(shop)/packages/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/scorm/export/route": "app/api/scorm/export/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/profile/billing/page": "app/profile/billing/page.js",
+  "/profile/packages/page": "app/profile/packages/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/profile/settings/page": "app/profile/settings/page.js",
+  "/resources/page": "app/resources/page.js"
 }

@@ -1,10 +1,41 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { signUpNewUser, signInWithGoogle } from "@/lib/auth"
+import { useRouter } from "next/navigation"
 
 export default function RegisterPage() {
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
+  const router = useRouter()
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError("")
+    setMessage("")
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.")
+      return
+    }
+
+    const { error } = await signUpNewUser(email, password, fullName)
+
+    if (error) {
+      setError(error.message)
+    } else {
+      setMessage("Registration successful! Please check your email to confirm your account.")
+      // Optionally redirect or clear the form
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
@@ -19,26 +50,52 @@ export default function RegisterPage() {
           <p className="text-muted-foreground">Start creating SCORM packages today</p>
         </div>
 
+        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
+        {message && <p className="mb-4 text-center text-green-500">{message}</p>}
+
         <div className="bg-card rounded-2xl border border-border p-8">
-          <form className="space-y-6">
+          <form onSubmit={handleRegister} className="space-y-6">
             <div>
               <label className="block text-sm font-semibold text-foreground mb-2">Full Name</label>
-              <Input placeholder="John Doe" />
+              <Input
+                placeholder="ALi Al Badri"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
-              <Input type="email" placeholder="you@example.com" />
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-foreground mb-2">Password</label>
-              <Input type="password" placeholder="••••••••" />
+              <Input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-foreground mb-2">Confirm Password</label>
-              <Input type="password" placeholder="••••••••" />
+              <Input
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
             </div>
 
             <div>
@@ -65,7 +122,7 @@ export default function RegisterPage() {
               </label>
             </div>
 
-            <Button className="w-full" size="lg">
+            <Button type="submit" className="w-full" size="lg">
               Create Account
             </Button>
           </form>
@@ -80,7 +137,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <Button variant="outline" className="w-full mt-4 bg-transparent">
+            <Button onClick={signInWithGoogle} variant="outline" className="w-full mt-4 bg-transparent">
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

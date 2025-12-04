@@ -3,7 +3,7 @@
 import type React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Play, FileText, GraduationCap, Building2, Sparkles, ShoppingBag, Boxes, Cloud } from 'lucide-react'
 import { useLocale } from '@/hooks/use-locale'
 import { t } from '@/lib/translations'
@@ -38,7 +38,6 @@ export default function HomePage() {
       content: <PreviewContent title={t(locale, 'preview.title.language')} locale={locale} />,
     },
   ]
-
   return (
     <div className='bg-background'>
       {/* Hero Section */}
@@ -72,7 +71,12 @@ export default function HomePage() {
 
             {/* Right Column - Preview Card */}
             <div className='bg-card rounded-2xl shadow-xl p-6 border border-border'>
-              <Tabs tabs={previewTabs} defaultValue='name' />
+              <Tabs defaultValue='name'>
+                <TabsList>
+                  {previewTabs.map(tab => <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>)}
+                </TabsList>
+                {previewTabs.map(tab => <TabsContent key={tab.value} value={tab.value}>{tab.content}</TabsContent>)}
+              </Tabs>
             </div>
           </div>
         </div>
@@ -168,16 +172,16 @@ function PreviewContent({ title, locale }: { title: string; locale: 'en' | 'ar' 
         </div>
         <h3 className='text-xl font-semibold text-foreground'>{title}</h3>
         <p className='text-sm text-muted-foreground'>{t(locale, 'preview.area')}</p>
-      </div>
-      <div className='mt-8 flex gap-3'>
-        <Button variant='outline' size='sm'>
-          <Play className='mr-2 h-4 w-4' />
-          {t(locale, 'preview.play')}
-        </Button>
-        <Button variant='outline' size='sm'>
-          <FileText className='mr-2 h-4 w-4' />
-          {t(locale, 'preview.view')}
-        </Button>
+        <div className='mt-8 flex gap-3'>
+          <Button variant='outline' size='sm'>
+            <Play className='mr-2 h-4 w-4' />
+            {t(locale, 'preview.play')}
+          </Button>
+          <Button variant='outline' size='sm'>
+            <FileText className='mr-2 h-4 w-4' />
+            {t(locale, 'preview.view')}
+          </Button>
+        </div>
       </div>
     </div>
   )
