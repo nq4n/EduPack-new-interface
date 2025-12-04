@@ -32,6 +32,7 @@ import {
   LayoutDashboard,
   Clock,
 } from "lucide-react"
+import { useScormAI } from "@/hooks/useScormAI"
 
 type Status = "draft" | "published"
 
@@ -73,13 +74,12 @@ export default function ScormAIPage() {
 
   const [status, setStatus] = useState<Status>("draft")
 
-  const [chatInput, setChatInput] = useState("")
-  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [aiChatMode, setAiChatMode] = useState<"hidden" | "visible" | "animating">("hidden");
 
+  const [initialMessages, setInitialMessages] = useState<ChatMessage[]>([])
   useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([
+    if (initialMessages.length === 0) {
+      setInitialMessages([
         {
           id: 1,
           role: "assistant",
@@ -87,7 +87,16 @@ export default function ScormAIPage() {
         },
       ])
     }
-  }, [t, messages.length])
+  }, [t, initialMessages.length])
+
+  const { messages, chatInput, setChatInput, isGenerating, submitPrompt } = useScormAI({
+    setProject,
+    setActivePageId,
+    setSelectedBlockId,
+    setEditorMode,
+    setAiChatMode,
+    initialMessages,
+  })
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -140,84 +149,11 @@ export default function ScormAIPage() {
     e.preventDefault()
     const prompt = chatInput.trim()
     if (!prompt) return
+    
+    // Determine if this is the first generation that transitions the view
+    const isInitialGeneration = aiChatMode === "visible"
 
-    const userMessage: ChatMessage = {
-      id: Date.now(),
-      role: "user",
-      content: prompt,
-    }
-
-    const thinkingMessage: ChatMessage = {
-      id: Date.now() + 1,
-      role: "assistant",
-      content: "Building your lesson, please wait...",
-    }
-
-    setChatInput("")
-    setMessages((prev) => [...prev, userMessage, thinkingMessage])
-
-    try {
-      const response = await fetch('/api/ai/lesson/build', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt, language: 'en' }), // Language can be made dynamic later
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "An unknown error occurred.");
-      }
-
-      // Update project state with the result from the AI
-      setProject(result.project);
-      setActivePageId(result.project.pages[0]?.id || null);
-      setSelectedBlockId(null);
-      
-      const summary = `I've created a new lesson titled "${result.project.title}".
-      \n- **Difficulty**: ${result.metadata.predictedDifficulty}
-      \n- **Tags**: ${result.metadata.recommendedTags.join(', ')}
-      \n${result.warnings.length > 0 ? `\n**Warnings**:\n- ${result.warnings.join('\n- ')}` : ''}`;
-
-      const assistantMessage: ChatMessage = {
-        id: Date.now() + 2,
-        role: "assistant",
-        content: summary,
-      };
-
-      setMessages((prev) => {
-        // Replace "thinking" message with the final one
-        const updated = [...prev];
-        updated[updated.length - 1] = assistantMessage;
-        return updated;
-      });
-
-      // If this was the initial AI generation chat, transition to the editor
-      if (aiChatMode === "visible") {
-        setAiChatMode("animating"); // Start animation state
-        // Simulate animation duration before fully transitioning
-        setTimeout(() => {
-          setAiChatMode("hidden");
-          setEditorMode("ai");
-        }, 1000); // 1 second for animation, adjust as needed
-      }
-
-
-
-    } catch (error: any) {
-      const errorMessage: ChatMessage = {
-        id: Date.now() + 2,
-        role: "assistant",
-        content: `Sorry, I ran into an error: ${error.message}`,
-      };
-      setMessages((prev) => {
-        const updated = [...prev];
-        updated[updated.length - 1] = errorMessage;
-        return updated;
-      });
-    }
+    submitPrompt(prompt, isInitialGeneration)
   }
 
   const handleSave = () => {
@@ -685,17 +621,17 @@ switch (type) {
                     onChange={(e) => setChatInput(e.target.value)}
                     placeholder="E.g., 'Create a lesson on the water cycle for 5th graders'"
                     className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
-                    disabled={aiChatMode === "animating"} // Disable input during animation
+                    disabled={isGenerating}
                 />
                 <Button 
                     type="submit" 
                     className="rounded-full h-12 px-6 bg-sky-600 hover:bg-sky-700 text-base"
-                    disabled={aiChatMode === "animating"} // Disable button during animation
+                    disabled={isGenerating}
                 >
-                    {aiChatMode === "animating" ? "Generating..." : "Generate"}
+                    {isGenerating ? "Generating..." : "Generate"}
                 </Button>
             </form>
-            {aiChatMode === "animating" && (
+            {isGenerating && (
                 <div className="text-center text-sm text-slate-500 mt-4">
                     Preparing your lesson and transitioning to the editor...
                 </div>
@@ -812,8 +748,9 @@ switch (type) {
                                 onChange={(e) => setChatInput(e.target.value)}
                                 placeholder={t("scorm.ai.placeholder")}
                                 className="flex-1 h-9 rounded-full bg-white border-slate-200"
+                                disabled={isGenerating}
                             />
-                            <Button type="submit" size="sm" className="rounded-full h-9 px-4 bg-sky-600 hover:bg-sky-700">
+                            <Button type="submit" size="sm" className="rounded-full h-9 px-4 bg-sky-600 hover:bg-sky-700" disabled={isGenerating}>
                                 {t("scorm.ai.send")}
                             </Button>
                         </form>

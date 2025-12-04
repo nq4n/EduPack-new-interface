@@ -1,7 +1,243 @@
-[00:00:11.500] Server  LOG      ✓ Ready in 8s
-[00:00:36.128] Server  LOG      ○ Compiling / ...
-[00:01:40.231] Server  WARN     ⚠ Cross origin request detected from 9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:10.254] Server  LOG      ✓ Ready in 7.5s
+[00:00:13.296] Server  LOG      ○ Compiling / ...
+[00:00:26.522] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/?monospaceUid=193000 color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/?monospaceUid=193000","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764861543647}
+[00:00:26.723] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:27.985] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:27.985] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:27.985] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/","r":"https://workstations.cloud.google.com/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764865037327}
+[00:02:12.742] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/packages color: rgb(120, 120, 120) color: inherit {"dp":"/packages","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/packages","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764865139233}
+[00:02:15.949] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/login color: rgb(120, 120, 120) color: inherit {"dp":"/login","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/login","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764865145698}
+[00:05:41.744] Server  LOG      ○ Compiling /scorm-ai ...
+[00:05:43.869] Server  ERROR    ⨯ ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+
+[00:05:46.943] Server  LOG      ○ Compiling /_error ...
+[00:05:47.447] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:48.486] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:50.889] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:51.683] Server  ERROR    ⨯ ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+
+[00:05:52.019] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:54.673] Browser ERROR   uncaughtError: Error: ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+
+[00:05:54.782] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:55.103] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:05:55.382] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:06:30.334] Browser ERROR   ./app/(editor)/scorm-ai/page.tsx:85:5
+Parsing ecmascript source code failed
+  83 |     if (messages.length === 0) {
+  84 |       setMessages([
+> 85 |     if (initialMessages.length === 0) {
+     |     ^^
+  86 |       setInitialMessages([
+  87 |         {
+  88 |           id: 1,
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component Browser]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/(editor)/scorm-ai/page.tsx [Client Component SSR]
+    ./app/(editor)/scorm-ai/page.tsx [Server Component]
+[00:06:36.775] Server  LOG      ✓ Compiled in 665ms
+[00:06:40.209] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:40.209] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:06:40.209] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
+[00:06:40.209] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764865410220}
