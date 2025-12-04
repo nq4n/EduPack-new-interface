@@ -35,6 +35,28 @@ export interface EditorProject {
     styles: any // For global styles
   }
   pages: EditorPage[]
+  tracking: EditorProjectTracking // New: Tracking settings
+  xapi: EditorProjectXapi // New: xAPI specific settings
+}
+
+// New: Interface for project tracking settings
+export interface EditorProjectTracking {
+  level: "minimal" | "standard" | "advanced"
+  pageViews: boolean
+  quizInteractions: boolean
+  media: boolean
+  hints: boolean
+  externalLinks: boolean
+  timePerPage: boolean
+  attempts: boolean
+}
+
+// New: Interface for xAPI specific settings
+export interface EditorProjectXapi {
+  lrsEndpoint: string
+  authToken: string
+  activityIdFormat: string
+  statementExtensions: string // JSON string
 }
 
 export interface EditorPage {

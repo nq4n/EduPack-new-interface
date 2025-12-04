@@ -1,47 +1,7 @@
-[00:00:02.092] Server  LOG      ✓ Ready in 1353ms
-[00:00:07.495] Server  LOG      ○ Compiling / ...
-[00:03:49.001] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:11.500] Server  LOG      ✓ Ready in 8s
+[00:00:36.128] Server  LOG      ○ Compiling / ...
+[00:01:40.231] Server  WARN     ⚠ Cross origin request detected from 9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:03:49.150] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:49.267] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:03:49.267] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
-[00:03:49.267] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/","r":"https://firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764694923701}
-[00:03:53.337] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764694927773}
-[00:09:22.750] Server  LOG      ✓ Compiled in 405ms
-[00:09:40.173] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:09:40.173] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:09:40.173] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
-[00:09:40.173] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai","r":"https://firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764695274653}
-[00:10:05.077] Server  LOG      ✓ Compiled in 478ms
-[00:18:18.786] Server  LOG      ✓ Compiled in 370ms
-[00:21:38.118] Server  LOG      ✓ Compiled in 399ms
-[00:22:18.617] Server  LOG      ✓ Compiled in 347ms
-[00:23:18.883] Server  LOG      ✓ Compiled in 431ms
-[00:23:40.241] Server  LOG      ✓ Compiled in 323ms
-[00:24:01.826] Server  LOG      ✓ Compiled in 390ms
-[00:24:29.407] Server  LOG      ✓ Compiled in 271ms
-[00:27:13.458] Server  LOG      ✓ Compiled in 334ms
-[00:28:21.315] Server  LOG      ✓ Compiled in 285ms
-[00:28:22.662] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'direction')
-[00:28:47.980] Server  LOG      ✓ Compiled in 398ms
-[00:28:48.469] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:28:48.741] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764696422983}
-[00:28:53.865] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:28:53.865] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:28:53.865] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/scorm-ai","route":"/scorm-ai"}
-[00:28:53.865] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai color: rgb(120, 120, 120) color: inherit {"dp":"/scorm-ai","o":"https://3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/scorm-ai","r":"https://workstations.cloud.google.com/","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764696428210}
-[00:41:14.013] Server  LOG      ✓ Compiled in 869ms
-[00:41:28.564] Server  LOG      ✓ Compiled in 288ms
-[00:42:35.207] Server  LOG      ✓ Compiled in 861ms
-[00:44:37.504] Server  LOG      ✓ Compiled in 308ms
-[00:57:42.930] Server  LOG      ✓ Compiled in 429ms
-[00:57:47.452] Server  LOG      ✓ Compiled in 505ms
-[01:08:26.259] Server  LOG      ✓ Compiled in 312ms
-[01:08:31.694] Server  LOG      ✓ Compiled in 611ms
-[01:22:50.777] Server  LOG      ✓ Compiled in 930ms
-[01:28:55.326] Server  LOG      ✓ Compiled in 597ms
-[01:29:15.558] Server  LOG      ✓ Compiled in 383ms
-[01:29:24.025] Server  LOG      ✓ Compiled in 490ms
-[01:29:30.404] Server  LOG      ✓ Compiled in 372ms
-[01:30:25.143] Server  LOG      ✓ Compiled in 363ms
-[01:32:01.061] Server  LOG      ✓ Compiled in 300ms
+[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:01:41.061] Browser LOG     %c[Vercel Web Analytics]%c [pageview] https://9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/?monospaceUid=193000 color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"https://9000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev/?monospaceUid=193000","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764861543647}

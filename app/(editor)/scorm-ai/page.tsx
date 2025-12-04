@@ -75,6 +75,7 @@ export default function ScormAIPage() {
 
   const [chatInput, setChatInput] = useState("")
   const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [aiChatMode, setAiChatMode] = useState<"hidden" | "visible" | "animating">("hidden");
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -192,6 +193,17 @@ export default function ScormAIPage() {
         updated[updated.length - 1] = assistantMessage;
         return updated;
       });
+
+      // If this was the initial AI generation chat, transition to the editor
+      if (aiChatMode === "visible") {
+        setAiChatMode("animating"); // Start animation state
+        // Simulate animation duration before fully transitioning
+        setTimeout(() => {
+          setAiChatMode("hidden");
+          setEditorMode("ai");
+        }, 1000); // 1 second for animation, adjust as needed
+      }
+
 
 
     } catch (error: any) {
@@ -607,11 +619,17 @@ switch (type) {
     setSelectedBlockId(null)
   }
 
-  // first screen: choice
+  // Render logic based on editor mode and AI chat state
   if (editorMode === "choice") {
     const start = (mode: "ai" | "blank") => {
-      setProject(initialProject)
-      setEditorMode(mode)
+      if (mode === "blank") {
+        setProject(initialProject)
+        setEditorMode(mode) // Sets editorMode to "blank"
+      } else { // mode === "ai"
+        setAiChatMode("visible")
+        setProject(initialProject) // Initialize project for AI build as well
+        setEditorMode(mode) // Also sets editorMode to "ai"
+      }
     }
 
     return (
@@ -651,6 +669,41 @@ switch (type) {
         </div>
       </div>
     )
+  }
+
+  // Central AI Chat for initial project generation
+  if (aiChatMode === "visible" || aiChatMode === "animating") {
+    return (
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">How can I help you today?</h2>
+          <p className="text-sm text-slate-500 mb-8">Describe the lesson you want to build, and AI will generate it for you.</p>
+          <div className="w-full"> {/* Container for the input form */}
+            <form onSubmit={handleSend} className="flex items-center gap-2">
+                <Input
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder="E.g., 'Create a lesson on the water cycle for 5th graders'"
+                    className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
+                    disabled={aiChatMode === "animating"} // Disable input during animation
+                />
+                <Button 
+                    type="submit" 
+                    className="rounded-full h-12 px-6 bg-sky-600 hover:bg-sky-700 text-base"
+                    disabled={aiChatMode === "animating"} // Disable button during animation
+                >
+                    {aiChatMode === "animating" ? "Generating..." : "Generate"}
+                </Button>
+            </form>
+            {aiChatMode === "animating" && (
+                <div className="text-center text-sm text-slate-500 mt-4">
+                    Preparing your lesson and transitioning to the editor...
+                </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
