@@ -69,6 +69,9 @@ export function Navbar() {
             <Link href="/packages" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.shop")}
             </Link>
+            <Link href="/payment" className="text-foreground hover:text-primary transition-colors">
+              {t(locale, "nav.payment")}
+            </Link>
             <Link href="/pricing" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.pricing")}
             </Link>
@@ -136,6 +139,9 @@ export function Navbar() {
             </Link>
             <Link href="/packages" className="block text-foreground hover:text-primary">
               {t(locale, "nav.shop")}
+            </Link>
+            <Link href="/payment" className="block text-foreground hover:text-primary">
+              {t(locale, "nav.payment")}
             </Link>
             <Link href="/pricing" className="block text-foreground hover:text-primary">
               {t(locale, "nav.pricing")}

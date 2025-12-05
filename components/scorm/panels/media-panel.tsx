@@ -2,6 +2,7 @@
 
 import React from "react"
 import { ImageBlock } from "@/lib/scorm/types"
+import { useLocale } from "@/hooks/use-locale"
 
 interface Props {
   block: ImageBlock
@@ -10,6 +11,7 @@ interface Props {
 
 export default function MediaPanel({ block, onChange }: Props) {
   const style = block.style || {}
+  const { t } = useLocale()
 
   const updateStyle = (key: string, value: any) => {
     onChange({
@@ -24,11 +26,15 @@ export default function MediaPanel({ block, onChange }: Props) {
   return (
     <div className="p-4 space-y-4 text-sm">
       {/* Title */}
-      <p className="font-semibold text-slate-700">Image Settings</p>
+      <p className="font-semibold text-slate-700">
+        {t("scorm.panels.media.title") || "Image Settings"}
+      </p>
 
       {/* IMAGE URL */}
       <div>
-        <label className="block mb-1 text-xs">Image URL</label>
+        <label className="block mb-1 text-xs">
+          {t("scorm.panels.media.url") || "Image URL"}
+        </label>
         <input
           type="text"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -39,7 +45,9 @@ export default function MediaPanel({ block, onChange }: Props) {
 
       {/* ALT TEXT */}
       <div>
-        <label className="block mb-1 text-xs">Alt Text</label>
+        <label className="block mb-1 text-xs">
+          {t("scorm.panels.media.alt") || "Alt Text"}
+        </label>
         <input
           type="text"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -50,9 +58,13 @@ export default function MediaPanel({ block, onChange }: Props) {
 
       {/* SIZE */}
       <div>
-        <p className="text-xs font-semibold mb-1">Size</p>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.media.size") || "Size"}
+        </p>
 
-        <label className="text-xs">Width (%)</label>
+        <label className="text-xs">
+          {t("scorm.panels.media.width") || "Width (%)"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -62,7 +74,9 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("width", `${e.target.value}%`)}
         />
 
-        <label className="text-xs mt-2">Max Width (px)</label>
+        <label className="text-xs mt-2">
+          {t("scorm.panels.media.maxWidth") || "Max Width (px)"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -73,7 +87,9 @@ export default function MediaPanel({ block, onChange }: Props) {
 
       {/* ALIGNMENT */}
       <div>
-        <p className="text-xs font-semibold mb-1">Alignment</p>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.media.alignment") || "Alignment"}
+        </p>
         <div className="flex gap-2">
           {["left", "center", "right"].map((a) => (
             <button
@@ -93,9 +109,13 @@ export default function MediaPanel({ block, onChange }: Props) {
 
       {/* APPEARANCE */}
       <div>
-        <p className="text-xs font-semibold mb-1">Appearance</p>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.media.appearance") || "Appearance"}
+        </p>
 
-        <label className="text-xs">Border Radius (px)</label>
+        <label className="text-xs">
+          {t("scorm.panels.media.radius") || "Border Radius (px)"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -103,7 +123,9 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs mt-2">Padding (px)</label>
+        <label className="text-xs mt-2">
+          {t("scorm.panels.media.padding") || "Padding (px)"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -111,7 +133,9 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        <label className="text-xs mt-3">Background Color</label>
+        <label className="text-xs mt-3">
+          {t("scorm.panels.media.background") || "Background Color"}
+        </label>
         <input
           type="color"
           className="w-full h-8 border rounded"

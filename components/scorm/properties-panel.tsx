@@ -21,6 +21,7 @@ import VideoPanel from "@/components/scorm/panels/video-panel"
 import InteractivePanel from "@/components/scorm/panels/interactive-panel"
 import ProjectPanel from "@/components/scorm/panels/project-panel"
 import PagePanel from "@/components/scorm/panels/page-panel"
+import QuizPanel from "@/components/scorm/panels/quiz-panel"
 
 interface PropertiesPanelProps {
   project: EditorProject
@@ -146,9 +147,10 @@ export function PropertiesPanel({
 
       case "quiz":
         return (
-          <div className="p-4 text-[11px] text-muted-foreground">
-            Quiz editor panel not wired yet.
-          </div>
+          <QuizPanel
+            block={selectedBlock as QuizBlock}
+            onChange={(updated) => onBlockChange(updated as EditorBlock)}
+          />
         )
 
       case "interactive":
