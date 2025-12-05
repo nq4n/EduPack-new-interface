@@ -931,10 +931,13 @@ switch (type) {
             label="scorm.tools.text"
           />
           <IconToolButton
-            onClick={() => alert(t("scorm.alerts.settingsLater"))}
-            icon={<Settings className="h-4 w-4" />}
-            label="scorm.tools.settings"
-          />
+  onClick={() => {
+    setRightPanel("project")
+    setSelectedBlockId(null)
+  }}
+  icon={<Settings className="h-4 w-4" />}
+  label="scorm.tools.settings"
+/>
         </div>
       </div>
     </>

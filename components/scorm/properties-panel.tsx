@@ -1,4 +1,6 @@
-import React from "react"
+'use client'
+
+import React, { useState } from "react"
 import {
   EditorProject,
   EditorBlock,
@@ -18,6 +20,7 @@ import MediaPanel from "@/components/scorm/panels/media-panel"
 import VideoPanel from "@/components/scorm/panels/video-panel"
 import InteractivePanel from "@/components/scorm/panels/interactive-panel"
 import ProjectPanel from "@/components/scorm/panels/project-panel"
+import PagePanel from "@/components/scorm/panels/page-panel"
 
 interface PropertiesPanelProps {
   project: EditorProject
@@ -37,14 +40,48 @@ export function PropertiesPanel({
   onAddPage,
 }: PropertiesPanelProps) {
   const { t } = useLocale()
+  const [activeTab, setActiveTab] = useState<"project" | "page">("project")
 
   if (panelType === "project") {
     return (
-      <ProjectPanel
-        project={project}
-        onChange={onProjectChange}
-        onAddPage={onAddPage}
-      />
+      <div className="h-full flex flex-col bg-white">
+        <div className="p-2 bg-slate-50 border-b border-slate-200">
+          <div className="flex w-full items-center gap-1 rounded-full bg-slate-200/80 p-1">
+            <button
+              onClick={() => setActiveTab("project")}
+              className={`w-full rounded-full py-1 text-xs font-semibold transition-colors ${
+                activeTab === "project"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "bg-transparent text-slate-500 hover:bg-white/50"
+              }`}
+            >
+              {t("scorm.tabs.project") || "Project"}
+            </button>
+            <button
+              onClick={() => setActiveTab("page")}
+              className={`w-full rounded-full py-1 text-xs font-semibold transition-colors ${
+                activeTab === "page"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "bg-transparent text-slate-500 hover:bg-white/50"
+              }`}
+            >
+              {t("scorm.tabs.pages") || "Pages"}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto">
+          {activeTab === "project" ? (
+            <ProjectPanel project={project} onChange={onProjectChange} />
+          ) : (
+            <PagePanel
+              project={project}
+              onChange={onProjectChange}
+              onAddPage={onAddPage}
+            />
+          )}
+        </div>
+      </div>
     )
   }
 

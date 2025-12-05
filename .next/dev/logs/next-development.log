@@ -88,3 +88,75 @@ Import traces:
 [00:42:16.347] Server  LOG      ✓ Compiled in 343ms
 [00:43:27.230] Server  LOG      ✓ Compiled in 205ms
 [00:47:12.195] Server  LOG      ✓ Compiled in 299ms
+[01:21:26.607] Server  LOG      ✓ Compiled in 2.2s
+[01:23:12.616] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:23:38.608] Server  LOG      ✓ Compiled in 1426ms
+[01:25:39.867] Server  LOG      ✓ Compiled in 113ms
+[01:27:14.936] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:38:28.346] Browser ERROR   ./app/resources/page.tsx:1:40
+Parsing ecmascript source code failed
+> 1 |                         placeholder={t('resources.form.message.placeholder')}
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |                       />
+  3 |                 </div>
+  4 |                 <Button className="w-full">{t('resources.form.send')}</Button>
+
+Unexpected token `string literal (resources.form.message.placeholder, 'resources.form.message.placeholder')`. Expected yield, an identifier, [ or {
+
+Import traces:
+  Client Component Browser:
+    ./app/resources/page.tsx [Client Component Browser]
+    ./app/resources/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./app/resources/page.tsx [Client Component SSR]
+    ./app/resources/page.tsx [Server Component]
+[01:40:14.524] Server  LOG      ✓ Compiled in 163ms
+[01:52:05.518] Server  LOG      ✓ Compiled in 541ms
+[01:53:59.585] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:53:59.835] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <MenuProvider scope={{Menu:[...], ...}} open={false} onOpenChange={function useCallbackRef.useMemo} content={null} ...>
+      <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
+        <DropdownMenuTrigger asChild={true}>
+          <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
+            <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
+              <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
+                <Primitive.div asChild={true} ref={function}>
+                  <Slot ref={function}>
+                    <SlotClone ref={function}>
+                      <Primitive.button type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
+                        <Slot type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
+                          <SlotClone type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
+                            <Button variant="ghost" size="icon" className="h-9 w-9" type="button" id="radix-_R_1..." ...>
+                              <button
+                                data-slot="dropdown-menu-trigger"
+                                className={"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-m..."}
+                                type="button"
++                               id="radix-_R_1dlb_"
+-                               id="radix-_R_5llb_"
+                                aria-haspopup="menu"
+                                aria-expanded={false}
+                                aria-controls={undefined}
+                                data-state="closed"
+                                data-disabled={undefined}
+                                disabled={false}
+                                onPointerDown={function handleEvent}
+                                onKeyDown={function handleEvent}
+                                ref={function}
+                              >
+        ...
+
+[01:54:19.878] Server  LOG     Orchestrator: Starting lesson build for prompt: "build a lesson that explaine ADDIE model"
+[01:54:20.385] Server  ERROR   [API /ai/lesson/build] Error: ReferenceError: generateLessonFromPrompt is not defined

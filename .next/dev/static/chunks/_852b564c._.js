@@ -1939,17 +1939,12 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-locale.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUp$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-up.js [app-client] (ecmascript) <export default as ArrowUp>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowDown$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-down.js [app-client] (ecmascript) <export default as ArrowDown>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
-;
-function ProjectPanel({ project, onChange, onAddPage }) {
+function ProjectPanel({ project, onChange }) {
     _s();
     const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLocale"])();
     const updateProject = (partial)=>{
@@ -1957,44 +1952,6 @@ function ProjectPanel({ project, onChange, onAddPage }) {
             ...project,
             ...partial
         });
-    };
-    const handlePageTitleChange = (pageId, newTitle)=>{
-        const updatedPages = project.pages.map((p)=>p.id === pageId ? {
-                ...p,
-                title: newTitle
-            } : p);
-        onChange({
-            ...project,
-            pages: updatedPages
-        });
-    };
-    const handleMovePage = (pageId, direction)=>{
-        const index = project.pages.findIndex((p)=>p.id === pageId);
-        if (index === -1) return;
-        const newPages = [
-            ...project.pages
-        ];
-        const newIndex = direction === "up" ? index - 1 : index + 1;
-        if (newIndex < 0 || newIndex >= newPages.length) return;
-        const [movedPage] = newPages.splice(index, 1);
-        newPages.splice(newIndex, 0, movedPage);
-        onChange({
-            ...project,
-            pages: newPages
-        });
-    };
-    const handleDeletePage = (pageId)=>{
-        if (project.pages.length <= 1) {
-            alert(t("scorm.projectPanel.deleteLastPageError") || "You cannot delete the last page.");
-            return;
-        }
-        if (window.confirm(t("scorm.projectPanel.deleteConfirm") || "Are you sure you want to delete this page?")) {
-            const updatedPages = project.pages.filter((p)=>p.id !== pageId);
-            onChange({
-                ...project,
-                pages: updatedPages
-            });
-        }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "h-full flex flex-col",
@@ -2011,7 +1968,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.title") || "Project Settings"
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 63,
+                                lineNumber: 29,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2019,23 +1976,23 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.subtitle") || "Manage overall course settings."
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 66,
+                                lineNumber: 32,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 62,
+                        lineNumber: 28,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                    lineNumber: 61,
+                    lineNumber: 27,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                lineNumber: 60,
+                lineNumber: 26,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2049,7 +2006,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.generalSettings") || "General"
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 76,
+                                lineNumber: 42,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2059,7 +2016,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t("scorm.projectPanel.projectTitle") || "Project Title"
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 80,
+                                        lineNumber: 46,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2071,13 +2028,13 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                             })
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 83,
+                                        lineNumber: 49,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 79,
+                                lineNumber: 45,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2087,7 +2044,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t("scorm.props.project.direction.title") || "Text Direction"
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 92,
+                                        lineNumber: 58,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2105,7 +2062,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.props.project.direction.ltr") || "Left-to-Right"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 107,
+                                                lineNumber: 73,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2113,25 +2070,25 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.props.project.direction.rtl") || "Right-to-Left"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 110,
+                                                lineNumber: 76,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 95,
+                                        lineNumber: 61,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 91,
+                                lineNumber: 57,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 75,
+                        lineNumber: 41,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2142,7 +2099,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.props.project.styles.title") || "Default Styles"
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 119,
+                                lineNumber: 85,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2152,7 +2109,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.props.project.styles.textColor')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 123,
+                                        lineNumber: 89,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2170,19 +2127,19 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                             })
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 126,
+                                        lineNumber: 92,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 122,
+                                lineNumber: 88,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 118,
+                        lineNumber: 84,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2193,7 +2150,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.generalTracking")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 144,
+                                lineNumber: 110,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2216,20 +2173,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-radio h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 149,
+                                                lineNumber: 115,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.minimal")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 157,
+                                                lineNumber: 123,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 114,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2249,20 +2206,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-radio h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 126,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.standard")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 168,
+                                                lineNumber: 134,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 159,
+                                        lineNumber: 125,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2282,32 +2239,32 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-radio h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 171,
+                                                lineNumber: 137,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.advanced")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 179,
+                                                lineNumber: 145,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 136,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 147,
+                                lineNumber: 113,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 143,
+                        lineNumber: 109,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2318,7 +2275,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.advancedOptions")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 186,
+                                lineNumber: 152,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2339,20 +2296,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 191,
+                                                lineNumber: 157,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.pageViews")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 163,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 190,
+                                        lineNumber: 156,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2370,20 +2327,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 200,
+                                                lineNumber: 166,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.quizInteractions")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 206,
+                                                lineNumber: 172,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 165,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2401,20 +2358,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 175,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.media")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 215,
+                                                lineNumber: 181,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 208,
+                                        lineNumber: 174,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2432,20 +2389,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 218,
+                                                lineNumber: 184,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.hints")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 224,
+                                                lineNumber: 190,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 217,
+                                        lineNumber: 183,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2463,20 +2420,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 227,
+                                                lineNumber: 193,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.externalLinks")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 233,
+                                                lineNumber: 199,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 226,
+                                        lineNumber: 192,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2494,20 +2451,20 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 236,
+                                                lineNumber: 202,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.timePerPage")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 242,
+                                                lineNumber: 208,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 235,
+                                        lineNumber: 201,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -2525,32 +2482,32 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 className: "form-checkbox h-3 w-3 text-blue-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 211,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t("scorm.projectPanel.tracking.attempts")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 251,
+                                                lineNumber: 217,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 210,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 189,
+                                lineNumber: 155,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 185,
+                        lineNumber: 151,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2561,7 +2518,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.xapiOptions")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 258,
+                                lineNumber: 224,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2574,7 +2531,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.projectPanel.xapi.lrsEndpoint")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 263,
+                                                lineNumber: 229,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2589,13 +2546,13 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                     })
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 266,
+                                                lineNumber: 232,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 228,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2605,7 +2562,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.projectPanel.xapi.authToken")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 274,
+                                                lineNumber: 240,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2620,13 +2577,13 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                     })
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 277,
+                                                lineNumber: 243,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 273,
+                                        lineNumber: 239,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2636,7 +2593,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.projectPanel.xapi.activityIdFormat")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 285,
+                                                lineNumber: 251,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -2651,13 +2608,13 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                     })
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 288,
+                                                lineNumber: 254,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 284,
+                                        lineNumber: 250,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2667,7 +2624,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 children: t("scorm.projectPanel.xapi.statementExtensions")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 296,
+                                                lineNumber: 262,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -2682,25 +2639,25 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                     })
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 299,
+                                                lineNumber: 265,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 295,
+                                        lineNumber: 261,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 261,
+                                lineNumber: 227,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 257,
+                        lineNumber: 223,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2711,7 +2668,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: t("scorm.projectPanel.exportPanel")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 311,
+                                lineNumber: 277,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2724,7 +2681,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.scorm12')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 315,
+                                        lineNumber: 281,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2734,7 +2691,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.scorm2004')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 316,
+                                        lineNumber: 282,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2744,7 +2701,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.xapi')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 317,
+                                        lineNumber: 283,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2754,7 +2711,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.html5')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 318,
+                                        lineNumber: 284,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2764,7 +2721,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.publicLink')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 319,
+                                        lineNumber: 285,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2774,7 +2731,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.embedCode')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 320,
+                                        lineNumber: 286,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2784,7 +2741,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.teacherPdf')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 321,
+                                        lineNumber: 287,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2794,7 +2751,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.studentPdf')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 322,
+                                        lineNumber: 288,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2804,7 +2761,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.json')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 323,
+                                        lineNumber: 289,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2814,173 +2771,31 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: t('scorm.projectPanel.export.qti')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 290,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 314,
+                                lineNumber: 280,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 310,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center justify-between",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                        className: "font-semibold text-slate-700 text-xs",
-                                        children: t('scorm.projectPanel.pageOrganization') || 'Page Organization'
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 331,
-                                        columnNumber: 18
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                        size: "sm",
-                                        variant: "outline",
-                                        onClick: onAddPage,
-                                        className: "h-6 px-2 text-xs",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__["Plus"], {
-                                                className: "h-3 w-3 mr-1"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 335,
-                                                columnNumber: 21
-                                            }, this),
-                                            t('scorm.projectPanel.addPage') || 'Add Page'
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 334,
-                                        columnNumber: 17
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 330,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-2",
-                                children: project.pages.map((page, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2 p-2 rounded-md bg-slate-50 border border-slate-100",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex-1",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                    type: "text",
-                                                    className: "w-full border-transparent bg-transparent rounded px-1 py-0.5 text-xs focus:bg-white focus:border-slate-300",
-                                                    value: page.title,
-                                                    onChange: (e)=>handlePageTitleChange(page.id, e.target.value)
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                    lineNumber: 343,
-                                                    columnNumber: 30
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 342,
-                                                columnNumber: 25
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center gap-1",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                        variant: "ghost",
-                                                        size: "icon",
-                                                        className: "h-6 w-6",
-                                                        onClick: ()=>handleMovePage(page.id, 'up'),
-                                                        disabled: index === 0,
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowUp$3e$__["ArrowUp"], {
-                                                            className: "h-3 w-3"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                            lineNumber: 352,
-                                                            columnNumber: 33
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                        lineNumber: 351,
-                                                        columnNumber: 29
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                        variant: "ghost",
-                                                        size: "icon",
-                                                        className: "h-6 w-6",
-                                                        onClick: ()=>handleMovePage(page.id, 'down'),
-                                                        disabled: index === project.pages.length - 1,
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowDown$3e$__["ArrowDown"], {
-                                                            className: "h-3 w-3"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                            lineNumber: 355,
-                                                            columnNumber: 33
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                        lineNumber: 354,
-                                                        columnNumber: 30
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                        variant: "ghost",
-                                                        size: "icon",
-                                                        className: "h-6 w-6 text-red-500 hover:text-red-600",
-                                                        onClick: ()=>handleDeletePage(page.id),
-                                                        disabled: project.pages.length <= 1,
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
-                                                            className: "h-3 w-3"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                            lineNumber: 358,
-                                                            columnNumber: 33
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                        lineNumber: 357,
-                                                        columnNumber: 29
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                                lineNumber: 350,
-                                                columnNumber: 25
-                                            }, this)
-                                        ]
-                                    }, page.id, true, {
-                                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                        lineNumber: 341,
-                                        columnNumber: 21
-                                    }, this))
-                            }, void 0, false, {
-                                fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                                lineNumber: 339,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                        lineNumber: 329,
+                        lineNumber: 276,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
-                lineNumber: 73,
+                lineNumber: 39,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/scorm/panels/project-panel.tsx",
-        lineNumber: 58,
+        lineNumber: 24,
         columnNumber: 5
     }, this);
 }
