@@ -32,15 +32,9 @@ import {
   LayoutDashboard,
   Clock,
 } from "lucide-react"
-import { useScormAI } from "@/hooks/useScormAI"
+import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner";
 type Status = "draft" | "published"
-
-type ChatMessage = {
-  id: number
-  role: "assistant" | "user" | "system"
-  content: string
-}
 
 export default function ScormAIPage() {
   const { t } = useLocale()
@@ -52,6 +46,22 @@ export default function ScormAIPage() {
     theme: {
       direction: "ltr",
       styles: {},
+    },
+    tracking: {
+      level: "standard",
+      pageViews: true,
+      quizInteractions: true,
+      media: true,
+      hints: false,
+      externalLinks: false,
+      timePerPage: true,
+      attempts: true,
+    },
+    xapi: {
+      lrsEndpoint: "",
+      authToken: "",
+      activityIdFormat: "iri",
+      statementExtensions: "{}",
     },
     pages: [
       {
@@ -764,7 +774,18 @@ switch (type) {
                                   : "inline-block rounded-2xl rounded-bl-sm bg-white text-slate-800 px-3 py-2 border border-slate-100"
                               }
                             >
-                              {m.content}
+                              {m.agent && m.role !== "user" && (
+                                <div className="text-[10px] uppercase tracking-wide text-slate-400 mb-0.5">
+                                  {m.agent === "mentor"
+                                    ? "Mentor AI"
+                                    : m.agent === "contentArchitect"
+                                    ? "Content Architect"
+                                    : m.agent === "assessmentDesigner"
+                                    ? "Assessment Designer"
+                                    : ""}
+                                </div>
+                              )}
+                              <div>{m.content}</div>
                             </div>
                           </div>
                         ))}
