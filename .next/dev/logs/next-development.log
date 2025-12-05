@@ -1,21 +1,19 @@
-[00:00:03.919] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:04.420] Server  LOG      ✓ Ready in 3.8s
-[00:00:04.424] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:03.549] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:03.845] Server  LOG      ✓ Ready in 3.2s
+[00:00:03.849] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:00:07.984] Server  LOG      ○ Compiling /scorm-ai ...
-[00:00:22.256] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:23.753] Browser WARN    GoTrueClient@sb-xnyniavtnqimkhskdpyq-auth-token:1 (2.86.2) 2025-12-05T19:03:11.271Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
-[00:05:17.805] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:18.572] Browser WARN    GoTrueClient@sb-xnyniavtnqimkhskdpyq-auth-token:1 (2.86.2) 2025-12-05T19:08:06.712Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
-[00:05:30.614] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:30.807] Server  ERROR   TypeError: cookieStore.get is not a function
-[00:05:30.876] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:30.915] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:30.980] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:31.015] Server  ERROR   TypeError: cookieStore.get is not a function
-[00:05:31.080] Server  ERROR   TypeError: cookieStore.get is not a function
-[00:05:31.113] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
-[00:05:31.169] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
-[00:05:31.241] Server  ERROR   TypeError: cookieStore.get is not a function
-[00:05:31.274] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
-[00:05:31.331] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
+[00:00:07.356] Server  LOG      ○ Compiling /scorm-ai ...
+[00:00:24.342] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:24.615] Browser WARN    GoTrueClient@sb-xnyniavtnqimkhskdpyq-auth-token:1 (2.86.2) 2025-12-05T19:09:41.974Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+[00:00:54.112] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:54.408] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:00:54.464] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:54.499] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:54.554] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:54.588] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:00:54.654] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:00:54.685] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:00:54.730] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
+[00:00:54.778] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:00:54.808] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:00:54.859] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
