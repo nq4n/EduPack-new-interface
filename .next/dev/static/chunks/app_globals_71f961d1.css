@@ -99,7 +99,6 @@
     --spacing: .25rem;
     --container-xs: 20rem;
     --container-md: 28rem;
-    --container-lg: 32rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
     --container-3xl: 48rem;
@@ -666,10 +665,6 @@
     margin-right: calc(var(--spacing) * 2);
   }
 
-  .mr-6 {
-    margin-right: calc(var(--spacing) * 6);
-  }
-
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
   }
@@ -700,10 +695,6 @@
 
   .mb-16 {
     margin-bottom: calc(var(--spacing) * 16);
-  }
-
-  .ml-6 {
-    margin-left: calc(var(--spacing) * 6);
   }
 
   .ml-auto {
@@ -817,10 +808,6 @@
 
   .h-12 {
     height: calc(var(--spacing) * 12);
-  }
-
-  .h-14 {
-    height: calc(var(--spacing) * 14);
   }
 
   .h-16 {
@@ -963,10 +950,6 @@
     width: calc(var(--spacing) * 24);
   }
 
-  .w-48 {
-    width: calc(var(--spacing) * 48);
-  }
-
   .w-56 {
     width: calc(var(--spacing) * 56);
   }
@@ -1009,10 +992,6 @@
 
   .max-w-\[80\%\] {
     max-width: 80%;
-  }
-
-  .max-w-lg {
-    max-width: var(--container-lg);
   }
 
   .max-w-md {
@@ -1222,18 +1201,6 @@
     margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
   }
 
-  :where(.space-x-4 > :not(:last-child)) {
-    --tw-space-x-reverse: 0;
-    margin-inline-start: calc(calc(var(--spacing) * 4) * var(--tw-space-x-reverse));
-    margin-inline-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-x-reverse)));
-  }
-
-  :where(.space-x-6 > :not(:last-child)) {
-    --tw-space-x-reverse: 0;
-    margin-inline-start: calc(calc(var(--spacing) * 6) * var(--tw-space-x-reverse));
-    margin-inline-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-x-reverse)));
-  }
-
   :where(.divide-y > :not(:last-child)) {
     --tw-divide-y-reverse: 0;
     border-bottom-style: var(--tw-border-style);
@@ -1420,10 +1387,6 @@
     }
   }
 
-  .border-destructive {
-    border-color: var(--destructive);
-  }
-
   .border-destructive\/30 {
     border-color: var(--destructive);
   }
@@ -1544,16 +1507,6 @@
     }
   }
 
-  .bg-accent\/50 {
-    background-color: var(--accent);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-accent\/50 {
-      background-color: color-mix(in oklab, var(--accent) 50%, transparent);
-    }
-  }
-
   .bg-background {
     background-color: var(--background);
   }
@@ -1565,16 +1518,6 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-background\/80 {
       background-color: color-mix(in oklab, var(--background) 80%, transparent);
-    }
-  }
-
-  .bg-background\/95 {
-    background-color: var(--background);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-background\/95 {
-      background-color: color-mix(in oklab, var(--background) 95%, transparent);
     }
   }
 
@@ -2167,16 +2110,8 @@
     text-align: left;
   }
 
-  .text-right {
-    text-align: right;
-  }
-
   .font-mono {
     font-family: Geist Mono, Geist Mono Fallback;
-  }
-
-  .font-sans {
-    font-family: Cairo, Geist, Geist Fallback, system-ui, sans-serif;
   }
 
   .text-2xl {
@@ -2320,16 +2255,6 @@
     color: var(--foreground);
   }
 
-  .text-foreground\/60 {
-    color: var(--foreground);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .text-foreground\/60 {
-      color: color-mix(in oklab, var(--foreground) 60%, transparent);
-    }
-  }
-
   .text-foreground\/70 {
     color: var(--foreground);
   }
@@ -2446,11 +2371,6 @@
     text-underline-offset: 4px;
   }
 
-  .antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
   .opacity-40 {
     opacity: .4;
   }
@@ -2561,12 +2481,6 @@
     --tw-backdrop-blur: blur(var(--blur-sm));
     -webkit-backdrop-filter: var(--tw-backdrop-blur, ) var(--tw-backdrop-brightness, ) var(--tw-backdrop-contrast, ) var(--tw-backdrop-grayscale, ) var(--tw-backdrop-hue-rotate, ) var(--tw-backdrop-invert, ) var(--tw-backdrop-opacity, ) var(--tw-backdrop-saturate, ) var(--tw-backdrop-sepia, );
     backdrop-filter: var(--tw-backdrop-blur, ) var(--tw-backdrop-brightness, ) var(--tw-backdrop-contrast, ) var(--tw-backdrop-grayscale, ) var(--tw-backdrop-hue-rotate, ) var(--tw-backdrop-invert, ) var(--tw-backdrop-opacity, ) var(--tw-backdrop-saturate, ) var(--tw-backdrop-sepia, );
-  }
-
-  .transition {
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
 
   .transition-\[color\,box-shadow\] {
@@ -2834,24 +2748,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:text-foreground:hover {
-      color: var(--foreground);
-    }
-  }
-
-  @media (hover: hover) {
-    .hover\:text-foreground\/80:hover {
-      color: var(--foreground);
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .hover\:text-foreground\/80:hover {
-        color: color-mix(in oklab, var(--foreground) 80%, transparent);
-      }
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:text-primary:hover {
       color: var(--primary);
     }
@@ -3107,18 +3003,6 @@
     color: var(--destructive);
   }
 
-  @supports ((-webkit-backdrop-filter: var(--tw)) or (backdrop-filter: var(--tw))) {
-    .supports-\[backdrop-filter\]\:bg-background\/60 {
-      background-color: var(--background);
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .supports-\[backdrop-filter\]\:bg-background\/60 {
-        background-color: color-mix(in oklab, var(--background) 60%, transparent);
-      }
-    }
-  }
-
   @media (min-width: 40rem) {
     .sm\:flex {
       display: flex;
@@ -3289,12 +3173,6 @@
     .md\:text-sm {
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:col-span-1 {
-      grid-column: span 1 / span 1;
     }
   }
 

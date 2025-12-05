@@ -1,17 +1,22 @@
+'use client'
+
 import type React from "react"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Video, FileText, Mail, MessageCircle } from "lucide-react"
+import { BookOpen, Video, FileText, Mail, MessageCircle, Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
 import Link from "next/link"
+import { useLocale } from "@/hooks/use-locale"
 
 export default function ResourcesPage() {
+  const { t } = useLocale()
+
   return (
     <div className="min-h-screen bg-background py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">How to Use EduPack</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-4">{t('resources.title')}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Step-by-step guides, video tutorials, and resources to help you get the most out of EduPack
+            {t('resources.description')}
           </p>
         </div>
 
@@ -20,54 +25,54 @@ export default function ResourcesPage() {
           <GuideCard
             number="1"
             icon={<Sparkles className="h-6 w-6" />}
-            title="Create your first package with SCORM AI"
-            description="Learn how to use our AI-powered authoring tool to build interactive SCORM packages from scratch"
-            duration="10 min read"
-            level="Beginner"
+            title={t('resources.guide1.title')}
+            description={t('resources.guide1.description')}
+            duration={t('resources.guide1.duration')}
+            level={t('resources.guide1.level')}
           />
           <GuideCard
             number="2"
             icon={<Upload className="h-6 w-6" />}
-            title="Upload and publish a package"
-            description="Step-by-step guide to uploading your existing SCORM content and making it available in the marketplace"
-            duration="5 min read"
-            level="Beginner"
+            title={t('resources.guide2.title')}
+            description={t('resources.guide2.description')}
+            duration={t('resources.guide2.duration')}
+            level={t('resources.guide2.level')}
           />
           <GuideCard
             number="3"
             icon={<ShoppingBag className="h-6 w-6" />}
-            title="Buy and download packages from the shop"
-            description="Discover how to find, preview, and purchase ready-made educational packages for your LMS"
-            duration="7 min read"
-            level="Beginner"
+            title={t('resources.guide3.title')}
+            description={t('resources.guide3.description')}
+            duration={t('resources.guide3.duration')}
+            level={t('resources.guide3.level')}
           />
           <GuideCard
             number="4"
             icon={<Cloud className="h-6 w-6" />}
-            title="Connect EduPack packages to your LMS"
-            description="Integration guides for Moodle, Canvas, Blackboard, and other popular learning management systems"
-            duration="15 min read"
-            level="Intermediate"
+            title={t('resources.guide4.title')}
+            description={t('resources.guide4.description')}
+            duration={t('resources.guide4.duration')}
+            level={t('resources.guide4.level')}
           />
         </div>
 
         {/* Video Tutorials */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Video Tutorials</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">{t('resources.videos.title')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <VideoCard
-              title="Getting Started with EduPack"
-              duration="8:34"
+              title={t('resources.video1.title')}
+              duration={t('resources.video1.duration')}
               thumbnail="/placeholder.svg?height=200&width=400"
             />
             <VideoCard
-              title="AI Content Generation Tips"
-              duration="12:15"
+              title={t('resources.video2.title')}
+              duration={t('resources.video2.duration')}
               thumbnail="/placeholder.svg?height=200&width=400"
             />
             <VideoCard
-              title="Advanced Authoring Techniques"
-              duration="18:47"
+              title={t('resources.video3.title')}
+              duration={t('resources.video3.duration')}
               thumbnail="/placeholder.svg?height=200&width=400"
             />
           </div>
@@ -75,22 +80,22 @@ export default function ResourcesPage() {
 
         {/* Documentation */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Documentation</h2>
+          <h2 className="text-3xl font-bold text-foreground mb-8">{t('resources.docs.title')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <DocLink
               icon={<FileText className="h-5 w-5" />}
-              title="API Documentation"
-              description="For developers integrating EduPack"
+              title={t('resources.doc1.title')}
+              description={t('resources.doc1.description')}
             />
             <DocLink
               icon={<BookOpen className="h-5 w-5" />}
-              title="Best Practices Guide"
-              description="Tips for creating effective content"
+              title={t('resources.doc2.title')}
+              description={t('resources.doc2.description')}
             />
             <DocLink
               icon={<FileText className="h-5 w-5" />}
-              title="SCORM Standards Reference"
-              description="Understanding SCORM specifications"
+              title={t('resources.doc3.title')}
+              description={t('resources.doc3.description')}
             />
           </div>
         </section>
@@ -99,20 +104,20 @@ export default function ResourcesPage() {
         <section id="contact" className="bg-card rounded-2xl border border-border p-8 lg:p-12">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-4">Need Help? Contact Our Team</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-4">{t('resources.help.title')}</h2>
               <p className="text-muted-foreground mb-6">
-                Our support team is here to help you succeed. Reach out anytime with questions or feedback.
+                {t('resources.help.description')}
               </p>
 
               <div className="space-y-4 mb-8">
                 <ContactPerson
-                  name="Sarah Mitchell"
-                  role="Support Specialist"
+                  name={t('resources.contact1.name')}
+                  role={t('resources.contact1.role')}
                   avatar="/placeholder.svg?height=48&width=48"
                 />
                 <ContactPerson
-                  name="David Chen"
-                  role="Technical Support Lead"
+                  name={t('resources.contact2.name')}
+                  role={t('resources.contact2.role')}
                   avatar="/placeholder.svg?height=48&width=48"
                 />
               </div>
@@ -124,38 +129,38 @@ export default function ResourcesPage() {
                 </a>
                 <Link href="#" className="flex items-center gap-3 text-primary hover:underline">
                   <MessageCircle className="h-5 w-5" />
-                  <span>Live Chat Support</span>
+                  <span>{t('resources.help.chat')}</span>
                 </Link>
               </div>
             </div>
 
             <div className="bg-muted/30 rounded-xl p-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Send us a message</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-4">{t('resources.form.title')}</h3>
               <form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Your Name</label>
+                  <label className="block text-sm font-semibold text-foreground mb-2">{t('resources.form.name')}</label>
                   <input
                     type="text"
                     className="w-full px-4 py-2 rounded-lg border border-input bg-background text-sm"
-                    placeholder="John Doe"
+                    placeholder={t('resources.form.name.placeholder')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
+                  <label className="block text-sm font-semibold text-foreground mb-2">{t('resources.form.email')}</label>
                   <input
                     type="email"
                     className="w-full px-4 py-2 rounded-lg border border-input bg-background text-sm"
-                    placeholder="you@example.com"
+                    placeholder={t('resources.form.email.placeholder')}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Message</label>
+                  <label className="block text-sm font-semibold text-foreground mb-2">{t('resources.form.message')}</label>
                   <textarea
                     className="w-full px-4 py-2 rounded-lg border border-input bg-background text-sm min-h-[120px]"
-                    placeholder="How can we help you?"
+                    placeholder={t('resources.form.message.placeholder')}
                   />
                 </div>
-                <Button className="w-full">Send Message</Button>
+                <Button className="w-full">{t('resources.form.send')}</Button>
               </form>
             </div>
           </div>
@@ -180,6 +185,7 @@ function GuideCard({
   duration: string
   level: string
 }) {
+  const { t } = useLocale()
   return (
     <div className="bg-card rounded-xl border border-border p-6 hover:shadow-lg transition-shadow">
       <div className="flex items-start gap-4 mb-4">
@@ -199,7 +205,7 @@ function GuideCard({
       </div>
       <Button variant="outline" className="w-full bg-transparent">
         <BookOpen className="mr-2 h-4 w-4" />
-        Open Guide
+        {t('resources.guide.open')}
       </Button>
     </div>
   )
@@ -248,5 +254,4 @@ function ContactPerson({ name, role, avatar }: { name: string; role: string; ava
   )
 }
 
-// Import missing icons
-import { Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
+

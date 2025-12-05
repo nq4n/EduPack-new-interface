@@ -11,7 +11,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/check.js [app-ssr] (ecmascript) <export default as Check>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/hooks/use-locale.ts [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -19,6 +21,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 function PricingPage() {
     const [billingType, setBillingType] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("credits");
+    const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$hooks$2f$use$2d$locale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useLocale"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-background py-12",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -29,24 +32,24 @@ function PricingPage() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                             className: "text-4xl font-bold text-foreground mb-4",
-                            children: "Choose Your Plan"
+                            children: t('pricing.title')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 16,
+                            lineNumber: 18,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "text-lg text-muted-foreground max-w-2xl mx-auto",
-                            children: "Whether you need credits for occasional use or a subscription for regular content creation, we have flexible options for everyone."
+                            children: t('pricing.description')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 17,
+                            lineNumber: 19,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 15,
+                    lineNumber: 17,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -55,154 +58,154 @@ function PricingPage() {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setBillingType("credits"),
                             className: `px-8 py-3 rounded-lg font-semibold transition-colors ${billingType === "credits" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`,
-                            children: "Credits"
+                            children: t('pricing.tabs.credits')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 25,
+                            lineNumber: 26,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>setBillingType("subscribe"),
                             className: `px-8 py-3 rounded-lg font-semibold transition-colors ${billingType === "subscribe" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`,
-                            children: "Subscribe"
+                            children: t('pricing.tabs.subscribe')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 35,
+                            lineNumber: 36,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 24,
+                    lineNumber: 25,
                     columnNumber: 9
                 }, this),
                 billingType === "credits" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid md:grid-cols-3 gap-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Starter",
-                            credits: "50 Credits",
-                            price: "$9",
-                            description: "Perfect for trying out EduPack",
+                            title: t('pricing.credits.starter.title'),
+                            credits: t('pricing.credits.starter.credits'),
+                            price: t('pricing.credits.starter.price'),
+                            description: t('pricing.credits.starter.description'),
                             features: [
-                                "Create up to 5 packages",
-                                "SCORM 1.2 & 2004 export",
-                                "Basic AI assistance",
-                                "Community support"
+                                t('pricing.credits.starter.feature1'),
+                                t('pricing.credits.starter.feature2'),
+                                t('pricing.credits.starter.feature3'),
+                                t('pricing.credits.starter.feature4')
                             ],
-                            cta: "Choose Starter"
+                            cta: t('pricing.credits.starter.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 50,
+                            lineNumber: 51,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Teacher",
-                            credits: "200 Credits",
-                            price: "$29",
-                            description: "Best for individual educators",
+                            title: t('pricing.credits.teacher.title'),
+                            credits: t('pricing.credits.teacher.credits'),
+                            price: t('pricing.credits.teacher.price'),
+                            description: t('pricing.credits.teacher.description'),
                             features: [
-                                "Create up to 20 packages",
-                                "All SCORM formats + xAPI",
-                                "Advanced AI features",
-                                "Priority email support",
-                                "Custom branding"
+                                t('pricing.credits.teacher.feature1'),
+                                t('pricing.credits.teacher.feature2'),
+                                t('pricing.credits.teacher.feature3'),
+                                t('pricing.credits.teacher.feature4'),
+                                t('pricing.credits.teacher.feature5')
                             ],
                             highlighted: true,
-                            cta: "Choose Teacher"
+                            cta: t('pricing.credits.teacher.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 63,
+                            lineNumber: 64,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Team",
-                            credits: "500 Credits",
-                            price: "$59",
-                            description: "For schools and institutions",
+                            title: t('pricing.credits.team.title'),
+                            credits: t('pricing.credits.team.credits'),
+                            price: t('pricing.credits.team.price'),
+                            description: t('pricing.credits.team.description'),
                             features: [
-                                "Create up to 50 packages",
-                                "All SCORM formats + xAPI",
-                                "Premium AI features",
-                                "Priority phone support",
-                                "Team collaboration",
-                                "Analytics dashboard"
+                                t('pricing.credits.team.feature1'),
+                                t('pricing.credits.team.feature2'),
+                                t('pricing.credits.team.feature3'),
+                                t('pricing.credits.team.feature4'),
+                                t('pricing.credits.team.feature5'),
+                                t('pricing.credits.team.feature6')
                             ],
-                            cta: "Choose Team"
+                            cta: t('pricing.credits.team.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 78,
+                            lineNumber: 79,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 49,
+                    lineNumber: 50,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid md:grid-cols-3 gap-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Monthly",
-                            subtitle: "Billed monthly",
-                            price: "$19",
-                            period: "/month",
-                            description: "Flexible month-to-month billing",
+                            title: t('pricing.subscribe.monthly.title'),
+                            subtitle: t('pricing.subscribe.monthly.subtitle'),
+                            price: t('pricing.subscribe.monthly.price'),
+                            period: t('pricing.subscribe.monthly.period'),
+                            description: t('pricing.subscribe.monthly.description'),
                             features: [
-                                "Unlimited packages",
-                                "All SCORM formats",
-                                "Full AI assistance",
-                                "Priority support",
-                                "Cancel anytime"
+                                t('pricing.subscribe.monthly.feature1'),
+                                t('pricing.subscribe.monthly.feature2'),
+                                t('pricing.subscribe.monthly.feature3'),
+                                t('pricing.subscribe.monthly.feature4'),
+                                t('pricing.subscribe.monthly.feature5')
                             ],
-                            cta: "Start Monthly"
+                            cta: t('pricing.subscribe.monthly.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 96,
+                            lineNumber: 97,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Semester",
-                            subtitle: "Billed every 6 months",
-                            price: "$89",
-                            period: "/6 months",
-                            description: "Save 20% with semester billing",
+                            title: t('pricing.subscribe.semester.title'),
+                            subtitle: t('pricing.subscribe.semester.subtitle'),
+                            price: t('pricing.subscribe.semester.price'),
+                            period: t('pricing.subscribe.semester.period'),
+                            description: t('pricing.subscribe.semester.description'),
                             features: [
-                                "Everything in Monthly",
-                                "Save $25 per semester",
-                                "Extended storage",
-                                "Advanced analytics"
+                                t('pricing.subscribe.semester.feature1'),
+                                t('pricing.subscribe.semester.feature2'),
+                                t('pricing.subscribe.semester.feature3'),
+                                t('pricing.subscribe.semester.feature4')
                             ],
                             highlighted: true,
-                            cta: "Start Semester"
+                            cta: t('pricing.subscribe.semester.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 111,
+                            lineNumber: 112,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(PricingCard, {
-                            title: "Yearly",
-                            subtitle: "Billed annually",
-                            price: "$149",
-                            period: "/year",
-                            description: "Best value - save 35%",
+                            title: t('pricing.subscribe.yearly.title'),
+                            subtitle: t('pricing.subscribe.yearly.subtitle'),
+                            price: t('pricing.subscribe.yearly.price'),
+                            period: t('pricing.subscribe.yearly.period'),
+                            description: t('pricing.subscribe.yearly.description'),
                             features: [
-                                "Everything in Semester",
-                                "Save $79 per year",
-                                "Premium templates",
-                                "Dedicated account manager",
-                                "Custom integrations"
+                                t('pricing.subscribe.yearly.feature1'),
+                                t('pricing.subscribe.yearly.feature2'),
+                                t('pricing.subscribe.yearly.feature3'),
+                                t('pricing.subscribe.yearly.feature4'),
+                                t('pricing.subscribe.yearly.feature5')
                             ],
-                            cta: "Start Yearly"
+                            cta: t('pricing.subscribe.yearly.cta')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 127,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 95,
+                    lineNumber: 96,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -210,68 +213,68 @@ function PricingPage() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: "text-3xl font-bold text-foreground text-center mb-12",
-                            children: "Frequently Asked Questions"
+                            children: t('pricing.faq.title')
                         }, void 0, false, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 141,
+                            lineNumber: 147,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "grid md:grid-cols-2 gap-8 max-w-4xl mx-auto",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FAQItem, {
-                                    question: "What's the difference between credits and subscriptions?",
-                                    answer: "Credits are one-time purchases for occasional use, while subscriptions give you unlimited access for a recurring fee."
+                                    question: t('pricing.faq.q1'),
+                                    answer: t('pricing.faq.a1')
                                 }, void 0, false, {
                                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                                    lineNumber: 143,
+                                    lineNumber: 149,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FAQItem, {
-                                    question: "Can I upgrade or downgrade my plan?",
-                                    answer: "Yes! You can change your plan at any time. Credits never expire, and subscriptions can be upgraded immediately."
+                                    question: t('pricing.faq.q2'),
+                                    answer: t('pricing.faq.a2')
                                 }, void 0, false, {
                                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                                    lineNumber: 147,
+                                    lineNumber: 153,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FAQItem, {
-                                    question: "Do you offer refunds?",
-                                    answer: "We offer a 30-day money-back guarantee on all plans. If you're not satisfied, contact us for a full refund."
+                                    question: t('pricing.faq.q3'),
+                                    answer: t('pricing.faq.a3')
                                 }, void 0, false, {
                                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                                    lineNumber: 151,
+                                    lineNumber: 157,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FAQItem, {
-                                    question: "Is there a free trial?",
-                                    answer: "Yes! All new users get 10 free trial credits to explore EduPack's features before committing to a plan."
+                                    question: t('pricing.faq.q4'),
+                                    answer: t('pricing.faq.a4')
                                 }, void 0, false, {
                                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                                    lineNumber: 155,
+                                    lineNumber: 161,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/(public)/pricing/page.tsx",
-                            lineNumber: 142,
+                            lineNumber: 148,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 140,
+                    lineNumber: 146,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/(public)/pricing/page.tsx",
-            lineNumber: 13,
+            lineNumber: 15,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/(public)/pricing/page.tsx",
-        lineNumber: 12,
+        lineNumber: 14,
         columnNumber: 5
     }, this);
 }
@@ -287,7 +290,7 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                         children: title
                     }, void 0, false, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 196,
+                        lineNumber: 202,
                         columnNumber: 9
                     }, this),
                     subtitle && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -295,7 +298,7 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                         children: subtitle
                     }, void 0, false, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 197,
+                        lineNumber: 203,
                         columnNumber: 22
                     }, this),
                     credits && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -303,13 +306,13 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                         children: credits
                     }, void 0, false, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 198,
+                        lineNumber: 204,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 195,
+                lineNumber: 201,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -323,7 +326,7 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                                 children: price
                             }, void 0, false, {
                                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                                lineNumber: 203,
+                                lineNumber: 209,
                                 columnNumber: 11
                             }, this),
                             period && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -331,13 +334,13 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                                 children: period
                             }, void 0, false, {
                                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                                lineNumber: 204,
+                                lineNumber: 210,
                                 columnNumber: 22
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 202,
+                        lineNumber: 208,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -345,13 +348,13 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                         children: description
                     }, void 0, false, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 206,
+                        lineNumber: 212,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 201,
+                lineNumber: 207,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -363,7 +366,7 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                                 className: "h-5 w-5 text-primary flex-shrink-0 mt-0.5"
                             }, void 0, false, {
                                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                                lineNumber: 212,
+                                lineNumber: 218,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -371,18 +374,18 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                                 children: feature
                             }, void 0, false, {
                                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                                lineNumber: 213,
+                                lineNumber: 219,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, index, true, {
                         fileName: "[project]/app/(public)/pricing/page.tsx",
-                        lineNumber: 211,
+                        lineNumber: 217,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 209,
+                lineNumber: 215,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -394,18 +397,18 @@ function PricingCard({ title, subtitle, credits, price, period, description, fea
                     children: cta
                 }, void 0, false, {
                     fileName: "[project]/app/(public)/pricing/page.tsx",
-                    lineNumber: 219,
+                    lineNumber: 225,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 218,
+                lineNumber: 224,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(public)/pricing/page.tsx",
-        lineNumber: 190,
+        lineNumber: 196,
         columnNumber: 5
     }, this);
 }
@@ -417,7 +420,7 @@ function FAQItem({ question, answer }) {
                 children: question
             }, void 0, false, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 230,
+                lineNumber: 236,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -425,13 +428,13 @@ function FAQItem({ question, answer }) {
                 children: answer
             }, void 0, false, {
                 fileName: "[project]/app/(public)/pricing/page.tsx",
-                lineNumber: 231,
+                lineNumber: 237,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(public)/pricing/page.tsx",
-        lineNumber: 229,
+        lineNumber: 235,
         columnNumber: 5
     }, this);
 }

@@ -4,19 +4,20 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import Link from "next/link"
+import { useLocale } from "@/hooks/use-locale"
 
 export default function PricingPage() {
   const [billingType, setBillingType] = useState<"credits" | "subscribe">("credits")
+  const { t } = useLocale()
 
   return (
     <div className="min-h-screen bg-background py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">Choose Your Plan</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-4">{t('pricing.title')}</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Whether you need credits for occasional use or a subscription for regular content creation, we have flexible
-            options for everyone.
+            {t('pricing.description')}
           </p>
         </div>
 
@@ -30,7 +31,7 @@ export default function PricingPage() {
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
           >
-            Credits
+            {t('pricing.tabs.credits')}
           </button>
           <button
             onClick={() => setBillingType("subscribe")}
@@ -40,7 +41,7 @@ export default function PricingPage() {
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
           >
-            Subscribe
+            {t('pricing.tabs.subscribe')}
           </button>
         </div>
 
@@ -48,113 +49,118 @@ export default function PricingPage() {
         {billingType === "credits" ? (
           <div className="grid md:grid-cols-3 gap-8">
             <PricingCard
-              title="Starter"
-              credits="50 Credits"
-              price="$9"
-              description="Perfect for trying out EduPack"
+              title={t('pricing.credits.starter.title')}
+              credits={t('pricing.credits.starter.credits')}
+              price={t('pricing.credits.starter.price')}
+              description={t('pricing.credits.starter.description')}
               features={[
-                "Create up to 5 packages",
-                "SCORM 1.2 & 2004 export",
-                "Basic AI assistance",
-                "Community support",
+                t('pricing.credits.starter.feature1'),
+                t('pricing.credits.starter.feature2'),
+                t('pricing.credits.starter.feature3'),
+                t('pricing.credits.starter.feature4'),
               ]}
-              cta="Choose Starter"
+              cta={t('pricing.credits.starter.cta')}
             />
             <PricingCard
-              title="Teacher"
-              credits="200 Credits"
-              price="$29"
-              description="Best for individual educators"
+              title={t('pricing.credits.teacher.title')}
+              credits={t('pricing.credits.teacher.credits')}
+              price={t('pricing.credits.teacher.price')}
+              description={t('pricing.credits.teacher.description')}
               features={[
-                "Create up to 20 packages",
-                "All SCORM formats + xAPI",
-                "Advanced AI features",
-                "Priority email support",
-                "Custom branding",
+                t('pricing.credits.teacher.feature1'),
+                t('pricing.credits.teacher.feature2'),
+                t('pricing.credits.teacher.feature3'),
+                t('pricing.credits.teacher.feature4'),
+                t('pricing.credits.teacher.feature5'),
               ]}
               highlighted
-              cta="Choose Teacher"
+              cta={t('pricing.credits.teacher.cta')}
             />
             <PricingCard
-              title="Team"
-              credits="500 Credits"
-              price="$59"
-              description="For schools and institutions"
+              title={t('pricing.credits.team.title')}
+              credits={t('pricing.credits.team.credits')}
+              price={t('pricing.credits.team.price')}
+              description={t('pricing.credits.team.description')}
               features={[
-                "Create up to 50 packages",
-                "All SCORM formats + xAPI",
-                "Premium AI features",
-                "Priority phone support",
-                "Team collaboration",
-                "Analytics dashboard",
+                t('pricing.credits.team.feature1'),
+                t('pricing.credits.team.feature2'),
+                t('pricing.credits.team.feature3'),
+                t('pricing.credits.team.feature4'),
+                t('pricing.credits.team.feature5'),
+                t('pricing.credits.team.feature6'),
               ]}
-              cta="Choose Team"
+              cta={t('pricing.credits.team.cta')}
             />
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             <PricingCard
-              title="Monthly"
-              subtitle="Billed monthly"
-              price="$19"
-              period="/month"
-              description="Flexible month-to-month billing"
+              title={t('pricing.subscribe.monthly.title')}
+              subtitle={t('pricing.subscribe.monthly.subtitle')}
+              price={t('pricing.subscribe.monthly.price')}
+              period={t('pricing.subscribe.monthly.period')}
+              description={t('pricing.subscribe.monthly.description')}
               features={[
-                "Unlimited packages",
-                "All SCORM formats",
-                "Full AI assistance",
-                "Priority support",
-                "Cancel anytime",
+                t('pricing.subscribe.monthly.feature1'),
+                t('pricing.subscribe.monthly.feature2'),
+                t('pricing.subscribe.monthly.feature3'),
+                t('pricing.subscribe.monthly.feature4'),
+                t('pricing.subscribe.monthly.feature5'),
               ]}
-              cta="Start Monthly"
+              cta={t('pricing.subscribe.monthly.cta')}
             />
             <PricingCard
-              title="Semester"
-              subtitle="Billed every 6 months"
-              price="$89"
-              period="/6 months"
-              description="Save 20% with semester billing"
-              features={["Everything in Monthly", "Save $25 per semester", "Extended storage", "Advanced analytics"]}
+              title={t('pricing.subscribe.semester.title')}
+              subtitle={t('pricing.subscribe.semester.subtitle')}
+              price={t('pricing.subscribe.semester.price')}
+              period={t('pricing.subscribe.semester.period')}
+              description={t('pricing.subscribe.semester.description')}
+              features={[
+                t('pricing.subscribe.semester.feature1'),
+                t('pricing.subscribe.semester.feature2'),
+                t('pricing.subscribe.semester.feature3'),
+                t('pricing.subscribe.semester.feature4'),
+              ]}
               highlighted
-              cta="Start Semester"
+              cta={t('pricing.subscribe.semester.cta')}
             />
             <PricingCard
-              title="Yearly"
-              subtitle="Billed annually"
-              price="$149"
-              period="/year"
-              description="Best value - save 35%"
+              title={t('pricing.subscribe.yearly.title')}
+              subtitle={t('pricing.subscribe.yearly.subtitle')}
+              price={t('pricing.subscribe.yearly.price')}
+              period={t('pricing.subscribe.yearly.period')}
+              description={t('pricing.subscribe.yearly.description')}
               features={[
-                "Everything in Semester",
-                "Save $79 per year",
-                "Premium templates",
-                "Dedicated account manager",
-                "Custom integrations",
+                t('pricing.subscribe.yearly.feature1'),
+                t('pricing.subscribe.yearly.feature2'),
+                t('pricing.subscribe.yearly.feature3'),
+                t('pricing.subscribe.yearly.feature4'),
+                t('pricing.subscribe.yearly.feature5'),
               ]}
-              cta="Start Yearly"
+              cta={t('pricing.subscribe.yearly.cta')}
             />
           </div>
         )}
 
         {/* FAQ Section */}
         <div className="mt-20">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-12">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-foreground text-center mb-12">{t('pricing.faq.title')}</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <FAQItem
-              question="What's the difference between credits and subscriptions?"
-              answer="Credits are one-time purchases for occasional use, while subscriptions give you unlimited access for a recurring fee."
+              question={t('pricing.faq.q1')}
+              answer={t('pricing.faq.a1')}
             />
             <FAQItem
-              question="Can I upgrade or downgrade my plan?"
-              answer="Yes! You can change your plan at any time. Credits never expire, and subscriptions can be upgraded immediately."
+              question={t('pricing.faq.q2')}
+              answer={t('pricing.faq.a2')}
             />
             <FAQItem
-              question="Do you offer refunds?"
-              answer="We offer a 30-day money-back guarantee on all plans. If you're not satisfied, contact us for a full refund."
+              question={t('pricing.faq.q3')}
+              answer={t('pricing.faq.a3')}
             />
             <FAQItem
-              question="Is there a free trial?"
-              answer="Yes! All new users get 10 free trial credits to explore EduPack's features before committing to a plan."
+              question={t('pricing.faq.q4')}
+              answer={t('pricing.faq.a4')}
             />
           </div>
         </div>

@@ -121,7 +121,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
           </h4>
           <div>
             <label className="block mb-1 text-xs font-medium">
-              Text Color
+              {t('scorm.props.project.styles.textColor')}
             </label>
             <input
               type="color"
@@ -142,7 +142,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
         {/* General Tracking */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.generalTracking") || "General Tracking"}
+            {t("scorm.projectPanel.generalTracking")}
           </h4>
           <div className="flex items-center gap-4">
             <label className="flex items-center space-x-2 text-xs">
@@ -154,7 +154,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={() => updateProject({ tracking: { ...project.tracking, level: "minimal" } })}
                 className="form-radio h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.minimal") || "Minimal"}</span>
+              <span>{t("scorm.projectPanel.tracking.minimal")}</span>
             </label>
             <label className="flex items-center space-x-2 text-xs">
               <input
@@ -165,7 +165,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={() => updateProject({ tracking: { ...project.tracking, level: "standard" } })}
                 className="form-radio h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.standard") || "Standard"}</span>
+              <span>{t("scorm.projectPanel.tracking.standard")}</span>
             </label>
             <label className="flex items-center space-x-2 text-xs">
               <input
@@ -176,7 +176,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={() => updateProject({ tracking: { ...project.tracking, level: "advanced" } })}
                 className="form-radio h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.advanced") || "Advanced"}</span>
+              <span>{t("scorm.projectPanel.tracking.advanced")}</span>
             </label>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
         {/* Advanced Options */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.advancedOptions") || "Advanced Options"}
+            {t("scorm.projectPanel.advancedOptions")}
           </h4>
           <div className="grid grid-cols-2 gap-2 text-xs">
             <label className="flex items-center space-x-2">
@@ -194,7 +194,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, pageViews: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.pageViews") || "Track page views"}</span>
+              <span>{t("scorm.projectPanel.tracking.pageViews")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -203,7 +203,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, quizInteractions: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.quizInteractions") || "Track quiz interactions"}</span>
+              <span>{t("scorm.projectPanel.tracking.quizInteractions")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -212,7 +212,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, media: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.media") || "Track media (play/pause/seek)"}</span>
+              <span>{t("scorm.projectPanel.tracking.media")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -221,7 +221,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, hints: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.hints") || "Track hints/help usage"}</span>
+              <span>{t("scorm.projectPanel.tracking.hints")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -230,7 +230,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, externalLinks: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.externalLinks") || "Track external links"}</span>
+              <span>{t("scorm.projectPanel.tracking.externalLinks")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -239,7 +239,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, timePerPage: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.timePerPage") || "Track time per page"}</span>
+              <span>{t("scorm.projectPanel.tracking.timePerPage")}</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -248,7 +248,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
                 onChange={(e) => updateProject({ tracking: { ...project.tracking, attempts: e.target.checked } })}
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
-              <span>{t("scorm.projectPanel.tracking.attempts") || "Track attempts"}</span>
+              <span>{t("scorm.projectPanel.tracking.attempts")}</span>
             </label>
           </div>
         </div>
@@ -256,12 +256,12 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
         {/* xAPI Only Options */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.xapiOptions") || "xAPI Only Options"}
+            {t("scorm.projectPanel.xapiOptions")}
           </h4>
           <div className="space-y-2">
             <div>
               <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.lrsEndpoint") || "LRS Endpoint"}
+                {t("scorm.projectPanel.xapi.lrsEndpoint")}
               </label>
               <input
                 type="text"
@@ -272,7 +272,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
             </div>
             <div>
               <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.authToken") || "Auth token"}
+                {t("scorm.projectPanel.xapi.authToken")}
               </label>
               <input
                 type="text"
@@ -283,7 +283,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
             </div>
             <div>
               <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.activityIdFormat") || "Activity ID format"}
+                {t("scorm.projectPanel.xapi.activityIdFormat")}
               </label>
               <input
                 type="text"
@@ -294,7 +294,7 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
             </div>
             <div>
               <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.statementExtensions") || "Statement extensions"}
+                {t("scorm.projectPanel.xapi.statementExtensions")}
               </label>
               <textarea
                 className="w-full border rounded px-2 py-1 text-xs"
@@ -309,19 +309,19 @@ export default function ProjectPanel({ project, onChange, onAddPage }: ProjectPa
         {/* Export Panel */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.exportPanel") || "Export Options"}
+            {t("scorm.projectPanel.exportPanel")}
           </h4>
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <Button variant="outline" size="sm" className="h-7">SCORM 1.2</Button>
-            <Button variant="outline" size="sm" className="h-7">SCORM 2004</Button>
-            <Button variant="outline" size="sm" className="h-7">xAPI/cmi5</Button>
-            <Button variant="outline" size="sm" className="h-7">HTML5 Package</Button>
-            <Button variant="outline" size="sm" className="h-7">Public Link</Button>
-            <Button variant="outline" size="sm" className="h-7">Embed Code</Button>
-            <Button variant="outline" size="sm" className="h-7">Teacher PDF</Button>
-            <Button variant="outline" size="sm" className="h-7">Student PDF</Button>
-            <Button variant="outline" size="sm" className="h-7">JSON source</Button>
-            <Button variant="outline" size="sm" className="h-7">QTI/Moodle Question Bank</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.scorm12')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.scorm2004')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.xapi')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.html5')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.publicLink')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.embedCode')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.teacherPdf')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.studentPdf')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.json')}</Button>
+            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.qti')}</Button>
           </div>
         </div>
 

@@ -2149,7 +2149,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                         className: "block mb-1 text-xs font-medium",
-                                        children: "Text Color"
+                                        children: t('scorm.props.project.styles.textColor')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 123,
@@ -2190,7 +2190,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
                                 className: "font-semibold text-slate-700 text-xs mt-2",
-                                children: t("scorm.projectPanel.generalTracking") || "General Tracking"
+                                children: t("scorm.projectPanel.generalTracking")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                 lineNumber: 144,
@@ -2220,7 +2220,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.minimal") || "Minimal"
+                                                children: t("scorm.projectPanel.tracking.minimal")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 157,
@@ -2253,7 +2253,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.standard") || "Standard"
+                                                children: t("scorm.projectPanel.tracking.standard")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 168,
@@ -2286,7 +2286,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.advanced") || "Advanced"
+                                                children: t("scorm.projectPanel.tracking.advanced")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 179,
@@ -2315,7 +2315,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
                                 className: "font-semibold text-slate-700 text-xs mt-2",
-                                children: t("scorm.projectPanel.advancedOptions") || "Advanced Options"
+                                children: t("scorm.projectPanel.advancedOptions")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                 lineNumber: 186,
@@ -2343,7 +2343,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.pageViews") || "Track page views"
+                                                children: t("scorm.projectPanel.tracking.pageViews")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 197,
@@ -2374,7 +2374,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.quizInteractions") || "Track quiz interactions"
+                                                children: t("scorm.projectPanel.tracking.quizInteractions")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 206,
@@ -2405,7 +2405,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.media") || "Track media (play/pause/seek)"
+                                                children: t("scorm.projectPanel.tracking.media")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 215,
@@ -2436,7 +2436,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.hints") || "Track hints/help usage"
+                                                children: t("scorm.projectPanel.tracking.hints")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 224,
@@ -2467,7 +2467,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.externalLinks") || "Track external links"
+                                                children: t("scorm.projectPanel.tracking.externalLinks")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 233,
@@ -2498,7 +2498,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.timePerPage") || "Track time per page"
+                                                children: t("scorm.projectPanel.tracking.timePerPage")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 242,
@@ -2529,7 +2529,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: t("scorm.projectPanel.tracking.attempts") || "Track attempts"
+                                                children: t("scorm.projectPanel.tracking.attempts")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 251,
@@ -2558,7 +2558,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
                                 className: "font-semibold text-slate-700 text-xs mt-2",
-                                children: t("scorm.projectPanel.xapiOptions") || "xAPI Only Options"
+                                children: t("scorm.projectPanel.xapiOptions")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                 lineNumber: 258,
@@ -2571,7 +2571,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                 className: "block mb-1 text-xs font-medium",
-                                                children: t("scorm.projectPanel.xapi.lrsEndpoint") || "LRS Endpoint"
+                                                children: t("scorm.projectPanel.xapi.lrsEndpoint")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 263,
@@ -2602,7 +2602,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                 className: "block mb-1 text-xs font-medium",
-                                                children: t("scorm.projectPanel.xapi.authToken") || "Auth token"
+                                                children: t("scorm.projectPanel.xapi.authToken")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 274,
@@ -2633,7 +2633,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                 className: "block mb-1 text-xs font-medium",
-                                                children: t("scorm.projectPanel.xapi.activityIdFormat") || "Activity ID format"
+                                                children: t("scorm.projectPanel.xapi.activityIdFormat")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 285,
@@ -2664,7 +2664,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                                 className: "block mb-1 text-xs font-medium",
-                                                children: t("scorm.projectPanel.xapi.statementExtensions") || "Statement extensions"
+                                                children: t("scorm.projectPanel.xapi.statementExtensions")
                                             }, void 0, false, {
                                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                                 lineNumber: 296,
@@ -2708,7 +2708,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
                                 className: "font-semibold text-slate-700 text-xs mt-2",
-                                children: t("scorm.projectPanel.exportPanel") || "Export Options"
+                                children: t("scorm.projectPanel.exportPanel")
                             }, void 0, false, {
                                 fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                 lineNumber: 311,
@@ -2721,7 +2721,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "SCORM 1.2"
+                                        children: t('scorm.projectPanel.export.scorm12')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 315,
@@ -2731,7 +2731,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "SCORM 2004"
+                                        children: t('scorm.projectPanel.export.scorm2004')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 316,
@@ -2741,7 +2741,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "xAPI/cmi5"
+                                        children: t('scorm.projectPanel.export.xapi')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 317,
@@ -2751,7 +2751,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "HTML5 Package"
+                                        children: t('scorm.projectPanel.export.html5')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 318,
@@ -2761,7 +2761,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "Public Link"
+                                        children: t('scorm.projectPanel.export.publicLink')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 319,
@@ -2771,7 +2771,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "Embed Code"
+                                        children: t('scorm.projectPanel.export.embedCode')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 320,
@@ -2781,7 +2781,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "Teacher PDF"
+                                        children: t('scorm.projectPanel.export.teacherPdf')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 321,
@@ -2791,7 +2791,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "Student PDF"
+                                        children: t('scorm.projectPanel.export.studentPdf')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 322,
@@ -2801,7 +2801,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "JSON source"
+                                        children: t('scorm.projectPanel.export.json')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 323,
@@ -2811,7 +2811,7 @@ function ProjectPanel({ project, onChange, onAddPage }) {
                                         variant: "outline",
                                         size: "sm",
                                         className: "h-7",
-                                        children: "QTI/Moodle Question Bank"
+                                        children: t('scorm.projectPanel.export.qti')
                                     }, void 0, false, {
                                         fileName: "[project]/components/scorm/panels/project-panel.tsx",
                                         lineNumber: 324,
