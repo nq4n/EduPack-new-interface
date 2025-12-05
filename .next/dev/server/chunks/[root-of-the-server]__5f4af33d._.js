@@ -48,72 +48,83 @@ __turbopack_context__.s([
     "POST",
     ()=>POST
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@supabase/ssr/dist/module/index.js [app-route] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@supabase/ssr/dist/module/createServerClient.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/headers.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
-;
+(()=>{
+    const e = new Error("Cannot find module 'lib/supabase/client'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@16.0.3_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next/server.js [app-route] (ecmascript)");
 ;
 ;
 async function POST(request) {
-    const cookieStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["cookies"])();
-    const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createServerClient"])(("TURBOPACK compile-time value", "https://xnyniavtnqimkhskdpyq.supabase.co"), ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhueW5pYXZ0bnFpbWtoc2tkcHlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4NDUzMzksImV4cCI6MjA4MDQyMTMzOX0.c8VnJsruL4LP6VWlhe4tGXZbtLDqmItlM9n2-Ra7Hx0"), {
-        cookies: {
-            get (name) {
-                return cookieStore.get(name)?.value;
-            },
-            set (name, value, options) {
-                cookieStore.set({
-                    name,
-                    value,
-                    ...options
-                });
-            },
-            remove (name, options) {
-                cookieStore.delete({
-                    name,
-                    ...options
-                });
-            }
-        }
-    });
+    // 1. Get user and validate session
+    const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
-            error: 'You must be logged in to save a project.'
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
+            error: 'User not logged in.'
         }), {
             status: 401
         });
     }
-    // Now that the user is authenticated, we can safely get the request body.
+    // 2. Get and validate the project data from the request body
     const project = await request.json();
     if (!project || !project.id) {
-        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
             error: 'Invalid project data.'
         }), {
             status: 400
         });
     }
-    const { data, error } = await supabase.from('packages').upsert({
-        id: project.id,
-        user_id: user.id,
-        content: project,
-        title: project.title,
-        updated_at: new Date().toISOString()
-    }).select().single();
-    if (error) {
-        console.error('Error saving project to Supabase:', error.message);
-        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
-            error: 'Failed to save project.',
-            details: error.message
+    const filePath = `${user.id}/${project.id}/project.json`;
+    // 3. Upload the project JSON to Supabase Storage
+    try {
+        const { error: storageError } = await supabase.storage.from('packages').upload(filePath, JSON.stringify(project), {
+            cacheControl: '3600',
+            upsert: true
+        });
+        if (storageError) {
+            throw new Error(`Supabase Storage Error: ${storageError.message}`);
+        }
+    } catch (e) {
+        console.error('--- STORAGE UPLOAD FAILED ---', e.message);
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
+            error: '[STORAGE_UPLOAD_FAILED] Failed to save project content.',
+            details: e.message
         }), {
             status: 500
         });
     }
-    return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-        message: 'Project saved successfully',
-        data
-    });
+    // 4. Save the project metadata to the Supabase database
+    try {
+        const packageData = {
+            package_id: project.id,
+            title: project.title,
+            description: project.description || null,
+            is_listed_in_store: project.isListedInStore || false,
+            storage_path: filePath,
+            created_by_user_id: user.id,
+            updated_at: new Date().toISOString()
+        };
+        // Use the Supabase client to upsert data into the 'packages' table
+        const { error: dbError } = await supabase.from('packages').upsert(packageData, {
+            onConflict: 'package_id'
+        }); // ADDED: onConflict option
+        if (dbError) {
+            throw new Error(`Supabase DB Error: ${dbError.message}`);
+        }
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            message: 'Project saved successfully'
+        });
+    } catch (e) {
+        console.error('--- DATABASE WRITE FAILED (SUPABASE) ---', e.message);
+        return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"](JSON.stringify({
+            error: '[DATABASE_WRITE_FAILED] Failed to save project metadata.',
+            details: e.message
+        }), {
+            status: 500
+        });
+    }
 }
 }),
 ];

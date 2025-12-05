@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export function createClient() {
@@ -12,11 +12,21 @@ export function createClient() {
         get(name: string) {
           return cookieStore.get(name)?.value
         },
-        set(name: string, value: string, options: any) {
-          cookieStore.set({ name, value, ...options })
+        set(name: string, value: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value, ...options })
+          } catch (error) {
+            // The `cookies().set()` method can only be called in a Server Action or Route Handler
+            // If you're called from a Server Component, this would be a no-op.
+          }
         },
-        remove(name: string, options: any) {
-          cookieStore.delete({ name, ...options })
+        remove(name: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value: '', ...options, maxAge: -1 })
+          } catch (error) {
+            // The `cookies().set()` method can only be called in a Server Action or Route Handler
+            // If you're called from a Server Component, this would be a no-op.
+          }
         },
       },
     }

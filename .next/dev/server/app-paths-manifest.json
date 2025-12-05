@@ -1,6 +1,4 @@
 {
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/scorm/save/route": "app/api/scorm/save/route.js",
-  "/page": "app/page.js"
+  "/api/scorm/save/route": "app/api/scorm/save/route.js"
 }
