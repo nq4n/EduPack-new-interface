@@ -1,162 +1,104 @@
-[00:00:06.024] Server  LOG      ✓ Ready in 4.4s
-[00:00:09.354] Server  LOG      ○ Compiling / ...
-[00:01:55.950] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:03.598] Server  ERROR    ⨯ The file "./proxy.ts" must export a function, either as a default export or as a named "proxy" export.
+This function is what Next.js runs for every request handled by this proxy (previously called middleware).
+
+Why this happens:
+- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
+- The file exists but doesn't export a function.
+- The export is not a function (e.g., an object or constant).
+- There's a syntax error preventing the export from being recognized.
+
+To fix it:
+- Ensure this file has either a default or "proxy" function export.
+
+Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:03.932] Server  LOG      ✓ Ready in 3.4s
+[00:00:13.785] Server  ERROR    ⨯ Error: The Proxy file "/proxy" must export a function named `proxy` or a default function.
+[00:00:20.100] Server  LOG      ○ Compiling /_not-found/page ...
+[00:00:20.532] Server  WARN     ⚠ Cross origin request detected from 3000-firebase-edupack-new-1764609437183.cluster-p5o54ufozbgxywgwqxykwgahws.cloudworkstations.dev to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:01:56.123] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:04.896] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:14:28.505] Server  LOG      ✓ Compiled in 772ms
-[00:14:36.529] Server  LOG      ✓ Compiled in 422ms
-[00:16:46.742] Browser ERROR   ./app/resources/page.tsx:263:41
-Ecmascript file had an error
-  261 |
-  262 | // Import missing icons
-> 263 | import { Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
-      |                                         ^^^^^
-  264 |
+[00:00:20.864] Browser ERROR   uncaughtError: Error: ./proxy.ts
+Proxy is missing expected function export name
+This function is what Next.js runs for every request handled by this proxy (previously called middleware).
 
-the name `Cloud` is defined multiple times
+Why this happens:
+- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
+- The file exists but doesn't export a function.
+- The export is not a function (e.g., an object or constant).
+- There's a syntax error preventing the export from being recognized.
 
-Import traces:
-  Client Component Browser:
-    ./app/resources/page.tsx [Client Component Browser]
-    ./app/resources/page.tsx [Server Component]
+To fix it:
+- Ensure this file has either a default or "proxy" function export.
 
-  Client Component SSR:
-    ./app/resources/page.tsx [Client Component SSR]
-    ./app/resources/page.tsx [Server Component]
-[00:16:46.742] Browser ERROR   ./app/resources/page.tsx:263:28
-Ecmascript file had an error
-  261 |
-  262 | // Import missing icons
-> 263 | import { Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
-      |                            ^^^^^^^^^^^
-  264 |
+Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
 
-the name `ShoppingBag` is defined multiple times
 
-Import traces:
-  Client Component Browser:
-    ./app/resources/page.tsx [Client Component Browser]
-    ./app/resources/page.tsx [Server Component]
+[00:00:21.376] Browser ERROR   ./proxy.ts
+Proxy is missing expected function export name
+This function is what Next.js runs for every request handled by this proxy (previously called middleware).
 
-  Client Component SSR:
-    ./app/resources/page.tsx [Client Component SSR]
-    ./app/resources/page.tsx [Server Component]
-[00:16:46.745] Browser ERROR   ./app/resources/page.tsx:263:10
-Ecmascript file had an error
-  261 |
-  262 | // Import missing icons
-> 263 | import { Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
-      |          ^^^^^^^^
-  264 |
+Why this happens:
+- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
+- The file exists but doesn't export a function.
+- The export is not a function (e.g., an object or constant).
+- There's a syntax error preventing the export from being recognized.
 
-the name `Sparkles` is defined multiple times
+To fix it:
+- Ensure this file has either a default or "proxy" function export.
 
-Import traces:
-  Client Component Browser:
-    ./app/resources/page.tsx [Client Component Browser]
-    ./app/resources/page.tsx [Server Component]
+Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:32.093] Browser ERROR   ./proxy.ts
+Proxy is missing expected function export name
+This function is what Next.js runs for every request handled by this proxy (previously called middleware).
 
-  Client Component SSR:
-    ./app/resources/page.tsx [Client Component SSR]
-    ./app/resources/page.tsx [Server Component]
-[00:16:46.746] Browser ERROR   ./app/resources/page.tsx:263:20
-Ecmascript file had an error
-  261 |
-  262 | // Import missing icons
-> 263 | import { Sparkles, Upload, ShoppingBag, Cloud } from "lucide-react"
-      |                    ^^^^^^
-  264 |
+Why this happens:
+- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
+- The file exists but doesn't export a function.
+- The export is not a function (e.g., an object or constant).
+- There's a syntax error preventing the export from being recognized.
 
-the name `Upload` is defined multiple times
+To fix it:
+- Ensure this file has either a default or "proxy" function export.
 
-Import traces:
-  Client Component Browser:
-    ./app/resources/page.tsx [Client Component Browser]
-    ./app/resources/page.tsx [Server Component]
+Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:32.094] Browser ERROR   ./proxy.ts
+Proxy is missing expected function export name
+This function is what Next.js runs for every request handled by this proxy (previously called middleware).
 
-  Client Component SSR:
-    ./app/resources/page.tsx [Client Component SSR]
-    ./app/resources/page.tsx [Server Component]
-[00:17:14.642] Server  LOG      ✓ Compiled in 438ms
-[00:19:29.928] Server  LOG      ✓ Compiled in 480ms
-[00:19:34.525] Server  LOG      ✓ Compiled in 486ms
-[00:19:54.792] Server  LOG      ✓ Compiled in 191ms
-[00:19:59.771] Server  LOG      ✓ Compiled in 318ms
-[00:41:53.617] Browser ERROR   uncaughtError: TypeError: t is not a function
-[00:42:14.813] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:42:16.347] Server  LOG      ✓ Compiled in 343ms
-[00:43:27.230] Server  LOG      ✓ Compiled in 205ms
-[00:47:12.195] Server  LOG      ✓ Compiled in 299ms
-[01:21:26.607] Server  LOG      ✓ Compiled in 2.2s
-[01:23:12.616] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:23:38.608] Server  LOG      ✓ Compiled in 1426ms
-[01:25:39.867] Server  LOG      ✓ Compiled in 113ms
-[01:27:14.936] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:38:28.346] Browser ERROR   ./app/resources/page.tsx:1:40
-Parsing ecmascript source code failed
-> 1 |                         placeholder={t('resources.form.message.placeholder')}
-    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  2 |                       />
-  3 |                 </div>
-  4 |                 <Button className="w-full">{t('resources.form.send')}</Button>
+Why this happens:
+- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
+- The file exists but doesn't export a function.
+- The export is not a function (e.g., an object or constant).
+- There's a syntax error preventing the export from being recognized.
 
-Unexpected token `string literal (resources.form.message.placeholder, 'resources.form.message.placeholder')`. Expected yield, an identifier, [ or {
+To fix it:
+- Ensure this file has either a default or "proxy" function export.
 
-Import traces:
-  Client Component Browser:
-    ./app/resources/page.tsx [Client Component Browser]
-    ./app/resources/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/resources/page.tsx [Client Component SSR]
-    ./app/resources/page.tsx [Server Component]
-[01:40:14.524] Server  LOG      ✓ Compiled in 163ms
-[01:52:05.518] Server  LOG      ✓ Compiled in 541ms
-[01:53:59.585] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:53:59.835] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <MenuProvider scope={{Menu:[...], ...}} open={false} onOpenChange={function useCallbackRef.useMemo} content={null} ...>
-      <MenuProvider scope={{Menu:[...], ...}} onClose={function Menu.useCallback} isUsingKeyboardRef={{current:false}} ...>
-        <DropdownMenuTrigger asChild={true}>
-          <DropdownMenuTrigger data-slot="dropdown-m..." asChild={true}>
-            <MenuAnchor asChild={true} __scopeMenu={{Menu:[...], ...}}>
-              <PopperAnchor __scopePopper={{Menu:[...], ...}} asChild={true} ref={null}>
-                <Primitive.div asChild={true} ref={function}>
-                  <Slot ref={function}>
-                    <SlotClone ref={function}>
-                      <Primitive.button type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
-                        <Slot type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
-                          <SlotClone type="button" id="radix-_R_1..." aria-haspopup="menu" aria-expanded={false} ...>
-                            <Button variant="ghost" size="icon" className="h-9 w-9" type="button" id="radix-_R_1..." ...>
-                              <button
-                                data-slot="dropdown-menu-trigger"
-                                className={"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-m..."}
-                                type="button"
-+                               id="radix-_R_1dlb_"
--                               id="radix-_R_5llb_"
-                                aria-haspopup="menu"
-                                aria-expanded={false}
-                                aria-controls={undefined}
-                                data-state="closed"
-                                data-disabled={undefined}
-                                disabled={false}
-                                onPointerDown={function handleEvent}
-                                onKeyDown={function handleEvent}
-                                ref={function}
-                              >
-        ...
-
-[01:54:19.878] Server  LOG     Orchestrator: Starting lesson build for prompt: "build a lesson that explaine ADDIE model"
-[01:54:20.385] Server  ERROR   [API /ai/lesson/build] Error: ReferenceError: generateLessonFromPrompt is not defined
+Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:01:00.246] Server  LOG      ✓ Compiled in 280ms
+[00:01:06.761] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:06.958] Browser WARN    GoTrueClient@sb-xnyniavtnqimkhskdpyq-auth-token:1 (2.86.2) 2025-12-05T13:47:19.554Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+[00:01:25.137] Server  LOG      ○ Compiling /api/scorm/save ...
+[00:01:27.140] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:27.445] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:27.613] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:27.680] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:27.769] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:27.826] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:27.943] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:28.033] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:01:28.163] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
+[00:01:28.273] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:28.333] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:01:28.435] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
+[00:01:39.081] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:39.338] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:39.446] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:39.605] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:39.705] Server  WARN    Error: Route "/api/scorm/save" used `cookies().get`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:01:39.772] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:39.883] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:39.980] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:01:40.070] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function
+[00:01:40.173] Server  ERROR   TypeError: cookieStore.get is not a function
+[00:01:40.361] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.get is not a function
+[00:01:40.440] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.get is not a function

@@ -12,6 +12,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [preferredLanguage, setPreferredLanguage] = useState("en")
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
   const router = useRouter()
@@ -26,7 +27,7 @@ export default function RegisterPage() {
       return
     }
 
-    const { error } = await signUpNewUser(email, password, fullName)
+    const { error } = await signUpNewUser(email, password, fullName, preferredLanguage)
 
     if (error) {
       setError(error.message)
@@ -99,12 +100,15 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-foreground mb-2">Role</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm">
-                <option>Teacher</option>
-                <option>Student</option>
-                <option>EdTech Professional</option>
-                <option>Other</option>
+              <label className="block text-sm font-semibold text-foreground mb-2">Preferred Language</label>
+              <select
+                className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
+                value={preferredLanguage}
+                onChange={(e) => setPreferredLanguage(e.target.value)}
+                required
+              >
+                <option value="en">English</option>
+                <option value="ar">Arabic</option>
               </select>
             </div>
 

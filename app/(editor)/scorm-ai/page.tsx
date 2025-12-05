@@ -33,7 +33,7 @@ import {
   Clock,
 } from "lucide-react"
 import { useScormAI } from "@/hooks/useScormAI"
-
+import { toast } from "sonner";
 type Status = "draft" | "published"
 
 type ChatMessage = {
@@ -160,11 +160,25 @@ export default function ScormAIPage() {
     submitPrompt(prompt, isInitialGeneration)
   }
 
-  const handleSave = () => {
-    console.log("Project saved!", project)
-    alert(t("scorm.ai.projectSaved"))
-    setStatus("draft")
-  }
+  const handleSave = async () => {
+    const promise = fetch("/api/scorm/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    });
+  
+    toast.promise(promise, {
+      loading: "Saving package...",
+      success: (data) => {
+        setStatus("draft");
+        return `Package saved successfully!`;
+      },
+      error: "Error saving package",
+    });
+  };
+  
 
   const handleExport = async () => {
     try {

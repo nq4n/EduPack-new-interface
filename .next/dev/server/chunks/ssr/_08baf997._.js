@@ -262,7 +262,215 @@ const translations = {
         "scorm.projectPanel.pageOrganization": "Page Organization",
         "scorm.projectPanel.addPage": "Add Page",
         "scorm.projectPanel.deleteLastPageError": "You cannot delete the last page.",
-        "scorm.projectPanel.deleteConfirm": "Are you sure you want to delete this page?"
+        "scorm.projectPanel.deleteConfirm": "Are you sure you want to delete this page?",
+        "resources.title": "How to Use EduPack",
+        "resources.description": "Step-by-step guides, video tutorials, and resources to help you get the most out of EduPack",
+        "resources.guide1.title": "Create your first package with SCORM AI",
+        "resources.guide1.description": "Learn how to use our AI-powered authoring tool to build interactive SCORM packages from scratch",
+        "resources.guide1.duration": "10 min read",
+        "resources.guide1.level": "Beginner",
+        "resources.guide2.title": "Upload and publish a package",
+        "resources.guide2.description": "Step-by-step guide to uploading your existing SCORM content and making it available in the marketplace",
+        "resources.guide2.duration": "5 min read",
+        "resources.guide2.level": "Beginner",
+        "resources.guide3.title": "Buy and download packages from the shop",
+        "resources.guide3.description": "Discover how to find, preview, and purchase ready-made educational packages for your LMS",
+        "resources.guide3.duration": "7 min read",
+        "resources.guide3.level": "Beginner",
+        "resources.guide4.title": "Connect EduPack packages to your LMS",
+        "resources.guide4.description": "Integration guides for Moodle, Canvas, Blackboard, and other popular learning management systems",
+        "resources.guide4.duration": "15 min read",
+        "resources.guide4.level": "Intermediate",
+        "resources.videos.title": "Video Tutorials",
+        "resources.video1.title": "Getting Started with EduPack",
+        "resources.video1.duration": "8:34",
+        "resources.video2.title": "AI Content Generation Tips",
+        "resources.video2.duration": "12:15",
+        "resources.video3.title": "Advanced Authoring Techniques",
+        "resources.video3.duration": "18:47",
+        "resources.docs.title": "Documentation",
+        "resources.doc1.title": "API Documentation",
+        "resources.doc1.description": "For developers integrating EduPack",
+        "resources.doc2.title": "Best Practices Guide",
+        "resources.doc2.description": "Tips for creating effective content",
+        "resources.doc3.title": "SCORM Standards Reference",
+        "resources.doc3.description": "Understanding SCORM specifications",
+        "resources.help.title": "Need Help? Contact Our Team",
+        "resources.help.description": "Our support team is here to help you succeed. Reach out anytime with questions or feedback.",
+        "resources.contact1.name": "Muiayad Al HAsani",
+        "resources.contact1.role": "page devloper",
+        "resources.contact2.name": "Ali Al Badri",
+        "resources.contact2.role": "page desginer",
+        "resources.help.chat": "Live Chat Support",
+        "resources.form.title": "Send us a message",
+        "resources.form.name": "Your Name",
+        "resources.form.name.placeholder": "John Doe",
+        "resources.form.email": "Email",
+        "resources.form.email.placeholder": "you@example.com",
+        "resources.form.message": "Message",
+        "resources.form.message.placeholder": "How can we help you?",
+        "resources.form.send": "Send Message",
+        "resources.guide.open": "Open Guide",
+        "features.hero.title": "Why Choose EduPack?",
+        "features.hero.description": "The most powerful and user-friendly SCORM authoring platform for educators and institutions. Create professional e-learning content without the complexity.",
+        "features.comparison.title": "EduPack vs Traditional Tools",
+        "features.comparison.feature": "Feature",
+        "features.comparison.traditional": "Traditional Tools",
+        "features.comparison.edupack": "EduPack",
+        "features.comparison.price.feature": "Starting Price",
+        "features.comparison.price.traditional": "$500-2000/year",
+        "features.comparison.price.edupack": "$9 (pay as you go)",
+        "features.comparison.curve.feature": "Learning Curve",
+        "features.comparison.curve.traditional": "Weeks to months",
+        "features.comparison.curve.edupack": "Minutes to hours",
+        "features.comparison.ai.feature": "AI Assistance",
+        "features.comparison.ai.traditional": "None",
+        "features.comparison.ai.edupack": "Built-in AI content generation",
+        "features.comparison.marketplace.feature": "Marketplace",
+        "features.comparison.marketplace.traditional": "Separate platforms",
+        "features.comparison.marketplace.edupack": "Integrated buy & sell",
+        "features.comparison.support.feature": "Technical Support",
+        "features.comparison.support.traditional": "Business hours only",
+        "features.comparison.support.edupack": "24/7 community + priority support",
+        "features.grid.title": "Everything You Need to Create Amazing Content",
+        "features.grid.description": "Powerful features designed to make SCORM authoring accessible to everyone",
+        "features.grid.card1.title": "AI-Assisted Content",
+        "features.grid.card1.description": "Generate engaging educational content, quizzes, and activities with AI-powered suggestions tailored to your subject.",
+        "features.grid.card2.title": "Ready-Made Templates",
+        "features.grid.card2.description": "Start with professionally designed templates for lessons, courses, and assessments. Customize to match your brand.",
+        "features.grid.card3.title": "Universal Export",
+        "features.grid.card3.description": "Export to SCORM 1.2, SCORM 2004, or xAPI with one click. Compatible with all major LMS platforms.",
+        "features.grid.card4.title": "Team Collaboration",
+        "features.grid.card4.description": "Work together with colleagues in real-time. Share resources, review content, and maintain consistency.",
+        "features.grid.card5.title": "Built-in Analytics",
+        "features.grid.card5.description": "Track learner engagement and performance with comprehensive analytics and reporting tools.",
+        "features.grid.card6.title": "Multi-Language Support",
+        "features.grid.card6.description": "Create content in English, Arabic, Spanish, French, and more. RTL support included.",
+        "features.grid.card7.title": "Lightning Fast",
+        "features.grid.card7.description": "Build and export packages in minutes, not days. Our optimized workflow keeps you productive.",
+        "features.grid.card8.title": "Sell Your Content",
+        "features.grid.card8.description": "Monetize your expertise by selling packages on our marketplace. Set your own prices and earn revenue.",
+        "features.grid.card9.title": "Smart Suggestions",
+        "features.grid.card9.description": "Get contextual recommendations for images, activities, and assessments as you build.",
+        "features.cta.title": "Ready to Experience the Difference?",
+        "features.cta.description": "Join thousands of educators who have simplified their e-learning content creation",
+        "features.cta.start": "Get Started Free",
+        "features.cta.pricing": "View Pricing",
+        "scorm.projectPanel.generalTracking": "General Tracking",
+        "scorm.projectPanel.tracking.minimal": "Minimal",
+        "scorm.projectPanel.tracking.standard": "Standard",
+        "scorm.projectPanel.tracking.advanced": "Advanced",
+        "scorm.projectPanel.advancedOptions": "Advanced Options",
+        "scorm.projectPanel.tracking.pageViews": "Track page views",
+        "scorm.projectPanel.tracking.quizInteractions": "Track quiz interactions",
+        "scorm.projectPanel.tracking.media": "Track media (play/pause/seek)",
+        "scorm.projectPanel.tracking.hints": "Track hints/help usage",
+        "scorm.projectPanel.tracking.externalLinks": "Track external links",
+        "scorm.projectPanel.tracking.timePerPage": "Track time per page",
+        "scorm.projectPanel.tracking.attempts": "Track attempts",
+        "scorm.projectPanel.xapiOptions": "xAPI Only Options",
+        "scorm.projectPanel.xapi.lrsEndpoint": "LRS Endpoint",
+        "scorm.projectPanel.xapi.authToken": "Auth token",
+        "scorm.projectPanel.xapi.activityIdFormat": "Activity ID format",
+        "scorm.projectPanel.xapi.statementExtensions": "Statement extensions",
+        "scorm.projectPanel.exportPanel": "Export Options",
+        "scorm.projectPanel.export.scorm12": "SCORM 1.2",
+        "scorm.projectPanel.export.scorm2004": "SCORM 2004",
+        "scorm.projectPanel.export.xapi": "xAPI/cmi5",
+        "scorm.projectPanel.export.html5": "HTML5 Package",
+        "scorm.projectPanel.export.publicLink": "Public Link",
+        "scorm.projectPanel.export.embedCode": "Embed Code",
+        "scorm.projectPanel.export.teacherPdf": "Teacher PDF",
+        "scorm.projectPanel.export.studentPdf": "Student PDF",
+        "scorm.projectPanel.export.json": "JSON source",
+        "scorm.projectPanel.export.qti": "QTI/Moodle Question Bank",
+        "scorm.props.project.styles.textColor": "Text Color",
+        "pricing.title": "Flexible Pricing for Every Creator",
+        "pricing.description": "Choose the plan that's right for you. Get started with credits or subscribe for unlimited access.",
+        "pricing.tabs.credits": "Pay-as-you-go Credits",
+        "pricing.tabs.subscribe": "Subscription Plans",
+        "pricing.credits.starter.title": "Starter Pack",
+        "pricing.credits.starter.credits": "100 Credits",
+        "pricing.credits.starter.price": "$9",
+        "pricing.credits.starter.description": "Perfect for trying out the platform.",
+        "pricing.credits.starter.feature1": "100 AI content generations",
+        "pricing.credits.starter.feature2": "Export up to 5 packages",
+        "pricing.credits.starter.feature3": "Basic support",
+        "pricing.credits.starter.feature4": "Access to marketplace",
+        "pricing.credits.starter.cta": "Get Started",
+        "pricing.credits.teacher.title": "Teacher Pack",
+        "pricing.credits.teacher.credits": "500 Credits",
+        "pricing.credits.teacher.price": "$39",
+        "pricing.credits.teacher.description": "Ideal for individual educators.",
+        "pricing.credits.teacher.feature1": "500 AI content generations",
+        "pricing.credits.teacher.feature2": "Export up to 25 packages",
+        "pricing.credits.teacher.feature3": "Priority support",
+        "pricing.credits.teacher.feature4": "Access to marketplace",
+        "pricing.credits.teacher.feature5": "Publish to marketplace",
+        "pricing.credits.teacher.cta": "Choose Teacher Pack",
+        "pricing.credits.team.title": "Team Pack",
+        "pricing.credits.team.credits": "2000 Credits",
+        "pricing.credits.team.price": "$129",
+        "pricing.credits.team.description": "Best for schools and institutions.",
+        "pricing.credits.team.feature1": "2000 AI content generations",
+        "pricing.credits.team.feature2": "Unlimited package exports",
+        "pricing.credits.team.feature3": "Dedicated support",
+        "pricing.credits.team.feature4": "Team collaboration features",
+        "pricing.credits.team.feature5": "Publish to marketplace",
+        "pricing.credits.team.feature6": "Custom branding",
+        "pricing.credits.team.cta": "Contact Sales",
+        "pricing.subscribe.monthly.title": "Monthly",
+        "pricing.subscribe.monthly.subtitle": "All features, unlimited usage.",
+        "pricing.subscribe.monthly.price": "$49",
+        "pricing.subscribe.monthly.period": "/ month",
+        "pricing.subscribe.monthly.description": "Cancel anytime.",
+        "pricing.subscribe.monthly.feature1": "Unlimited AI generations",
+        "pricing.subscribe.monthly.feature2": "Unlimited package exports",
+        "pricing.subscribe.monthly.feature3": "Priority support",
+        "pricing.subscribe.monthly.feature4": "Team collaboration",
+        "pricing.subscribe.monthly.feature5": "Publish to marketplace",
+        "pricing.subscribe.monthly.cta": "Subscribe Now",
+        "pricing.subscribe.semester.title": "Semester",
+        "pricing.subscribe.semester.subtitle": "Save 20% with semester billing.",
+        "pricing.subscribe.semester.price": "$199",
+        "pricing.subscribe.semester.period": "/ 6 months",
+        "pricing.subscribe.semester.description": "Pay once for the whole semester.",
+        "pricing.subscribe.semester.feature1": "Unlimited AI generations",
+        "pricing.subscribe.semester.feature2": "Unlimited package exports",
+        "pricing.subscribe.semester.feature3": "Priority support",
+        "pricing.subscribe.semester.feature4": "Team collaboration",
+        "pricing.subscribe.semester.cta": "Choose Semester",
+        "pricing.subscribe.yearly.title": "Yearly",
+        "pricing.subscribe.yearly.subtitle": "Best value! Two months free.",
+        "pricing.subscribe.yearly.price": "$499",
+        "pricing.subscribe.yearly.period": "/ year",
+        "pricing.subscribe.yearly.description": "Set it and forget it for a year.",
+        "pricing.subscribe.yearly.feature1": "Unlimited AI generations",
+        "pricing.subscribe.yearly.feature2": "Unlimited package exports",
+        "pricing.subscribe.yearly.feature3": "Dedicated support",
+        "pricing.subscribe.yearly.feature4": "Team collaboration",
+        "pricing.subscribe.yearly.feature5": "Custom branding",
+        "pricing.subscribe.yearly.cta": "Choose Yearly",
+        "pricing.faq.title": "Frequently Asked Questions",
+        "pricing.faq.q1": "What are credits?",
+        "pricing.faq.a1": "Credits are used for AI content generation. One credit equals one generation (e.g., a paragraph of text, a quiz question).",
+        "pricing.faq.q2": "Do credits expire?",
+        "pricing.faq.a2": "No, credits never expire. You can use them whenever you want.",
+        "pricing.faq.q3": "Can I upgrade or downgrade my subscription?",
+        "pricing.faq.a3": "Yes, you can change your subscription plan at any time. The changes will be reflected in the next billing cycle.",
+        "pricing.faq.q4": "What is your refund policy?",
+        "pricing.faq.a4": "We offer a 14-day money-back guarantee on all subscription plans. If you are not satisfied, contact us for a full refund.",
+        "about.title": "About EduPack",
+        "about.mission.title": "Our Mission",
+        "about.mission.p1": "EduPack was created to democratize e-learning content creation. We believe that every educator, regardless of technical expertise, should have access to powerful tools for creating engaging, interactive learning experiences.",
+        "about.mission.p2": "By combining AI-powered content generation with an intuitive authoring interface and a collaborative marketplace, we're making it easier than ever to create, share, and monetize educational content.",
+        "about.who.title": "Who We Serve",
+        "about.who.teachers.title": "Teachers & Instructors",
+        "about.who.teachers.p": "Individual educators looking to create professional e-learning content without spending countless hours on technical setup.",
+        "about.who.edtech.title": "EdTech Teams & Institutions",
+        "about.who.edtech.p": "Schools, universities, and corporate training departments seeking to standardize and scale their e-learning content production.",
+        "about.purpose.title": "Our Purpose",
+        "about.purpose.p": "We're building more than just software—we're creating an ecosystem where educators can focus on what they do best: teaching. By handling the technical complexity and providing tools that enhance creativity, we're empowering the next generation of e-learning content creators."
     },
     ar: {
         "nav.home": "الرئيسية",
@@ -450,7 +658,204 @@ const translations = {
         "scorm.projectPanel.pageOrganization": "تنظيم الصفحات",
         "scorm.projectPanel.addPage": "إضافة صفحة",
         "scorm.projectPanel.deleteLastPageError": "لا يمكنك حذف الصفحة الأخيرة.",
-        "scorm.projectPanel.deleteConfirm": "هل أنت متأكد أنك تريد حذف هذه الصفحة؟"
+        "scorm.projectPanel.deleteConfirm": "هل أنت متأكد أنك تريد حذف هذه الصفحة؟",
+        "resources.title": "How to Use EduPack",
+        "resources.description": "Step-by-step guides, video tutorials, and resources to help you get the most out of EduPack",
+        "resources.guide1.title": "Create your first package with SCORM AI",
+        "resources.guide1.description": "Learn how to use our AI-powered authoring tool to build interactive SCORM packages from scratch",
+        "resources.guide1.duration": "10 min read",
+        "resources.guide1.level": "Beginner",
+        "resources.guide2.title": "Upload and publish a package",
+        "resources.guide2.description": "Step-by-step guide to uploading your existing SCORM content and making it available in the marketplace",
+        "resources.guide2.duration": "5 min read",
+        "resources.guide2.level": "Beginner",
+        "resources.guide3.title": "Buy and download packages from the shop",
+        "resources.guide3.description": "Discover how to find, preview, and purchase ready-made educational packages for your LMS",
+        "resources.guide3.duration": "7 min read",
+        "resources.guide3.level": "Beginner",
+        "resources.guide4.title": "Connect EduPack packages to your LMS",
+        "resources.guide4.description": "Integration guides for Moodle, Canvas, Blackboard, and other popular learning management systems",
+        "resources.guide4.duration": "15 min read",
+        "resources.guide4.level": "Intermediate",
+        "resources.videos.title": "Video Tutorials",
+        "resources.video1.title": "Getting Started with EduPack",
+        "resources.video1.duration": "8:34",
+        "resources.video2.title": "AI Content Generation Tips",
+        "resources.video2.duration": "12:15",
+        "resources.video3.title": "Advanced Authoring Techniques",
+        "resources.video3.duration": "18:47",
+        "resources.docs.title": "Documentation",
+        "resources.doc1.title": "API Documentation",
+        "resources.doc1.description": "For developers integrating EduPack",
+        "resources.doc2.title": "Best Practices Guide",
+        "resources.doc2.description": "Tips for creating effective content",
+        "resources.doc3.title": "SCORM Standards Reference",
+        "resources.doc3.description": "Understanding SCORM specifications",
+        "resources.help.title": "Need Help? Contact Our Team",
+        "resources.help.description": "Our support team is here to help you succeed. Reach out anytime with questions or feedback.",
+        "resources.contact1.name": "Muiayad Al HAsani",
+        "resources.contact1.role": "page devloper",
+        "resources.contact2.name": "Ali Al Badri",
+        "resources.contact2.role": "page desginer",
+        "resources.help.chat": "Live Chat Support",
+        "resources.form.title": "Send us a message",
+        "resources.form.name": "Your Name",
+        "resources.form.name.placeholder": "John Doe",
+        "resources.form.email": "Email",
+        "resources.form.email.placeholder": "you@example.com",
+        "resources.form.message": "Message",
+        "resources.form.message.placeholder": "How can we help you?",
+        "resources.form.send": "Send Message",
+        "resources.guide.open": "Open Guide",
+        "features.hero.title": "Why Choose EduPack?",
+        "features.hero.description": "The most powerful and user-friendly SCORM authoring platform for educators and institutions. Create professional e-learning content without the complexity.",
+        "features.comparison.title": "EduPack vs Traditional Tools",
+        "features.comparison.feature": "Feature",
+        "features.comparison.traditional": "Traditional Tools",
+        "features.comparison.edupack": "EduPack",
+        "features.comparison.price.feature": "Starting Price",
+        "features.comparison.price.traditional": "$500-2000/year",
+        "features.comparison.price.edupack": "$9 (pay as you go)",
+        "features.comparison.curve.feature": "Learning Curve",
+        "features.comparison.curve.traditional": "Weeks to months",
+        "features.comparison.curve.edupack": "Minutes to hours",
+        "features.comparison.ai.feature": "AI Assistance",
+        "features.comparison.ai.traditional": "None",
+        "features.comparison.ai.edupack": "Built-in AI content generation",
+        "features.comparison.marketplace.feature": "Marketplace",
+        "features.comparison.marketplace.traditional": "Separate platforms",
+        "features.comparison.marketplace.edupack": "Integrated buy & sell",
+        "features.comparison.support.feature": "Technical Support",
+        "features.comparison.support.traditional": "Business hours only",
+        "features.comparison.support.edupack": "24/7 community + priority support",
+        "features.grid.title": "Everything You Need to Create Amazing Content",
+        "features.grid.description": "Powerful features designed to make SCORM authoring accessible to everyone",
+        "features.grid.card1.title": "AI-Assisted Content",
+        "features.grid.card1.description": "Generate engaging educational content, quizzes, and activities with AI-powered suggestions tailored to your subject.",
+        "features.grid.card2.title": "Ready-Made Templates",
+        "features.grid.card2.description": "Start with professionally designed templates for lessons, courses, and assessments. Customize to match your brand.",
+        "features.grid.card3.title": "Universal Export",
+        "features.grid.card3.description": "Export to SCORM 1.2, SCORM 2004, or xAPI with one click. Compatible with all major LMS platforms.",
+        "features.grid.card4.title": "Team Collaboration",
+        "features.grid.card4.description": "Work together with colleagues in real-time. Share resources, review content, and maintain consistency.",
+        "features.grid.card5.title": "Built-in Analytics",
+        "features.grid.card5.description": "Track learner engagement and performance with comprehensive analytics and reporting tools.",
+        "features.grid.card6.title": "Multi-Language Support",
+        "features.grid.card6.description": "Create content in English, Arabic, Spanish, French, and more. RTL support included.",
+        "features.grid.card7.title": "Lightning Fast",
+        "features.grid.card7.description": "Build and export packages in minutes, not days. Our optimized workflow keeps you productive.",
+        "features.grid.card8.title": "Sell Your Content",
+        "features.grid.card8.description": "Monetize your expertise by selling packages on our marketplace. Set your own prices and earn revenue.",
+        "features.grid.card9.title": "Smart Suggestions",
+        "features.grid.card9.description": "Get contextual recommendations for images, activities, and assessments as you build.",
+        "features.cta.title": "Ready to Experience the Difference?",
+        "features.cta.description": "Join thousands of educators who have simplified their e-learning content creation",
+        "features.cta.start": "Get Started Free",
+        "features.cta.pricing": "View Pricing",
+        "scorm.projectPanel.generalTracking": "General Tracking",
+        "scorm.projectPanel.tracking.minimal": "Minimal",
+        "scorm.projectPanel.tracking.standard": "Standard",
+        "scorm.projectPanel.tracking.advanced": "Advanced",
+        "scorm.projectPanel.advancedOptions": "Advanced Options",
+        "scorm.projectPanel.tracking.pageViews": "Track page views",
+        "scorm.projectPanel.tracking.quizInteractions": "Track quiz interactions",
+        "scorm.projectPanel.tracking.media": "Track media (play/pause/seek)",
+        "scorm.projectPanel.tracking.hints": "Track hints/help usage",
+        "scorm.projectPanel.tracking.externalLinks": "Track external links",
+        "scorm.projectPanel.tracking.timePerPage": "Track time per page",
+        "scorm.projectPanel.tracking.attempts": "Track attempts",
+        "scorm.projectPanel.xapiOptions": "xAPI Only Options",
+        "scorm.projectPanel.xapi.lrsEndpoint": "LRS Endpoint",
+        "scorm.projectPanel.xapi.authToken": "Auth token",
+        "scorm.projectPanel.xapi.activityIdFormat": "Activity ID format",
+        "scorm.projectPanel.xapi.statementExtensions": "Statement extensions",
+        "scorm.projectPanel.exportPanel": "Export Options",
+        "scorm.projectPanel.export.scorm12": "SCORM 1.2",
+        "scorm.projectPanel.export.scorm2004": "SCORM 2004",
+        "scorm.projectPanel.export.xapi": "xAPI/cmi5",
+        "scorm.projectPanel.export.html5": "HTML5 Package",
+        "scorm.projectPanel.export.publicLink": "Public Link",
+        "scorm.projectPanel.export.embedCode": "Embed Code",
+        "scorm.projectPanel.export.teacherPdf": "Teacher PDF",
+        "scorm.projectPanel.export.studentPdf": "Student PDF",
+        "scorm.projectPanel.export.json": "JSON source",
+        "scorm.projectPanel.export.qti": "QTI/Moodle Question Bank",
+        "scorm.props.project.styles.textColor": "Text Color",
+        "pricing.title": "Flexible Pricing for Every Creator",
+        "pricing.description": "Choose the plan that's right for you. Get started with credits or subscribe for unlimited access.",
+        "pricing.tabs.credits": "Pay-as-you-go Credits",
+        "pricing.tabs.subscribe": "Subscription Plans",
+        "pricing.credits.starter.title": "Starter Pack",
+        "pricing.credits.starter.credits": "100 Credits",
+        "pricing.credits.starter.price": "$9",
+        "pricing.credits.starter.description": "Perfect for trying out the platform.",
+        "pricing.credits.starter.feature1": "100 AI content generations",
+        "pricing.credits.starter.feature2": "Export up to 5 packages",
+        "pricing.credits.starter.feature3": "Basic support",
+        "pricing.credits.starter.feature4": "Access to marketplace",
+        "pricing.credits.starter.cta": "Get Started",
+        "pricing.credits.teacher.title": "Teacher Pack",
+        "pricing.credits.teacher.credits": "500 Credits",
+        "pricing.credits.teacher.price": "$39",
+        "pricing.credits.teacher.description": "Ideal for individual educators.",
+        "pricing.credits.teacher.feature1": "500 AI content generations",
+        "pricing.credits.teacher.feature2": "Export up to 25 packages",
+        "pricing.credits.teacher.feature3": "Priority support",
+        "pricing.credits.teacher.feature4": "Access to marketplace",
+        "pricing.credits.teacher.feature5": "Publish to marketplace",
+        "pricing.credits.teacher.cta": "Choose Teacher Pack",
+        "pricing.credits.team.title": "Team Pack",
+        "pricing.credits.team.credits": "2000 Credits",
+        "pricing.credits.team.price": "$129",
+        "pricing.credits.team.description": "Best for schools and institutions.",
+        "pricing.credits.team.feature1": "2000 AI content generations",
+        "pricing.credits.team.feature2": "Unlimited package exports",
+        "pricing.credits.team.feature3": "Dedicated support",
+        "pricing.credits.team.feature4": "Team collaboration features",
+        "pricing.credits.team.feature5": "Publish to marketplace",
+        "pricing.credits.team.feature6": "Custom branding",
+        "pricing.credits.team.cta": "Contact Sales",
+        "pricing.subscribe.monthly.title": "Monthly",
+        "pricing.subscribe.monthly.subtitle": "All features, unlimited usage.",
+        "pricing.subscribe.monthly.price": "$49",
+        "pricing.subscribe.monthly.period": "/ month",
+        "pricing.subscribe.monthly.description": "Cancel anytime.",
+        "pricing.subscribe.monthly.feature1": "Unlimited AI generations",
+        "pricing.subscribe.monthly.feature2": "Unlimited package exports",
+        "pricing.subscribe.monthly.feature3": "Priority support",
+        "pricing.subscribe.monthly.feature4": "Team collaboration",
+        "pricing.subscribe.monthly.feature5": "Publish to marketplace",
+        "pricing.subscribe.monthly.cta": "Subscribe Now",
+        "pricing.subscribe.semester.title": "Semester",
+        "pricing.subscribe.semester.subtitle": "Save 20% with semester billing.",
+        "pricing.subscribe.semester.price": "$199",
+        "pricing.subscribe.semester.period": "/ 6 months",
+        "pricing.subscribe.semester.description": "Pay once for the whole semester.",
+        "pricing.subscribe.semester.feature1": "Unlimited AI generations",
+        "pricing.subscribe.semester.feature2": "Unlimited package exports",
+        "pricing.subscribe.semester.feature3": "Priority support",
+        "pricing.subscribe.semester.feature4": "Team collaboration",
+        "pricing.subscribe.semester.cta": "Choose Semester",
+        "pricing.subscribe.yearly.title": "Yearly",
+        "pricing.subscribe.yearly.subtitle": "Best value! Two months free.",
+        "pricing.subscribe.yearly.price": "$499",
+        "pricing.subscribe.yearly.period": "/ year",
+        "pricing.subscribe.yearly.description": "Set it and forget it for a year.",
+        "pricing.subscribe.yearly.feature1": "Unlimited AI generations",
+        "pricing.subscribe.yearly.feature2": "Unlimited package exports",
+        "pricing.subscribe.yearly.feature3": "Dedicated support",
+        "pricing.subscribe.yearly.feature4": "Team collaboration",
+        "pricing.subscribe.yearly.feature5": "Custom branding",
+        "pricing.subscribe.yearly.cta": "Choose Yearly",
+        "pricing.faq.title": "Frequently Asked Questions",
+        "pricing.faq.q1": "What are credits?",
+        "pricing.faq.a1": "Credits are used for AI content generation. One credit equals one generation (e.g., a paragraph of text, a quiz question).",
+        "pricing.faq.q2": "Do credits expire?",
+        "pricing.faq.a2": "No, credits never expire. You can use them whenever you want.",
+        "pricing.faq.q3": "Can I upgrade or downgrade my subscription?",
+        "pricing.faq.a3": "Yes, you can change your subscription plan at any time. The changes will be reflected in the next billing cycle.",
+        "pricing.faq.q4": "What is your refund policy?",
+        "pricing.faq.a4": "نحن نقدم ضمان استرداد الأموال لمدة 14 يومًا على جميع خطط الاشتراك. إذا لم تكن راضيًا ، فاتصل بنا لاسترداد المبلغ بالكامل."
     }
 };
 function t(locale, key, values) {
@@ -609,7 +1014,7 @@ function HomePage() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'hero.title')
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 50,
+                                        lineNumber: 49,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -617,7 +1022,7 @@ function HomePage() {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'hero.description')
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 53,
+                                        lineNumber: 52,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -633,19 +1038,19 @@ function HomePage() {
                                                             className: "mr-2 h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 57,
+                                                            lineNumber: 56,
                                                             columnNumber: 21
                                                         }, this),
                                                         (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'hero.cta.start')
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 56,
+                                                    lineNumber: 55,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 55,
+                                                lineNumber: 54,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -659,25 +1064,25 @@ function HomePage() {
                                                             className: "mr-2 h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 63,
+                                                            lineNumber: 62,
                                                             columnNumber: 21
                                                         }, this),
                                                         (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'hero.cta.browse')
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 62,
+                                                    lineNumber: 61,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 61,
+                                                lineNumber: 60,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 54,
+                                        lineNumber: 53,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -689,44 +1094,67 @@ function HomePage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 68,
+                                        lineNumber: 67,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 49,
+                                lineNumber: 48,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "bg-card rounded-2xl shadow-xl p-6 border border-border",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tabs"], {
-                                    tabs: previewTabs,
-                                    defaultValue: "name"
-                                }, void 0, false, {
+                                    defaultValue: "name",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsList"], {
+                                            children: previewTabs.map((tab)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsTrigger"], {
+                                                    value: tab.value,
+                                                    children: tab.label
+                                                }, tab.value, false, {
+                                                    fileName: "[project]/app/page.tsx",
+                                                    lineNumber: 76,
+                                                    columnNumber: 43
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/page.tsx",
+                                            lineNumber: 75,
+                                            columnNumber: 17
+                                        }, this),
+                                        previewTabs.map((tab)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
+                                                value: tab.value,
+                                                children: tab.content
+                                            }, tab.value, false, {
+                                                fileName: "[project]/app/page.tsx",
+                                                lineNumber: 78,
+                                                columnNumber: 41
+                                            }, this))
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 75,
+                                    lineNumber: 74,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 74,
+                                lineNumber: 73,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 47,
+                        lineNumber: 46,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 46,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 45,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -738,17 +1166,17 @@ function HomePage() {
                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'featured-packages.title')
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 84,
+                        lineNumber: 88,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 83,
+                    lineNumber: 87,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 82,
+                lineNumber: 86,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -763,14 +1191,14 @@ function HomePage() {
                                     className: "h-8 w-8 text-primary"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 98,
                                     columnNumber: 21
                                 }, void 0),
                                 title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.scorm.title'),
                                 description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.scorm.desc')
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 93,
+                                lineNumber: 97,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
@@ -778,14 +1206,14 @@ function HomePage() {
                                     className: "h-8 w-8 text-primary"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 99,
+                                    lineNumber: 103,
                                     columnNumber: 21
                                 }, void 0),
                                 title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.ai.title'),
                                 description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.ai.desc')
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 98,
+                                lineNumber: 102,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
@@ -793,14 +1221,14 @@ function HomePage() {
                                     className: "h-8 w-8 text-primary"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 108,
                                     columnNumber: 21
                                 }, void 0),
                                 title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.marketplace.title'),
                                 description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.marketplace.desc')
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 103,
+                                lineNumber: 107,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureCard, {
@@ -808,30 +1236,30 @@ function HomePage() {
                                     className: "h-8 w-8 text-primary"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 109,
+                                    lineNumber: 113,
                                     columnNumber: 21
                                 }, void 0),
                                 title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.lms.title'),
                                 description: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'feature.lms.desc')
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 108,
+                                lineNumber: 112,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 92,
+                        lineNumber: 96,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 91,
+                    lineNumber: 95,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 90,
+                lineNumber: 94,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -844,7 +1272,7 @@ function HomePage() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'audience.title')
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 120,
+                            lineNumber: 124,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -855,7 +1283,7 @@ function HomePage() {
                                         className: "h-12 w-12 text-primary"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 123,
+                                        lineNumber: 127,
                                         columnNumber: 21
                                     }, void 0),
                                     title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'audience.teachers.title'),
@@ -867,7 +1295,7 @@ function HomePage() {
                                     ]
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 122,
+                                    lineNumber: 126,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AudienceCard, {
@@ -875,7 +1303,7 @@ function HomePage() {
                                         className: "h-12 w-12 text-primary"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 133,
+                                        lineNumber: 137,
                                         columnNumber: 21
                                     }, void 0),
                                     title: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'audience.institutions.title'),
@@ -887,24 +1315,24 @@ function HomePage() {
                                     ]
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 136,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 125,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 119,
+                    lineNumber: 123,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 118,
+                lineNumber: 122,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -917,7 +1345,7 @@ function HomePage() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'cta.title')
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 149,
+                            lineNumber: 153,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -925,7 +1353,7 @@ function HomePage() {
                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'cta.description')
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 150,
+                            lineNumber: 154,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -936,124 +1364,122 @@ function HomePage() {
                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'cta.button')
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 152,
+                                lineNumber: 156,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 151,
+                            lineNumber: 155,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 148,
+                    lineNumber: 152,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 147,
+                lineNumber: 151,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 43,
+        lineNumber: 42,
         columnNumber: 5
     }, this);
 }
 function PreviewContent({ title, locale }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "bg-accent/20 rounded-xl p-8 min-h-[300px] flex flex-col items-center justify-center border-2 border-accent/50",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "text-center space-y-4",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-accent/30 rounded-full p-4 inline-flex",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
-                            className: "h-8 w-8 text-foreground"
-                        }, void 0, false, {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "text-center space-y-4",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "bg-accent/30 rounded-full p-4 inline-flex",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
+                        className: "h-8 w-8 text-foreground"
+                    }, void 0, false, {
+                        fileName: "[project]/app/page.tsx",
+                        lineNumber: 171,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/app/page.tsx",
+                    lineNumber: 170,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                    className: "text-xl font-semibold text-foreground",
+                    children: title
+                }, void 0, false, {
+                    fileName: "[project]/app/page.tsx",
+                    lineNumber: 173,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                    className: "text-sm text-muted-foreground",
+                    children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.area')
+                }, void 0, false, {
+                    fileName: "[project]/app/page.tsx",
+                    lineNumber: 174,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mt-8 flex gap-3",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                            variant: "outline",
+                            size: "sm",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
+                                    className: "mr-2 h-4 w-4"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/page.tsx",
+                                    lineNumber: 177,
+                                    columnNumber: 13
+                                }, this),
+                                (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.play')
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 167,
+                            lineNumber: 176,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                            variant: "outline",
+                            size: "sm",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                    className: "mr-2 h-4 w-4"
+                                }, void 0, false, {
+                                    fileName: "[project]/app/page.tsx",
+                                    lineNumber: 181,
+                                    columnNumber: 13
+                                }, this),
+                                (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.view')
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/page.tsx",
+                            lineNumber: 180,
                             columnNumber: 11
                         }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 166,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                        className: "text-xl font-semibold text-foreground",
-                        children: title
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 169,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-sm text-muted-foreground",
-                        children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.area')
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 170,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/page.tsx",
-                lineNumber: 165,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-8 flex gap-3",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                        variant: "outline",
-                        size: "sm",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
-                                className: "mr-2 h-4 w-4"
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 174,
-                                columnNumber: 11
-                            }, this),
-                            (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.play')
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 173,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                        variant: "outline",
-                        size: "sm",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
-                                className: "mr-2 h-4 w-4"
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 178,
-                                columnNumber: 11
-                            }, this),
-                            (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$translations$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["t"])(locale, 'preview.view')
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 177,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/page.tsx",
-                lineNumber: 172,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/app/page.tsx",
+                    lineNumber: 175,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/app/page.tsx",
+            lineNumber: 169,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 164,
+        lineNumber: 168,
         columnNumber: 5
     }, this);
 }
@@ -1066,7 +1492,7 @@ function FeatureCard({ icon, title, description }) {
                 children: icon
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 189,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1074,7 +1500,7 @@ function FeatureCard({ icon, title, description }) {
                 children: title
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 190,
+                lineNumber: 194,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1082,13 +1508,13 @@ function FeatureCard({ icon, title, description }) {
                 children: description
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 191,
+                lineNumber: 195,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 188,
+        lineNumber: 192,
         columnNumber: 5
     }, this);
 }
@@ -1105,13 +1531,13 @@ function AudienceCard({ icon, title, points }) {
                         children: title
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 201,
+                        lineNumber: 205,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 199,
+                lineNumber: 203,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -1123,7 +1549,7 @@ function AudienceCard({ icon, title, points }) {
                                 className: "mt-1 h-2 w-2 rounded-full bg-primary flex-shrink-0"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 206,
+                                lineNumber: 210,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1131,24 +1557,24 @@ function AudienceCard({ icon, title, points }) {
                                 children: point
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 207,
+                                lineNumber: 211,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, index, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 205,
+                        lineNumber: 209,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 203,
+                lineNumber: 207,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 198,
+        lineNumber: 202,
         columnNumber: 5
     }, this);
 }

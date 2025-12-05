@@ -48,7 +48,7 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabaseClient.js [app-client] (ecmascript)");
 ;
-async function signUpNewUser(email, password, name) {
+async function signUpNewUser(email, password, name, preferredLanguage) {
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabaseClient$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["supabase"].auth.signUp({
         email: email,
         password: password,
@@ -56,7 +56,8 @@ async function signUpNewUser(email, password, name) {
             // You can pass additional data to be stored in the user's metadata.
             // This can be used by a database trigger to create the user's profile.
             data: {
-                full_name: name
+                full_name: name,
+                preferred_language: preferredLanguage
             }
         }
     });
