@@ -2,6 +2,7 @@
 
 import React from "react"
 import { TextBlock } from "@/lib/scorm/types"
+import { useLocale } from "@/hooks/use-locale"
 
 interface Props {
   block: TextBlock
@@ -10,6 +11,7 @@ interface Props {
 
 export default function TextPanel({ block, onChange }: Props) {
   const style = block.style || {}
+  const { t } = useLocale()
 
   const updateStyle = (key: string, value: any) => {
     onChange({
@@ -24,11 +26,15 @@ export default function TextPanel({ block, onChange }: Props) {
   return (
     <div className="p-4 space-y-4 text-sm">
       {/* Title */}
-      <p className="font-semibold text-slate-700">Text Settings</p>
+      <p className="font-semibold text-slate-700">
+        {t("scorm.panels.text.title") || "Text Settings"}
+      </p>
 
       {/* TEXT CONTENT */}
       <div>
-        <label className="block mb-1 text-xs">Content</label>
+        <label className="block mb-1 text-xs">
+          {t("scorm.panels.text.content") || "Content"}
+        </label>
         <textarea
           className="w-full border rounded px-2 py-2 h-32 text-xs"
           value={block.html}
@@ -43,7 +49,9 @@ export default function TextPanel({ block, onChange }: Props) {
 
       {/* FONT OPTIONS */}
       <div className="space-y-2">
-        <p className="text-xs font-semibold text-slate-600">Typography</p>
+        <p className="text-xs font-semibold text-slate-600">
+          {t("scorm.panels.text.typography") || "Typography"}
+        </p>
 
         <div className="flex items-center gap-2 flex-wrap">
           <button
@@ -95,7 +103,9 @@ export default function TextPanel({ block, onChange }: Props) {
 
       {/* ALIGNMENT */}
       <div>
-        <p className="text-xs font-semibold mb-1">Alignment</p>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.text.alignment") || "Alignment"}
+        </p>
         <div className="flex gap-2">
           {["left", "center", "right", "justify"].map((a) => (
             <button
@@ -115,7 +125,9 @@ export default function TextPanel({ block, onChange }: Props) {
 
       {/* DIRECTION */}
       <div>
-        <p className="text-xs font-semibold mb-1">Direction</p>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.text.direction") || "Direction"}
+        </p>
         <div className="flex gap-2">
           <button
             type="button"
@@ -144,7 +156,9 @@ export default function TextPanel({ block, onChange }: Props) {
       {/* COLORS */}
       <div className="flex gap-4 items-center">
         <div>
-          <p className="text-xs mb-1">Text Color</p>
+          <p className="text-xs mb-1">
+            {t("scorm.panels.text.textColor") || "Text Color"}
+          </p>
           <input
             type="color"
             value={style.color || "#000000"}
@@ -153,7 +167,9 @@ export default function TextPanel({ block, onChange }: Props) {
         </div>
 
         <div>
-          <p className="text-xs mb-1">Background</p>
+          <p className="text-xs mb-1">
+            {t("scorm.panels.text.background") || "Background"}
+          </p>
           <input
             type="color"
             value={style.background || "#ffffff"}
@@ -164,9 +180,13 @@ export default function TextPanel({ block, onChange }: Props) {
 
       {/* SPACING */}
       <div className="space-y-2">
-        <p className="text-xs font-semibold">Spacing</p>
+        <p className="text-xs font-semibold">
+          {t("scorm.panels.text.spacing") || "Spacing"}
+        </p>
 
-        <label className="text-xs">Padding</label>
+        <label className="text-xs">
+          {t("scorm.panels.text.padding") || "Padding"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -174,7 +194,9 @@ export default function TextPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">Border Radius</label>
+        <label className="text-xs">
+          {t("scorm.panels.text.radius") || "Border Radius"}
+        </label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -182,7 +204,9 @@ export default function TextPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">Line Height</label>
+        <label className="text-xs">
+          {t("scorm.panels.text.lineHeight") || "Line Height"}
+        </label>
         <select
           className="w-full border rounded px-2 py-1 text-xs"
           value={style.lineHeight || "1.6"}

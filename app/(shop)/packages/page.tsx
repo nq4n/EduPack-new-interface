@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,13 +8,28 @@ import { Badge } from "@/components/ui/badge"
 import { useLocale } from "@/hooks/use-locale"
 import { t } from "@/lib/translations"
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
+import { EditorProject } from "@/lib/scorm/types"
+
+interface PackageRecord {
+  id: string | number
+  title: string
+  grade: string
+  subject: string
+  language: string
+  description: string
+  price: string
+  thumbnail?: string
+  content?: EditorProject
+  updated_at?: string
+}
 
 export default function ShopPage() {
   const { locale } = useLocale()
   const [searchQuery, setSearchQuery] = useState("")
+  const [packages, setPackages] = useState<PackageRecord[]>([])
+  const [loadingPackages, setLoadingPackages] = useState(false)
 
-  // Mock packages data
-  const packages = [
+  const fallbackPackages: PackageRecord[] = [
     {
       id: 1,
       title: t(locale, "shop.packages.1.title"),
@@ -77,6 +92,54 @@ export default function ShopPage() {
     },
   ]
 
+  useEffect(() => {
+    const loadPackages = async () => {
+      setLoadingPackages(true)
+      try {
+        const response = await fetch("/api/scorm/package")
+        if (!response.ok) throw new Error("Failed to fetch packages")
+        const body = await response.json()
+        const remote: PackageRecord[] = (body.data || []).map((pkg: any, index: number) => {
+          const project = pkg.content as EditorProject | undefined
+          const pageCount = project?.pages?.length || 0
+          const blockCount = project?.pages?.reduce(
+            (total: number, page: any) => total + (page.blocks?.length || 0),
+            0
+          ) || 0
+
+          return {
+            id: pkg.id || `remote-${index}`,
+            title: pkg.title || project?.title || t(locale, "shop.preview.placeholderTitle"),
+            grade: t(locale, "shop.preview.pageCount", { pages: pageCount }),
+            subject: t(locale, "shop.preview.blockCount", { blocks: blockCount }),
+            language:
+              project?.theme?.direction === "rtl"
+                ? t(locale, "shop.preview.languageRtl")
+                : t(locale, "shop.preview.languageLtr"),
+            description: t(locale, "shop.preview.loadedDescription"),
+            price: t(locale, "shop.preview.included"),
+            content: project,
+          }
+        })
+
+        setPackages([...remote, ...fallbackPackages])
+      } catch (err) {
+        console.error(err)
+        setPackages(fallbackPackages)
+      } finally {
+        setLoadingPackages(false)
+      }
+    }
+
+    loadPackages()
+  }, [locale])
+
+  const filteredPackages = useMemo(() => {
+    return packages.filter((pkg) =>
+      pkg.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [packages, searchQuery])
+
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,8 +198,8 @@ export default function ShopPage() {
 
         {/* Packages Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {packages.map((pkg) => (
-            <PackageCard key={pkg.id} package={pkg} locale={locale} />
+          {filteredPackages.map((pkg) => (
+            <PackageCard key={pkg.id} package={pkg} locale={locale} loading={loadingPackages} />
           ))}
         </div>
 
@@ -161,7 +224,19 @@ export default function ShopPage() {
   )
 }
 
-function PackageCard({ package: pkg, locale }: { package: any; locale: "en" | "ar" }) {
+function PackageCard({
+  package: pkg,
+  locale,
+  loading,
+}: {
+  package: PackageRecord
+  locale: "en" | "ar"
+  loading?: boolean
+}) {
+  const project = pkg.content
+  const pageCount = project?.pages?.length || 0
+  const blockCount = project?.pages?.reduce((total, page) => total + (page.blocks?.length || 0), 0) || 0
+
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-shadow">
       <img src={pkg.thumbnail || "/placeholder.svg"} alt={pkg.title} className="w-full h-48 object-cover" />
@@ -179,6 +254,15 @@ function PackageCard({ package: pkg, locale }: { package: any; locale: "en" | "a
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{pkg.description}</p>
+        <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+          {project ? (
+            <span>
+              {t(locale, "shop.preview.meta", { pages: pageCount, blocks: blockCount })}
+            </span>
+          ) : (
+            <span>{loading ? t(locale, "shop.preview.loading") : t(locale, "shop.preview.sampleMeta")}</span>
+          )}
+        </div>
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-primary">{pkg.price}</span>
           <Link href={`/packages/${pkg.id}`}>

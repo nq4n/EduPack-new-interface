@@ -3,6 +3,7 @@
 import React from "react"
 import { QuizBlock, TextBlock } from "@/lib/scorm/types"
 import TextPanel from "@/components/scorm/panels/text-panel"
+import { useLocale } from "@/hooks/use-locale"
 
 interface QuizPanelProps {
   block: QuizBlock
@@ -12,6 +13,7 @@ interface QuizPanelProps {
 export default function QuizPanel({ block, onChange }: QuizPanelProps) {
   const style = block.style || {}
   const optionStyle = block.optionStyle || {}
+  const { t } = useLocale()
 
   const updateStyle = (key: string, value: any) => {
     onChange({
@@ -79,16 +81,19 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
 
   return (
     <div className="p-4 space-y-4 text-sm">
-      <p className="font-semibold text-slate-700">Quiz Settings</p>
+      <p className="font-semibold text-slate-700">
+        {t("scorm.panels.quiz.title") || "Quiz Settings"}
+      </p>
 
       {/* 🔗 Question editor using TextPanel */}
       <div className="border rounded-lg overflow-hidden">
         <div className="px-3 pt-2 pb-1 border-b bg-slate-50">
           <p className="text-xs font-semibold text-slate-700">
-            Question text
+            {t("scorm.panels.quiz.question") || "Question text"}
           </p>
           <p className="text-[11px] text-slate-500">
-            Format the question like normal text (bold, RTL, colors…)
+            {t("scorm.panels.quiz.questionHelp") ||
+              "Format the question like normal text (bold, RTL, colors…)"}
           </p>
         </div>
         <TextPanel block={questionTextBlock} onChange={handleQuestionChange} />
@@ -97,20 +102,23 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
       {/* OPTIONS LIST */}
       <div>
         <div className="flex items-center justify-between mb-1">
-          <p className="text-xs font-semibold">Options</p>
+          <p className="text-xs font-semibold">
+            {t("scorm.panels.quiz.options") || "Options"}
+          </p>
           <button
             type="button"
             className="text-xs px-2 py-1 rounded border border-slate-300 hover:bg-slate-50"
             onClick={addOption}
           >
-            + Add option
+            {t("scorm.panels.quiz.addOption") || "+ Add option"}
           </button>
         </div>
 
         <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
           {(block.options || []).length === 0 && (
             <p className="text-[11px] text-slate-400">
-              No options yet. Click “Add option” to create choices.
+              {t("scorm.panels.quiz.noOptions") ||
+                "No options yet. Click “Add option” to create choices."}
             </p>
           )}
 
@@ -135,22 +143,24 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
                 className="text-[11px] text-red-500 hover:underline"
                 onClick={() => removeOption(index)}
               >
-                Remove
+                {t("scorm.panels.quiz.remove") || "Remove"}
               </button>
             </div>
           ))}
         </div>
 
         <p className="text-[11px] text-slate-400 mt-1">
-          You can mark one or more options as correct.
+          {t("scorm.panels.quiz.correctHelp") || "You can mark one or more options as correct."}
         </p>
       </div>
 
       {/* APPEARANCE (container) */}
       <div className="space-y-2">
-        <p className="text-xs font-semibold">Question box appearance</p>
+        <p className="text-xs font-semibold">
+          {t("scorm.panels.quiz.boxAppearance") || "Question box appearance"}
+        </p>
 
-        <label className="text-xs">Padding (px)</label>
+        <label className="text-xs">{t("scorm.panels.quiz.padding") || "Padding (px)"}</label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -158,7 +168,7 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">Border Radius (px)</label>
+        <label className="text-xs">{t("scorm.panels.quiz.radius") || "Border Radius (px)"}</label>
         <input
           type="number"
           className="w-full border rounded px-2 py-1 text-xs"
@@ -166,7 +176,7 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">Background Color</label>
+        <label className="text-xs">{t("scorm.panels.quiz.background") || "Background Color"}</label>
         <input
           type="color"
           className="w-full h-8 border rounded"
@@ -180,13 +190,15 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
             checked={style.shadow === true}
             onChange={(e) => updateStyle("shadow", e.target.checked)}
           />
-          <span className="text-xs">Shadow</span>
+          <span className="text-xs">{t("scorm.panels.quiz.shadow") || "Shadow"}</span>
         </div>
       </div>
 
       {/* OPTION APPEARANCE */}
       <div className="space-y-2">
-        <p className="text-xs font-semibold">Options text style</p>
+        <p className="text-xs font-semibold">
+          {t("scorm.panels.quiz.optionStyle") || "Options text style"}
+        </p>
 
         <div className="flex items-center gap-2">
           {/* Bold */}
@@ -240,7 +252,9 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
 
         {/* Align */}
         <div>
-          <p className="text-[11px] mt-1 mb-1">Alignment</p>
+          <p className="text-[11px] mt-1 mb-1">
+            {t("scorm.panels.quiz.align") || "Alignment"}
+          </p>
           <div className="flex gap-2">
             {["left", "center", "right"].map((a) => (
               <button
@@ -260,7 +274,9 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
 
         {/* Color */}
         <div>
-          <p className="text-[11px] mt-1 mb-1">Text color</p>
+          <p className="text-[11px] mt-1 mb-1">
+            {t("scorm.panels.quiz.color") || "Text color"}
+          </p>
           <input
             type="color"
             className="w-full h-8 border rounded"

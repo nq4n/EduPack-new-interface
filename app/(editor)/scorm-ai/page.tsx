@@ -161,23 +161,33 @@ export default function ScormAIPage() {
   }
 
   const handleSave = async () => {
-    const promise = fetch("/api/scorm/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(project),
-    });
-  
+    const promise = (async () => {
+      const response = await fetch("/api/scorm/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(project),
+      })
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}))
+        const message = errorBody.error ?? "Failed to save package"
+        throw new Error(message)
+      }
+
+      const { data } = await response.json()
+      setStatus("draft")
+      return data
+    })()
+
     toast.promise(promise, {
       loading: "Saving package...",
-      success: (data) => {
-        setStatus("draft");
-        return `Package saved successfully!`;
-      },
-      error: "Error saving package",
-    });
-  };
+      success: () => `Package saved successfully!`,
+      error: (error) => error.message || "Error saving package",
+    })
+  }
   
 
   const handleExport = async () => {
