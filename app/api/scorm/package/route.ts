@@ -5,16 +5,15 @@ export async function GET() {
   const supabase = createServerClient()
   const { data, error } = await supabase
     .from("packages")
-    .select("id,title,description,content,updated_at,is_listed_in_store")
-    .eq("is_listed_in_store", true)
-    .order("updated_at", { ascending: false })
+    .select("package_id,title,description,storage_path,created_at,created_by_user_id")
+    .order("created_at", { ascending: false })
 
   if (error) {
     console.error("Error fetching packages from Supabase:", error.message)
-    return new NextResponse(
-      JSON.stringify({ error: "Failed to load packages.", details: error.message }),
-      { status: 500 }
-    )
+    const status = error.message.toLowerCase().includes("permission") ? 403 : 500
+    return new NextResponse(JSON.stringify({ error: "Failed to load packages.", details: error.message }), {
+      status,
+    })
   }
 
   return NextResponse.json({ data: data ?? [] })

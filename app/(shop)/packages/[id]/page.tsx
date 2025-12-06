@@ -11,8 +11,10 @@ import { useLocale } from "@/hooks/use-locale"
 interface PackageRecord {
   id: string
   title?: string
+  description?: string
   content?: EditorProject
-  updated_at?: string
+  created_at?: string
+  storage_path?: string
 }
 
 export default function PackagePreviewPage() {

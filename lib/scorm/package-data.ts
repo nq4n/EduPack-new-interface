@@ -3,22 +3,23 @@ import { type Locale } from "@/lib/i18n"
 import { type EditorProject } from "./types"
 
 export interface PackageRecord {
-  id: string | number
+  id: string
   title: string
+  description: string
+  storage_path?: string
+  created_at?: string
   grade: string
   subject: string
   language: string
-  description: string
   price: string
   thumbnail?: string
   content?: EditorProject
-  updated_at?: string
 }
 
 export function buildFallbackPackages(locale: Locale): PackageRecord[] {
   return [
     {
-      id: 1,
+      id: "1",
       title: t(locale, "shop.packages.1.title"),
       grade: t(locale, "shop.packages.1.grade"),
       subject: t(locale, "shop.packages.1.subject"),
@@ -28,7 +29,7 @@ export function buildFallbackPackages(locale: Locale): PackageRecord[] {
       thumbnail: "/math-fractions-classroom.jpg",
     },
     {
-      id: 2,
+      id: "2",
       title: t(locale, "shop.packages.2.title"),
       grade: t(locale, "shop.packages.2.grade"),
       subject: t(locale, "shop.packages.2.subject"),
@@ -38,7 +39,7 @@ export function buildFallbackPackages(locale: Locale): PackageRecord[] {
       thumbnail: "/solar-system-space-planets.jpg",
     },
     {
-      id: 3,
+      id: "3",
       title: t(locale, "shop.packages.3.title"),
       grade: t(locale, "shop.packages.3.grade"),
       subject: t(locale, "shop.packages.3.subject"),
@@ -48,7 +49,7 @@ export function buildFallbackPackages(locale: Locale): PackageRecord[] {
       thumbnail: "/shakespeare-theatre-literature.jpg",
     },
     {
-      id: 4,
+      id: "4",
       title: t(locale, "shop.packages.4.title"),
       grade: t(locale, "shop.packages.4.grade"),
       subject: t(locale, "shop.packages.4.subject"),
@@ -58,7 +59,7 @@ export function buildFallbackPackages(locale: Locale): PackageRecord[] {
       thumbnail: "/chemistry-lab-science-education.jpg",
     },
     {
-      id: 5,
+      id: "5",
       title: t(locale, "shop.packages.5.title"),
       grade: t(locale, "shop.packages.5.grade"),
       subject: t(locale, "shop.packages.5.subject"),
@@ -68,7 +69,7 @@ export function buildFallbackPackages(locale: Locale): PackageRecord[] {
       thumbnail: "/world-map-geography-education.jpg",
     },
     {
-      id: 6,
+      id: "6",
       title: t(locale, "shop.packages.6.title"),
       grade: t(locale, "shop.packages.6.grade"),
       subject: t(locale, "shop.packages.6.subject"),
@@ -88,18 +89,19 @@ export function mapRemotePackages(locale: Locale, raw: any[]): PackageRecord[] {
       project?.pages?.reduce((total, page) => total + (page.blocks?.length || 0), 0) || 0
 
     return {
-      id: pkg.id || `remote-${index}`,
+      id: pkg.package_id || pkg.id || `remote-${index}`,
       title: pkg.title || project?.title || t(locale, "shop.preview.placeholderTitle"),
+      description: pkg.description || t(locale, "shop.preview.loadedDescription"),
+      storage_path: pkg.storage_path,
+      created_at: pkg.created_at,
       grade: t(locale, "shop.preview.pageCount", { pages: pageCount }),
       subject: t(locale, "shop.preview.blockCount", { blocks: blockCount }),
       language:
         project?.theme?.direction === "rtl"
           ? t(locale, "shop.preview.languageRtl")
           : t(locale, "shop.preview.languageLtr"),
-      description: pkg.description || t(locale, "shop.preview.loadedDescription"),
       price: t(locale, "shop.preview.included"),
       content: project,
-      updated_at: pkg.updated_at,
     }
   })
 }

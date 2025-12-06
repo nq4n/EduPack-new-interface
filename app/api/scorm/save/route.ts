@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase/server-client"
+import { randomUUID } from "crypto"
 
 export async function POST(request: Request) {
   const supabase = createServerClient()
@@ -18,14 +19,17 @@ export async function POST(request: Request) {
 
   const project = await request.json()
 
-  if (!project || !project.id) {
-    return new NextResponse(JSON.stringify({ error: "Invalid project data." }), {
-      status: 400,
-    })
+  if (!project) {
+    return new NextResponse(JSON.stringify({ error: "Invalid project data." }), { status: 400 })
   }
 
+  const isValidUuid = (value: unknown) =>
+    typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+
+  const packageId = isValidUuid(project.id) ? project.id : randomUUID()
+
   const userId = user.id as string
-  const filePath = `${userId}/${project.id}/project.json`
+  const filePath = `${userId}/${packageId}/project.json`
 
   try {
     const { error: storageError } = await supabase.storage
@@ -52,19 +56,16 @@ export async function POST(request: Request) {
 
   try {
     const packageData = {
-      id: project.id,
+      package_id: packageId,
       title: project.title,
       description: project.description || null,
-      content: project,
-      is_listed_in_store: project.isListedInStore || false,
       storage_path: filePath,
       created_by_user_id: userId,
-      updated_at: new Date().toISOString(),
     }
 
     const { data, error: dbError } = await supabase
       .from("packages")
-      .upsert(packageData, { onConflict: "id" })
+      .upsert(packageData, { onConflict: "package_id" })
       .select()
       .single()
 
