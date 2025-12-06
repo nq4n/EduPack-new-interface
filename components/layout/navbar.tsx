@@ -2,15 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useLocale } from "@/hooks/use-locale"
 import { t } from "@/lib/translations"
 import { LanguageSwitcher } from "./language-switcher"
-import { supabase } from "@/lib/supabaseClient"
-import type { Session } from "@supabase/supabase-js"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,35 +18,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useSupabase } from "../auth-provider"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [session, setSession] = useState<Session | null>(null)
   const { locale } = useLocale()
   const router = useRouter()
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session))
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
+  const { supabase, user } = useSupabase()
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     router.push("/")
+    router.refresh()
   }
 
   const getInitials = (email = "") => email.charAt(0).toUpperCase()
 
   return (
-      <nav
-        id="main-navbar"
-        className="bg-white border-b border-border sticky top-0 z-50"
-      >
+    <nav
+      id="main-navbar"
+      className="bg-white border-b border-border sticky top-0 z-50"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -74,9 +64,6 @@ export function Navbar() {
             <Link href="/packages" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.shop")}
             </Link>
-            <Link href="/payment" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.payment")}
-            </Link>
             <Link href="/pricing" className="text-foreground hover:text-primary transition-colors">
               {t(locale, "nav.pricing")}
             </Link>
@@ -91,13 +78,13 @@ export function Navbar() {
           {/* Right Side */}
           <div className="hidden md:flex items-center gap-4">
             <LanguageSwitcher />
-            {session ? (
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={session.user.user_metadata.avatar_url} alt={session.user.email} />
-                      <AvatarFallback>{getInitials(session.user.email)}</AvatarFallback>
+                      <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || "User avatar"} />
+                      <AvatarFallback>{getInitials(user.email ?? "")}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
@@ -105,7 +92,7 @@ export function Navbar() {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">My Account</p>
-                      <p className="text-xs leading-none text-muted-foreground">{session.user.email}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -145,9 +132,6 @@ export function Navbar() {
             <Link href="/packages" className="block text-foreground hover:text-primary">
               {t(locale, "nav.shop")}
             </Link>
-            <Link href="/payment" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.payment")}
-            </Link>
             <Link href="/pricing" className="block text-foreground hover:text-primary">
               {t(locale, "nav.pricing")}
             </Link>
@@ -157,7 +141,7 @@ export function Navbar() {
             <Link href="/resources" className="block text-foreground hover:text-primary">
               {t(locale, "nav.resources")}
             </Link>
-            {!session && (
+            {!user && (
               <div className="flex gap-2 pt-4">
                 <Link href="/login" className="flex-1">
                   <Button variant="ghost" className="w-full">
