@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@supabase/supabase-js"
 
 export async function POST(request: Request) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -12,16 +12,36 @@ export async function POST(request: Request) {
     )
   }
 
-  const supabase = createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  })
 
-  if (!user) {
-    return new NextResponse(JSON.stringify({ error: "User not logged in." }), {
-      status: 401,
-    })
+  const authHeader = request.headers.get("authorization") || ""
+  const bearerToken = authHeader.toLowerCase().startsWith("bearer ")
+    ? authHeader.slice(7)
+    : null
+
+  if (!bearerToken) {
+    return new NextResponse(
+      JSON.stringify({ error: "Missing Authorization Bearer token." }),
+      { status: 401 }
+    )
   }
+
+  const { data: userData, error: userError } = await supabase.auth.getUser(bearerToken)
+
+  if (userError || !userData?.user) {
+    console.error("[SAVE_ROUTE] getUser error:", userError)
+    return new NextResponse(
+      JSON.stringify({ error: "User not logged in (invalid token)." }),
+      { status: 401 }
+    )
+  }
+
+  const user = userData.user
 
   const project = await request.json()
 
@@ -31,7 +51,8 @@ export async function POST(request: Request) {
     })
   }
 
-  const filePath = `${user.id}/${project.id}/project.json`
+  const userId = user.id as string
+  const filePath = `${userId}/${project.id}/project.json`
 
   try {
     const { error: storageError } = await supabase.storage
@@ -39,6 +60,7 @@ export async function POST(request: Request) {
       .upload(filePath, JSON.stringify(project), {
         cacheControl: "3600",
         upsert: true,
+        contentType: "application/json",
       })
 
     if (storageError) {
@@ -63,7 +85,7 @@ export async function POST(request: Request) {
       content: project,
       is_listed_in_store: project.isListedInStore || false,
       storage_path: filePath,
-      created_by_user_id: user.id,
+      created_by_user_id: userId,
       updated_at: new Date().toISOString(),
     }
 

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { useLocale } from "@/hooks/use-locale"
+import { useSupabase } from "@/components/auth-provider"
 import {
   EditorBlock,
   EditorPage,
@@ -38,6 +39,7 @@ type Status = "draft" | "published"
 
 export default function ScormAIPage() {
   const { t } = useLocale()
+  const { supabase } = useSupabase()
 
   const initialProject: EditorProject = {
     id: `proj-${Date.now()}`,
@@ -172,12 +174,25 @@ export default function ScormAIPage() {
 
   const handleSave = async () => {
     const promise = (async () => {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession()
+
+      if (sessionError) {
+        console.error("Error getting session:", sessionError)
+      }
+
+      if (!session?.access_token) {
+        throw new Error("User not logged in (no token from Supabase).")
+      }
+
       const response = await fetch("/api/scorm/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
-        credentials: "include",
         body: JSON.stringify(project),
       })
 
