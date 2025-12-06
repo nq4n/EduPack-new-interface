@@ -10,12 +10,7 @@ export async function POST(req: NextRequest) {
       apiKey,
     });
 
-    const { messages: rawMessages = [], prompt } = await req.json();
-    const messages = Array.isArray(rawMessages) ? rawMessages : [];
-
-    if (prompt && messages.length === 0) {
-      messages.push({ role: "user", content: String(prompt) });
-    }
+    const { messages } = await req.json();
 
     if (messages.length === 0) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
