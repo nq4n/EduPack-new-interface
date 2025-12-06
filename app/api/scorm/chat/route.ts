@@ -1,27 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-
-const openrouter = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
-});
+import { getOpenRouterConfig } from '@/lib/env';
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json();
+    const { apiKey, model } = getOpenRouterConfig();
+    const openrouter = new OpenAI({
+      baseURL: "https://openrouter.ai/api/v1",
+      apiKey,
+    });
 
-    if (!messages) {
+    const { messages: rawMessages = [], prompt } = await req.json();
+    const messages = Array.isArray(rawMessages) ? rawMessages : [];
+
+    if (prompt && messages.length === 0) {
+      messages.push({ role: "user", content: String(prompt) });
+    }
+
+    if (messages.length === 0) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
     }
 
     const completion = await openrouter.chat.completions.create({
-      model: process.env.OPENROUTER_FREE_MODEL || 'qwen/qwen2.5-7b-instruct',
+      model,
       messages,
     });
 
     return NextResponse.json(completion.choices[0].message);
   } catch (error) {
     console.error('Error calling OpenRouter:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal Server Error'
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -8,20 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { useLocale } from "@/hooks/use-locale"
 import { t } from "@/lib/translations"
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react"
-import { EditorProject } from "@/lib/scorm/types"
-
-interface PackageRecord {
-  id: string | number
-  title: string
-  grade: string
-  subject: string
-  language: string
-  description: string
-  price: string
-  thumbnail?: string
-  content?: EditorProject
-  updated_at?: string
-}
+import { type PackageRecord, fetchPackageList } from "@/lib/scorm/package-data"
 
 export default function ShopPage() {
   const { locale } = useLocale()
@@ -30,113 +17,13 @@ export default function ShopPage() {
   const [loadingPackages, setLoadingPackages] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fallbackPackages: PackageRecord[] = [
-    {
-      id: 1,
-      title: t(locale, "shop.packages.1.title"),
-      grade: t(locale, "shop.packages.1.grade"),
-      subject: t(locale, "shop.packages.1.subject"),
-      language: t(locale, "shop.packages.1.language"),
-      description: t(locale, "shop.packages.1.description"),
-      price: t(locale, "shop.packages.1.price"),
-      thumbnail: "/math-fractions-classroom.jpg",
-    },
-    {
-      id: 2,
-      title: t(locale, "shop.packages.2.title"),
-      grade: t(locale, "shop.packages.2.grade"),
-      subject: t(locale, "shop.packages.2.subject"),
-      language: t(locale, "shop.packages.2.language"),
-      description: t(locale, "shop.packages.2.description"),
-      price: "$12.99",
-      thumbnail: "/solar-system-space-planets.jpg",
-    },
-    {
-      id: 3,
-      title: t(locale, "shop.packages.3.title"),
-      grade: t(locale, "shop.packages.3.grade"),
-      subject: t(locale, "shop.packages.3.subject"),
-      language: t(locale, "shop.packages.3.language"),
-      description: t(locale, "shop.packages.3.description"),
-      price: "$9.99",
-      thumbnail: "/shakespeare-theatre-literature.jpg",
-    },
-    {
-      id: 4,
-      title: t(locale, "shop.packages.4.title"),
-      grade: t(locale, "shop.packages.4.grade"),
-      subject: t(locale, "shop.packages.4.subject"),
-      language: t(locale, "shop.packages.4.language"),
-      description: t(locale, "shop.packages.4.description"),
-      price: "$14.99",
-      thumbnail: "/chemistry-lab-science-education.jpg",
-    },
-    {
-      id: 5,
-      title: t(locale, "shop.packages.5.title"),
-      grade: t(locale, "shop.packages.5.grade"),
-      subject: t(locale, "shop.packages.5.subject"),
-      language: t(locale, "shop.packages.5.language"),
-      description: t(locale, "shop.packages.5.description"),
-      price: t(locale, "shop.packages.5.price"),
-      thumbnail: "/world-map-geography-education.jpg",
-    },
-    {
-      id: 6,
-      title: t(locale, "shop.packages.6.title"),
-      grade: t(locale, "shop.packages.6.grade"),
-      subject: t(locale, "shop.packages.6.subject"),
-      language: t(locale, "shop.packages.6.language"),
-      description: t(locale, "shop.packages.6.description"),
-      price: "$19.99",
-      thumbnail: "/coding-programming-computer-education.jpg",
-    },
-  ]
-
   useEffect(() => {
     const loadPackages = async () => {
       setLoadingPackages(true)
-      setError(null)
-      try {
-        const response = await fetch("/api/scorm/package")
-        if (!response.ok) {
-          const errorBody = await response.json().catch(() => ({}))
-          throw new Error(errorBody.error || "Failed to fetch packages")
-        }
-
-        const body = await response.json()
-        const remote: PackageRecord[] = (body.data || []).map((pkg: any, index: number) => {
-          const project = pkg.content as EditorProject | undefined
-          const pageCount = project?.pages?.length || 0
-          const blockCount = project?.pages?.reduce(
-            (total: number, page: any) => total + (page.blocks?.length || 0),
-            0
-          ) || 0
-
-          return {
-            id: pkg.id || `remote-${index}`,
-            title: pkg.title || project?.title || t(locale, "shop.preview.placeholderTitle"),
-            grade: t(locale, "shop.preview.pageCount", { pages: pageCount }),
-            subject: t(locale, "shop.preview.blockCount", { blocks: blockCount }),
-            language:
-              project?.theme?.direction === "rtl"
-                ? t(locale, "shop.preview.languageRtl")
-                : t(locale, "shop.preview.languageLtr"),
-            description: pkg.description || t(locale, "shop.preview.loadedDescription"),
-            price: t(locale, "shop.preview.included"),
-            content: project,
-          }
-        })
-
-        setPackages(remote.length > 0 ? remote : fallbackPackages)
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err)
-        console.error(err)
-        setError(message)
-        setPackages(fallbackPackages)
-      } finally {
-        setLoadingPackages(false)
-      }
+      const { packages: loadedPackages, error: loadError } = await fetchPackageList(locale)
+      setPackages(loadedPackages)
+      setError(loadError ?? null)
+      setLoadingPackages(false)
     }
 
     loadPackages()
