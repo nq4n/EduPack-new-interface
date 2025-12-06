@@ -9,6 +9,8 @@ import {
   VideoBlock,
   QuizBlock,
   InteractiveBlock,
+  SCORMVersion,
+  ExportFormat,
 } from "@/lib/scorm/types"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -30,6 +32,7 @@ interface PropertiesPanelProps {
   onBlockChange: (block: EditorBlock) => void
   panelType: "block" | "project"
   onAddPage: () => void
+  onExport?: (format: ExportFormat | SCORMVersion) => void
 }
 
 export function PropertiesPanel({
@@ -39,6 +42,7 @@ export function PropertiesPanel({
   onBlockChange,
   panelType,
   onAddPage,
+  onExport,
 }: PropertiesPanelProps) {
   const { t } = useLocale()
   const [activeTab, setActiveTab] = useState<"project" | "page">("project")
@@ -73,7 +77,7 @@ export function PropertiesPanel({
 
         <div className="flex-1 overflow-y-auto">
           {activeTab === "project" ? (
-            <ProjectPanel project={project} onChange={onProjectChange} />
+            <ProjectPanel project={project} onChange={onProjectChange} onExport={onExport} />
           ) : (
             <PagePanel
               project={project}
