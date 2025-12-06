@@ -9,15 +9,17 @@ import { useSupabase } from "@/components/auth-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-const roleOptions = ["Teacher", "Student", "EdTech Professional", "Other"]
-const countryOptions = ["United States", "United Kingdom", "Canada", "Australia"]
-const languageOptions = ["English", "Arabic", "Spanish"]
+const languageOptions = [
+  { label: "English", value: "en" },
+  { label: "Arabic", value: "ar" },
+]
+
+const normalizeLanguage = (language: string) =>
+  language?.toLowerCase().startsWith("ar") ? "ar" : "en"
 
 type ProfileFormState = {
   fullName: string
   email: string
-  role: string
-  country: string
   preferredLanguage: string
 }
 
@@ -31,8 +33,6 @@ function PersonalInfoPanel() {
   const [form, setForm] = useState<ProfileFormState>({
     fullName: "",
     email: "",
-    role: "",
-    country: "",
     preferredLanguage: "",
   })
   const [loading, setLoading] = useState(true)
@@ -52,9 +52,7 @@ function PersonalInfoPanel() {
 
     const { data, error } = await supabase
       .from("users")
-      .select(
-        "user_id, full_name, email, role, country, preferred_language, avatar_url"
-      )
+      .select("user_id, full_name, email, preferred_language, avatar_url")
       .eq("user_id", user.id)
       .single()
 
@@ -71,7 +69,9 @@ function PersonalInfoPanel() {
           user_id: user.id,
           full_name: user.user_metadata?.full_name ?? "",
           email: user.email,
-          preferred_language: user.user_metadata?.preferred_language ?? "English",
+          preferred_language: normalizeLanguage(
+            user.user_metadata?.preferred_language ?? "en"
+          ),
           avatar_url: user.user_metadata?.avatar_url ?? null,
         })
         .select()
@@ -99,16 +99,12 @@ function PersonalInfoPanel() {
   const initializeForm = (profile: {
     full_name?: string | null
     email?: string | null
-    role?: string | null
-    country?: string | null
     preferred_language?: string | null
   }) => {
     setForm({
       fullName: profile.full_name ?? "",
       email: profile.email ?? user?.email ?? "",
-      role: profile.role ?? "",
-      country: profile.country ?? "",
-      preferredLanguage: profile.preferred_language ?? "",
+      preferredLanguage: normalizeLanguage(profile.preferred_language ?? "en"),
     })
   }
 
@@ -137,9 +133,7 @@ function PersonalInfoPanel() {
         user_id: user.id,
         full_name: form.fullName,
         email: form.email || user.email,
-        role: form.role || null,
-        country: form.country || null,
-        preferred_language: form.preferredLanguage || null,
+        preferred_language: normalizeLanguage(form.preferredLanguage || "en"),
         avatar_url: user.user_metadata?.avatar_url ?? null,
       })
 
@@ -208,42 +202,6 @@ function PersonalInfoPanel() {
             <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
             <Input value={form.email} type="email" disabled />
           </div>
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Role</label>
-            <select
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
-              value={form.role}
-              onChange={handleSelectChange("role")}
-              disabled={loading}
-            >
-              <option value="" disabled>
-                Select a role
-              </option>
-              {roleOptions.map((role) => (
-                <option key={role} value={role}>
-                  {role}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Country</label>
-            <select
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
-              value={form.country}
-              onChange={handleSelectChange("country")}
-              disabled={loading}
-            >
-              <option value="" disabled>
-                Select a country
-              </option>
-              {countryOptions.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-          </div>
           <div className="md:col-span-2">
             <label className="block text-sm font-semibold text-foreground mb-2">Preferred Language</label>
             <select
@@ -256,8 +214,8 @@ function PersonalInfoPanel() {
                 Select a language
               </option>
               {languageOptions.map((language) => (
-                <option key={language} value={language}>
-                  {language}
+                <option key={language.value} value={language.value}>
+                  {language.label}
                 </option>
               ))}
             </select>

@@ -67,27 +67,40 @@ export function useScormAI({
       setChatInput("")
 
       try {
-        const response = await fetch("/api/scorm/ai", {
+        const payloadMessages = [...messages, userMessage].map(
+          ({ role, content }) => ({ role, content })
+        )
+
+        const response = await fetch("/api/scorm/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt }),
+          body: JSON.stringify({ messages: payloadMessages }),
         })
 
-        const data = await response.json()
-        if (!response.ok) throw new Error(data.error || "AI generation failed")
+        const isJson = response.headers
+          .get("content-type")
+          ?.includes("application/json")
+        const data = isJson ? await response.json() : null
+
+        if (!response.ok) {
+          const message = (data as { error?: string })?.error
+          throw new Error(message || response.statusText || "AI generation failed")
+        }
+
+        const aiResponse = (data as AISuggestion | null) ?? null
 
         const aiMessage: ChatMessage = {
           id: Date.now() + 1,
-          role: "assistant",
-          content: data.message || "Generated lesson.",
-          agent: data.agent || undefined,
+          role: aiResponse?.role || "assistant",
+          content: aiResponse?.content || aiResponse?.message || "Generated lesson.",
+          agent: aiResponse?.agent || undefined,
         }
 
         addMessage(aiMessage)
 
         // If AI generated lesson structure:
-        if (data.result?.project) {
-          setPendingLesson(data as AISuggestion)
+        if (aiResponse?.result?.project) {
+          setPendingLesson(aiResponse)
 
           if (isInitialGeneration) {
             setAiChatMode("animating")
@@ -99,13 +112,20 @@ export function useScormAI({
         }
       } catch (err) {
         console.error("AI error:", err)
+
+        const errorMessage =
+          err instanceof Error ? err.message : "AI response could not be parsed"
+        addMessage({
+          id: Date.now() + 2,
+          role: "assistant",
+          content: errorMessage,
+        })
       } finally {
         setIsGenerating(false)
       }
     },
 
-    // ❗ FIX: dependency array must be inside useCallback, not on a separate line
-    [isGenerating]
+    [messages, setAiChatMode, setEditorMode]
   )
 
   return {
