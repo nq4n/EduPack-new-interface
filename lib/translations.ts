@@ -13,7 +13,6 @@ export const translations = {
     "nav.privacy": "Privacy",
     "nav.terms": "Terms",
     "nav.shop": "Packages",
-    "nav.payment": "Payment",
     "nav.switchLanguage": "Switch Language",
     "hero.title": "Create SCORM packages with AI",
     "hero.description":
@@ -542,7 +541,6 @@ export const translations = {
     "nav.privacy": "الخصوصية",
     "nav.terms": "الشروط",
     "nav.shop": "الباقات",
-    "nav.payment": "الدفع",
     "hero.title": "أنشئ حزم SCORM بالذكاء الاصطناعي",
     "hero.description":
       "أسهل طريقة لإنشاء حزم SCORM حديثة وتفاعلية وجميلة لنظام إدارة التعلم الخاص بك. استفد من الذكاء الاصطناعي لإنشاء المحتوى والاختبارات والمزيد.",

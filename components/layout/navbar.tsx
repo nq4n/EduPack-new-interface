@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -25,6 +25,18 @@ export function Navbar() {
   const { locale } = useLocale()
   const router = useRouter()
   const { supabase, user } = useSupabase()
+
+  const navLinks = useMemo(
+    () => [
+      { href: "/", label: t(locale, "nav.home") },
+      { href: "/scorm-ai", label: t(locale, "nav.scorm-ai") },
+      { href: "/packages", label: t(locale, "nav.shop") },
+      { href: "/pricing", label: t(locale, "nav.pricing") },
+      { href: "/features", label: t(locale, "nav.features") },
+      { href: "/resources", label: t(locale, "nav.resources") },
+    ],
+    [locale],
+  )
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
@@ -55,24 +67,15 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.home")}
-            </Link>
-            <Link href="/scorm-ai" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.scorm-ai")}
-            </Link>
-            <Link href="/packages" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.shop")}
-            </Link>
-            <Link href="/pricing" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.pricing")}
-            </Link>
-            <Link href="/features" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.features")}
-            </Link>
-            <Link href="/resources" className="text-foreground hover:text-primary transition-colors">
-              {t(locale, "nav.resources")}
-            </Link>
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-foreground hover:text-primary transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           {/* Right Side */}
@@ -123,24 +126,15 @@ export function Navbar() {
       {isOpen && (
         <div className="md:hidden border-t border-border bg-white">
           <div className="px-4 py-4 space-y-3">
-            <Link href="/" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.home")}
-            </Link>
-            <Link href="/scorm-ai" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.scorm-ai")}
-            </Link>
-            <Link href="/packages" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.shop")}
-            </Link>
-            <Link href="/pricing" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.pricing")}
-            </Link>
-            <Link href="/features" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.features")}
-            </Link>
-            <Link href="/resources" className="block text-foreground hover:text-primary">
-              {t(locale, "nav.resources")}
-            </Link>
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block text-foreground hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ))}
             {!user && (
               <div className="flex gap-2 pt-4">
                 <Link href="/login" className="flex-1">
