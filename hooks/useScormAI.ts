@@ -1,11 +1,6 @@
 import { useState, useCallback, useEffect } from "react"
-import {
-  EditorBlock,
-  EditorPage,
-  EditorProject,
-  QuizBlock,
-  InteractiveBlock,
-} from "@/lib/scorm/types"
+import { BuildLessonResult, EditorProject } from "@/lib/scorm/types"
+import { buildLessonPackage } from "@/lib/ai/orchestrator"
 
 export type AgentRole = "user" | "mentor" | "contentArchitect" | "assessmentDesigner"
 
@@ -23,6 +18,12 @@ type UseScormAIProps = {
   setEditorMode: (mode: "choice" | "ai" | "blank") => void
   setAiChatMode: (mode: "hidden" | "visible" | "animating") => void
   initialMessages: ChatMessage[]
+  onLessonApplied?: (blockIds: string[]) => void
+}
+
+type PendingLesson = {
+  result: BuildLessonResult
+  isInitial: boolean
 }
 
 export function useScormAI({
@@ -32,10 +33,12 @@ export function useScormAI({
   setEditorMode,
   setAiChatMode,
   initialMessages,
+  onLessonApplied,
 }: UseScormAIProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [chatInput, setChatInput] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
+  const [pendingLesson, setPendingLesson] = useState<PendingLesson | null>(null)
 
   useEffect(() => {
     if (initialMessages.length > 0 && messages.length === 0) {
@@ -43,198 +46,31 @@ export function useScormAI({
     }
   }, [initialMessages, messages.length])
 
-  const generateId = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
-
   const addMessage = (message: ChatMessage) => {
     setMessages((prev) => [...prev, message])
   }
 
-  const applyDefaults = (project: EditorProject): EditorProject => {
-    return {
-      tracking: {
-        level: "standard",
-        pageViews: true,
-        quizInteractions: true,
-        media: true,
-        hints: false,
-        externalLinks: false,
-        timePerPage: true,
-        attempts: true,
-      },
-      xapi: {
-        lrsEndpoint: "",
-        authToken: "",
-        activityIdFormat: "iri",
-        statementExtensions: "{}",
-      },
-      ...project,
-    }
-  }
+  const summarizeBlocks = (project: EditorProject) =>
+    project.pages.reduce((total, page) => total + (page.blocks?.length || 0), 0)
 
-  const planLesson = async (prompt: string) => {
-    const lessonSummary = `Lesson on ${prompt}`
-    const learningObjectives = [
-      `Understand the core ideas of ${prompt}`,
-      `Apply ${prompt} concepts in realistic scenarios`,
-      `Reflect on how ${prompt} connects to prior knowledge`,
-    ]
-    const contentTasks = [
-      "Design introduction and contextual overview",
-      "Outline main learning sequence with examples",
-      "Highlight visuals or media to support comprehension",
-    ]
-    const assessmentTasks = [
-      "Create formative quiz questions",
-      "Design an interactive activity",
-      "Summarize key takeaways for reflection",
-    ]
+  const applyLesson = (result: BuildLessonResult, isInitialGeneration: boolean) => {
+    const blockIds = result.project.pages.flatMap((page) =>
+      (page.blocks || []).map((block) => block.id)
+    )
 
-    return { lessonSummary, learningObjectives, contentTasks, assessmentTasks }
-  }
-
-  const buildContent = async (prompt: string, plan: Awaited<ReturnType<typeof planLesson>>) => {
-    const introPage: EditorPage = {
-      id: generateId("page"),
-      title: `Introduction to ${prompt}`,
-      blocks: [
-        {
-          id: generateId("block"),
-          type: "text",
-          html: `<p>${plan.lessonSummary}</p>`,
-        },
-        {
-          id: generateId("block"),
-          type: "image",
-          src: "https://placehold.co/600x360",
-          alt: `${prompt} illustration`,
-        },
-      ],
-    }
-
-    const conceptPage: EditorPage = {
-      id: generateId("page"),
-      title: `${prompt} in Practice`,
-      blocks: [
-        {
-          id: generateId("block"),
-          type: "text",
-          html: `<p>Walk through a practical scenario that demonstrates ${prompt}. Emphasize steps and reasoning so learners can follow along.</p>`,
-        },
-        {
-          id: generateId("block"),
-          type: "video",
-          src: "https://www.w3schools.com/html/mov_bbb.mp4",
-        },
-      ],
-    }
-
-    return {
-      pages: [introPage, conceptPage],
-    }
-  }
-
-  const buildAssessments = async (
-    prompt: string,
-    plan: Awaited<ReturnType<typeof planLesson>>,
-    _content: Awaited<ReturnType<typeof buildContent>>
-  ) => {
-    const quiz: QuizBlock = {
-      id: generateId("quiz"),
-      type: "quiz",
-      question: `What is a key idea about ${prompt}?`,
-      options: [
-        { id: generateId("opt"), label: `It helps us understand ${prompt} better`, correct: true },
-        { id: generateId("opt"), label: `It replaces all other concepts`, correct: false },
-        { id: generateId("opt"), label: `It is unrelated to learning objectives`, correct: false },
-      ],
-    }
-
-    const interactive: InteractiveBlock = {
-      id: generateId("interactive"),
-      type: "interactive",
-      variant: "callout",
-      label: "Reflection",
-      bodyHtml: `<p>List two ways ${prompt} could be applied in your classroom or workplace.</p>`,
-      style: {
-        padding: "12px",
-        radius: "12px",
-        background: "#ecfeff",
-        shadow: true,
-      },
-    }
-
-    return {
-      quizzes: [quiz],
-      interactive: [interactive],
-    }
-  }
-
-  const adaptBlocks = (blocks: EditorBlock[]) => {
-    return blocks.map((block) => {
-      const id = block.id || generateId("block")
-      if (block.type === "quiz") {
-        const options = block.options?.map((opt) => ({
-          ...opt,
-          id: opt.id || generateId("opt"),
-        }))
-        return { ...block, id, options }
-      }
-      return { ...block, id }
-    }) as EditorBlock[]
-  }
-
-  const mergeOutputs = (
-    prompt: string,
-    plan: Awaited<ReturnType<typeof planLesson>>,
-    content: Awaited<ReturnType<typeof buildContent>>,
-    assessments: Awaited<ReturnType<typeof buildAssessments>>
-  ) => {
-    const pages: EditorPage[] = content.pages.map((page) => ({
-      ...page,
-      id: page.id || generateId("page"),
-      blocks: adaptBlocks(page.blocks || []),
-    }))
-
-    const assessmentPage: EditorPage = {
-      id: generateId("page"),
-      title: "Knowledge Check",
-      blocks: [
-        ...assessments.quizzes.map((quiz) => ({ ...quiz, type: "quiz" as const })),
-        ...assessments.interactive.map((interaction) => ({ ...interaction, type: interaction.type })),
-      ],
-    }
-
-    const project: EditorProject = applyDefaults({
-      id: `proj-${Date.now()}`,
-      title: plan.lessonSummary || `Lesson on ${prompt}`,
-      version: "1.0",
-      theme: { direction: "ltr", styles: {} },
-      pages: [...pages, assessmentPage],
-    })
-
-    const warnings: string[] = pages.length === 0 ? ["No pages generated"] : []
-    const recommendedTags = plan.learningObjectives.map((objective) => objective.split(" ")[0].replace(/[^a-zA-Z]/g, "").toLowerCase())
-    const metadata = {
-      predictedDifficulty: plan.learningObjectives.length > 3 ? "medium" : "easy",
-      recommendedTags: Array.from(new Set(recommendedTags.filter(Boolean))),
-    } as const
-
-    return { project, warnings, metadata }
-  }
-
-  const handleAIResponse = (
-    result: ReturnType<typeof mergeOutputs>,
-    isInitialGeneration: boolean,
-  ) => {
     setProject(result.project)
     setActivePageId(result.project.pages[0]?.id || null)
     setSelectedBlockId(null)
+
+    if (blockIds.length > 0) {
+      onLessonApplied?.(blockIds)
+    }
 
     addMessage({
       id: Date.now(),
       role: "assistant",
       agent: "mentor",
-      content: `I've merged the content and assessments into "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
+      content: `Applied the orchestrated lesson "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
     })
 
     if (result.warnings.length > 0) {
@@ -264,48 +100,97 @@ export function useScormAI({
     })
   }
 
-  const submitPrompt = useCallback(async (prompt: string, isInitialGeneration: boolean) => {
-    if (!prompt || isGenerating) return
+  const submitPrompt = useCallback(
+    async (prompt: string, isInitialGeneration: boolean) => {
+      if (!prompt || isGenerating) return
 
-    setIsGenerating(true)
-    setChatInput("")
+      setIsGenerating(true)
+      setChatInput("")
 
-    addMessage({ id: Date.now(), role: "user", agent: "user", content: prompt })
-    addMessage({ id: Date.now() + 1, role: "assistant", agent: "mentor", content: "Planning lesson blueprint..." })
+      const now = Date.now()
+      addMessage({ id: now, role: "user", agent: "user", content: prompt })
+      addMessage({ id: now + 1, role: "assistant", agent: "mentor", content: "Routing request to AI levels..." })
 
-    try {
-      const plan = await planLesson(prompt)
-      addMessage({
-        id: Date.now() + 2,
-        role: "assistant",
-        agent: "mentor",
-        content: `Plan ready. Summary: ${plan.lessonSummary}. Objectives: ${plan.learningObjectives.join("; ")}.`,
-      })
+      try {
+        const result = await buildLessonPackage(prompt)
+        const blockCount = summarizeBlocks(result.project)
 
-      const content = await buildContent(prompt, plan)
-      addMessage({
-        id: Date.now() + 3,
-        role: "assistant",
-        agent: "contentArchitect",
-        content: `Content structure prepared with ${content.pages.length} pages covering ${plan.contentTasks.join(", ")}.`,
-      })
+        addMessage({
+          id: Date.now() + 2,
+          role: "assistant",
+          agent: "mentor",
+          content: result.metadata.routerSummary,
+        })
 
-      const assessments = await buildAssessments(prompt, plan, content)
-      addMessage({
-        id: Date.now() + 4,
-        role: "assistant",
-        agent: "assessmentDesigner",
-        content: `Assessment draft includes ${assessments.quizzes.length} quiz and ${assessments.interactive.length} interactive block(s) focusing on ${plan.assessmentTasks.join(", ")}.`,
-      })
+        addMessage({
+          id: Date.now() + 3,
+          role: "assistant",
+          agent: "contentArchitect",
+          content: `Level 2 drafted ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
+        })
 
-      const merged = mergeOutputs(prompt, plan, content, assessments)
-      handleAIResponse(merged, isInitialGeneration)
-    } catch (error: any) {
-      handleAIError(error)
-    } finally {
-      setIsGenerating(false)
-    }
-  }, [isGenerating]) // Dependencies will be managed by useCallback
+        addMessage({
+          id: Date.now() + 4,
+          role: "assistant",
+          agent: "assessmentDesigner",
+          content: `Level 1 ML suggests difficulty ${result.metadata.predictedDifficulty} with tags ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
+        })
 
-  return { messages, chatInput, setChatInput, isGenerating, submitPrompt }
+        if (result.warnings.length > 0) {
+          addMessage({
+            id: Date.now() + 5,
+            role: "assistant",
+            agent: "mentor",
+            content: `Level 0 checks flagged: ${result.warnings.join("; ")}`,
+          })
+        }
+
+        const pageOutline = result.project.pages
+          .map((page) => `• ${page.title} (${page.blocks.length} blocks)`)
+          .join(" | ")
+
+        addMessage({
+          id: Date.now() + 6,
+          role: "assistant",
+          agent: "mentor",
+          content: `I prepared a lesson plan: ${pageOutline || "No pages generated"}. Would you like me to apply these changes to the editor?`,
+        })
+
+        setPendingLesson({ result, isInitial: isInitialGeneration })
+      } catch (error: any) {
+        handleAIError(error)
+      } finally {
+        setIsGenerating(false)
+      }
+    },
+    [isGenerating],
+  ) // Dependencies will be managed by useCallback
+
+  const acceptPendingLesson = () => {
+    if (!pendingLesson) return
+    applyLesson(pendingLesson.result, pendingLesson.isInitial)
+    setPendingLesson(null)
+  }
+
+  const rejectPendingLesson = () => {
+    if (!pendingLesson) return
+    addMessage({
+      id: Date.now(),
+      role: "assistant",
+      agent: "mentor",
+      content: "Got it—discarded the proposed changes. Share another request when you're ready.",
+    })
+    setPendingLesson(null)
+  }
+
+  return {
+    messages,
+    chatInput,
+    setChatInput,
+    isGenerating,
+    submitPrompt,
+    pendingLesson,
+    acceptPendingLesson,
+    rejectPendingLesson,
+  }
 }

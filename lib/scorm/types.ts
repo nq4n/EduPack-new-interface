@@ -1,6 +1,17 @@
 // lib/scorm/types.ts
 
 export type SCORMVersion = "1.2" | "2004"
+export type ExportFormat =
+  | "scorm12"
+  | "scorm2004"
+  | "xapi"
+  | "html5"
+  | "publicLink"
+  | "embedCode"
+  | "teacherPdf"
+  | "studentPdf"
+  | "json"
+  | "qti"
 
 export interface SCORMManifestItem {
   id: string
@@ -121,12 +132,22 @@ export type InteractiveBlock = {
   style?: any
 }
 
+export interface RouterAnalysis {
+    language: "en" | "ar";
+    intent: string;
+    audience: string;
+    route: ("level2" | "level1" | "level0")[];
+    notes?: string;
+}
+
 export interface BuildLessonResult {
     project: EditorProject;
     warnings: string[];
     metadata: {
         predictedDifficulty: "easy" | "medium" | "hard";
         recommendedTags: string[];
+        routerSummary: string;
+        routing: RouterAnalysis;
     };
 }
 
