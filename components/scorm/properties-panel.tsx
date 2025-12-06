@@ -10,6 +10,7 @@ import {
   QuizBlock,
   InteractiveBlock,
   SCORMVersion,
+  ExportFormat,
 } from "@/lib/scorm/types"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -31,6 +32,7 @@ interface PropertiesPanelProps {
   onBlockChange: (block: EditorBlock) => void
   panelType: "block" | "project"
   onAddPage: () => void
+  onExport?: (format: ExportFormat | SCORMVersion) => void
   onExport?: (version: SCORMVersion) => void
 }
 

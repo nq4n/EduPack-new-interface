@@ -1,6 +1,17 @@
 // lib/scorm/types.ts
 
 export type SCORMVersion = "1.2" | "2004"
+export type ExportFormat =
+  | "scorm12"
+  | "scorm2004"
+  | "xapi"
+  | "html5"
+  | "publicLink"
+  | "embedCode"
+  | "teacherPdf"
+  | "studentPdf"
+  | "json"
+  | "qti"
 
 export interface SCORMManifestItem {
   id: string

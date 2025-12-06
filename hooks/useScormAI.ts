@@ -18,6 +18,12 @@ type UseScormAIProps = {
   setEditorMode: (mode: "choice" | "ai" | "blank") => void
   setAiChatMode: (mode: "hidden" | "visible" | "animating") => void
   initialMessages: ChatMessage[]
+  onLessonApplied?: (blockIds: string[]) => void
+}
+
+type PendingLesson = {
+  result: BuildLessonResult
+  isInitial: boolean
 }
 
 export function useScormAI({
@@ -27,10 +33,12 @@ export function useScormAI({
   setEditorMode,
   setAiChatMode,
   initialMessages,
+  onLessonApplied,
 }: UseScormAIProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [chatInput, setChatInput] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
+  const [pendingLesson, setPendingLesson] = useState<PendingLesson | null>(null)
 
   useEffect(() => {
     if (initialMessages.length > 0 && messages.length === 0) {
@@ -45,6 +53,11 @@ export function useScormAI({
   const summarizeBlocks = (project: EditorProject) =>
     project.pages.reduce((total, page) => total + (page.blocks?.length || 0), 0)
 
+  const applyLesson = (result: BuildLessonResult, isInitialGeneration: boolean) => {
+    const blockIds = result.project.pages.flatMap((page) =>
+      (page.blocks || []).map((block) => block.id)
+    )
+
   const handleAIResponse = (
     result: BuildLessonResult,
     isInitialGeneration: boolean,
@@ -53,10 +66,15 @@ export function useScormAI({
     setActivePageId(result.project.pages[0]?.id || null)
     setSelectedBlockId(null)
 
+    if (blockIds.length > 0) {
+      onLessonApplied?.(blockIds)
+    }
+
     addMessage({
       id: Date.now(),
       role: "assistant",
       agent: "mentor",
+      content: `Applied the orchestrated lesson "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
       content: `Open router orchestration merged the outputs into "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
     })
 
@@ -113,6 +131,7 @@ export function useScormAI({
           id: Date.now() + 3,
           role: "assistant",
           agent: "contentArchitect",
+          content: `Level 2 drafted ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
           content: `Level 2 generated ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
         })
 
@@ -132,6 +151,18 @@ export function useScormAI({
           })
         }
 
+        const pageOutline = result.project.pages
+          .map((page) => `• ${page.title} (${page.blocks.length} blocks)`)
+          .join(" | ")
+
+        addMessage({
+          id: Date.now() + 6,
+          role: "assistant",
+          agent: "mentor",
+          content: `I prepared a lesson plan: ${pageOutline || "No pages generated"}. Would you like me to apply these changes to the editor?`,
+        })
+
+        setPendingLesson({ result, isInitial: isInitialGeneration })
         handleAIResponse(result, isInitialGeneration)
       } catch (error: any) {
         handleAIError(error)
@@ -139,8 +170,36 @@ export function useScormAI({
         setIsGenerating(false)
       }
     },
+    [isGenerating],
+  ) // Dependencies will be managed by useCallback
+
+  const acceptPendingLesson = () => {
+    if (!pendingLesson) return
+    applyLesson(pendingLesson.result, pendingLesson.isInitial)
+    setPendingLesson(null)
+  }
+
+  const rejectPendingLesson = () => {
+    if (!pendingLesson) return
+    addMessage({
+      id: Date.now(),
+      role: "assistant",
+      agent: "mentor",
+      content: "Got it—discarded the proposed changes. Share another request when you're ready.",
+    })
+    setPendingLesson(null)
+  }
     [isGenerating]
   ) // Dependencies will be managed by useCallback
 
-  return { messages, chatInput, setChatInput, isGenerating, submitPrompt }
+  return {
+    messages,
+    chatInput,
+    setChatInput,
+    isGenerating,
+    submitPrompt,
+    pendingLesson,
+    acceptPendingLesson,
+    rejectPendingLesson,
+  }
 }

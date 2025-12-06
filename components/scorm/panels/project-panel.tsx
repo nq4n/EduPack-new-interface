@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { EditorProject, ExportFormat, SCORMVersion } from "@/lib/scorm/types"
 import { EditorProject, SCORMVersion } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button"
 interface ProjectPanelProps {
   project: EditorProject
   onChange: (updated: EditorProject) => void
+  onExport?: (format: ExportFormat | SCORMVersion) => void
   onExport?: (version: SCORMVersion) => void
 }
 
@@ -299,6 +301,76 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
             >
               {t("scorm.projectPanel.export.scorm2004")}
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("xapi")}
+            >
+              {t("scorm.projectPanel.export.xapi")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("html5")}
+            >
+              {t("scorm.projectPanel.export.html5")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("publicLink")}
+            >
+              {t("scorm.projectPanel.export.publicLink")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("embedCode")}
+            >
+              {t("scorm.projectPanel.export.embedCode")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("teacherPdf")}
+            >
+              {t("scorm.projectPanel.export.teacherPdf")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("studentPdf")}
+            >
+              {t("scorm.projectPanel.export.studentPdf")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("json")}
+            >
+              {t("scorm.projectPanel.export.json")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("qti")}
+            >
             <Button variant="outline" size="sm" className="h-7" disabled>
               {t("scorm.projectPanel.export.xapi")}
             </Button>
