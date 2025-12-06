@@ -1,30 +1,8 @@
-import { useState, useCallback, useEffect } from "react"
-import { BuildLessonResult, EditorProject } from "@/lib/scorm/types"
-import { buildLessonPackage } from "@/lib/ai/orchestrator"
+"use client"
 
-export type AgentRole = "user" | "mentor" | "contentArchitect" | "assessmentDesigner"
-
-export type ChatMessage = {
-  id: number
-  role: "assistant" | "user" | "system"
-  content: string
-  agent?: AgentRole
-}
-
-type UseScormAIProps = {
-  setProject: (project: EditorProject) => void
-  setActivePageId: (id: string | null) => void
-  setSelectedBlockId: (id: string | null) => void
-  setEditorMode: (mode: "choice" | "ai" | "blank") => void
-  setAiChatMode: (mode: "hidden" | "visible" | "animating") => void
-  initialMessages: ChatMessage[]
-  onLessonApplied?: (blockIds: string[]) => void
-}
-
-type PendingLesson = {
-  result: BuildLessonResult
-  isInitial: boolean
-}
+import { useState, useCallback } from "react"
+import { EditorProject } from "@/lib/scorm/types"
+import { ChatMessage, ScormAIHookProps, AISuggestion } from "@/lib/scorm/ai-types"
 
 export function useScormAI({
   setProject,
@@ -34,163 +12,101 @@ export function useScormAI({
   setAiChatMode,
   initialMessages,
   onLessonApplied,
-}: UseScormAIProps) {
+}: ScormAIHookProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
   const [chatInput, setChatInput] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
-  const [pendingLesson, setPendingLesson] = useState<PendingLesson | null>(null)
+  const [pendingLesson, setPendingLesson] = useState<AISuggestion | null>(null)
 
-  useEffect(() => {
-    if (initialMessages.length > 0 && messages.length === 0) {
-      setMessages(initialMessages)
-    }
-  }, [initialMessages, messages.length])
-
-  const addMessage = (message: ChatMessage) => {
-    setMessages((prev) => [...prev, message])
+  // Append user message + AI response
+  const addMessage = (msg: ChatMessage) => {
+    setMessages((prev) => [...prev, msg])
   }
 
-  const summarizeBlocks = (project: EditorProject) =>
-    project.pages.reduce((total, page) => total + (page.blocks?.length || 0), 0)
+  // Accept AI lesson changes
+  const acceptPendingLesson = () => {
+    if (!pendingLesson) return
 
-  const applyLesson = (result: BuildLessonResult, isInitialGeneration: boolean) => {
-    const blockIds = result.project.pages.flatMap((page) =>
-      (page.blocks || []).map((block) => block.id)
+    const newProject = pendingLesson.result.project as EditorProject
+
+    setProject(newProject)
+
+    if (newProject.pages.length > 0) {
+      setActivePageId(newProject.pages[0].id)
+      setSelectedBlockId(null)
+    }
+
+    onLessonApplied(
+      newProject.pages.flatMap((p) => p.blocks.map((b) => b.id))
     )
 
-  const handleAIResponse = (
-    result: BuildLessonResult,
-    isInitialGeneration: boolean,
-  ) => {
-    setProject(result.project)
-    setActivePageId(result.project.pages[0]?.id || null)
-    setSelectedBlockId(null)
-
-    if (blockIds.length > 0) {
-      onLessonApplied?.(blockIds)
-    }
-
-    addMessage({
-      id: Date.now(),
-      role: "assistant",
-      agent: "mentor",
-      content: `Applied the orchestrated lesson "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
-      content: `Open router orchestration merged the outputs into "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
-    })
-
-    if (result.warnings.length > 0) {
-      addMessage({
-        id: Date.now() + 1,
-        role: "assistant",
-        agent: "mentor",
-        content: `Warnings noted: ${result.warnings.join("; ")}`,
-      })
-    }
-
-    if (isInitialGeneration) {
-      setAiChatMode("animating")
-      setTimeout(() => {
-        setAiChatMode("hidden")
-        setEditorMode("ai")
-      }, 1000)
-    }
+    setPendingLesson(null)
+    setEditorMode("ai")
+    setAiChatMode("hidden")
   }
 
-  const handleAIError = (error: any) => {
-    addMessage({
-      id: Date.now(),
-      role: "assistant",
-      agent: "mentor",
-      content: `Sorry, I ran into an error: ${error.message}`,
-    })
+  // Reject AI lesson
+  const rejectPendingLesson = () => {
+    setPendingLesson(null)
   }
 
+  // AI prompt handler
   const submitPrompt = useCallback(
     async (prompt: string, isInitialGeneration: boolean) => {
-      if (!prompt || isGenerating) return
+      if (!prompt.trim()) return
 
       setIsGenerating(true)
+
+      const userMessage: ChatMessage = {
+        id: Date.now(),
+        role: "user",
+        content: prompt,
+      }
+
+      addMessage(userMessage)
       setChatInput("")
 
-      const now = Date.now()
-      addMessage({ id: now, role: "user", agent: "user", content: prompt })
-      addMessage({ id: now + 1, role: "assistant", agent: "mentor", content: "Routing request to AI levels..." })
-
       try {
-        const result = await buildLessonPackage(prompt)
-        const blockCount = summarizeBlocks(result.project)
-
-        addMessage({
-          id: Date.now() + 2,
-          role: "assistant",
-          agent: "mentor",
-          content: result.metadata.routerSummary,
+        const response = await fetch("/api/scorm/ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt }),
         })
 
-        addMessage({
-          id: Date.now() + 3,
-          role: "assistant",
-          agent: "contentArchitect",
-          content: `Level 2 drafted ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
-          content: `Level 2 generated ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
-        })
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || "AI generation failed")
 
-        addMessage({
-          id: Date.now() + 4,
+        const aiMessage: ChatMessage = {
+          id: Date.now() + 1,
           role: "assistant",
-          agent: "assessmentDesigner",
-          content: `Level 1 ML suggests difficulty ${result.metadata.predictedDifficulty} with tags ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
-        })
-
-        if (result.warnings.length > 0) {
-          addMessage({
-            id: Date.now() + 5,
-            role: "assistant",
-            agent: "mentor",
-            content: `Level 0 checks flagged: ${result.warnings.join("; ")}`,
-          })
+          content: data.message || "Generated lesson.",
+          agent: data.agent || undefined,
         }
 
-        const pageOutline = result.project.pages
-          .map((page) => `• ${page.title} (${page.blocks.length} blocks)`)
-          .join(" | ")
+        addMessage(aiMessage)
 
-        addMessage({
-          id: Date.now() + 6,
-          role: "assistant",
-          agent: "mentor",
-          content: `I prepared a lesson plan: ${pageOutline || "No pages generated"}. Would you like me to apply these changes to the editor?`,
-        })
+        // If AI generated lesson structure:
+        if (data.result?.project) {
+          setPendingLesson(data as AISuggestion)
 
-        setPendingLesson({ result, isInitial: isInitialGeneration })
-        handleAIResponse(result, isInitialGeneration)
-      } catch (error: any) {
-        handleAIError(error)
+          if (isInitialGeneration) {
+            setAiChatMode("animating")
+            setTimeout(() => {
+              setAiChatMode("hidden")
+              setEditorMode("ai")
+            }, 600)
+          }
+        }
+      } catch (err) {
+        console.error("AI error:", err)
       } finally {
         setIsGenerating(false)
       }
     },
-    [isGenerating],
-  ) // Dependencies will be managed by useCallback
 
-  const acceptPendingLesson = () => {
-    if (!pendingLesson) return
-    applyLesson(pendingLesson.result, pendingLesson.isInitial)
-    setPendingLesson(null)
-  }
-
-  const rejectPendingLesson = () => {
-    if (!pendingLesson) return
-    addMessage({
-      id: Date.now(),
-      role: "assistant",
-      agent: "mentor",
-      content: "Got it—discarded the proposed changes. Share another request when you're ready.",
-    })
-    setPendingLesson(null)
-  }
+    // ❗ FIX: dependency array must be inside useCallback, not on a separate line
     [isGenerating]
-  ) // Dependencies will be managed by useCallback
+  )
 
   return {
     messages,
