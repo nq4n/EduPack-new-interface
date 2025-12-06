@@ -1,76 +1,90 @@
 
-import { EditorProject } from "@/lib/scorm/types";
+import { EditorProject, EditorBlock, TextBlock, QuizBlock } from "@/lib/scorm/types"
 
-// Level 1: Simple, low-cost ML models for predictions.
+// Level 1: lightweight heuristics that mimic ML scoring for UX purposes.
 
-// In a real implementation, these models would be trained offline (e.g., in a Python
-// environment with scikit-learn) and the model weights/parameters would be exported to a
-// JSON file. This file would be loaded by the TypeScript backend to make predictions.
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+}
 
-// --- Dummy ML Model Data (replace with actual model from JSON) ---
+function wordCount(text: string): number {
+  const cleaned = stripHtml(text)
+  if (!cleaned) return 0
+  return cleaned.split(/\s+/).length
+}
 
-const difficultyModel = {
-    // A very simple logistic regression-like model represented in JSON
-    // Features: grade_level (numeric), num_pages, total_blocks
-    // This is a simplified example. A real model would have more features and proper weights.
-    intercept: -2.5,
-    coefs: {
-        grade: 0.2,
-        pages: 0.1,
-        blocks: 0.05,
-    }
-};
+function countQuizBlocks(blocks: EditorBlock[]): number {
+  return blocks.filter((block): block is QuizBlock => block.type === "quiz").length
+}
 
-/**
- * Predicts the difficulty of a lesson package.
- * @param project The editor project.
- * @returns A difficulty prediction: "easy", "medium", or "hard".
- */
-export async function predictDifficulty(project: EditorProject): Promise<"easy" | "medium" | "hard"> {
-    // In a real scenario, you'd extract features from the project.
-    // For this example, we'll use some simple heuristics.
-    const grade = 8; // Assuming a grade level if not present, e.g., from project metadata
-    const numPages = project.pages.length;
-    const totalBlocks = project.pages.reduce((acc, page) => acc + page.blocks.length, 0);
+function averageWordsPerPage(pages: EditorProject["pages"]): number {
+  if (pages.length === 0) return 0
+  const totalWords = pages.reduce((sum, page) => {
+    const pageText = page.blocks
+      .filter((block): block is TextBlock => block.type === "text")
+      .map((block) => wordCount(block.html))
+      .reduce((acc, count) => acc + count, 0)
+    return sum + pageText
+  }, 0)
 
-    // Simple logistic regression-style prediction
-    const log_odds = difficultyModel.intercept +
-        (difficultyModel.coefs.grade * grade) +
-        (difficultyModel.coefs.pages * numPages) +
-        (difficultyModel.coefs.blocks * totalBlocks);
-
-    const probability = 1 / (1 + Math.exp(-log_odds)); // Sigmoid function
-
-    if (probability < 0.33) return "easy";
-    if (probability < 0.66) return "medium";
-    return "hard";
+  return Math.round(totalWords / pages.length)
 }
 
 /**
- * Recommends tags for a lesson based on its content.
- * This is a placeholder for a text classification model.
- * @param project The editor project.
- * @returns An array of recommended tags.
+ * Predicts the difficulty of a lesson package using interpretable heuristics that mirror
+ * a light ML model. This provides consistent messaging for the UI without requiring
+ * heavyweight inference dependencies.
+ */
+export async function predictDifficulty(project: EditorProject): Promise<"easy" | "medium" | "hard"> {
+  const numPages = project.pages.length
+  const totalBlocks = project.pages.reduce((acc, page) => acc + page.blocks.length, 0)
+  const quizCount = project.pages.reduce((acc, page) => acc + countQuizBlocks(page.blocks), 0)
+  const avgWords = averageWordsPerPage(project.pages)
+
+  // Progressive thresholds inspired by readability scoring.
+  if (numPages <= 1 && avgWords < 120 && quizCount === 0) {
+    return "easy"
+  }
+
+  const contentDensityScore = avgWords + quizCount * 40 + totalBlocks * 5
+  const structuralScore = numPages * 25
+  const combinedScore = contentDensityScore + structuralScore
+
+  if (combinedScore < 400) {
+    return "medium"
+  }
+
+  return "hard"
+}
+
+/**
+ * Recommends tags for a lesson based on transparent keyword-style features that map well
+ * to the UI chip set. This remains deterministic so the page can reliably surface them.
  */
 export async function recommendTags(project: EditorProject): Promise<string[]> {
-    const content = project.pages.map(p => p.blocks.map(b => 'html' in b ? b.html : '').join(' ')).join(' ');
-    const recommended: string[] = [];
+  const body = project.pages
+    .map((p) => p.blocks.map((b) => ("html" in b ? (b as TextBlock).html : "")).join(" "))
+    .join(" ")
+    .toLowerCase()
 
-    if (content.toLowerCase().includes("fraction")) {
-        recommended.push("Fractions");
-    }
-    if (content.toLowerCase().includes("reading")) {
-        recommended.push("Reading Comprehension");
-    }
-    if (content.toLowerCase().includes("ecosystem")) {
-        recommended.push("Ecosystems");
-    }
+  const tags = new Set<string>()
 
-    // A real model would use something like TF-IDF and a classifier.
-    // This dummy version just does simple keyword matching.
-    if(recommended.length === 0) {
-        recommended.push("General");
-    }
+  const add = (tag: string) => tags.add(tag)
 
-    return recommended;
+  if (body.includes("math") || body.includes("fraction") || body.includes("algebra")) add("Math")
+  if (body.includes("reading") || body.includes("story") || body.includes("essay")) add("Literacy")
+  if (body.includes("ecosystem") || body.includes("habitat") || body.includes("climate")) add("Science")
+  if (body.includes("history") || body.includes("civilization") || body.includes("ancient")) add("Social Studies")
+
+  const hasMedia = project.pages.some((p) => p.blocks.some((b) => b.type === "image" || b.type === "video"))
+  const hasInteractive = project.pages.some((p) => p.blocks.some((b) => b.type === "interactive"))
+  const hasQuizzes = project.pages.some((p) => p.blocks.some((b) => b.type === "quiz"))
+
+  if (hasMedia) add("Multimedia")
+  if (hasInteractive) add("Interactive")
+  if (hasQuizzes) add("Assessment")
+
+  if (tags.size === 0) add("General")
+
+  return Array.from(tags)
 }

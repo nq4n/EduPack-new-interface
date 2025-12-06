@@ -1,16 +1,17 @@
 "use client"
 
 import React from "react"
-import { EditorProject } from "@/lib/scorm/types"
+import { EditorProject, SCORMVersion } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
 
 interface ProjectPanelProps {
   project: EditorProject
   onChange: (updated: EditorProject) => void
+  onExport?: (version: SCORMVersion) => void
 }
 
-export default function ProjectPanel({ project, onChange }: ProjectPanelProps) {
+export default function ProjectPanel({ project, onChange, onExport }: ProjectPanelProps) {
   const { t } = useLocale()
 
   const updateProject = (partial: Partial<EditorProject>) => {
@@ -19,6 +20,8 @@ export default function ProjectPanel({ project, onChange }: ProjectPanelProps) {
       ...partial,
     })
   }
+
+  const exportDisabled = !onExport
 
   return (
     <div className="h-full flex flex-col">
@@ -278,16 +281,48 @@ export default function ProjectPanel({ project, onChange }: ProjectPanelProps) {
             {t("scorm.projectPanel.exportPanel")}
           </h4>
           <div className="grid grid-cols-2 gap-2 text-xs">
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.scorm12')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.scorm2004')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.xapi')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.html5')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.publicLink')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.embedCode')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.teacherPdf')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.studentPdf')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.json')}</Button>
-            <Button variant="outline" size="sm" className="h-7">{t('scorm.projectPanel.export.qti')}</Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("1.2")}
+            >
+              {t("scorm.projectPanel.export.scorm12")}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7"
+              disabled={exportDisabled}
+              onClick={() => onExport?.("2004")}
+            >
+              {t("scorm.projectPanel.export.scorm2004")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.xapi")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.html5")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.publicLink")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.embedCode")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.teacherPdf")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.studentPdf")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.json")}
+            </Button>
+            <Button variant="outline" size="sm" className="h-7" disabled>
+              {t("scorm.projectPanel.export.qti")}
+            </Button>
           </div>
         </div>
       </div>

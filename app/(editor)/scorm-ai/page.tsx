@@ -10,6 +10,7 @@ import {
   EditorBlock,
   EditorPage,
   EditorProject,
+  SCORMVersion,
   TextBlock,
   ImageBlock,
   VideoBlock,
@@ -35,6 +36,7 @@ import {
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner";
+import { buildScormZip } from "@/lib/scorm/exporter"
 type Status = "draft" | "published"
 
 export default function ScormAIPage() {
@@ -215,21 +217,9 @@ export default function ScormAIPage() {
   }
   
 
-  const handleExport = async () => {
+  const handleExport = async (version: SCORMVersion = "1.2") => {
     try {
-      const response = await fetch("/api/scorm/export", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(project),
-      })
-
-      if (!response.ok) {
-        throw new Error(t("scorm.ai.exportFailed"))
-      }
-
-      const blob = await response.blob()
+      const blob = await buildScormZip(project, version)
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
@@ -239,9 +229,12 @@ export default function ScormAIPage() {
       a.remove()
       window.URL.revokeObjectURL(url)
       setStatus("published")
+      toast.success(t("scorm.ai.exportSuccess") || "Export completed")
     } catch (error) {
       console.error("Failed to export project:", error)
-      alert(t("scorm.ai.exportError"))
+      const fallback = t("scorm.ai.exportError")
+      const message = error instanceof Error && error.message ? error.message : fallback
+      toast.error(message)
     }
   }
 
@@ -946,6 +939,7 @@ switch (type) {
                     onBlockChange={handleBlockChange}
                     panelType={rightPanel}
                     onAddPage={handleAddPage}
+                    onExport={handleExport}
                   />
                 </div>
               </div>

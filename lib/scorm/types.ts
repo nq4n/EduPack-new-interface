@@ -121,12 +121,22 @@ export type InteractiveBlock = {
   style?: any
 }
 
+export interface RouterAnalysis {
+    language: "en" | "ar";
+    intent: string;
+    audience: string;
+    route: ("level2" | "level1" | "level0")[];
+    notes?: string;
+}
+
 export interface BuildLessonResult {
     project: EditorProject;
     warnings: string[];
     metadata: {
         predictedDifficulty: "easy" | "medium" | "hard";
         recommendedTags: string[];
+        routerSummary: string;
+        routing: RouterAnalysis;
     };
 }
 

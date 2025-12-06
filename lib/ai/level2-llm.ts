@@ -9,6 +9,45 @@ import { EditorProject } from "@/lib/scorm/types";
 const LLM_API_ENDPOINT = process.env.LLM_API_ENDPOINT || "https://api.example.com/v1/chat/completions";
 const LLM_API_KEY = process.env.LLM_API_KEY;
 
+function buildFallbackLesson(prompt: string, language: "en" | "ar"): Partial<EditorProject> {
+    const safePrompt = prompt.trim() || "your topic";
+    const dir = language === "ar" ? "rtl" : "ltr";
+    const timestamp = Date.now();
+
+    return {
+        title: `${language === "ar" ? "درس عن" : "Lesson on"} ${safePrompt}`,
+        theme: { direction: dir, styles: {} },
+        pages: [
+            {
+                id: `page-intro-${timestamp}`,
+                title: language === "ar" ? "مقدمة" : "Introduction",
+                blocks: [
+                    {
+                        id: `block-intro-${timestamp}`,
+                        type: "text",
+                        html: `<p>${language === "ar" ? "نظرة عامة سريعة على" : "A quick overview of"} ${safePrompt}.</p>`,
+                    },
+                ],
+            },
+            {
+                id: `page-practice-${timestamp}`,
+                title: language === "ar" ? "تطبيق" : "Practice",
+                blocks: [
+                    {
+                        id: `block-practice-${timestamp}`,
+                        type: "quiz",
+                        question: language === "ar" ? "ما هو أهم مفهوم؟" : "What is the key idea?",
+                        options: [
+                            { id: `opt-a-${timestamp}`, label: language === "ar" ? "المفهوم الصحيح" : "The correct concept", correct: true },
+                            { id: `opt-b-${timestamp}`, label: language === "ar" ? "تفصيل جانبي" : "A side detail", correct: false },
+                        ],
+                    },
+                ],
+            },
+        ],
+    };
+}
+
 interface LLMCompletionResponse {
     // This is a simplified example based on OpenAI's API shape
     choices: {
@@ -28,9 +67,8 @@ interface LLMCompletionResponse {
  */
 export async function generateLessonFromPrompt(prompt: string, language: "en" | "ar"): Promise<Partial<EditorProject>> {
     if (!LLM_API_KEY) {
-        console.error("LLM API key is not configured.");
-        // In a real app, you might return a more user-friendly error.
-        throw new Error("AI service is not configured.");
+        console.warn("LLM API key is not configured. Using fallback lesson generator.");
+        return buildFallbackLesson(prompt, language);
     }
 
     const systemPrompt = `You are an expert instructional designer. Create a complete lesson package in ${language === 'ar' ? 'Arabic' : 'English'} based on the user's request. The output MUST be a valid JSON object matching the structure of an EditorProject: { "title": "...", "pages": [{ "id": "...", "title": "...", "blocks": [...] }] }. The blocks can be of type 'text', 'image', 'video', or 'quiz'. For image blocks, provide a descriptive 'alt' text that can be used to generate an image later.`;
