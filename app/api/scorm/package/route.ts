@@ -13,10 +13,10 @@ export async function GET() {
 
   if (error) {
     console.error("Error fetching packages from Supabase:", error.message)
-    return new NextResponse(
-      JSON.stringify({ error: "Failed to load packages.", details: error.message }),
-      { status: 500 }
-    )
+    const status = error.message.toLowerCase().includes("permission") ? 403 : 500
+    return new NextResponse(JSON.stringify({ error: "Failed to load packages.", details: error.message }), {
+      status,
+    })
   }
 
   return NextResponse.json({ data: data ?? [] })
