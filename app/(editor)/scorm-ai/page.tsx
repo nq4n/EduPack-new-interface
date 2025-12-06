@@ -509,6 +509,19 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
           break
         }
       }
+  const handleExport = async (version: SCORMVersion = "1.2") => {
+    try {
+      const blob = await buildScormZip(project, version)
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `${project.title.replace(/ /g, "_") || "scorm-package"}.zip`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+      setStatus("published")
+      toast.success(t("scorm.ai.exportSuccess") || "Export completed")
     } catch (error) {
       console.error("Failed to export project:", error)
       const fallback = t("scorm.ai.exportError")
