@@ -1,23 +1,12 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { getSupabaseConfig } from "@/lib/env"
+import { createServerClient } from "@/lib/supabase/server-client"
 
 interface Params {
   params: { id: string }
 }
 
 export async function GET(_request: Request, { params }: Params) {
-  try {
-    getSupabaseConfig()
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Supabase credentials are not configured."
-    return new NextResponse(
-      JSON.stringify({ error: message }),
-      { status: 500 }
-    )
-  }
-
-  const supabase = createClient()
+  const supabase = createServerClient()
   const { data, error } = await supabase
     .from("packages")
     .select("id,title,description,content,updated_at,is_listed_in_store")

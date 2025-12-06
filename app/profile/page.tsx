@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { useSupabase } from "@/components/auth-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { getUserProfile, updateUserProfile } from "@/lib/user-profile"
 
 const languageOptions = [
   { label: "English", value: "en" },
@@ -28,7 +29,7 @@ export default function ProfilePage() {
 }
 
 function PersonalInfoPanel() {
-  const { supabase, user } = useSupabase()
+  const { user } = useSupabase()
   const router = useRouter()
   const [form, setForm] = useState<ProfileFormState>({
     fullName: "",
@@ -41,7 +42,7 @@ function PersonalInfoPanel() {
 
   const isLoggedOut = useMemo(() => !user, [user])
 
-  const fetchProfile = useCallback(async () => {
+  const loadProfile = useCallback(async () => {
     if (!user) {
       setLoading(false)
       return
@@ -49,52 +50,18 @@ function PersonalInfoPanel() {
 
     setLoading(true)
     setError(null)
-
-    const { data, error } = await supabase
-      .from("users")
-      .select("user_id, full_name, email, preferred_language, avatar_url")
-      .eq("user_id", user.id)
-      .single()
-
-    if (error && error.code !== "PGRST116") {
+    const { data: profile, error } = await getUserProfile(user.id)
+    if (error) {
       setError("Could not load your profile. Please try again.")
-      setLoading(false)
-      return
+    } else if (profile) {
+      initializeForm(profile)
     }
-
-    if (!data) {
-      const { data: newProfile, error: insertError } = await supabase
-        .from("users")
-        .upsert({
-          user_id: user.id,
-          full_name: user.user_metadata?.full_name ?? "",
-          email: user.email,
-          preferred_language: normalizeLanguage(
-            user.user_metadata?.preferred_language ?? "en"
-          ),
-          avatar_url: user.user_metadata?.avatar_url ?? null,
-        })
-        .select()
-        .single()
-
-      if (insertError) {
-        setError("Could not create your profile. Please try again.")
-        setLoading(false)
-        return
-      }
-
-      initializeForm(newProfile)
-      setLoading(false)
-      return
-    }
-
-    initializeForm(data)
     setLoading(false)
-  }, [supabase, user])
+  }, [user])
 
   useEffect(() => {
-    fetchProfile()
-  }, [fetchProfile])
+    loadProfile()
+  }, [loadProfile])
 
   const initializeForm = (profile: {
     full_name?: string | null
@@ -108,12 +75,14 @@ function PersonalInfoPanel() {
     })
   }
 
-  const handleInputChange = (field: keyof ProfileFormState) =>
+  const handleInputChange =
+    (field: keyof ProfileFormState) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setForm((current) => ({ ...current, [field]: event.target.value }))
     }
 
-  const handleSelectChange = (field: keyof ProfileFormState) =>
+  const handleSelectChange =
+    (field: keyof ProfileFormState) =>
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       setForm((current) => ({ ...current, [field]: event.target.value }))
     }
@@ -127,15 +96,10 @@ function PersonalInfoPanel() {
     setSaving(true)
     setError(null)
 
-    const { error } = await supabase
-      .from("users")
-      .upsert({
-        user_id: user.id,
-        full_name: form.fullName,
-        email: form.email || user.email,
-        preferred_language: normalizeLanguage(form.preferredLanguage || "en"),
-        avatar_url: user.user_metadata?.avatar_url ?? null,
-      })
+    const { error } = await updateUserProfile(user.id, {
+      full_name: form.fullName,
+      preferred_language: normalizeLanguage(form.preferredLanguage || "en"),
+    })
 
     setSaving(false)
 
@@ -145,7 +109,7 @@ function PersonalInfoPanel() {
     }
 
     toast.success("Profile updated")
-    await fetchProfile()
+    await loadProfile()
     router.refresh()
   }
 
@@ -153,7 +117,9 @@ function PersonalInfoPanel() {
     return (
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-foreground">Profile</h2>
-        <p className="text-muted-foreground">Please sign in to view your profile.</p>
+        <p className="text-muted-foreground">
+          Please sign in to view your profile.
+        </p>
       </div>
     )
   }
@@ -173,11 +139,15 @@ function PersonalInfoPanel() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Personal Information</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">
+          Personal Information
+        </h2>
 
         {/* Avatar */}
         <div className="mb-8">
-          <label className="block text-sm font-semibold text-foreground mb-2">Profile Picture</label>
+          <label className="block text-sm font-semibold text-foreground mb-2">
+            Profile Picture
+          </label>
           <div className="flex items-center gap-4">
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
               <User className="h-10 w-10 text-primary" />
@@ -191,7 +161,9 @@ function PersonalInfoPanel() {
         {/* Form */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Full Name</label>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              Full Name
+            </label>
             <Input
               value={form.fullName}
               onChange={handleInputChange("fullName")}
@@ -199,11 +171,15 @@ function PersonalInfoPanel() {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              Email
+            </label>
             <Input value={form.email} type="email" disabled />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-semibold text-foreground mb-2">Preferred Language</label>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              Preferred Language
+            </label>
             <select
               className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
               value={form.preferredLanguage}

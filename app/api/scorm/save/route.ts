@@ -1,41 +1,10 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
-import { getSupabaseConfig } from "@/lib/env"
+import { createServerClient } from "@/lib/supabase/server-client"
 
 export async function POST(request: Request) {
-  let supabaseUrl: string
-  let supabaseAnonKey: string
+  const supabase = createServerClient()
 
-  try {
-    ;({ supabaseUrl, supabaseAnonKey } = getSupabaseConfig())
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Supabase credentials are not configured."
-    return new NextResponse(
-      JSON.stringify({ error: message }),
-      { status: 500 }
-    )
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  })
-
-  const authHeader = request.headers.get("authorization") || ""
-  const bearerToken = authHeader.toLowerCase().startsWith("bearer ")
-    ? authHeader.slice(7)
-    : null
-
-  if (!bearerToken) {
-    return new NextResponse(
-      JSON.stringify({ error: "Missing Authorization Bearer token." }),
-      { status: 401 }
-    )
-  }
-
-  const { data: userData, error: userError } = await supabase.auth.getUser(bearerToken)
+  const { data: userData, error: userError } = await supabase.auth.getUser()
 
   if (userError || !userData?.user) {
     console.error("[SAVE_ROUTE] getUser error:", userError)

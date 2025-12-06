@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+import { supabase } from '@/lib/supabase/browser-client'
+import { ensureUserProfile } from '@/lib/user-profile'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 
 type SupabaseContext = {
@@ -12,22 +13,27 @@ type SupabaseContext = {
 const Context = createContext<SupabaseContext | undefined>(undefined)
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [supabase] = useState(() => createClient())
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
+      if (session?.user) {
+        await ensureUserProfile(session.user)
+      }
       setUser(session?.user ?? null)
     })
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session?.user) {
+        await ensureUserProfile(session.user)
+      }
       setUser(session?.user ?? null)
     })
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [])
 
   return (
     <Context.Provider value={{ supabase, user }}>
