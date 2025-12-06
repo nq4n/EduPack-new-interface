@@ -104,11 +104,32 @@ export default function ScormAIPage() {
     }
   }, [t, initialMessages.length])
 
+  const {
+    messages,
+    chatInput,
+    setChatInput,
+    isGenerating,
+    submitPrompt,
+    pendingLesson,
+    acceptPendingLesson,
+    rejectPendingLesson,
+  } = useScormAI({
+    setProject,
+    setActivePageId,
+    setSelectedBlockId,
+    setEditorMode,
+    setAiChatMode,
+    initialMessages,
+    onLessonApplied: showHighlights,
+  })
+
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [highlightedBlockIds, setHighlightedBlockIds] = useState<string[]>([])
   const highlightTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+
 
   // navbar toggle
   const [navVisible, setNavVisible] = useState(false)
@@ -148,25 +169,6 @@ export default function ScormAIPage() {
       }
     }
   }, [])
-
-  const {
-    messages,
-    chatInput,
-    setChatInput,
-    isGenerating,
-    submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
-  } = useScormAI({
-    setProject,
-    setActivePageId,
-    setSelectedBlockId,
-    setEditorMode,
-    setAiChatMode,
-    initialMessages,
-    onLessonApplied: showHighlights,
-  })
 
   const activePage = project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
 
@@ -507,6 +509,19 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
           break
         }
       }
+  const handleExport = async (version: SCORMVersion = "1.2") => {
+    try {
+      const blob = await buildScormZip(project, version)
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `${project.title.replace(/ /g, "_") || "scorm-package"}.zip`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(url)
+      setStatus("published")
+      toast.success(t("scorm.ai.exportSuccess") || "Export completed")
     } catch (error) {
       console.error("Failed to export project:", error)
       const fallback = t("scorm.ai.exportError")

@@ -58,6 +58,10 @@ export function useScormAI({
       (page.blocks || []).map((block) => block.id)
     )
 
+  const handleAIResponse = (
+    result: BuildLessonResult,
+    isInitialGeneration: boolean,
+  ) => {
     setProject(result.project)
     setActivePageId(result.project.pages[0]?.id || null)
     setSelectedBlockId(null)
@@ -71,6 +75,7 @@ export function useScormAI({
       role: "assistant",
       agent: "mentor",
       content: `Applied the orchestrated lesson "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
+      content: `Open router orchestration merged the outputs into "${result.project.title}" with ${result.project.pages.length} pages. Difficulty: ${result.metadata.predictedDifficulty}. Tags: ${result.metadata.recommendedTags.join(", ") || "n/a"}.`,
     })
 
     if (result.warnings.length > 0) {
@@ -127,6 +132,7 @@ export function useScormAI({
           role: "assistant",
           agent: "contentArchitect",
           content: `Level 2 drafted ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
+          content: `Level 2 generated ${result.project.pages.length} page(s) with ${blockCount} block(s).`,
         })
 
         addMessage({
@@ -157,6 +163,7 @@ export function useScormAI({
         })
 
         setPendingLesson({ result, isInitial: isInitialGeneration })
+        handleAIResponse(result, isInitialGeneration)
       } catch (error: any) {
         handleAIError(error)
       } finally {
@@ -182,6 +189,8 @@ export function useScormAI({
     })
     setPendingLesson(null)
   }
+    [isGenerating]
+  ) // Dependencies will be managed by useCallback
 
   return {
     messages,
