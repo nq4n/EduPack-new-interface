@@ -15,25 +15,50 @@ export default function RegisterPage() {
   const [preferredLanguage, setPreferredLanguage] = useState("en")
   const [error, setError] = useState("")
   const [message, setMessage] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setMessage("")
+    setIsSubmitting(true)
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.")
+      setIsSubmitting(false)
       return
     }
 
-    const { error } = await signUpNewUser(email, password, fullName, preferredLanguage)
+    const { data, error } = await signUpNewUser(email, password, fullName, preferredLanguage)
 
     if (error) {
       setError(error.message)
-    } else {
-      setMessage("Registration successful! Please check your email to confirm your account.")
-      // Optionally redirect or clear the form
+      setIsSubmitting(false)
+      return
+    }
+
+    if (data?.session) {
+      router.push("/")
+      router.refresh()
+      setIsSubmitting(false)
+      return
+    }
+
+    setMessage("Registration successful! Please check your email to confirm your account.")
+    setIsSubmitting(false)
+  }
+
+  const handleGoogleSignIn = async () => {
+    setError("")
+    setIsGoogleLoading(true)
+
+    const { error: googleError } = await signInWithGoogle()
+
+    if (googleError) {
+      setError(googleError.message)
+      setIsGoogleLoading(false)
     }
   }
 
@@ -126,8 +151,8 @@ export default function RegisterPage() {
               </label>
             </div>
 
-            <Button type="submit" className="w-full" size="lg">
-              Create Account
+            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+              {isSubmitting ? "Creating account..." : "Create Account"}
             </Button>
           </form>
 
@@ -141,10 +166,15 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <Button onClick={signInWithGoogle} variant="outline" className="w-full mt-4 bg-transparent">
+            <Button
+              onClick={handleGoogleSignIn}
+              variant="outline"
+              className="w-full mt-4 bg-transparent"
+              disabled={isGoogleLoading}
+            >
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.7 3.28-8.09z"
                   fill="#4285F4"
                 />
                 <path
@@ -160,7 +190,7 @@ export default function RegisterPage() {
                   fill="#EA4335"
                 />
               </svg>
-              Continue with Google
+              {isGoogleLoading ? "Redirecting..." : "Continue with Google"}
             </Button>
           </div>
 

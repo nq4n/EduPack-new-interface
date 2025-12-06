@@ -11,20 +11,37 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
+    setIsSubmitting(true)
 
-    const { error } = await signInWithPassword(email, password)
+    const { error: signInError } = await signInWithPassword(email, password)
 
-    if (error) {
-      setError(error.message)
-    } else {
-      // On successful login, redirect to the home page or a dashboard
-      router.push("/")
-      router.refresh() // Refresh to update server-side rendered components if any
+    if (signInError) {
+      setError(signInError.message)
+      setIsSubmitting(false)
+      return
+    }
+
+    router.push("/")
+    router.refresh()
+    setIsSubmitting(false)
+  }
+
+  const handleGoogleSignIn = async () => {
+    setError("")
+    setIsGoogleLoading(true)
+
+    const { error: googleError } = await signInWithGoogle()
+
+    if (googleError) {
+      setError(googleError.message)
+      setIsGoogleLoading(false)
     }
   }
 
@@ -62,14 +79,19 @@ export default function LoginPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" size="lg">
-              Sign In
+            <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
-            <Button onClick={signInWithGoogle} variant="outline" className="w-full bg-transparent">
-              Continue with Google
+            <Button
+              onClick={handleGoogleSignIn}
+              variant="outline"
+              className="w-full bg-transparent"
+              disabled={isGoogleLoading}
+            >
+              {isGoogleLoading ? "Redirecting..." : "Continue with Google"}
             </Button>
           </div>
 
