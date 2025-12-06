@@ -2,7 +2,6 @@
 
 import React from "react"
 import { EditorProject, ExportFormat, SCORMVersion } from "@/lib/scorm/types"
-import { EditorProject, SCORMVersion } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
 
@@ -10,10 +9,13 @@ interface ProjectPanelProps {
   project: EditorProject
   onChange: (updated: EditorProject) => void
   onExport?: (format: ExportFormat | SCORMVersion) => void
-  onExport?: (version: SCORMVersion) => void
 }
 
-export default function ProjectPanel({ project, onChange, onExport }: ProjectPanelProps) {
+export default function ProjectPanel({
+  project,
+  onChange,
+  onExport,
+}: ProjectPanelProps) {
   const { t } = useLocale()
 
   const updateProject = (partial: Partial<EditorProject>) => {
@@ -35,7 +37,8 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               {t("scorm.projectPanel.title") || "Project Settings"}
             </h3>
             <p className="text-[11px] text-muted-foreground">
-              {t("scorm.projectPanel.subtitle") || "Manage overall course settings."}
+              {t("scorm.projectPanel.subtitle") ||
+                "Manage overall course settings."}
             </p>
           </div>
         </div>
@@ -92,7 +95,7 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
           </h4>
           <div>
             <label className="block mb-1 text-xs font-medium">
-              {t('scorm.props.project.styles.textColor')}
+              {t("scorm.props.project.styles.textColor")}
             </label>
             <input
               type="color"
@@ -102,7 +105,10 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 updateProject({
                   theme: {
                     ...project.theme,
-                    styles: { ...project.theme.styles, color: e.target.value },
+                    styles: {
+                      ...project.theme.styles,
+                      color: e.target.value,
+                    },
                   },
                 })
               }
@@ -122,7 +128,11 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 name="trackingLevel"
                 value="minimal"
                 checked={project.tracking?.level === "minimal"}
-                onChange={() => updateProject({ tracking: { ...project.tracking, level: "minimal" } })}
+                onChange={() =>
+                  updateProject({
+                    tracking: { ...project.tracking, level: "minimal" },
+                  })
+                }
                 className="form-radio h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.minimal")}</span>
@@ -133,7 +143,11 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 name="trackingLevel"
                 value="standard"
                 checked={project.tracking?.level === "standard"}
-                onChange={() => updateProject({ tracking: { ...project.tracking, level: "standard" } })}
+                onChange={() =>
+                  updateProject({
+                    tracking: { ...project.tracking, level: "standard" },
+                  })
+                }
                 className="form-radio h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.standard")}</span>
@@ -144,7 +158,11 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 name="trackingLevel"
                 value="advanced"
                 checked={project.tracking?.level === "advanced"}
-                onChange={() => updateProject({ tracking: { ...project.tracking, level: "advanced" } })}
+                onChange={() =>
+                  updateProject({
+                    tracking: { ...project.tracking, level: "advanced" },
+                  })
+                }
                 className="form-radio h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.advanced")}</span>
@@ -162,7 +180,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.pageViews}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, pageViews: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      pageViews: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.pageViews")}</span>
@@ -171,7 +196,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.quizInteractions}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, quizInteractions: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      quizInteractions: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.quizInteractions")}</span>
@@ -180,7 +212,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.media}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, media: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      media: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.media")}</span>
@@ -189,7 +228,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.hints}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, hints: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      hints: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.hints")}</span>
@@ -198,7 +244,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.externalLinks}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, externalLinks: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      externalLinks: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.externalLinks")}</span>
@@ -207,7 +260,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.timePerPage}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, timePerPage: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      timePerPage: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.timePerPage")}</span>
@@ -216,7 +276,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               <input
                 type="checkbox"
                 checked={project.tracking?.attempts}
-                onChange={(e) => updateProject({ tracking: { ...project.tracking, attempts: e.target.checked } })}
+                onChange={(e) =>
+                  updateProject({
+                    tracking: {
+                      ...project.tracking,
+                      attempts: e.target.checked,
+                    },
+                  })
+                }
                 className="form-checkbox h-3 w-3 text-blue-600"
               />
               <span>{t("scorm.projectPanel.tracking.attempts")}</span>
@@ -238,7 +305,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 type="text"
                 className="w-full border rounded px-2 py-1 text-xs"
                 value={project.xapi?.lrsEndpoint || ""}
-                onChange={(e) => updateProject({ xapi: { ...project.xapi, lrsEndpoint: e.target.value } })}
+                onChange={(e) =>
+                  updateProject({
+                    xapi: {
+                      ...project.xapi,
+                      lrsEndpoint: e.target.value,
+                    },
+                  })
+                }
               />
             </div>
             <div>
@@ -249,7 +323,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 type="text"
                 className="w-full border rounded px-2 py-1 text-xs"
                 value={project.xapi?.authToken || ""}
-                onChange={(e) => updateProject({ xapi: { ...project.xapi, authToken: e.target.value } })}
+                onChange={(e) =>
+                  updateProject({
+                    xapi: {
+                      ...project.xapi,
+                      authToken: e.target.value,
+                    },
+                  })
+                }
               />
             </div>
             <div>
@@ -260,7 +341,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 type="text"
                 className="w-full border rounded px-2 py-1 text-xs"
                 value={project.xapi?.activityIdFormat || ""}
-                onChange={(e) => updateProject({ xapi: { ...project.xapi, activityIdFormat: e.target.value } })}
+                onChange={(e) =>
+                  updateProject({
+                    xapi: {
+                      ...project.xapi,
+                      activityIdFormat: e.target.value,
+                    },
+                  })
+                }
               />
             </div>
             <div>
@@ -271,7 +359,14 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
                 className="w-full border rounded px-2 py-1 text-xs"
                 rows={3}
                 value={project.xapi?.statementExtensions || ""}
-                onChange={(e) => updateProject({ xapi: { ...project.xapi, statementExtensions: e.target.value } })}
+                onChange={(e) =>
+                  updateProject({
+                    xapi: {
+                      ...project.xapi,
+                      statementExtensions: e.target.value,
+                    },
+                  })
+                }
               />
             </div>
           </div>
@@ -371,28 +466,6 @@ export default function ProjectPanel({ project, onChange, onExport }: ProjectPan
               disabled={exportDisabled}
               onClick={() => onExport?.("qti")}
             >
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.xapi")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.html5")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.publicLink")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.embedCode")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.teacherPdf")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.studentPdf")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
-              {t("scorm.projectPanel.export.json")}
-            </Button>
-            <Button variant="outline" size="sm" className="h-7" disabled>
               {t("scorm.projectPanel.export.qti")}
             </Button>
           </div>
