@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React, { useState } from "react"
 import {
@@ -33,7 +33,6 @@ interface PropertiesPanelProps {
   panelType: "block" | "project"
   onAddPage: () => void
   onExport?: (format: ExportFormat | SCORMVersion) => void
-  onExport?: (version: SCORMVersion) => void
 }
 
 export function PropertiesPanel({
