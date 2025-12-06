@@ -19,8 +19,9 @@ export async function GET(_request: Request, { params }: Params) {
   const supabase = createClient()
   const { data, error } = await supabase
     .from("packages")
-    .select("id,title,content,updated_at")
+    .select("id,title,description,content,updated_at,is_listed_in_store")
     .eq("id", params.id)
+    .eq("is_listed_in_store", true)
     .maybeSingle()
 
   if (error) {

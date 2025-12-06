@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -52,9 +53,13 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">E</span>
-            </div>
+            <Image
+              src="/edupack-logo.svg"
+              alt="EduPack logo"
+              width={36}
+              height={36}
+              priority
+            />
             <span className="text-xl font-bold text-primary">EduPack</span>
           </Link>
 

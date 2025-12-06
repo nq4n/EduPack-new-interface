@@ -15,7 +15,8 @@ export async function GET() {
   const supabase = createClient()
   const { data, error } = await supabase
     .from("packages")
-    .select("id,title,content,updated_at")
+    .select("id,title,description,content,updated_at,is_listed_in_store")
+    .eq("is_listed_in_store", true)
     .order("updated_at", { ascending: false })
 
   if (error) {

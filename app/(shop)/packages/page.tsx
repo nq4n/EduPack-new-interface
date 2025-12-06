@@ -28,6 +28,7 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [packages, setPackages] = useState<PackageRecord[]>([])
   const [loadingPackages, setLoadingPackages] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const fallbackPackages: PackageRecord[] = [
     {
@@ -95,9 +96,14 @@ export default function ShopPage() {
   useEffect(() => {
     const loadPackages = async () => {
       setLoadingPackages(true)
+      setError(null)
       try {
         const response = await fetch("/api/scorm/package")
-        if (!response.ok) throw new Error("Failed to fetch packages")
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => ({}))
+          throw new Error(errorBody.error || "Failed to fetch packages")
+        }
+
         const body = await response.json()
         const remote: PackageRecord[] = (body.data || []).map((pkg: any, index: number) => {
           const project = pkg.content as EditorProject | undefined
@@ -116,15 +122,17 @@ export default function ShopPage() {
               project?.theme?.direction === "rtl"
                 ? t(locale, "shop.preview.languageRtl")
                 : t(locale, "shop.preview.languageLtr"),
-            description: t(locale, "shop.preview.loadedDescription"),
+            description: pkg.description || t(locale, "shop.preview.loadedDescription"),
             price: t(locale, "shop.preview.included"),
             content: project,
           }
         })
 
-        setPackages([...remote, ...fallbackPackages])
+        setPackages(remote.length > 0 ? remote : fallbackPackages)
       } catch (err) {
+        const message = err instanceof Error ? err.message : String(err)
         console.error(err)
+        setError(message)
         setPackages(fallbackPackages)
       } finally {
         setLoadingPackages(false)
@@ -148,6 +156,12 @@ export default function ShopPage() {
           <h1 className="text-4xl font-bold text-foreground mb-2">{t(locale, "shop.title")}</h1>
           <p className="text-muted-foreground">{t(locale, "shop.desc")}</p>
         </div>
+
+        {error ? (
+          <div className="mb-6 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+            {error}
+          </div>
+        ) : null}
 
         {/* Filter Bar */}
         <div className="bg-card rounded-xl border border-border p-6 mb-8">
