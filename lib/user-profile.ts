@@ -1,5 +1,5 @@
 // lib/user-profile.ts
-import { supabase } from './supabase/browser-client';
+import { createClient } from './supabase/client';
 import type { User } from '@supabase/supabase-js';
 
 /**
@@ -13,6 +13,7 @@ export async function ensureUserProfile(user: User | null) {
   if (!user) {
     return { profile: null, error: new Error('User object is required.') };
   }
+  const supabase = createClient();
 
   // 1. Check if a profile already exists
   const { data: existingProfile, error: selectError } = await supabase
@@ -79,6 +80,7 @@ export async function updateUserProfile(userId, updates) {
   if (!userId) {
     return { profile: null, error: new Error('User ID is required.') };
   }
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from('users')
@@ -105,6 +107,7 @@ export async function getUserProfile(userId) {
   if (!userId) {
     return { data: null, error: new Error('User ID is required.') };
   }
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from('users')
