@@ -1,6 +1,13 @@
 "use client"
 
-import { useState, type FormEvent, useEffect, useRef, useCallback } from "react"
+import {
+  useState,
+  type FormEvent,
+  useEffect,
+  useRef,
+  useCallback,
+  type ReactNode,
+} from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -16,7 +23,7 @@ import {
   ImageBlock,
   VideoBlock,
   QuizBlock,
-  InteractiveBlock
+  InteractiveBlock,
 } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
 import { PropertiesPanel } from "@/components/scorm/properties-panel"
@@ -36,8 +43,9 @@ import {
   Clock,
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
-import { toast } from "sonner";
+import { toast } from "sonner"
 import { buildScormZip } from "@/lib/scorm/exporter"
+
 type Status = "draft" | "published"
 
 export default function ScormAIPage() {
@@ -79,19 +87,21 @@ export default function ScormAIPage() {
 
   const [project, setProject] = useState<EditorProject>(initialProject)
 
-  const hasContent = project.pages.length > 1 || project.pages[0]?.blocks.length > 0
+  const hasContent =
+    project.pages.length > 1 || project.pages[0]?.blocks.length > 0
   const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(
-    hasContent ? "ai" : "choice"
+    hasContent ? "ai" : "choice",
   )
 
   const [activePageId, setActivePageId] = useState<string>(project.pages[0]?.id)
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
 
   const [status, setStatus] = useState<Status>("draft")
-
-  const [aiChatMode, setAiChatMode] = useState<"hidden" | "visible" | "animating">("hidden");
+  const [aiChatMode, setAiChatMode] =
+    useState<"hidden" | "visible" | "animating">("hidden")
 
   const [initialMessages, setInitialMessages] = useState<ChatMessage[]>([])
+
   useEffect(() => {
     if (initialMessages.length === 0) {
       setInitialMessages([
@@ -104,51 +114,30 @@ export default function ScormAIPage() {
     }
   }, [t, initialMessages.length])
 
-  const {
-    messages,
-    chatInput,
-    setChatInput,
-    isGenerating,
-    submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
-  } = useScormAI({
-    setProject,
-    setActivePageId,
-    setSelectedBlockId,
-    setEditorMode,
-    setAiChatMode,
-    initialMessages,
-    onLessonApplied: showHighlights,
-  })
-
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [highlightedBlockIds, setHighlightedBlockIds] = useState<string[]>([])
   const highlightTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-
-
   // navbar toggle
   const [navVisible, setNavVisible] = useState(false)
 
   useEffect(() => {
     const nav = document.getElementById("main-navbar")
-    if (!nav) return;
+    if (!nav) return
 
-    const originalDisplay = nav.style.display;
+    const originalDisplay = nav.style.display
     if (navVisible) {
-      nav.style.display = originalDisplay || "";
+      nav.style.display = originalDisplay || ""
     } else {
-      nav.style.display = "none";
+      nav.style.display = "none"
     }
 
     return () => {
-      nav.style.display = originalDisplay || "";
-    };
-  }, [navVisible]);
+      nav.style.display = originalDisplay || ""
+    }
+  }, [navVisible])
 
   const showHighlights = useCallback((ids: string[]) => {
     if (highlightTimerRef.current) {
@@ -170,7 +159,8 @@ export default function ScormAIPage() {
     }
   }, [])
 
-  const activePage = project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
+  const activePage =
+    project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
 
   const selectedBlock =
     activePage.blocks.find((b) => b.id === selectedBlockId) ?? null
@@ -187,7 +177,7 @@ export default function ScormAIPage() {
       const updatedPages = prevProject.pages.map((p) => {
         if (p.id === activePageId) {
           const updatedBlocks = p.blocks.map((b) =>
-            b.id === updatedBlock.id ? updatedBlock : b
+            b.id === updatedBlock.id ? updatedBlock : b,
           )
           return { ...p, blocks: updatedBlocks }
         }
@@ -197,11 +187,30 @@ export default function ScormAIPage() {
     })
   }
 
+  const {
+    messages,
+    chatInput,
+    setChatInput,
+    isGenerating,
+    submitPrompt,
+    pendingLesson,
+    acceptPendingLesson,
+    rejectPendingLesson,
+  } = useScormAI({
+    setProject,
+    setActivePageId,
+    setSelectedBlockId,
+    setEditorMode,
+    setAiChatMode,
+    initialMessages,
+    onLessonApplied: showHighlights,
+  })
+
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
     const prompt = chatInput.trim()
     if (!prompt) return
-    
+
     // Determine if this is the first generation that transitions the view
     const isInitialGeneration = aiChatMode === "visible"
 
@@ -249,7 +258,6 @@ export default function ScormAIPage() {
       error: (error) => error.message || "Error saving package",
     })
   }
-  
 
   const downloadBlob = (blob: Blob, filename: string) => {
     const url = window.URL.createObjectURL(blob)
@@ -303,13 +311,17 @@ export default function ScormAIPage() {
         }
 
         if (interactive.variant === "callout") {
-          return `<div><p><strong>${interactive.label || "Callout"}</strong></p><div>${interactive.bodyHtml || ""}</div></div>`
+          return `<div><p><strong>${
+            interactive.label || "Callout"
+          }</strong></p><div>${interactive.bodyHtml || ""}</div></div>`
         }
 
         if (interactive.variant === "reveal") {
-          return `<details ${interactive.initiallyOpen ? "open" : ""}><summary>${interactive.label || "Show"}</summary><div>${
-            interactive.bodyHtml || ""
-          }</div></details>`
+          return `<details ${
+            interactive.initiallyOpen ? "open" : ""
+          }><summary>${
+            interactive.label || "Show"
+          }</summary><div>${interactive.bodyHtml || ""}</div></details>`
         }
 
         return `<div>${interactive.customHtml || interactive.bodyHtml || ""}</div>`
@@ -354,7 +366,9 @@ export default function ScormAIPage() {
 
   const buildQtiXml = () => {
     const quizzes = project.pages
-      .flatMap((page) => page.blocks.filter((b) => b.type === "quiz") as QuizBlock[])
+      .flatMap(
+        (page) => page.blocks.filter((b) => b.type === "quiz") as QuizBlock[],
+      )
       .map(
         (quiz) => `
         <assessmentItem identifier="${quiz.id}" title="${quiz.question}" adaptive="false" timeDependent="false">
@@ -365,7 +379,9 @@ export default function ScormAIPage() {
               ${(quiz.options || [])
                 .map(
                   (option) => `
-                <simpleChoice identifier="${option.id}"${option.correct ? " data-correct=\"true\"" : ""}>${option.label}</simpleChoice>
+                <simpleChoice identifier="${option.id}"${
+                    option.correct ? ' data-correct="true"' : ""
+                  }>${option.label}</simpleChoice>
               `,
                 )
                 .join("\n")}
@@ -377,13 +393,17 @@ export default function ScormAIPage() {
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-items>
-${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes available\" />"}
+${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes available" />'}
 </qti-assessment-items>`
   }
 
   const openPrintableReport = (role: "teacher" | "student") => {
     const learningSummary = project.pages
-      .map((page, index) => `${index + 1}. ${page.title} (${page.blocks.length} blocks)`).join("<br />")
+      .map(
+        (page, index) =>
+          `${index + 1}. ${page.title} (${page.blocks.length} blocks)`,
+      )
+      .join("<br />")
 
     const reportHtml = `<!DOCTYPE html>
       <html lang="en">
@@ -400,7 +420,9 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
         </head>
         <body>
           <h1>${project.title}</h1>
-          <div class="meta">Role: ${role === "teacher" ? "Instructor" : "Learner"} • Pages: ${project.pages.length}</div>
+          <div class="meta">Role: ${
+            role === "teacher" ? "Instructor" : "Learner"
+          } • Pages: ${project.pages.length}</div>
           <div class="panel">
             <h2>Lesson outline</h2>
             <div>${learningSummary || "No pages prepared."}</div>
@@ -419,7 +441,10 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
       win.focus()
       win.print()
     } else {
-      downloadBlob(new Blob([reportHtml], { type: "text/html" }), `${project.title || "lesson"}-${role}.html`)
+      downloadBlob(
+        new Blob([reportHtml], { type: "text/html" }),
+        `${project.title || "lesson"}-${role}.html`,
+      )
     }
   }
 
@@ -432,6 +457,7 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
     return url
   }
 
+  // SINGLE, FIXED handleExport FUNCTION
   const handleExport = async (format: ExportFormat | SCORMVersion = "1.2") => {
     const target: ExportFormat =
       format === "1.2" ? "scorm12" : format === "2004" ? "scorm2004" : format
@@ -445,7 +471,10 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
       switch (target) {
         case "scorm12":
         case "scorm2004": {
-          const blob = await buildScormZip(project, target === "scorm12" ? "1.2" : "2004")
+          const blob = await buildScormZip(
+            project,
+            target === "scorm12" ? "1.2" : "2004",
+          )
           downloadBlob(blob, `${slug || "scorm-package"}.zip`)
           setStatus("published")
           toast.success(t("scorm.ai.exportSuccess") || "Export completed")
@@ -459,7 +488,9 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
             tracking: project.tracking,
           }
           downloadBlob(
-            new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" }),
+            new Blob([JSON.stringify(payload, null, 2)], {
+              type: "application/json",
+            }),
             `${slug || "lesson"}-xapi.json`,
           )
           toast.success("xAPI package ready as JSON")
@@ -467,7 +498,10 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
         }
         case "html5": {
           const html = buildStandaloneHtml(project.title)
-          downloadBlob(new Blob([html], { type: "text/html" }), `${slug || "lesson"}-offline.html`)
+          downloadBlob(
+            new Blob([html], { type: "text/html" }),
+            `${slug || "lesson"}-offline.html`,
+          )
           toast.success("HTML5 offline page downloaded")
           break
         }
@@ -496,7 +530,9 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
         }
         case "json": {
           downloadBlob(
-            new Blob([JSON.stringify(project, null, 2)], { type: "application/json" }),
+            new Blob([JSON.stringify(project, null, 2)], {
+              type: "application/json",
+            }),
             `${slug || "lesson"}.json`,
           )
           toast.success("Project JSON downloaded")
@@ -504,28 +540,19 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
         }
         case "qti": {
           const xml = buildQtiXml()
-          downloadBlob(new Blob([xml], { type: "application/xml" }), `${slug || "lesson"}-qti.xml`)
+          downloadBlob(
+            new Blob([xml], { type: "application/xml" }),
+            `${slug || "lesson"}-qti.xml`,
+          )
           toast.success("QTI export ready")
           break
         }
       }
-  const handleExport = async (version: SCORMVersion = "1.2") => {
-    try {
-      const blob = await buildScormZip(project, version)
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `${project.title.replace(/ /g, "_") || "scorm-package"}.zip`
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      window.URL.revokeObjectURL(url)
-      setStatus("published")
-      toast.success(t("scorm.ai.exportSuccess") || "Export completed")
     } catch (error) {
       console.error("Failed to export project:", error)
       const fallback = t("scorm.ai.exportError")
-      const message = error instanceof Error && error.message ? error.message : fallback
+      const message =
+        error instanceof Error && error.message ? error.message : fallback
       toast.error(message)
     }
   }
@@ -537,67 +564,67 @@ ${quizzes || "<assessmentItem identifier=\"placeholder\" title=\"No quizzes avai
       newBlock = { ...data, id: `block-${Date.now()}`, type } as EditorBlock
     } else {
       const baseBlock = { id: `block-${Date.now()}` }
-switch (type) {
-  case "text":
-    newBlock = {
-      ...baseBlock,
-      type: "text",
-      html: t("scorm.ai.newTextBlock"),
-    }
-    break
-  case "image":
-    newBlock = {
-      ...baseBlock,
-      type: "image",
-      src: "https://via.placeholder.com/600x400",
-      alt: t("scorm.ai.placeholderImage"),
-    }
-    break
-  case "video":
-    newBlock = {
-      ...baseBlock,
-      type: "video",
-      src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    }
-    break
-  case "quiz":
-    newBlock = {
-      ...baseBlock,
-      type: "quiz",
-      question: t("scorm.ai.newQuestion"),
-      options: [
-        { id: "1", label: t("scorm.ai.option1"), correct: true },
-        { id: "2", label: t("scorm.ai.option2"), correct: false },
-      ],
-    }
-    break
-  case "interactive": {
-    const raw = t("scorm.ai.interactive.defaultLabel") as string
-    const label =
-      raw && raw !== "scorm.ai.interactive.defaultLabel"
-        ? raw
-        : "Interactive element"
 
-    newBlock = {
-      ...baseBlock,
-      type: "interactive",
-      variant: "button",
-      label,
-      url: "",
-      bodyHtml: "",
-      style: {
-        padding: "8px",
-        radius: "999px",
-        background: "#0ea5e9",
-        shadow: true,
-      },
-    } as EditorBlock
-    break
-  }
-  default:
-    return
-}
+      switch (type) {
+        case "text":
+          newBlock = {
+            ...baseBlock,
+            type: "text",
+            html: t("scorm.ai.newTextBlock"),
+          }
+          break
+        case "image":
+          newBlock = {
+            ...baseBlock,
+            type: "image",
+            src: "https://via.placeholder.com/600x400",
+            alt: t("scorm.ai.placeholderImage"),
+          }
+          break
+        case "video":
+          newBlock = {
+            ...baseBlock,
+            type: "video",
+            src: "https://www.w3schools.com/html/mov_bbb.mp4",
+          }
+          break
+        case "quiz":
+          newBlock = {
+            ...baseBlock,
+            type: "quiz",
+            question: t("scorm.ai.newQuestion"),
+            options: [
+              { id: "1", label: t("scorm.ai.option1"), correct: true },
+              { id: "2", label: t("scorm.ai.option2"), correct: false },
+            ],
+          }
+          break
+        case "interactive": {
+          const raw = t("scorm.ai.interactive.defaultLabel") as string
+          const label =
+            raw && raw !== "scorm.ai.interactive.defaultLabel"
+              ? raw
+              : "Interactive element"
 
+          newBlock = {
+            ...baseBlock,
+            type: "interactive",
+            variant: "button",
+            label,
+            url: "",
+            bodyHtml: "",
+            style: {
+              padding: "8px",
+              radius: "999px",
+              background: "#0ea5e9",
+              shadow: true,
+            },
+          } as EditorBlock
+          break
+        }
+        default:
+          return
+      }
     }
 
     setProject((prevProject) => {
@@ -688,7 +715,7 @@ switch (type) {
                                 <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
                                 <label for="${o.id}">${o.label}</label>
                               </div>
-                            `
+                            `,
                             )
                             .join("")}
                         </fieldset>
@@ -702,20 +729,51 @@ switch (type) {
 
                     const styleString = `
                       padding: ${style.padding || "10px"};
-                      border-radius: ${style.radius || (ib.variant === "button" ? "999px" : "12px")};
-                      background: ${style.background || (ib.variant === "button" ? "#0ea5e9" : ib.variant === "callout" ? "#eef2ff" : "#f1f5f9")};
-                      box-shadow: ${style.shadow ? "0 8px 20px rgba(0,0,0,0.15)" : "none"};
-                      color: ${style.background && (style.background as string).startsWith("#") ? (parseInt((style.background as string).substring(1), 16) > 0xffffff / 2 ? "#000" : "#fff") : "#fff"};
+                      border-radius: ${
+                        style.radius ||
+                        (ib.variant === "button" ? "999px" : "12px")
+                      };
+                      background: ${
+                        style.background ||
+                        (ib.variant === "button"
+                          ? "#0ea5e9"
+                          : ib.variant === "callout"
+                          ? "#eef2ff"
+                          : "#f1f5f9")
+                      };
+                      box-shadow: ${
+                        style.shadow
+                          ? "0 8px 20px rgba(0,0,0,0.15)"
+                          : "none"
+                      };
+                      color: ${
+                        style.background &&
+                        (style.background as string).startsWith("#")
+                          ? parseInt(
+                              (style.background as string).substring(1),
+                              16,
+                            ) >
+                            0xffffff / 2
+                            ? "#000"
+                            : "#fff"
+                          : "#fff"
+                      };
                       border: none;
                     `
 
                     if (ib.variant === "button") {
-                      return `<button style="${styleString}">${ib.label || "Interactive element"}</button>`
+                      return `<button style="${styleString}">${
+                        ib.label || "Interactive element"
+                      }</button>`
                     }
 
                     if (ib.variant === "callout") {
                       return `<div style="${styleString}">
-                        ${ib.label ? `<p><strong>${ib.label}</strong></p>` : ""}
+                        ${
+                          ib.label
+                            ? `<p><strong>${ib.label}</strong></p>`
+                            : ""
+                        }
                         ${
                           ib.bodyHtml ||
                           "<p style='font-size:11px;color:#6b7280;'>Add callout content from the editor.</p>"
@@ -725,7 +783,9 @@ switch (type) {
 
                     if (ib.variant === "reveal") {
                       return `
-                        <details ${ib.initiallyOpen ? "open" : ""} style="${styleString}">
+                        <details ${
+                          ib.initiallyOpen ? "open" : ""
+                        } style="${styleString}">
                           <summary>${ib.label || "Details"}</summary>
                           ${
                             ib.bodyHtml ||
@@ -748,7 +808,7 @@ switch (type) {
               })
               .join("")}
           </article>
-        `
+        `,
           )
           .join("")}
       </body>
@@ -762,7 +822,6 @@ switch (type) {
       alert(t("scorm.ai.popupBlocked"))
     }
   }
-
 
   const handleFileProcess = (file: File) => {
     if (!file) return
@@ -824,7 +883,9 @@ switch (type) {
     fileInputRef.current?.click()
   }
 
-  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0]
     if (file) {
       handleFileProcess(file)
@@ -903,7 +964,8 @@ switch (type) {
       if (mode === "blank") {
         setProject(initialProject)
         setEditorMode(mode) // Sets editorMode to "blank"
-      } else { // mode === "ai"
+      } else {
+        // mode === "ai"
         setAiChatMode("visible")
         setProject(initialProject) // Initialize project for AI build as well
         setEditorMode(mode) // Also sets editorMode to "ai"
@@ -920,10 +982,16 @@ switch (type) {
             {t("scorm.choice.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={() => start("ai")} className="h-auto py-4 rounded-2xl px-6">
+            <Button
+              size="lg"
+              onClick={() => start("ai")}
+              className="h-auto py-4 rounded-2xl px-6"
+            >
               <div className="flex flex-col items-center gap-1">
                 <MessageCircle className="h-6 w-6 mb-1" />
-                <span className="font-semibold text-sm">{t("scorm.choice.aiAssistant")}</span>
+                <span className="font-semibold text-sm">
+                  {t("scorm.choice.aiAssistant")}
+                </span>
                 <span className="font-normal text-xs text-primary-foreground/80">
                   {t("scorm.choice.aiAssistantDesc")}
                 </span>
@@ -937,7 +1005,9 @@ switch (type) {
             >
               <div className="flex flex-col items-center gap-1">
                 <FilePlus className="h-6 w-6 mb-1" />
-                <span className="font-semibold text-sm">{t("scorm.choice.blankPage")}</span>
+                <span className="font-semibold text-sm">
+                  {t("scorm.choice.blankPage")}
+                </span>
                 <span className="font-normal text-xs text-slate-500">
                   {t("scorm.choice.blankPageDesc")}
                 </span>
@@ -954,34 +1024,40 @@ switch (type) {
     return (
       <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center">
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">How can I help you today?</h2>
-          <p className="text-sm text-slate-500 mb-8">Describe the lesson you want to build, and AI will generate it for you.</p>
-          <div className="w-full"> {/* Container for the input form */}
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">
+            How can I help you today?
+          </h2>
+          <p className="text-sm text-slate-500 mb-8">
+            Describe the lesson you want to build, and AI will generate it for
+            you.
+          </p>
+          <div className="w-full">
+            {/* Container for the input form */}
             <form onSubmit={handleSend} className="flex items-center gap-2">
-                <Input
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    placeholder="E.g., 'Create a lesson on the water cycle for 5th graders'"
-                    className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
-                    disabled={isGenerating}
-                />
-                <Button 
-                    type="submit" 
-                    className="rounded-full h-12 px-6 bg-sky-600 hover:bg-sky-700 text-base"
-                    disabled={isGenerating}
-                >
-                    {isGenerating ? "Generating..." : "Generate"}
-                </Button>
+              <Input
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder="E.g., 'Create a lesson on the water cycle for 5th graders'"
+                className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
+                disabled={isGenerating}
+              />
+              <Button
+                type="submit"
+                className="rounded-full h-12 px-6 bg-sky-600 hover:bg-sky-700 text-base"
+                disabled={isGenerating}
+              >
+                {isGenerating ? "Generating..." : "Generate"}
+              </Button>
             </form>
             {isGenerating && (
-                <div className="text-center text-sm text-slate-500 mt-4">
-                    Preparing your lesson and transitioning to the editor...
-                </div>
+              <div className="text-center text-sm text-slate-500 mt-4">
+                Preparing your lesson and transitioning to the editor...
+              </div>
             )}
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -1052,43 +1128,45 @@ switch (type) {
             {/* canvas + properties side-by-side */}
             <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
               {/* Chat panel (left) */}
-              <div
-                className={`w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100`}
-              >
+              <div className="w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100">
                 <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                   <div className="flex flex-col h-full">
                     <div className="p-4 border-b flex items-center gap-2">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100">
-                            <MessageCircle className="h-5 w-5 text-sky-700" />
-                        </span>
-                        <h3 className="font-semibold text-base text-slate-800">{t("scorm.ai.title")}</h3>
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-100">
+                        <MessageCircle className="h-5 w-5 text-sky-700" />
+                      </span>
+                      <h3 className="font-semibold text-base text-slate-800">
+                        {t("scorm.ai.title")}
+                      </h3>
                     </div>
                     <div className="flex-1 p-4 overflow-y-auto text-sm space-y-3">
                       {messages.map((m) => (
                         <div
                           key={m.id}
                           className={`flex ${
-                            m.role === "user" ? "justify-end" : "justify-start"
-                            }`}
+                            m.role === "user"
+                              ? "justify-end"
+                              : "justify-start"
+                          }`}
+                        >
+                          <div
+                            className={
+                              m.role === "user"
+                                ? "inline-block rounded-2xl rounded-br-sm bg-sky-600 text-white px-3 py-2"
+                                : "inline-block rounded-2xl rounded-bl-sm bg-white text-slate-800 px-3 py-2 border border-slate-100"
+                            }
                           >
-                            <div
-                              className={
-                                m.role === "user"
-                                  ? "inline-block rounded-2xl rounded-br-sm bg-sky-600 text-white px-3 py-2"
-                                  : "inline-block rounded-2xl rounded-bl-sm bg-white text-slate-800 px-3 py-2 border border-slate-100"
-                              }
-                            >
-                              {m.agent && m.role !== "user" && (
-                                <div className="text-[10px] uppercase tracking-wide text-slate-400 mb-0.5">
-                                  {m.agent === "mentor"
-                                    ? "Mentor AI"
-                                    : m.agent === "contentArchitect"
-                                    ? "Content Architect"
-                                    : m.agent === "assessmentDesigner"
-                                    ? "Assessment Designer"
-                                    : ""}
-                                </div>
-                              )}
+                            {m.agent && m.role !== "user" && (
+                              <div className="text-[10px] uppercase tracking-wide text-slate-400 mb-0.5">
+                                {m.agent === "mentor"
+                                  ? "Mentor AI"
+                                  : m.agent === "contentArchitect"
+                                  ? "Content Architect"
+                                  : m.agent === "assessmentDesigner"
+                                  ? "Assessment Designer"
+                                  : ""}
+                              </div>
+                            )}
                             <div>{m.content}</div>
                           </div>
                         </div>
@@ -1096,31 +1174,55 @@ switch (type) {
                       {pendingLesson && (
                         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm">
                           <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
-                            {t("scorm.ai.pendingChanges") || "Pending approval"}
+                            {t("scorm.ai.pendingChanges") ||
+                              "Pending approval"}
                           </div>
                           <p className="text-xs text-emerald-900">
-                            {`"${pendingLesson.result.project.title}" has ${pendingLesson.result.project.pages.length} page(s) with ${
+                            {`"${pendingLesson.result.project.title}" has ${
+                              pendingLesson.result.project.pages.length
+                            } page(s) with ${
                               pendingLesson.result.project.pages.reduce(
-                                (total, page) => total + (page.blocks?.length || 0),
+                                (total, page) =>
+                                  total + (page.blocks?.length || 0),
                                 0,
                               )
-                            } block(s). Difficulty: ${pendingLesson.result.metadata.predictedDifficulty}. Tags: ${pendingLesson.result.metadata.recommendedTags.join(", ") || "n/a"}.`}
+                            } block(s). Difficulty: ${
+                              pendingLesson.result.metadata
+                                .predictedDifficulty
+                            }. Tags: ${
+                              pendingLesson.result.metadata.recommendedTags.join(
+                                ", ",
+                              ) || "n/a"
+                            }.`}
                           </p>
                           <div className="flex flex-wrap gap-1">
-                            {pendingLesson.result.project.pages.slice(0, 3).map((page) => (
-                              <Badge key={page.id} variant="secondary" className="bg-white text-emerald-800 border-emerald-200">
-                                {page.title}: {page.blocks.length} block(s)
-                              </Badge>
-                            ))}
+                            {pendingLesson.result.project.pages
+                              .slice(0, 3)
+                              .map((page) => (
+                                <Badge
+                                  key={page.id}
+                                  variant="secondary"
+                                  className="bg-white text-emerald-800 border-emerald-200"
+                                >
+                                  {page.title}: {page.blocks.length} block(s)
+                                </Badge>
+                              ))}
                           </div>
                           {pendingLesson.result.warnings.length > 0 && (
                             <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2">
-                              {`Warnings: ${pendingLesson.result.warnings.join("; ")}`}
+                              {`Warnings: ${pendingLesson.result.warnings.join(
+                                "; ",
+                              )}`}
                             </div>
                           )}
                           <div className="flex items-center gap-2">
-                            <Button size="sm" className="h-8 px-3" onClick={acceptPendingLesson}>
-                              {t("scorm.ai.acceptChanges") || "Apply changes"}
+                            <Button
+                              size="sm"
+                              className="h-8 px-3"
+                              onClick={acceptPendingLesson}
+                            >
+                              {t("scorm.ai.acceptChanges") ||
+                                "Apply changes"}
                             </Button>
                             <Button
                               size="sm"
@@ -1200,17 +1302,25 @@ switch (type) {
                           {t("scorm.ai.addPage") || "Page"}
                         </Button>
                       </div>
-                      <form onSubmit={handleSend} className="flex items-center gap-2">
-                          <Input
-                              value={chatInput}
-                              onChange={(e) => setChatInput(e.target.value)}
-                              placeholder={t("scorm.ai.placeholder")}
-                              className="flex-1 h-9 rounded-full bg-white border-slate-200"
-                              disabled={isGenerating}
-                          />
-                          <Button type="submit" size="sm" className="rounded-full h-9 px-4 bg-sky-600 hover:bg-sky-700" disabled={isGenerating}>
-                              {t("scorm.ai.send")}
-                          </Button>
+                      <form
+                        onSubmit={handleSend}
+                        className="flex items-center gap-2"
+                      >
+                        <Input
+                          value={chatInput}
+                          onChange={(e) => setChatInput(e.target.value)}
+                          placeholder={t("scorm.ai.placeholder")}
+                          className="flex-1 h-9 rounded-full bg-white border-slate-200"
+                          disabled={isGenerating}
+                        />
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="rounded-full h-9 px-4 bg-sky-600 hover:bg-sky-700"
+                          disabled={isGenerating}
+                        >
+                          {t("scorm.ai.send")}
+                        </Button>
                       </form>
                     </div>
                   </div>
@@ -1220,7 +1330,9 @@ switch (type) {
               {/* Canvas (center) */}
               <div
                 className={`relative flex-1 ${
-                  isDragging ? "border-2 border-dashed border-sky-500 bg-sky-50/20" : ""
+                  isDragging
+                    ? "border-2 border-dashed border-sky-500 bg-sky-50/20"
+                    : ""
                 }`}
                 onClick={() => {
                   setSelectedBlockId(null)
@@ -1279,7 +1391,8 @@ switch (type) {
                       <div className="space-y-4">
                         {activePage.blocks.map((block) => {
                           const isSelected = selectedBlock?.id === block.id
-                          const isHighlighted = highlightedBlockIds.includes(block.id)
+                          const isHighlighted =
+                            highlightedBlockIds.includes(block.id)
                           return (
                             <div key={block.id}>
                               <div
@@ -1334,9 +1447,7 @@ switch (type) {
               </div>
 
               {/* Properties panel (right) */}
-              <div
-                className={`w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100`}
-              >
+              <div className="w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100">
                 <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                   <PropertiesPanel
                     project={project}
@@ -1391,13 +1502,13 @@ switch (type) {
             label="scorm.tools.text"
           />
           <IconToolButton
-  onClick={() => {
-    setRightPanel("project")
-    setSelectedBlockId(null)
-  }}
-  icon={<Settings className="h-4 w-4" />}
-  label="scorm.tools.settings"
-/>
+            onClick={() => {
+              setRightPanel("project")
+              setSelectedBlockId(null)
+            }}
+            icon={<Settings className="h-4 w-4" />}
+            label="scorm.tools.settings"
+          />
         </div>
       </div>
     </>
@@ -1410,7 +1521,7 @@ function IconToolButton({
   onClick,
   emphasis,
 }: {
-  icon: React.ReactNode
+  icon: ReactNode
   label: string
   onClick?: () => void
   emphasis?: boolean
