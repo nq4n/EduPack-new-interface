@@ -37,7 +37,7 @@ module.exports = mod;
 }),
 "[project]/app/api/scorm/save/route.ts [app-route] (ecmascript)", ((__turbopack_context__, module, exports) => {
 
-const e = new Error("Could not parse module '[project]/app/api/scorm/save/route.ts'\n\nExpected ';', '}' or <eof>");
+const e = new Error("Could not parse module '[project]/app/api/scorm/save/route.ts'\n\nMerge conflict marker encountered.");
 e.code = 'MODULE_UNPARSABLE';
 throw e;
 }),

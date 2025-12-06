@@ -137,6 +137,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/payment/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/payment">> = Specific
+  const handler = {} as typeof import("../../../app/payment/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/privacy/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/privacy">> = Specific
@@ -240,6 +249,24 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/scorm/export">> = Specific
   const handler = {} as typeof import("../../../app/api/scorm/export/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/scorm/package/[id]/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scorm/package/[id]">> = Specific
+  const handler = {} as typeof import("../../../app/api/scorm/package/[id]/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/api/scorm/package/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scorm/package">> = Specific
+  const handler = {} as typeof import("../../../app/api/scorm/package/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check
