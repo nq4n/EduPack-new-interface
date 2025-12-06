@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="EduPack logo">
+  <defs>
+    <linearGradient id="face-light" x1="0%" x2="0%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#c9e5f5" />
+      <stop offset="100%" stop-color="#7eb2d4" />
+    </linearGradient>
+    <linearGradient id="face-warm" x1="0%" x2="0%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#fde7a5" />
+      <stop offset="100%" stop-color="#d6a136" />
+    </linearGradient>
+  </defs>
+  <g stroke="#245d73" stroke-width="12" stroke-linejoin="round" fill="none">
+    <polygon fill="#f2f6f9" points="128 14 28 70 28 186 128 242 228 186 228 70" />
+    <polygon fill="url(#face-light)" points="128 14 28 70 128 126 228 70" />
+    <polygon fill="url(#face-warm)" points="228 70 228 186 128 242 128 126" />
+    <polygon fill="#e9f1f8" points="28 70 28 186 128 242 128 126" />
+    <path d="M98 92v76l-38-26" fill="none" />
+    <path d="M158 92v76l38-26" fill="none" />
+    <path d="M98 92 128 112 158 92" fill="#7eb2d4" />
+    <path d="M98 168 128 188 158 168" fill="#d6a136" />
+  </g>
+</svg>
