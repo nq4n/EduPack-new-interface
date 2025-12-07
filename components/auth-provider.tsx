@@ -1,8 +1,6 @@
-'use client'
-
+import { ensureUserProfile } from '@/lib/db'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { ensureUserProfile } from '@/lib/user-profile'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 
 type SupabaseContext = {
@@ -43,7 +41,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     return () => {
       subscription.unsubscribe()
     }
-  }, [])
+  }, [supabase])
 
   return (
     <Context.Provider value={{ supabase, user }}>

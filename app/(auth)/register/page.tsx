@@ -1,12 +1,12 @@
 "use client"
 
+import { getAuthCallbackUrl } from "@/lib/utils"
+import { useSupabase } from "@/components/auth-provider"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useSupabase } from "@/components/auth-provider"
-import { getAuthCallbackUrl } from "@/lib/get-auth-callback-url"
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("")
@@ -33,11 +33,6 @@ export default function RegisterPage() {
       return
     }
 
-    const callbackUrl =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/api/auth/callback?next=/`
-        : undefined
-
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -46,7 +41,7 @@ export default function RegisterPage() {
           full_name: fullName,
           preferred_language: preferredLanguage,
         },
-        emailRedirectTo: callbackUrl,
+        emailRedirectTo: getAuthCallbackUrl(),
       },
     })
 
@@ -60,7 +55,6 @@ export default function RegisterPage() {
       // User immediately confirmed (auto-confirmed in development)
       // Redirect to home
       router.push("/")
-      router.refresh()
       setIsSubmitting(false)
       return
     }

@@ -1,12 +1,12 @@
 "use client"
 
+import { getAuthCallbackUrl } from "@/lib/utils"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useSupabase } from "@/components/auth-provider"
-import { getAuthCallbackUrl } from "@/lib/get-auth-callback-url"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -35,7 +35,6 @@ export default function LoginPage() {
 
     // User profile will be ensured by AuthProvider on auth state change
     router.push("/")
-    router.refresh()
     setIsSubmitting(false)
   }
 

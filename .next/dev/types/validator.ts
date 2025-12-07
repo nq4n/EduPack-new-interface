@@ -47,6 +47,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 }
 
 
+// Validate ../../../app/(auth)/auth-code-error/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/auth-code-error">> = Specific
+  const handler = {} as typeof import("../../../app/(auth)/auth-code-error/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/(auth)/login/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/login">> = Specific
@@ -284,15 +293,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 
 
 
-
-// Validate ../../../app/(auth)/register/layout.tsx
-{
-  type __IsExpected<Specific extends LayoutConfig<"/register">> = Specific
-  const handler = {} as typeof import("../../../app/(auth)/register/layout.js")
-  type __Check = __IsExpected<typeof handler>
-  // @ts-ignore
-  type __Unused = __Check
-}
 
 // Validate ../../../app/layout.tsx
 {

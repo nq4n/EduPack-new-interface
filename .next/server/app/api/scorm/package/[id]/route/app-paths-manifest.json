@@ -1,0 +1,3 @@
+{
+  "/api/scorm/package/[id]/route": "app/api/scorm/package/[id]/route.js"
+}
