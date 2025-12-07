@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server-client"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET() {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from("packages")
     .select(
@@ -23,4 +23,3 @@ export async function GET() {
 
   return NextResponse.json({ data: data ?? [] })
 }
-

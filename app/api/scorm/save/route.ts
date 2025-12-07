@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server-client"
+import { createClient } from "@/lib/supabase/server"
 import { randomUUID } from "crypto"
 
 export async function POST(request: Request) {
-  const supabase = createServerClient()
+  const supabase = createClient()
 
   const { data: userData, error: userError } = await supabase.auth.getUser()
 
