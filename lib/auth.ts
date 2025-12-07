@@ -2,6 +2,9 @@ import { createClient } from "./supabase/client"
 import { ensureUserProfile } from "./user-profile"
 
 export async function signUpNewUser(
+import { getAuthCallbackUrl } from "./get-auth-callback-url"
+
+export async function signUpNewUser(
   email: string,
   password: string,
   name: string,
@@ -16,10 +19,7 @@ export async function signUpNewUser(
         full_name: name,
         preferred_language: preferredLanguage,
       },
-      emailRedirectTo:
-        typeof window !== "undefined"
-          ? `${window.location.origin}/api/auth/callback?next=/`
-          : undefined,
+      emailRedirectTo: `${getAuthCallbackUrl()}?next=/`,
     },
   })
 
@@ -57,10 +57,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo:
-        typeof window !== "undefined"
-          ? `${window.location.origin}/api/auth/callback?next=/`
-          : undefined,
+      redirectTo: `${getAuthCallbackUrl()}?next=/`,
     },
   })
 
@@ -75,10 +72,8 @@ export async function signOut() {
 
 export async function sendPasswordResetEmail(email: string) {
   const supabase = createClient()
-  const redirectTo = typeof window !== "undefined" ? `${window.location.origin}/update-password` : undefined
+  const redirectTo = `${getAuthCallbackUrl().replace('/api/auth/callback', '')}/update-password`
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
-  })
-
   return { error }
 }

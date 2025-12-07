@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useSupabase } from "@/components/auth-provider"
+import { getAuthCallbackUrl } from "@/lib/get-auth-callback-url"
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("")
@@ -75,10 +76,7 @@ export default function RegisterPage() {
     const { error: googleError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo:
-          typeof window !== "undefined"
-            ? `${window.location.origin}/api/auth/callback?next=/`
-            : undefined,
+        redirectTo: `${getAuthCallbackUrl()}?next=/`,
       },
     })
 
