@@ -15,6 +15,10 @@ export async function signUpNewUser(
         full_name: name,
         preferred_language: preferredLanguage,
       },
+      emailRedirectTo:
+        typeof window !== "undefined"
+          ? `${window.location.origin}/api/auth/callback?next=/`
+          : undefined,
     },
   })
 
