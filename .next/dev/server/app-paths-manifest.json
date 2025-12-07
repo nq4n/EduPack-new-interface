@@ -1,8 +1,7 @@
 {
-  "/(shop)/packages/page": "app/(shop)/packages/page.js",
+  "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
+  "/api/scorm/chat/route": "app/api/scorm/chat/route.js",
   "/api/scorm/package/route": "app/api/scorm/package/route.js",
-  "/profile/billing/page": "app/profile/billing/page.js",
-  "/profile/packages/page": "app/profile/packages/page.js",
-  "/profile/page": "app/profile/page.js",
-  "/profile/settings/page": "app/profile/settings/page.js"
+  "/page": "app/page.js",
+  "/profile/page": "app/profile/page.js"
 }

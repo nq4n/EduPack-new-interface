@@ -1,1745 +1,558 @@
-[00:00:00.826] Server  LOG      ✓ Ready in 533ms
-[00:00:08.004] Server  ERROR    ⨯ ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-
-
-
-./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-
-
-
-./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-
-
-[00:00:08.891] Browser ERROR   uncaughtError: Error: ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-
-
-[00:00:09.127] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.127] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.127] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.127] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.127] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.127] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.421] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.421] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:00:09.421] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:15.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:15.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:15.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:18.202] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:18.202] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:18.202] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:19.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:19.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:19.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:02:31.213] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:06:07.217] Server  LOG      ✓ Compiled in 44ms
-[00:06:07.741] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:08.966] Server  LOG      ✓ Compiled in 43ms
-[00:06:14.011] Server  LOG      ✓ Compiled in 39ms
-[00:06:20.067] Server  LOG      ✓ Compiled in 45ms
-[00:06:20.205] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:06:20.205] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:06:20.205] Browser ERROR   ./app/profile/packages/page.tsx:8:1
-Export getUserOwnedPackages doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserOwnedPackages } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type PackageItem = {
-  11 |   package_id: string
-
-The export getUserOwnedPackages was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/packages/page.tsx [Client Component Browser]
-    ./app/profile/packages/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/packages/page.tsx [Client Component SSR]
-    ./app/profile/packages/page.tsx [Server Component]
-[00:06:21.441] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./node_modules/next/dist/server/web/spec-extension/adapters/reflect.js changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:06:21.749] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:25.202] Browser ERROR   ./app/profile/packages/page.tsx:2:23
-Ecmascript file had an error
-  1 |
-> 2 | import { useCallback, useEffect, useState } from "react"
-    |                       ^^^^^^^^^
-  3 | import { Button } from "@/components/ui/button"
-  4 | import { Package, Download, Eye, Loader2 } from "lucide-react"
-  5 | import { toast } from "sonner"
-
-You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:06:25.202] Browser ERROR   ./app/profile/packages/page.tsx:2:34
-Ecmascript file had an error
-  1 |
-> 2 | import { useCallback, useEffect, useState } from "react"
-    |                                  ^^^^^^^^
-  3 | import { Button } from "@/components/ui/button"
-  4 | import { Package, Download, Eye, Loader2 } from "lucide-react"
-  5 | import { toast } from "sonner"
-
-You're importing a component that needs `useState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:06:38.783] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\.next\dev\server\chunks\ssr\_4b6d1547._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:06:38.783] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\.next\dev\server\chunks\ssr\[root-of-the-server]__a164a4e7._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:06:38.784] Server  ERROR    ⨯ Error: Attempted to call useSupabase() from the server but useSupabase is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
-[00:06:39.211] Browser ERROR   uncaughtError: Error: Attempted to call useSupabase() from the server but useSupabase is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
-[00:08:40.621] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:52.129] Server  ERROR    ⨯ ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-[00:08:52.165] Server  ERROR    ⨯ ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-
-./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-[00:08:52.413] Browser ERROR   uncaughtError: Error: ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-
-
-[00:08:52.636] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:08:52.636] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.542] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:09:07.784] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./lib/supabase/server.ts:3:1
-Ecmascript file had an error
-  1 | // lib/supabase/server.ts
-  2 | import { createServerClient, type CookieOptions } from "@supabase/ssr";
-> 3 | import { cookies } from "next/headers";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | // ⚠️ IMPORTANT: this is async now
-  6 | export async function createClient() {
-
-You're importing a component that needs "next/headers". That only works in a Server Component which is not supported in the pages/ directory. Read more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
-
-Import traces:
-  Client Component Browser:
-    ./lib/supabase/server.ts [Client Component Browser]
-    ./lib/profile-data.ts [Client Component Browser]
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/supabase/server.ts [Client Component SSR]
-    ./lib/profile-data.ts [Client Component SSR]
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserCredits doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserCredits was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-client] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:09:07.784] Browser ERROR   ./app/profile/billing/page.tsx:8:1
-Export getUserSubscription doesn't exist in target module
-   6 | import { toast } from "sonner"
-   7 | import { useSupabase } from "@/components/auth-provider"
->  8 | import { getUserSubscription, getUserCredits } from "@/lib/profile-data"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   9 |
-  10 | type BillingData = {
-  11 |   subscription: any | null
-
-The export getUserSubscription was not found in module [project]/lib/profile-data.ts [app-ssr] (ecmascript).
-Did you mean to import getCurrentUserWithProfileAndPackages?
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import traces:
-  Client Component Browser:
-    ./app/profile/billing/page.tsx [Client Component Browser]
-    ./app/profile/billing/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/profile/billing/page.tsx [Client Component SSR]
-    ./app/profile/billing/page.tsx [Server Component]
-[00:10:43.037] Server  ERROR    ⨯ ./app/profile/billing/page.tsx:3:1
-Module not found: Can't resolve './BillingClient'
-  1 | // app/profile/billing/page.tsx
-  2 | import { createClient } from "@/lib/supabase/server";
-> 3 | import BillingClient from "./BillingClient"; // client component
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | export default async function BillingPage() {
-  6 |   const supabase = await createClient();
-
-
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-[00:10:43.038] Server  ERROR    ⨯ ./app/profile/billing/page.tsx:3:1
-Module not found: Can't resolve './BillingClient'
-  1 | // app/profile/billing/page.tsx
-  2 | import { createClient } from "@/lib/supabase/server";
-> 3 | import BillingClient from "./BillingClient"; // client component
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | export default async function BillingPage() {
-  6 |   const supabase = await createClient();
-
-
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-[00:10:43.207] Browser ERROR   ./app/profile/billing/page.tsx:3:1
-Module not found: Can't resolve './BillingClient'
-  1 | // app/profile/billing/page.tsx
-  2 | import { createClient } from "@/lib/supabase/server";
-> 3 | import BillingClient from "./BillingClient"; // client component
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  4 |
-  5 | export default async function BillingPage() {
-  6 |   const supabase = await createClient();
-
-https://nextjs.org/docs/messages/module-not-found
-[00:11:48.284] Server  LOG      ✓ Compiled in 39ms
-[00:12:08.315] Server  LOG      ✓ Compiled in 69ms
-[00:12:13.263] Server  LOG      ✓ Compiled in 44ms
-[00:12:16.705] Server  LOG      ✓ Compiled in 38ms
-[00:12:26.194] Server  LOG      ✓ Compiled in 37ms
-[00:12:28.341] Server  LOG      ✓ Compiled in 46ms
-[00:12:30.081] Server  LOG      ✓ Compiled in 43ms
-[00:12:40.043] Server  WARN     ⚠ Cross origin request detected from 192.168.100.136 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[00:00:00.808] Server  LOG      ✓ Ready in 517ms
+[00:00:03.448] Server  WARN     ⚠ Cross origin request detected from 192.168.100.136 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
-[00:12:40.079] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:12:56.146] Server  LOG     API: Fetching packages (mocked).
-[00:12:56.156] Server  LOG     API: Fetching packages (mocked).
+[00:00:03.482] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.323] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:58.851] Server  ERROR    ⨯ ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:58.989] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:59.500] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:59.500] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:59.618] Browser ERROR   AI error: {}
+[00:00:59.618] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:00.554] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:00.554] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:00.554] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:00.554] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:25.971] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:26.252] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.252] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.252] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:01:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:07.549] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:07.550] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:12.555] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:12.555] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:19.555] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:19.555] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:21.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:21.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:23.552] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:23.552] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:07:26.551] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:18:13.553] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:18:13.554] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:39.609] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:39.691] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:39.960] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.072] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
+[00:41:40.548] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en">
+                          <body
+-                           style={{padding-right:"15px",overflow-x:"hidden",overflow-y:"hidden"}}
+                          >
+                  ...
+
+[00:41:40.548] Browser ERROR   ./app/api/scorm/chat/route.ts:3:1
+Module not found: Can't resolve '@/lib/env'
+  1 | import { NextRequest, NextResponse } from 'next/server';
+  2 | import OpenAI from 'openai';
+> 3 | import { getOpenRouterConfig } from '@/lib/env';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | export async function POST(req: NextRequest) {
+  6 |   try {
+
+Import map: aliased to relative './lib/env' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found
