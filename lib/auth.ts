@@ -21,6 +21,8 @@ export async function signUpNewUser(
     },
   })
 
+  console.debug('[AUTH] signUpNewUser result', { data, error })
+
   // Ensure user profile is created after signup
   if (data?.user && !error) {
     const { error: profileError } = await ensureUserProfile(data.user)
@@ -38,6 +40,8 @@ export async function signInWithPassword(email: string, password: string) {
     email,
     password,
   })
+
+  console.debug('[AUTH] signInWithPassword result', { data, error })
 
   // Ensure user profile exists
   if (data?.user && !error) {
@@ -58,7 +62,7 @@ export async function signInWithGoogle() {
       redirectTo: `${getAuthCallbackUrl()}?next=/`,
     },
   })
-
+  console.debug('[AUTH] signInWithGoogle result', { data, error })
   return { data, error }
 }
 

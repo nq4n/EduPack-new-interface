@@ -57,13 +57,23 @@ export async function GET(request: Request) {
         }
       )
 
-      const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
-      
-      if (exchangeError) {
-        console.error('Exchange code error:', exchangeError)
+      const exchangeResult = await supabase.auth.exchangeCodeForSession(code)
+
+      if (exchangeResult.error) {
+        console.error('Exchange code error:', exchangeResult.error)
         return NextResponse.redirect(`${origin}/auth/auth-code-error`)
       }
-      
+
+      // Log session returned from exchange
+      try {
+        console.debug('[AUTH CALLBACK] exchange result', {
+          data: exchangeResult.data ?? null,
+          error: exchangeResult.error ?? null,
+        })
+      } catch (err) {
+        // ignore
+      }
+
       // Get the user after session is established
       const { data: { user }, error: userError } = await supabase.auth.getUser()
       

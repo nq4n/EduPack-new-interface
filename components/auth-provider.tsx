@@ -18,6 +18,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
+      try {
+        console.debug('[AUTH PROVIDER] onAuthStateChange session', { session })
+      } catch (err) {
+        // ignore
+      }
       if (session?.user) {
         await ensureUserProfile(session.user)
       }
@@ -25,6 +30,10 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     })
 
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      try {
+        console.debug('[AUTH PROVIDER] getSession result', { session })
+      } catch (err) {}
+
       if (session?.user) {
         await ensureUserProfile(session.user)
       }
