@@ -4,6 +4,16 @@ import { getSupabaseConfig } from '../env'
 
 export function createServerClient() {
   const cookieStore = cookies()
+  try {
+    // Diagnostics: show cookieStore shape during server-side creation
+    console.debug('[SUPABASE SERVER CLIENT] cookies adapter detected', {
+      hasGet: typeof cookieStore.get === 'function',
+      hasSet: typeof cookieStore.set === 'function',
+      hasKeys: typeof (cookieStore as any).keys === 'function',
+    })
+  } catch (err: any) {
+    console.debug('[SUPABASE SERVER CLIENT] cookie diagnostics failed:', err?.message)
+  }
   const { supabaseUrl, supabaseAnonKey } = getSupabaseConfig()
 
   return _createServerClient(
