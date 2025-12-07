@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useSupabase } from "@/components/auth-provider"
 
 export default function LoginPage() {
@@ -15,7 +15,9 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { supabase } = useSupabase()
+  const next = searchParams.get("next") || "/"
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,7 +36,7 @@ export default function LoginPage() {
     }
 
     // User profile will be ensured by AuthProvider on auth state change
-    router.push("/")
+    router.push(next)
     setIsSubmitting(false)
   }
 
@@ -45,7 +47,7 @@ export default function LoginPage() {
     const { error: googleError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${getAuthCallbackUrl()}?next=/`,
+        redirectTo: `${getAuthCallbackUrl()}?next=${encodeURIComponent(next)}`,
       },
     })
 
