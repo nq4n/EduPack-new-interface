@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { createServerClient } from "@/lib/supabase/server-client"
+import { createClient } from "@/lib/supabase/server"
 import { type EditorProject } from "@/lib/scorm/types"
 
 interface Params {
@@ -14,7 +14,7 @@ export async function GET(_request: Request, { params }: Params) {
     return new NextResponse(JSON.stringify({ error: "Invalid package id." }), { status: 400 })
   }
 
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from("packages")
     .select("package_id,title,description,storage_path,created_at,created_by_user_id")
