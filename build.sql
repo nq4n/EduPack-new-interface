@@ -15,6 +15,12 @@ create table if not exists public.users (
 -- RLS
 alter table public.users enable row level security;
 
+-- Drop existing policies if they exist
+drop policy if exists "Users can view their own profile" on public.users;
+drop policy if exists "Users can insert their own profile on signup" on public.users;
+drop policy if exists "Users can update their own profile" on public.users;
+
+-- Create policies
 create policy "Users can view their own profile"
   on public.users for select
   using (auth.uid() = user_id);
@@ -41,6 +47,13 @@ create table if not exists public.packages (
 
 alter table public.packages enable row level security;
 
+-- Drop existing policies if they exist
+drop policy if exists "Users can view packages they own" on public.packages;
+drop policy if exists "Users can insert their own packages" on public.packages;
+drop policy if exists "Users can update their own packages" on public.packages;
+drop policy if exists "Users can delete their own packages" on public.packages;
+
+-- Create policies
 create policy "Users can view packages they own"
   on public.packages for select
   using (
@@ -77,6 +90,13 @@ create table if not exists public.package_owners (
 
 alter table public.package_owners enable row level security;
 
+-- Drop existing policies if they exist
+drop policy if exists "Users can view ownership entries they belong to" on public.package_owners;
+drop policy if exists "Only package creator can add owners" on public.package_owners;
+drop policy if exists "Only package creator can remove owners" on public.package_owners;
+drop policy if exists "Only package creator can update collaborator roles" on public.package_owners;
+
+-- Create policies
 create policy "Users can view ownership entries they belong to"
   on public.package_owners for select
   using (user_id = auth.uid());
@@ -126,6 +146,11 @@ create table if not exists public.billing (
 
 alter table public.billing enable row level security;
 
+-- Drop existing policies if they exist
+drop policy if exists "Users can view their own billing" on public.billing;
+drop policy if exists "Users can insert their own billing entries" on public.billing;
+
+-- Create policies
 create policy "Users can view their own billing"
   on public.billing for select
   using (user_id = auth.uid());
@@ -147,6 +172,11 @@ create table if not exists public.messages (
 
 alter table public.messages enable row level security;
 
+-- Drop existing policies if they exist
+drop policy if exists "Messages are readable by admins only" on public.messages;
+drop policy if exists "Anyone can submit a message" on public.messages;
+
+-- Create policies
 create policy "Messages are readable by admins only"
   on public.messages for select
   using (auth.role() = 'service_role');   -- adjust if needed
@@ -162,6 +192,11 @@ create policy "Anyone can submit a message"
 insert into storage.buckets (id, name, public)
 values ('packages', 'packages', false)
 on conflict do nothing;
+
+-- Drop existing storage policies if they exist
+drop policy if exists "Users can upload to their folder" on storage.objects;
+drop policy if exists "Users can read their files" on storage.objects;
+drop policy if exists "Users can delete their files" on storage.objects;
 
 -- Allow users to upload files inside their folder
 create policy "Users can upload to their folder"
