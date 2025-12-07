@@ -19,6 +19,10 @@ create policy "Users can view their own profile"
   on public.users for select
   using (auth.uid() = user_id);
 
+create policy "Users can insert their own profile on signup"
+  on public.users for insert
+  with check (auth.uid() = user_id);
+
 create policy "Users can update their own profile"
   on public.users for update
   using (auth.uid() = user_id);

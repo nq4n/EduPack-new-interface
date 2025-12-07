@@ -32,6 +32,7 @@ export default function LoginPage() {
       return
     }
 
+    // User profile will be ensured by AuthProvider on auth state change
     router.push("/")
     router.refresh()
     setIsSubmitting(false)

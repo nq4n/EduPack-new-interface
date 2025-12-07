@@ -56,6 +56,8 @@ export default function RegisterPage() {
     }
 
     if (data?.session) {
+      // User immediately confirmed (auto-confirmed in development)
+      // Redirect to home
       router.push("/")
       router.refresh()
       setIsSubmitting(false)

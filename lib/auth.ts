@@ -1,4 +1,5 @@
 import { createClient } from "./supabase/client"
+import { ensureUserProfile } from "./user-profile"
 
 export async function signUpNewUser(
   email: string,
@@ -22,6 +23,14 @@ export async function signUpNewUser(
     },
   })
 
+  // Ensure user profile is created after signup
+  if (data?.user && !error) {
+    const { error: profileError } = await ensureUserProfile(data.user)
+    if (profileError) {
+      console.error('Failed to create user profile:', profileError)
+    }
+  }
+
   return { data, error }
 }
 
@@ -31,6 +40,14 @@ export async function signInWithPassword(email: string, password: string) {
     email,
     password,
   })
+
+  // Ensure user profile exists
+  if (data?.user && !error) {
+    const { error: profileError } = await ensureUserProfile(data.user)
+    if (profileError) {
+      console.error('Failed to ensure user profile:', profileError)
+    }
+  }
 
   return { data, error }
 }
