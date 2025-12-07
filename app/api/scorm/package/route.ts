@@ -5,7 +5,9 @@ export async function GET() {
   const supabase = createServerClient()
   const { data, error } = await supabase
     .from("packages")
-    .select("package_id ,title ,description ,is_listed_in_store ,storage_path, created_by_user_id ,created_a ,updated_at")
+    .select(
+      "package_id, title, description, is_listed_in_store, storage_path, created_by_user_id, created_at, updated_at"
+    )
     .eq("is_listed_in_store", true)
     .order("updated_at", { ascending: false })
 
