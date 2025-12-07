@@ -4,20 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils" // Assuming you have a utility for class names
 
-const sidebarNavItems = [
-  {
-    title: "Settings",
-    href: "/profile/settings",
-  },
-  {
-    title: "My Packages",
-    href: "/profile/packages",
-  },
-  {
-    title: "Subscription & Billing",
-    href: "/profile/billing",
-  },
-]
+const sidebarNavItems = []
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
