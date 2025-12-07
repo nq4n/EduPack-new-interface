@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { signUpNewUser, signInWithGoogle } from "@/lib/auth"
 import { useRouter } from "next/navigation"
+import { useSupabase } from "@/components/auth-provider"
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("")
@@ -18,6 +18,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
+  const { supabase } = useSupabase()
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -31,7 +32,22 @@ export default function RegisterPage() {
       return
     }
 
-    const { data, error } = await signUpNewUser(email, password, fullName, preferredLanguage)
+    const callbackUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/api/auth/callback?next=/`
+        : undefined
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          preferred_language: preferredLanguage,
+        },
+        emailRedirectTo: callbackUrl,
+      },
+    })
 
     if (error) {
       setError(error.message)
@@ -54,7 +70,15 @@ export default function RegisterPage() {
     setError("")
     setIsGoogleLoading(true)
 
-    const { error: googleError } = await signInWithGoogle()
+    const { error: googleError } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo:
+          typeof window !== "undefined"
+            ? `${window.location.origin}/api/auth/callback?next=/`
+            : undefined,
+      },
+    })
 
     if (googleError) {
       setError(googleError.message)
@@ -205,3 +229,4 @@ export default function RegisterPage() {
     </div>
   )
 }
+

@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { signInWithPassword, signInWithGoogle } from "@/lib/auth"
 import { useRouter } from "next/navigation"
+import { useSupabase } from "@/components/auth-provider"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -14,13 +14,17 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const router = useRouter()
+  const { supabase } = useSupabase()
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
     setIsSubmitting(true)
 
-    const { error: signInError } = await signInWithPassword(email, password)
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
 
     if (signInError) {
       setError(signInError.message)
@@ -37,7 +41,15 @@ export default function LoginPage() {
     setError("")
     setIsGoogleLoading(true)
 
-    const { error: googleError } = await signInWithGoogle()
+    const { error: googleError } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo:
+          typeof window !== "undefined"
+            ? `${window.location.origin}/api/auth/callback?next=/`
+            : undefined,
+      },
+    })
 
     if (googleError) {
       setError(googleError.message)
