@@ -1,5 +1,6 @@
 import { createServerClient } from '@/lib/supabase/server-client'
 import { createClient as createAdminClient } from '@supabase/supabase-js'
+import { createServerClient as _createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import { getSupabaseConfig } from '@/lib/env'
 
@@ -11,7 +12,51 @@ export async function GET(request: Request) {
 
   if (code) {
     try {
-      const supabase = createServerClient()
+      // Build a NextResponse ahead of time so we can set cookies on it
+      const redirectUrl = `${origin}${next}`
+      const res = NextResponse.redirect(redirectUrl)
+
+      const { supabaseUrl, supabaseAnonKey } = getSupabaseConfig()
+
+      // Minimal cookie parser for request header
+      const parseCookie = (header: string | null, name: string) => {
+        if (!header) return undefined
+        const cookies = header.split(';').map((c) => c.trim())
+        for (const c of cookies) {
+          const [k, ...v] = c.split('=')
+          if (k === name) return decodeURIComponent(v.join('='))
+        }
+        return undefined
+      }
+
+      const cookieHeader = request.headers.get('cookie')
+
+      const supabase = _createServerClient(
+        supabaseUrl,
+        supabaseAnonKey,
+        {
+          cookies: {
+            get(name: string) {
+              return parseCookie(cookieHeader, name)
+            },
+            set(name: string, value: string, options: any) {
+              try {
+                res.cookies.set({ name, value, ...options })
+              } catch (err) {
+                // swallow errors
+              }
+            },
+            remove(name: string, options: any) {
+              try {
+                res.cookies.set({ name, value: '', ...options, maxAge: -1 })
+              } catch (err) {
+                // swallow errors
+              }
+            },
+          },
+        }
+      )
+
       const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
       
       if (exchangeError) {
@@ -82,7 +127,7 @@ export async function GET(request: Request) {
         }
       }
       
-      return NextResponse.redirect(`${origin}${next}`)
+      return res
     } catch (error) {
       console.error('Callback error:', error)
       return NextResponse.redirect(`${origin}/auth/auth-code-error`)
