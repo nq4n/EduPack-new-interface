@@ -14,6 +14,4 @@ export function getAuthCallbackUrl(): string {
   }
 
   // Fallback (shouldn't happen in practice)
-  return '/api/auth/callback'
-
-3
+  return '/api/auth/callback'}
