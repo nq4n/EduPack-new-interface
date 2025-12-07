@@ -1,6 +1,10 @@
 var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/scorm/save/route.js")
-R.c("server/chunks/275cd_next_dist_8c618cc1._.js")
-R.c("server/chunks/[root-of-the-server]__b0a677a7._.js")
+R.c("server/chunks/node_modules_next_9603c0d1._.js")
+R.c("server/chunks/node_modules_@supabase_realtime-js_dist_module_306ac729._.js")
+R.c("server/chunks/node_modules_@supabase_storage-js_dist_module_473cf4b8._.js")
+R.c("server/chunks/node_modules_@supabase_auth-js_dist_module_d4605ced._.js")
+R.c("server/chunks/node_modules_b2383b72._.js")
+R.c("server/chunks/[root-of-the-server]__f6832d37._.js")
 R.c("server/chunks/_next-internal_server_app_api_scorm_save_route_actions_e488e9e0.js")
-R.m("[project]/node_modules/.pnpm/next@16.0.3_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/scorm/save/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
-module.exports=R.m("[project]/node_modules/.pnpm/next@16.0.3_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/scorm/save/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/scorm/save/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/scorm/save/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

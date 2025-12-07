@@ -27,9 +27,18 @@ module.exports = mod;
 "use strict";
 
 __turbopack_context__.s([
+    "cn",
+    ()=>cn,
     "getAuthCallbackUrl",
     ()=>getAuthCallbackUrl
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/clsx/dist/clsx.mjs [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$tailwind$2d$merge$2f$dist$2f$bundle$2d$mjs$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/tailwind-merge/dist/bundle-mjs.mjs [app-ssr] (ecmascript)");
+;
+;
+function cn(...inputs) {
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$tailwind$2d$merge$2f$dist$2f$bundle$2d$mjs$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["twMerge"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["clsx"])(inputs));
+}
 const getAuthCallbackUrl = ()=>{
     let url = process?.env?.NEXT_PUBLIC_SITE_URL ?? // Set this to your site URL in production
     process?.env?.NEXT_PUBLIC_VERCEL_URL ?? // Automatically set by Vercel.
@@ -1606,54 +1615,30 @@ function AuthProvider({ children }) {
     const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createClient"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session)=>{
-            try {
-                console.debug('[AUTH PROVIDER] onAuthStateChange session', {
-                    session
-                });
-            } catch (err) {
-            // ignore
-            }
-            if (session?.user) {
-                await ensureUserProfile(session.user);
-            }
             setUser(session?.user ?? null);
         });
-        supabase.auth.getSession().then(async ({ data: { session } })=>{
-            try {
-                console.debug('[AUTH PROVIDER] getSession result', {
-                    session
-                });
-            } catch (err) {}
-            if (session?.user) {
-                await ensureUserProfile(session.user);
-            }
+        supabase.auth.getSession().then(({ data: { session } })=>{
             setUser(session?.user ?? null);
         });
-        return ()=>{
-            subscription.unsubscribe();
-        };
+        return ()=>subscription.unsubscribe();
     }, []);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Context.Provider, {
         value: {
             supabase,
             user
         },
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
-            children: children
-        }, void 0, false)
+        children: children
     }, void 0, false, {
         fileName: "[project]/components/auth-provider.tsx",
-        lineNumber: 48,
+        lineNumber: 31,
         columnNumber: 5
     }, this);
 }
-const useSupabase = ()=>{
+function useSupabase() {
     const context = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(Context);
-    if (context === undefined) {
-        throw new Error('useSupabase must be used inside AuthProvider');
-    }
+    if (!context) throw new Error("useSupabase must be used inside AuthProvider");
     return context;
-};
+}
 }),
 "[project]/components/layout/navbar.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

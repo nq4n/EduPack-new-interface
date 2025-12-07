@@ -1,4 +1,5 @@
-import { ensureUserProfile } from '@/lib/db'
+'use client'
+
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { SupabaseClient, User } from '@supabase/supabase-js'
@@ -16,46 +17,25 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_, session) => {
-      try {
-        console.debug('[AUTH PROVIDER] onAuthStateChange session', { session })
-      } catch (err) {
-        // ignore
-      }
-      if (session?.user) {
-        await ensureUserProfile(session.user)
-      }
       setUser(session?.user ?? null)
     })
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      try {
-        console.debug('[AUTH PROVIDER] getSession result', { session })
-      } catch (err) {}
-
-      if (session?.user) {
-        await ensureUserProfile(session.user)
-      }
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
     })
 
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [supabase])
+    return () => subscription.unsubscribe()
+  }, [])
 
   return (
     <Context.Provider value={{ supabase, user }}>
-      <>{children}</>
+      {children}
     </Context.Provider>
   )
 }
 
-export const useSupabase = () => {
+export function useSupabase() {
   const context = useContext(Context)
-
-  if (context === undefined) {
-    throw new Error('useSupabase must be used inside AuthProvider')
-  }
-
+  if (!context) throw new Error("useSupabase must be used inside AuthProvider")
   return context
 }

@@ -1,4 +1,8 @@
 {
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/page": "app/page.js"
+  "/(shop)/packages/page": "app/(shop)/packages/page.js",
+  "/api/scorm/package/route": "app/api/scorm/package/route.js",
+  "/profile/billing/page": "app/profile/billing/page.js",
+  "/profile/packages/page": "app/profile/packages/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/profile/settings/page": "app/profile/settings/page.js"
 }
