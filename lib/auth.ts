@@ -15,6 +15,10 @@ export async function signUpNewUser(
         full_name: name,
         preferred_language: preferredLanguage,
       },
+      emailRedirectTo:
+        typeof window !== "undefined"
+          ? `${window.location.origin}/api/auth/callback?next=/`
+          : undefined,
     },
   })
 
@@ -36,7 +40,10 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+      redirectTo:
+        typeof window !== "undefined"
+          ? `${window.location.origin}/api/auth/callback?next=/`
+          : undefined,
     },
   })
 

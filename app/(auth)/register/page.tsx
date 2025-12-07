@@ -32,6 +32,11 @@ export default function RegisterPage() {
       return
     }
 
+    const callbackUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/api/auth/callback?next=/`
+        : undefined
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -40,6 +45,7 @@ export default function RegisterPage() {
           full_name: fullName,
           preferred_language: preferredLanguage,
         },
+        emailRedirectTo: callbackUrl,
       },
     })
 
