@@ -32,15 +32,19 @@ export async function POST(request: Request) {
   const filePath = `${userId}/${packageId}/project.json`
 
   try {
-    const { error: storageError } = await supabase.storage
+    const json = JSON.stringify(project)
+    const fileBody = Buffer.from(json)
+
+    const { data: storageData, error: storageError } = await supabase.storage
       .from("packages")
-      .upload(filePath, JSON.stringify(project), {
+      .upload(filePath, fileBody, {
         cacheControl: "3600",
         upsert: true,
         contentType: "application/json",
       })
 
     if (storageError) {
+      console.error('[SAVE_ROUTE] storage response:', storageData)
       throw new Error(`Supabase Storage Error: ${storageError.message}`)
     }
   } catch (e: any) {
