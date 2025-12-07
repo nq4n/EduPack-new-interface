@@ -1,6 +1,7 @@
 import { createClient as createBrowserClient, type SupabaseClient } from '@supabase/supabase-js'
 import { getSupabaseConfig } from '../env'
 import { Database } from './database.types'
+import { createServerClient } from './server-client'
 
 declare global {
   // Allow attaching the client to globalThis for dev/hot-reload environments
@@ -11,19 +12,19 @@ declare global {
 export function createClient() {
   const { supabaseUrl, supabaseAnonKey } = getSupabaseConfig()
 
-  // Use a singleton on the browser to avoid creating multiple GoTrueClient
-  // instances which lead to race conditions and the warning seen in console.
-  if (typeof window !== 'undefined') {
-    if (!(globalThis as any).__EDUPACK_SUPABASE_CLIENT__) {
-      ;(globalThis as any).__EDUPACK_SUPABASE_CLIENT__ = createBrowserClient<Database>(
-        supabaseUrl,
-        supabaseAnonKey
-      )
-    }
-
-    return (globalThis as any).__EDUPACK_SUPABASE_CLIENT__ as SupabaseClient<Database>
+  // On the server, return the SSR server client which uses Next cookies() adapter
+  if (typeof window === 'undefined') {
+    return createServerClient()
   }
 
-  // For server-side usage (fallback) return a new client instance
-  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  // Use a singleton on the browser to avoid creating multiple GoTrueClient
+  // instances which lead to race conditions and the warning seen in console.
+  if (!(globalThis as any).__EDUPACK_SUPABASE_CLIENT__) {
+    ;(globalThis as any).__EDUPACK_SUPABASE_CLIENT__ = createBrowserClient<Database>(
+      supabaseUrl,
+      supabaseAnonKey
+    )
+  }
+
+  return (globalThis as any).__EDUPACK_SUPABASE_CLIENT__ as SupabaseClient<Database>
 }
