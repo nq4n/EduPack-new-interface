@@ -33,6 +33,30 @@ create policy "Users can update their own profile"
   on public.users for update
   using (auth.uid() = user_id);
 
+-- Trigger to auto-create user profiles on signup
+drop trigger if exists on_auth_user_created on auth.users;
+drop function if exists public.handle_new_user();
+
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.users (user_id, email, full_name, preferred_language, avatar_url)
+  values (
+    new.id,
+    new.email,
+    new.raw_user_meta_data->>'full_name',
+    new.raw_user_meta_data->>'preferred_language',
+    new.raw_user_meta_data->>'avatar_url'
+  )
+  on conflict (user_id) do nothing;
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
 -- ================================
 -- 2. PACKAGES TABLE
 -- ================================
@@ -221,3 +245,6 @@ using (
   bucket_id = 'packages'
   and (storage.foldername(name))[1] = auth.uid()::text
 );
+
+
+

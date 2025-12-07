@@ -1,7 +1,5 @@
 import { createClient } from "./supabase/client"
 import { ensureUserProfile } from "./user-profile"
-
-export async function signUpNewUser(
 import { getAuthCallbackUrl } from "./get-auth-callback-url"
 
 export async function signUpNewUser(
@@ -75,5 +73,6 @@ export async function sendPasswordResetEmail(email: string) {
   const redirectTo = `${getAuthCallbackUrl().replace('/api/auth/callback', '')}/update-password`
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
+  })
   return { error }
 }
