@@ -1,12 +1,11 @@
 "use client";
+
 import { useState, useCallback } from "react";
 import { EditorProject } from "@/lib/scorm/types";
 import {
   ChatMessage,
   ScormAIHookProps,
-} 
-
-from "@/lib/scorm/ai-types";
+} from "@/lib/scorm/ai-types";
 
 // -------------------------------------------
 // Extractor for NEW PIPELINE response format
@@ -14,8 +13,6 @@ from "@/lib/scorm/ai-types";
 function extractProject(result: any): EditorProject | null {
   if (!result) return null;
 
-  // New pipeline returns:
-  // { agent: "...", content: "...", project: { ... }, metadata: {...} }
   if (result.project && Array.isArray(result.project.pages)) {
     return result.project as EditorProject;
   }
@@ -36,6 +33,9 @@ export function useScormAI({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [chatInput, setChatInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Public → AI allowed once only
+  const [aiUsedOnce, setAiUsedOnce] = useState(false);
 
   // Holds the whole pipeline result
   const [pendingLesson, setPendingLesson] = useState<any | null>(null);
@@ -58,7 +58,6 @@ export function useScormAI({
 
     setProject(newProject);
 
-    // Autofocus first page
     if (newProject.pages.length > 0) {
       setActivePageId(newProject.pages[0].id);
       setSelectedBlockId(null);
@@ -71,8 +70,6 @@ export function useScormAI({
     }
 
     setPendingLesson(null);
-
-    // Switch UI back to editor mode
     setEditorMode("ai");
     setAiChatMode("hidden");
   };
@@ -85,6 +82,13 @@ export function useScormAI({
   const submitPrompt = useCallback(
     async (prompt: string, isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
+
+      // 🔥 AFTER the first use → require login
+      if (aiUsedOnce) {
+        alert("Please log in to continue using AI features.");
+        window.location.href = "/login";
+        return;
+      }
 
       setIsGenerating(true);
 
@@ -103,12 +107,12 @@ export function useScormAI({
           content: m.content,
         }));
 
-       const response = await fetch("/api/scorm/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // 🔥 IMPORTANT FIX
-        body: JSON.stringify({ messages: payloadMessages }),
-      });
+        const response = await fetch("/api/scorm/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ messages: payloadMessages }),
+        });
 
         const json = await response.json();
 
@@ -118,22 +122,22 @@ export function useScormAI({
 
         console.debug("🔵 Pipeline result:", json);
 
-        // Add AI assistant message (text only)
         addMessage({
           id: Date.now() + 1,
           role: "assistant",
           content: json.content ?? "Lesson generated.",
         });
 
-        // The pipeline result is at json (not json.result anymore)
         const project = extractProject(json);
 
         if (project) {
           setPendingLesson(json);
 
+          // 🔥 Mark that the user used AI once
+          setAiUsedOnce(true);
+
           if (isInitialGeneration) {
             setAiChatMode("animating");
-
             setTimeout(() => {
               setAiChatMode("hidden");
               setEditorMode("ai");
@@ -152,7 +156,7 @@ export function useScormAI({
         setIsGenerating(false);
       }
     },
-    [messages, setAiChatMode, setEditorMode]
+    [messages, aiUsedOnce, setAiChatMode, setEditorMode]
   );
 
   return {

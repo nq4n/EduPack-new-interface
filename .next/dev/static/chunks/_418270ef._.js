@@ -3993,8 +3993,6 @@ var _s = __turbopack_context__.k.signature();
 // -------------------------------------------
 function extractProject(result) {
     if (!result) return null;
-    // New pipeline returns:
-    // { agent: "...", content: "...", project: { ... }, metadata: {...} }
     if (result.project && Array.isArray(result.project.pages)) {
         return result.project;
     }
@@ -4006,6 +4004,8 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialMessages);
     const [chatInput, setChatInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [isGenerating, setIsGenerating] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Public → AI allowed once only
+    const [aiUsedOnce, setAiUsedOnce] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     // Holds the whole pipeline result
     const [pendingLesson, setPendingLesson] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const addMessage = (msg)=>{
@@ -4025,7 +4025,6 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
             return;
         }
         setProject(newProject);
-        // Autofocus first page
         if (newProject.pages.length > 0) {
             setActivePageId(newProject.pages[0].id);
             setSelectedBlockId(null);
@@ -4033,7 +4032,6 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
             onLessonApplied(ids);
         }
         setPendingLesson(null);
-        // Switch UI back to editor mode
         setEditorMode("ai");
         setAiChatMode("hidden");
     };
@@ -4044,6 +4042,12 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
     const submitPrompt = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "useScormAI.useCallback[submitPrompt]": async (prompt, isInitialGeneration)=>{
             if (!prompt.trim()) return;
+            // 🔥 AFTER the first use → require login
+            if (aiUsedOnce) {
+                alert("Please log in to continue using AI features.");
+                window.location.href = "/login";
+                return;
+            }
             setIsGenerating(true);
             const userMessage = {
                 id: Date.now(),
@@ -4077,16 +4081,16 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
                     throw new Error(json.error || "AI generation failed");
                 }
                 console.debug("🔵 Pipeline result:", json);
-                // Add AI assistant message (text only)
                 addMessage({
                     id: Date.now() + 1,
                     role: "assistant",
                     content: json.content ?? "Lesson generated."
                 });
-                // The pipeline result is at json (not json.result anymore)
                 const project = extractProject(json);
                 if (project) {
                     setPendingLesson(json);
+                    // 🔥 Mark that the user used AI once
+                    setAiUsedOnce(true);
                     if (isInitialGeneration) {
                         setAiChatMode("animating");
                         setTimeout({
@@ -4110,6 +4114,7 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
         }
     }["useScormAI.useCallback[submitPrompt]"], [
         messages,
+        aiUsedOnce,
         setAiChatMode,
         setEditorMode
     ]);
@@ -4124,7 +4129,7 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
         rejectPendingLesson
     };
 }
-_s(useScormAI, "aMCvtLdmBt8+mB4KIq6Cz6DOKdA=");
+_s(useScormAI, "HVsvwb6SnOiFYkeNXElAaJ0oVJM=");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
