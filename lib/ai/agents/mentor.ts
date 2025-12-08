@@ -1,14 +1,9 @@
 // lib/ai/agents/mentor.ts
 
-import OpenAI from "openai";
-
+import { getOpenRouterClient } from "../utils/openrouter";
 
 // We use OpenRouter endpoint through the OpenAI SDK
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-  
-});
+const client = getOpenRouterClient();
 
 /**
  * Mentor Stage

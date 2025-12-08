@@ -1,11 +1,8 @@
 // lib/ai/agents/architect.ts
 
-import OpenAI from "openai";
+import { getOpenRouterClient } from "../utils/openrouter";
 
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-});
+const client = getOpenRouterClient();
 
 /**
  * Architect Stage
