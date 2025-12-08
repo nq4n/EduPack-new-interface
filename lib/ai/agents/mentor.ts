@@ -2,9 +2,6 @@
 
 import { getOpenRouterClient } from "../utils/openrouter";
 
-// We use OpenRouter endpoint through the OpenAI SDK
-const client = getOpenRouterClient();
-
 /**
  * Mentor Stage
  * Reads chat messages → Extracts intent → Produces a lesson outline.
@@ -12,6 +9,8 @@ const client = getOpenRouterClient();
  * Output: plain text outline (NOT JSON)
  */
 export async function mentorStage(messages: any[]) {
+  const client = getOpenRouterClient();
+
   const systemPrompt = `
 You are an expert instructional designer and teacher mentor.
 

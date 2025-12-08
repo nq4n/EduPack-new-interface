@@ -29,6 +29,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result, { status: 200 });
   } catch (error: any) {
     console.error("❌ SCORM AI Chat Error:", error);
+
+    if (error?.status === 401 || /401/.test(error?.message || "")) {
+      return NextResponse.json(
+        {
+          error:
+            "OpenRouter rejected the request. Verify OPENROUTER_API_KEY is set correctly in your .env.local and restart the dev server.",
+        },
+        { status: 401 }
+      );
+    }
+
     return NextResponse.json(
       { error: error?.message || "AI processing failed" },
       { status: 500 }
