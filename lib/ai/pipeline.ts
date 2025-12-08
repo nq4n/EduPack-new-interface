@@ -1,4 +1,4 @@
-// lib/ai/orchestrator.ts
+// lib/ai/pipeline.ts
 
 import { mentorStage } from "./agents/mentor";
 import { architectStage } from "./agents/architect";
@@ -6,35 +6,35 @@ import { deepResearchStage } from "./agents/deepresearch";
 import { normalizeLesson } from "./utils/normalize";
 import { sanitizeText } from "./utils/sanitize";
 import { safeParseProject } from "./ai-schema";
-import { v4 as uuid } from "uuid";
+
+// Use Next.js built-in UUID generator
+const uuid = () => crypto.randomUUID();
 
 /**
- * Orchestrator:
- * Mentor → Architect → DeepResearch → Normalizer → Final SCORM Project
+ * Full SCORM AI Pipeline:
+ * Mentor → Architect → Deep Research → Normalize → SCORM JSON
  */
 
-export async function runOrchestrator(messages: any[]) {
-  // 1️⃣ Mentor
-  const mentorOutput = await mentorStage(messages.map((m: any) => ({
+export async function runAIPipeline(messages: any[]) {
+  const cleanedMessages = messages.map((m: any) => ({
     role: m.role,
-    content: sanitizeText(m.content)
-  })));
+    content: sanitizeText(m.content),
+  }));
 
-  // 2️⃣ Architect
-  const architectOutput = await architectStage(mentorOutput);
+  const mentorOut = await mentorStage(cleanedMessages);
+  const architectOut = await architectStage(mentorOut);
+  const enrichedOut = await deepResearchStage(architectOut);
 
-  // 3️⃣ Deep Research
-  const enrichedOutput = await deepResearchStage(architectOutput);
+  const normalized = normalizeLesson(enrichedOut);
 
-  // 4️⃣ Normalize into intermediate structure
-  const normalized = normalizeLesson(enrichedOutput);
-
-  // 5️⃣ Convert normalized → SCORM Project JSON
   const projectJson = {
     id: `proj-${uuid()}`,
     title: normalized.title,
     version: "1.2",
-    theme: { direction: "ltr", styles: {} },
+    theme: {
+      direction: "ltr",
+      styles: {},
+    },
     tracking: {
       level: "standard",
       pageViews: true,
@@ -68,8 +68,8 @@ export async function runOrchestrator(messages: any[]) {
   const finalProject = safeParseProject(projectJson);
 
   return {
-    agent: "orchestrator",
-    content: "Lesson created successfully.",
+    agent: "pipeline",
+    content: "Lesson generated successfully.",
     project: finalProject,
     warnings: [],
     metadata: {

@@ -1,61 +1,27 @@
-[00:00:01.705] Server  LOG      ✓ Ready in 1164ms
-[00:00:21.467] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\ssr\[root-of-the-server]__738975ba._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:00:21.469] Server  ERROR    ⨯ Error: Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY
-[00:00:21.699] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:21.906] Browser ERROR   uncaughtError: Error: Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY
-[00:01:17.977] Server  LOG        Reload env: .env
-[00:01:18.213] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\ssr\[root-of-the-server]__738975ba._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:01:18.216] Server  ERROR    ⨯ Error: Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY
-[00:01:18.354] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:19.297] Browser ERROR   uncaughtError: Error: Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY
-[00:01:20.390] Server  LOG        Reload env: .env
-[00:01:20.998] Server  LOG      ✓ Compiled in 368ms
-[00:01:21.005] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:01:21.007] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/supabase/client.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:01:21.007] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:01:21.154] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:21.741] Server  LOG     API: Fetching packages (mocked).
-[00:01:51.588] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:24.575] Server  LOG     API: Fetching packages (mocked).
-[00:02:24.590] Server  LOG     API: Fetching packages (mocked).
-[00:04:51.348] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_openai_f417a314._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.350] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\[root-of-the-server]__df7aed19._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.367] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.379] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_next_2e28ba95._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.386] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\base-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.391] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\next-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.394] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\dev\next-dev-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.401] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\trace\trace.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.404] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\router-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.406] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\start-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:04:51.411] Server  ERROR   Error calling OpenRouter: Error: 401 No cookie auth credentials found
-[00:04:51.522] Browser ERROR   AI error: {}
-[00:08:33.484] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:08:33.803] Server  LOG     API: Fetching packages (mocked).
-[00:10:09.956] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_openai_f417a314._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.958] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\[root-of-the-server]__df7aed19._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.961] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.962] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_next_2e28ba95._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.964] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\base-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.965] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\next-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.965] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\dev\next-dev-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.966] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\trace\trace.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.967] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\router-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.971] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\start-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:10:09.973] Server  ERROR   Error calling OpenRouter: Error: 401 No cookie auth credentials found
-[00:10:10.081] Browser ERROR   AI error: {}
-[00:25:04.122] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:43.391] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_openai_f417a314._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.396] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\[root-of-the-server]__df7aed19._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.398] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.407] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\.next\dev\server\chunks\node_modules_next_2e28ba95._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.408] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\base-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.409] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\next-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.411] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\dev\next-dev-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.412] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\trace\trace.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.414] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\router-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.415] Server  ERROR   C:\Users\مؤيد\Desktop\graduation project\EduPack-new-interface\node_modules\next\dist\server\lib\start-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[00:25:43.416] Server  ERROR   Error calling OpenRouter: Error: 401 No cookie auth credentials found
-[00:25:43.529] Browser ERROR   AI error: {}
-[00:33:26.533] Server  ERROR   OpenRouter error: 401 "{\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
-[00:33:26.647] Browser ERROR   AI error: {}
+[00:00:00.736] Server  LOG      ✓ Ready in 470ms
+[00:00:02.527] Server  LOG     🔑 OpenRouter API Key exists: true
+[00:00:02.821] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.345] Browser LOG     🔑 OpenRouter API Key exists: false
+[00:00:05.566] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.566] Browser LOG     🔑 OpenRouter API Key exists: false
+[00:00:06.659] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.659] Browser LOG     🔑 OpenRouter API Key exists: false
+[00:00:07.565] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:07.565] Browser LOG     🔑 OpenRouter API Key exists: false
+[00:00:41.220] Server  LOG        Reload env: .env
+[00:00:43.323] Server  LOG        Reload env: .env
+[00:00:46.614] Server  LOG     🔑 OpenRouter API Key exists: true
+[00:00:46.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:46.955] Browser LOG     🔑 OpenRouter API Key exists: false
+[00:01:13.840] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\.next\dev\server\chunks\node_modules_openai_f417a314._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.842] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\.next\dev\server\chunks\[root-of-the-server]__154dbe7f._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.853] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\compiled\next-server\app-route-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.861] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\.next\dev\server\chunks\node_modules_next_2e28ba95._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.864] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\server\base-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.866] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\server\next-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.867] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\server\dev\next-dev-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.868] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\trace\trace.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.868] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\server\lib\router-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.869] Server  ERROR   C:\Users\Windows 11\Desktop\مشروع التخرج\EduPack-new-interface\node_modules\next\dist\server\lib\start-server.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:01:13.871] Server  ERROR   ❌ SCORM AI Chat Error: Error: 401 No cookie auth credentials found
+[00:01:13.984] Browser ERROR   ❌ AI Error: {}

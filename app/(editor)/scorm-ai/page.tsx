@@ -86,9 +86,11 @@ export default function ScormAIPage() {
   }
 
   const [project, setProject] = useState<EditorProject>(initialProject)
+  const firstPageBlocksCount = (project.pages[0]?.blocks ?? []).length
 
   const hasContent =
-    project.pages.length > 1 || project.pages[0]?.blocks.length > 0
+    project.pages.length > 1 || firstPageBlocksCount > 0
+
   const [editorMode, setEditorMode] = useState<"choice" | "ai" | "blank">(
     hasContent ? "ai" : "choice",
   )
@@ -159,11 +161,21 @@ export default function ScormAIPage() {
     }
   }, [])
 
-  const activePage =
-    project.pages.find((p) => p.id === activePageId) ?? project.pages[0]
+const fallbackPage: EditorPage = {
+  id: "page-fallback",
+  title: t("scorm.ai.introduction"),
+  blocks: [],
+}
 
-  const selectedBlock =
-    activePage.blocks.find((b) => b.id === selectedBlockId) ?? null
+const activePage =
+  project.pages.find((p) => p.id === activePageId) ??
+  project.pages[0] ??
+  fallbackPage
+const activeBlocks = activePage?.blocks ?? [];
+
+const selectedBlock =
+  (activePage.blocks ?? []).find((b) => b.id === selectedBlockId) ?? null
+
 
   const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
 
@@ -398,12 +410,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
   }
 
   const openPrintableReport = (role: "teacher" | "student") => {
-    const learningSummary = project.pages
-      .map(
-        (page, index) =>
-          `${index + 1}. ${page.title} (${page.blocks.length} blocks)`,
-      )
+      const learningSummary = project.pages
+        .map((page, index) => {
+          const blockCount = (page.blocks ?? []).length
+          return `${index + 1}. ${page.title} (${blockCount} blocks)`
+        })
       .join("<br />")
+
 
     const reportHtml = `<!DOCTYPE html>
       <html lang="en">
@@ -1171,32 +1184,33 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           </div>
                         </div>
                       ))}
-                      {pendingLesson && (
+                      {pendingLesson && pendingLesson.result?.project && (
                         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm">
                           <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
-                            {t("scorm.ai.pendingChanges") ||
-                              "Pending approval"}
+                            {t("scorm.ai.pendingChanges") || "Pending approval"}
                           </div>
-                          <p className="text-xs text-emerald-900">
-                            {`"${pendingLesson.result.project.title}" has ${
-                              pendingLesson.result.project.pages.length
-                            } page(s) with ${
-                              pendingLesson.result.project.pages.reduce(
-                                (total, page) =>
-                                  total + (page.blocks?.length || 0),
-                                0,
-                              )
-                            } block(s). Difficulty: ${
-                              pendingLesson.result.metadata
-                                .predictedDifficulty
-                            }. Tags: ${
-                              pendingLesson.result.metadata.recommendedTags.join(
-                                ", ",
-                              ) || "n/a"
-                            }.`}
-                          </p>
+
+                          {(() => {
+                            const proj = pendingLesson.result.project ?? pendingLesson.result
+                            const pages = proj.pages ?? []
+                            const totalBlocks = pages.reduce(
+                              (total, page) => total + ((page.blocks ?? []).length),
+                              0,
+                            )
+                            const difficulty =
+                              pendingLesson.result.metadata?.predictedDifficulty ?? "n/a"
+                            const tags =
+                              pendingLesson.result.metadata?.recommendedTags?.join(", ") || "n/a"
+
+                            return (
+                              <p className="text-xs text-emerald-900">
+                                {`"${proj.title}" has ${pages.length} page(s) with ${totalBlocks} block(s). Difficulty: ${difficulty}. Tags: ${tags}.`}
+                              </p>
+                            )
+                          })()}
+
                           <div className="flex flex-wrap gap-1">
-                            {pendingLesson.result.project.pages
+                            {(pendingLesson.result.project.pages ?? [])
                               .slice(0, 3)
                               .map((page) => (
                                 <Badge
@@ -1204,25 +1218,24 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                   variant="secondary"
                                   className="bg-white text-emerald-800 border-emerald-200"
                                 >
-                                  {page.title}: {page.blocks.length} block(s)
+                                  {page.title}: {(page.blocks ?? []).length} block(s)
                                 </Badge>
                               ))}
                           </div>
-                          {pendingLesson.result.warnings.length > 0 && (
+
+                          {(pendingLesson.result.warnings ?? []).length > 0 && (
                             <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2">
-                              {`Warnings: ${pendingLesson.result.warnings.join(
-                                "; ",
-                              )}`}
+                              {`Warnings: ${(pendingLesson.result.warnings ?? []).join("; ")}`}
                             </div>
                           )}
+
                           <div className="flex items-center gap-2">
                             <Button
                               size="sm"
                               className="h-8 px-3"
                               onClick={acceptPendingLesson}
                             >
-                              {t("scorm.ai.acceptChanges") ||
-                                "Apply changes"}
+                              {t("scorm.ai.acceptChanges") || "Apply changes"}
                             </Button>
                             <Button
                               size="sm"
@@ -1387,9 +1400,10 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                   </div>
 
                   <div className="max-h-[600px] overflow-auto pr-1">
-                    {activePage && activePage.blocks.length > 0 ? (
+                    
+                    {activePage && activeBlocks.length > 0 ? (
                       <div className="space-y-4">
-                        {activePage.blocks.map((block) => {
+                          {activeBlocks.map((block) => {
                           const isSelected = selectedBlock?.id === block.id
                           const isHighlighted =
                             highlightedBlockIds.includes(block.id)

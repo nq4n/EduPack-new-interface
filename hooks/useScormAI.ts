@@ -1,8 +1,29 @@
-"use client"
+"use client";
+console.log("🔑 OpenRouter API Key exists:", !!process.env.OPENROUTER_API_KEY);
+import { useState, useCallback } from "react";
+import { EditorProject } from "@/lib/scorm/types";
+import {
+  ChatMessage,
+  ScormAIHookProps,
+} 
 
-import { useState, useCallback } from "react"
-import { EditorProject } from "@/lib/scorm/types"
-import { ChatMessage, ScormAIHookProps, AISuggestion } from "@/lib/scorm/ai-types"
+from "@/lib/scorm/ai-types";
+
+// -------------------------------------------
+// Extractor for NEW PIPELINE response format
+// -------------------------------------------
+function extractProject(result: any): EditorProject | null {
+  if (!result) return null;
+
+  // New pipeline returns:
+  // { agent: "...", content: "...", project: { ... }, metadata: {...} }
+  if (result.project && Array.isArray(result.project.pages)) {
+    return result.project as EditorProject;
+  }
+
+  console.warn("⚠️ extractProject(): no valid project found in:", result);
+  return null;
+}
 
 export function useScormAI({
   setProject,
@@ -13,120 +34,127 @@ export function useScormAI({
   initialMessages,
   onLessonApplied,
 }: ScormAIHookProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
-  const [chatInput, setChatInput] = useState("")
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [pendingLesson, setPendingLesson] = useState<AISuggestion | null>(null)
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [chatInput, setChatInput] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  // Append user message + AI response
+  // Holds the whole pipeline result
+  const [pendingLesson, setPendingLesson] = useState<any | null>(null);
+
   const addMessage = (msg: ChatMessage) => {
-    setMessages((prev) => [...prev, msg])
-  }
+    setMessages((prev) => [...prev, msg]);
+  };
 
-  // Accept AI lesson changes
+  // -------------------------------------------
+  // ACCEPT AI LESSON
+  // -------------------------------------------
   const acceptPendingLesson = () => {
-    if (!pendingLesson) return
+    if (!pendingLesson) return;
 
-    const newProject = pendingLesson.result.project as EditorProject
-
-    setProject(newProject)
-
-    if (newProject.pages.length > 0) {
-      setActivePageId(newProject.pages[0].id)
-      setSelectedBlockId(null)
+    const newProject = extractProject(pendingLesson);
+    if (!newProject) {
+      console.error("❌ No valid project in pendingLesson:", pendingLesson);
+      return;
     }
 
-    onLessonApplied(
-      newProject.pages.flatMap((p) => p.blocks.map((b) => b.id))
-    )
+    setProject(newProject);
 
-    setPendingLesson(null)
-    setEditorMode("ai")
-    setAiChatMode("hidden")
-  }
+    // Autofocus first page
+    if (newProject.pages.length > 0) {
+      setActivePageId(newProject.pages[0].id);
+      setSelectedBlockId(null);
 
-  // Reject AI lesson
-  const rejectPendingLesson = () => {
-    setPendingLesson(null)
-  }
+      const ids = newProject.pages.flatMap((p) =>
+        (p.blocks ?? []).map((b) => b.id)
+      );
 
-  // AI prompt handler
+      onLessonApplied(ids);
+    }
+
+    setPendingLesson(null);
+
+    // Switch UI back to editor mode
+    setEditorMode("ai");
+    setAiChatMode("hidden");
+  };
+
+  const rejectPendingLesson = () => setPendingLesson(null);
+
+  // -------------------------------------------
+  // SEND PROMPT → AI PIPELINE
+  // -------------------------------------------
   const submitPrompt = useCallback(
     async (prompt: string, isInitialGeneration: boolean) => {
-      if (!prompt.trim()) return
+      if (!prompt.trim()) return;
 
-      setIsGenerating(true)
+      setIsGenerating(true);
 
       const userMessage: ChatMessage = {
         id: Date.now(),
         role: "user",
         content: prompt,
-      }
+      };
 
-      addMessage(userMessage)
-      setChatInput("")
+      addMessage(userMessage);
+      setChatInput("");
 
       try {
-        const payloadMessages = [...messages, userMessage].map(
-          ({ role, content }) => ({ role, content })
-        )
+        const payloadMessages = [...messages, userMessage].map((m) => ({
+          role: m.role,
+          content: m.content,
+        }));
 
-        const response = await fetch("/api/scorm/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: payloadMessages }),
-        })
+       const response = await fetch("/api/scorm/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔥 IMPORTANT FIX
+        body: JSON.stringify({ messages: payloadMessages }),
+      });
 
-        const isJson = response.headers
-          .get("content-type")
-          ?.includes("application/json")
-        const data = isJson ? await response.json() : null
+        const json = await response.json();
 
         if (!response.ok) {
-          const message = (data as { error?: string })?.error
-          throw new Error(message || response.statusText || "AI generation failed")
+          throw new Error(json.error || "AI generation failed");
         }
 
-        const aiResponse = (data as AISuggestion | null) ?? null
+        console.debug("🔵 Pipeline result:", json);
 
-        const aiMessage: ChatMessage = {
+        // Add AI assistant message (text only)
+        addMessage({
           id: Date.now() + 1,
-          role: aiResponse?.role || "assistant",
-          content: aiResponse?.content || aiResponse?.message || "Generated lesson.",
-          agent: aiResponse?.agent || undefined,
-        }
+          role: "assistant",
+          content: json.content ?? "Lesson generated.",
+        });
 
-        addMessage(aiMessage)
+        // The pipeline result is at json (not json.result anymore)
+        const project = extractProject(json);
 
-        // If AI generated lesson structure:
-        if (aiResponse?.result?.project) {
-          setPendingLesson(aiResponse)
+        if (project) {
+          setPendingLesson(json);
 
           if (isInitialGeneration) {
-            setAiChatMode("animating")
+            setAiChatMode("animating");
+
             setTimeout(() => {
-              setAiChatMode("hidden")
-              setEditorMode("ai")
-            }, 600)
+              setAiChatMode("hidden");
+              setEditorMode("ai");
+            }, 600);
           }
         }
-      } catch (err) {
-        console.error("AI error:", err)
+      } catch (err: any) {
+        console.error("❌ AI Error:", err);
 
-        const errorMessage =
-          err instanceof Error ? err.message : "AI response could not be parsed"
         addMessage({
           id: Date.now() + 2,
           role: "assistant",
-          content: errorMessage,
-        })
+          content: err.message || "AI failed to generate a valid response.",
+        });
       } finally {
-        setIsGenerating(false)
+        setIsGenerating(false);
       }
     },
-
     [messages, setAiChatMode, setEditorMode]
-  )
+  );
 
   return {
     messages,
@@ -137,5 +165,5 @@ export function useScormAI({
     pendingLesson,
     acceptPendingLesson,
     rejectPendingLesson,
-  }
+  };
 }

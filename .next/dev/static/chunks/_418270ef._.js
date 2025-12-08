@@ -3984,42 +3984,65 @@ __turbopack_context__.s([
     "useScormAI",
     ()=>useScormAI
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var _s = __turbopack_context__.k.signature();
 "use client";
+console.log("🔑 OpenRouter API Key exists:", !!__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.OPENROUTER_API_KEY);
 ;
+// -------------------------------------------
+// Extractor for NEW PIPELINE response format
+// -------------------------------------------
+function extractProject(result) {
+    if (!result) return null;
+    // New pipeline returns:
+    // { agent: "...", content: "...", project: { ... }, metadata: {...} }
+    if (result.project && Array.isArray(result.project.pages)) {
+        return result.project;
+    }
+    console.warn("⚠️ extractProject(): no valid project found in:", result);
+    return null;
+}
 function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditorMode, setAiChatMode, initialMessages, onLessonApplied }) {
     _s();
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialMessages);
     const [chatInput, setChatInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [isGenerating, setIsGenerating] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Holds the whole pipeline result
     const [pendingLesson, setPendingLesson] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Append user message + AI response
     const addMessage = (msg)=>{
         setMessages((prev)=>[
                 ...prev,
                 msg
             ]);
     };
-    // Accept AI lesson changes
+    // -------------------------------------------
+    // ACCEPT AI LESSON
+    // -------------------------------------------
     const acceptPendingLesson = ()=>{
         if (!pendingLesson) return;
-        const newProject = pendingLesson.result.project;
+        const newProject = extractProject(pendingLesson);
+        if (!newProject) {
+            console.error("❌ No valid project in pendingLesson:", pendingLesson);
+            return;
+        }
         setProject(newProject);
+        // Autofocus first page
         if (newProject.pages.length > 0) {
             setActivePageId(newProject.pages[0].id);
             setSelectedBlockId(null);
+            const ids = newProject.pages.flatMap((p)=>(p.blocks ?? []).map((b)=>b.id));
+            onLessonApplied(ids);
         }
-        onLessonApplied(newProject.pages.flatMap((p)=>p.blocks.map((b)=>b.id)));
         setPendingLesson(null);
+        // Switch UI back to editor mode
         setEditorMode("ai");
         setAiChatMode("hidden");
     };
-    // Reject AI lesson
-    const rejectPendingLesson = ()=>{
-        setPendingLesson(null);
-    };
-    // AI prompt handler
+    const rejectPendingLesson = ()=>setPendingLesson(null);
+    // -------------------------------------------
+    // SEND PROMPT → AI PIPELINE
+    // -------------------------------------------
     const submitPrompt = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "useScormAI.useCallback[submitPrompt]": async (prompt, isInitialGeneration)=>{
             if (!prompt.trim()) return;
@@ -4036,9 +4059,9 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
                     ...messages,
                     userMessage
                 ].map({
-                    "useScormAI.useCallback[submitPrompt].payloadMessages": ({ role, content })=>({
-                            role,
-                            content
+                    "useScormAI.useCallback[submitPrompt].payloadMessages": (m)=>({
+                            role: m.role,
+                            content: m.content
                         })
                 }["useScormAI.useCallback[submitPrompt].payloadMessages"]);
                 const response = await fetch("/api/scorm/chat", {
@@ -4046,27 +4069,26 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify({
                         messages: payloadMessages
                     })
                 });
-                const isJson = response.headers.get("content-type")?.includes("application/json");
-                const data = isJson ? await response.json() : null;
+                const json = await response.json();
                 if (!response.ok) {
-                    const message = data?.error;
-                    throw new Error(message || response.statusText || "AI generation failed");
+                    throw new Error(json.error || "AI generation failed");
                 }
-                const aiResponse = data ?? null;
-                const aiMessage = {
+                console.debug("🔵 Pipeline result:", json);
+                // Add AI assistant message (text only)
+                addMessage({
                     id: Date.now() + 1,
-                    role: aiResponse?.role || "assistant",
-                    content: aiResponse?.content || aiResponse?.message || "Generated lesson.",
-                    agent: aiResponse?.agent || undefined
-                };
-                addMessage(aiMessage);
-                // If AI generated lesson structure:
-                if (aiResponse?.result?.project) {
-                    setPendingLesson(aiResponse);
+                    role: "assistant",
+                    content: json.content ?? "Lesson generated."
+                });
+                // The pipeline result is at json (not json.result anymore)
+                const project = extractProject(json);
+                if (project) {
+                    setPendingLesson(json);
                     if (isInitialGeneration) {
                         setAiChatMode("animating");
                         setTimeout({
@@ -4078,12 +4100,11 @@ function useScormAI({ setProject, setActivePageId, setSelectedBlockId, setEditor
                     }
                 }
             } catch (err) {
-                console.error("AI error:", err);
-                const errorMessage = err instanceof Error ? err.message : "AI response could not be parsed";
+                console.error("❌ AI Error:", err);
                 addMessage({
                     id: Date.now() + 2,
                     role: "assistant",
-                    content: errorMessage
+                    content: err.message || "AI failed to generate a valid response."
                 });
             } finally{
                 setIsGenerating(false);
@@ -4563,7 +4584,8 @@ function ScormAIPage() {
         ]
     };
     const [project, setProject] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialProject);
-    const hasContent = project.pages.length > 1 || project.pages[0]?.blocks.length > 0;
+    const firstPageBlocksCount = (project.pages[0]?.blocks ?? []).length;
+    const hasContent = project.pages.length > 1 || firstPageBlocksCount > 0;
     const [editorMode, setEditorMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(hasContent ? "ai" : "choice");
     const [activePageId, setActivePageId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(project.pages[0]?.id);
     const [selectedBlockId, setSelectedBlockId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
@@ -4636,8 +4658,14 @@ function ScormAIPage() {
             })["ScormAIPage.useEffect"];
         }
     }["ScormAIPage.useEffect"], []);
-    const activePage = project.pages.find((p)=>p.id === activePageId) ?? project.pages[0];
-    const selectedBlock = activePage.blocks.find((b)=>b.id === selectedBlockId) ?? null;
+    const fallbackPage = {
+        id: "page-fallback",
+        title: t("scorm.ai.introduction"),
+        blocks: []
+    };
+    const activePage = project.pages.find((p)=>p.id === activePageId) ?? project.pages[0] ?? fallbackPage;
+    const activeBlocks = activePage?.blocks ?? [];
+    const selectedBlock = (activePage.blocks ?? []).find((b)=>b.id === selectedBlockId) ?? null;
     const [rightPanel, setRightPanel] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("project");
     const handleBlockClick = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "ScormAIPage.useCallback[handleBlockClick]": (block)=>{
@@ -4819,7 +4847,10 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
 </qti-assessment-items>`;
     };
     const openPrintableReport = (role)=>{
-        const learningSummary = project.pages.map((page, index)=>`${index + 1}. ${page.title} (${page.blocks.length} blocks)`).join("<br />");
+        const learningSummary = project.pages.map((page, index)=>{
+            const blockCount = (page.blocks ?? []).length;
+            return `${index + 1}. ${page.title} (${blockCount} blocks)`;
+        }).join("<br />");
         const reportHtml = `<!DOCTYPE html>
       <html lang="en">
         <head>
@@ -5347,7 +5378,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         children: t("scorm.choice.title")
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 978,
+                        lineNumber: 991,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5355,7 +5386,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         children: t("scorm.choice.description")
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 981,
+                        lineNumber: 994,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5372,7 +5403,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             className: "h-6 w-6 mb-1"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 991,
+                                            lineNumber: 1004,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5380,7 +5411,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             children: t("scorm.choice.aiAssistant")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 992,
+                                            lineNumber: 1005,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5388,18 +5419,18 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             children: t("scorm.choice.aiAssistantDesc")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 995,
+                                            lineNumber: 1008,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                    lineNumber: 990,
+                                    lineNumber: 1003,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 985,
+                                lineNumber: 998,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5414,7 +5445,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             className: "h-6 w-6 mb-1"
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1007,
+                                            lineNumber: 1020,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5422,7 +5453,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             children: t("scorm.choice.blankPage")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1008,
+                                            lineNumber: 1021,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5430,35 +5461,35 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                             children: t("scorm.choice.blankPageDesc")
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1011,
+                                            lineNumber: 1024,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                    lineNumber: 1006,
+                                    lineNumber: 1019,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1000,
+                                lineNumber: 1013,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 984,
+                        lineNumber: 997,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 977,
+                lineNumber: 990,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-            lineNumber: 976,
+            lineNumber: 989,
             columnNumber: 7
         }, this);
     }
@@ -5474,7 +5505,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         children: "How can I help you today?"
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 1027,
+                        lineNumber: 1040,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5482,7 +5513,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         children: "Describe the lesson you want to build, and AI will generate it for you."
                     }, void 0, false, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 1030,
+                        lineNumber: 1043,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5500,7 +5531,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                         disabled: isGenerating
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1037,
+                                        lineNumber: 1050,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5510,13 +5541,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                         children: isGenerating ? "Generating..." : "Generate"
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1044,
+                                        lineNumber: 1057,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1036,
+                                lineNumber: 1049,
                                 columnNumber: 13
                             }, this),
                             isGenerating && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5524,24 +5555,24 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 children: "Preparing your lesson and transitioning to the editor..."
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1053,
+                                lineNumber: 1066,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 1034,
+                        lineNumber: 1047,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1026,
+                lineNumber: 1039,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-            lineNumber: 1025,
+            lineNumber: 1038,
             columnNumber: 7
         }, this);
     }
@@ -5555,7 +5586,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                 onChange: handleFileInputChange
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1066,
+                lineNumber: 1079,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5568,12 +5599,12 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                     children: "☰"
                 }, void 0, false, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 1081,
+                    lineNumber: 1094,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1075,
+                lineNumber: 1088,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5599,14 +5630,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                         className: "h-4 w-4 mr-1"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1098,
+                                                        lineNumber: 1111,
                                                         columnNumber: 19
                                                     }, this),
                                                     t("scorm.topbar.preview")
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1092,
+                                                lineNumber: 1105,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5619,20 +5650,20 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                         className: "h-4 w-4 mr-1"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1107,
+                                                        lineNumber: 1120,
                                                         columnNumber: 19
                                                     }, this),
                                                     t("scorm.topbar.export")
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1101,
+                                                lineNumber: 1114,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1091,
+                                        lineNumber: 1104,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5644,7 +5675,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                 children: status === "draft" ? t("scorm.topbar.status.draft") : t("scorm.topbar.status.published")
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1113,
+                                                lineNumber: 1126,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5654,32 +5685,32 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1122,
+                                                        lineNumber: 1135,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: t("scorm.tools.history")
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1123,
+                                                        lineNumber: 1136,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1121,
+                                                lineNumber: 1134,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1112,
+                                        lineNumber: 1125,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1090,
+                                lineNumber: 1103,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5701,12 +5732,12 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                     className: "h-5 w-5 text-sky-700"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 1136,
+                                                                    lineNumber: 1149,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1135,
+                                                                lineNumber: 1148,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -5714,13 +5745,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                 children: t("scorm.ai.title")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1138,
+                                                                lineNumber: 1151,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1134,
+                                                        lineNumber: 1147,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5736,28 +5767,28 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 children: m.agent === "mentor" ? "Mentor AI" : m.agent === "contentArchitect" ? "Content Architect" : m.agent === "assessmentDesigner" ? "Assessment Designer" : ""
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1160,
+                                                                                lineNumber: 1173,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                                 children: m.content
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1170,
+                                                                                lineNumber: 1183,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1152,
+                                                                        lineNumber: 1165,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 }, m.id, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 1144,
+                                                                    lineNumber: 1157,
                                                                     columnNumber: 25
                                                                 }, this)),
-                                                            pendingLesson && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            pendingLesson && pendingLesson.result?.project && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5765,44 +5796,51 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         children: t("scorm.ai.pendingChanges") || "Pending approval"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1176,
+                                                                        lineNumber: 1189,
                                                                         columnNumber: 27
                                                                     }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                        className: "text-xs text-emerald-900",
-                                                                        children: `"${pendingLesson.result.project.title}" has ${pendingLesson.result.project.pages.length} page(s) with ${pendingLesson.result.project.pages.reduce((total, page)=>total + (page.blocks?.length || 0), 0)} block(s). Difficulty: ${pendingLesson.result.metadata.predictedDifficulty}. Tags: ${pendingLesson.result.metadata.recommendedTags.join(", ") || "n/a"}.`
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1180,
-                                                                        columnNumber: 27
-                                                                    }, this),
+                                                                    (()=>{
+                                                                        const proj = pendingLesson.result.project ?? pendingLesson.result;
+                                                                        const pages = proj.pages ?? [];
+                                                                        const totalBlocks = pages.reduce((total, page)=>total + (page.blocks ?? []).length, 0);
+                                                                        const difficulty = pendingLesson.result.metadata?.predictedDifficulty ?? "n/a";
+                                                                        const tags = pendingLesson.result.metadata?.recommendedTags?.join(", ") || "n/a";
+                                                                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "text-xs text-emerald-900",
+                                                                            children: `"${proj.title}" has ${pages.length} page(s) with ${totalBlocks} block(s). Difficulty: ${difficulty}. Tags: ${tags}.`
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
+                                                                            lineNumber: 1206,
+                                                                            columnNumber: 31
+                                                                        }, this);
+                                                                    })(),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "flex flex-wrap gap-1",
-                                                                        children: pendingLesson.result.project.pages.slice(0, 3).map((page)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                                                        children: (pendingLesson.result.project.pages ?? []).slice(0, 3).map((page)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
                                                                                 variant: "secondary",
                                                                                 className: "bg-white text-emerald-800 border-emerald-200",
                                                                                 children: [
                                                                                     page.title,
                                                                                     ": ",
-                                                                                    page.blocks.length,
+                                                                                    (page.blocks ?? []).length,
                                                                                     " block(s)"
                                                                                 ]
                                                                             }, page.id, true, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1202,
+                                                                                lineNumber: 1216,
                                                                                 columnNumber: 33
                                                                             }, this))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1198,
+                                                                        lineNumber: 1212,
                                                                         columnNumber: 27
                                                                     }, this),
-                                                                    pendingLesson.result.warnings.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    (pendingLesson.result.warnings ?? []).length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2",
-                                                                        children: `Warnings: ${pendingLesson.result.warnings.join("; ")}`
+                                                                        children: `Warnings: ${(pendingLesson.result.warnings ?? []).join("; ")}`
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1212,
+                                                                        lineNumber: 1227,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5815,7 +5853,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 children: t("scorm.ai.acceptChanges") || "Apply changes"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1219,
+                                                                                lineNumber: 1233,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5826,25 +5864,25 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 children: t("scorm.ai.rejectChanges") || "Discard"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1227,
+                                                                                lineNumber: 1240,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1218,
+                                                                        lineNumber: 1232,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1175,
+                                                                lineNumber: 1188,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1142,
+                                                        lineNumber: 1155,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5858,7 +5896,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         children: t("scorm.ai.quickInsert") || "Quick insert"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1241,
+                                                                        lineNumber: 1254,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5872,14 +5910,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1251,
+                                                                                lineNumber: 1264,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addText") || "Text"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1244,
+                                                                        lineNumber: 1257,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5893,14 +5931,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1261,
+                                                                                lineNumber: 1274,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addImage") || "Image"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1254,
+                                                                        lineNumber: 1267,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5914,14 +5952,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1271,
+                                                                                lineNumber: 1284,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addVideo") || "Video"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1264,
+                                                                        lineNumber: 1277,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5935,14 +5973,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1281,
+                                                                                lineNumber: 1294,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addQuiz") || "Quiz"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1274,
+                                                                        lineNumber: 1287,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5956,14 +5994,14 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1291,
+                                                                                lineNumber: 1304,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addInteractive") || "Interactive"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1284,
+                                                                        lineNumber: 1297,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5977,20 +6015,20 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                                 className: "h-3.5 w-3.5 mr-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                                lineNumber: 1301,
+                                                                                lineNumber: 1314,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             t("scorm.ai.addPage") || "Page"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1294,
+                                                                        lineNumber: 1307,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1240,
+                                                                lineNumber: 1253,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -6005,7 +6043,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         disabled: isGenerating
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1309,
+                                                                        lineNumber: 1322,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -6016,35 +6054,35 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         children: t("scorm.ai.send")
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1316,
+                                                                        lineNumber: 1329,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1305,
+                                                                lineNumber: 1318,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1239,
+                                                        lineNumber: 1252,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1133,
+                                                lineNumber: 1146,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1132,
+                                            lineNumber: 1145,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1131,
+                                        lineNumber: 1144,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6071,7 +6109,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                     children: t("scorm.canvas.title")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 1351,
+                                                                    lineNumber: 1364,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6087,18 +6125,18 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                             children: page.title
                                                                         }, page.id, false, {
                                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                            lineNumber: 1356,
+                                                                            lineNumber: 1369,
                                                                             columnNumber: 27
                                                                         }, this))
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 1354,
+                                                                    lineNumber: 1367,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 1350,
+                                                            lineNumber: 1363,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -6113,25 +6151,25 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                 className: "h-4 w-4 text-slate-700"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1385,
+                                                                lineNumber: 1398,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                            lineNumber: 1376,
+                                                            lineNumber: 1389,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 1349,
+                                                    lineNumber: 1362,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "max-h-[600px] overflow-auto pr-1",
-                                                    children: activePage && activePage.blocks.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: activePage && activeBlocks.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "space-y-4",
-                                                        children: activePage.blocks.map((block)=>{
+                                                        children: activeBlocks.map((block)=>{
                                                             const isSelected = selectedBlock?.id === block.id;
                                                             const isHighlighted = highlightedBlockIds.includes(block.id);
                                                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6146,23 +6184,23 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         theme: project.theme
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1413,
+                                                                        lineNumber: 1427,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                    lineNumber: 1398,
+                                                                    lineNumber: 1412,
                                                                     columnNumber: 31
                                                                 }, this)
                                                             }, block.id, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1397,
+                                                                lineNumber: 1411,
                                                                 columnNumber: 29
                                                             }, this);
                                                         })
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1391,
+                                                        lineNumber: 1405,
                                                         columnNumber: 23
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "text-center space-y-3 py-12",
@@ -6172,7 +6210,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                 children: t("scorm.canvas.title")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1424,
+                                                                lineNumber: 1438,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -6180,7 +6218,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                 children: t("scorm.canvas.desc")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1427,
+                                                                lineNumber: 1441,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -6197,36 +6235,36 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                                         className: "mr-2 h-4 w-4"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                        lineNumber: 1440,
+                                                                        lineNumber: 1454,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     t("scorm.canvas.start")
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                                lineNumber: 1430,
+                                                                lineNumber: 1444,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                        lineNumber: 1423,
+                                                        lineNumber: 1437,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                    lineNumber: 1389,
+                                                    lineNumber: 1402,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1345,
+                                            lineNumber: 1358,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1331,
+                                        lineNumber: 1344,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6243,39 +6281,39 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                                 onExport: handleExport
                                             }, void 0, false, {
                                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                                lineNumber: 1452,
+                                                lineNumber: 1466,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                            lineNumber: 1451,
+                                            lineNumber: 1465,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                        lineNumber: 1450,
+                                        lineNumber: 1464,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1129,
+                                lineNumber: 1142,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                        lineNumber: 1088,
+                        lineNumber: 1101,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 1087,
+                    lineNumber: 1100,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1085,
+                lineNumber: 1098,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -6289,13 +6327,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1473,
+                                lineNumber: 1487,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.upload"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1471,
+                            lineNumber: 1485,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6304,13 +6342,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1478,
+                                lineNumber: 1492,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.interactive"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1476,
+                            lineNumber: 1490,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6319,13 +6357,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1483,
+                                lineNumber: 1497,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.quiz"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1481,
+                            lineNumber: 1495,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6337,13 +6375,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1491,
+                                lineNumber: 1505,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.pageEditor"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1486,
+                            lineNumber: 1500,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6352,13 +6390,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1496,
+                                lineNumber: 1510,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.media"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1494,
+                            lineNumber: 1508,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6367,13 +6405,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1501,
+                                lineNumber: 1515,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.text"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1499,
+                            lineNumber: 1513,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(IconToolButton, {
@@ -6385,24 +6423,24 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                                lineNumber: 1509,
+                                lineNumber: 1523,
                                 columnNumber: 19
                             }, void 0),
                             label: "scorm.tools.settings"
                         }, void 0, false, {
                             fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                            lineNumber: 1504,
+                            lineNumber: 1518,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                    lineNumber: 1470,
+                    lineNumber: 1484,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1469,
+                lineNumber: 1483,
                 columnNumber: 7
             }, this)
         ]
@@ -6433,13 +6471,13 @@ function IconToolButton({ icon, label, onClick, emphasis }) {
                 children: translatedLabel
             }, void 0, false, {
                 fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-                lineNumber: 1543,
+                lineNumber: 1557,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/(editor)/scorm-ai/page.tsx",
-        lineNumber: 1532,
+        lineNumber: 1546,
         columnNumber: 5
     }, this);
 }
