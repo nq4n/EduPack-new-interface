@@ -2,8 +2,6 @@
 
 import { getOpenRouterClient } from "../utils/openrouter";
 
-const client = getOpenRouterClient();
-
 /**
  * Architect Stage
  * Converts mentor outline → SCORM lesson blueprint (text only).
@@ -11,6 +9,8 @@ const client = getOpenRouterClient();
  * Output: structured NATURAL LANGUAGE (NOT JSON).
  */
 export async function architectStage(outline: string) {
+  const client = getOpenRouterClient();
+
   const systemPrompt = `
 You are a SCORM lesson architect.
 

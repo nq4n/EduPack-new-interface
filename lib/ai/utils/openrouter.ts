@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 
 function requireOpenRouterApiKey() {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
 
   if (!apiKey) {
     throw new Error(
