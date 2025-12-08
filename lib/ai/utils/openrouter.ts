@@ -1,5 +1,4 @@
 // lib/ai/utils/openrouter.ts
-
 import OpenAI from "openai";
 
 function requireOpenRouterApiKey() {

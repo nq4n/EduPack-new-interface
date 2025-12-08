@@ -1,43 +1,46 @@
 // lib/ai/agents/deepresearch.ts
 
-import OpenAI from "openai";
 import { getOpenRouterClient } from "../utils/openrouter";
+
+// Use shared OpenRouter client with required headers
+const client = getOpenRouterClient();
 
 /**
  * Deep Research Stage
- * Enriches the architect blueprint with deeper explanations,
- * examples, practice tasks, and instructional scaffolding.
+ * Enriches the architect blueprint with:
+ * - explanations
+ * - examples
+ * - guided practice
+ * - independent tasks
+ * - differentiation notes
  * 
- * Output: structured enriched text (NOT JSON).
+ * Output: enriched NATURAL LANGUAGE (NOT JSON).
  */
-
 export async function deepResearchStage(blueprint: string) {
-  const client = getOpenRouterClient();
-
   const systemPrompt = `
 You are an advanced education specialist.
 
 Your task:
-Take the architect's lesson blueprint and expand it with:
+Take the architect's lesson blueprint and enrich it with:
 
-- Clear explanations
-- Real-world examples
+- Clear, simple explanations
+- Real classroom examples
 - Guided practice steps
 - Independent practice tasks
 - Optional hints
 - Teacher notes for differentiation
-- A small assessment section for each key concept
+- Small embedded assessments
 
 Rules:
-- DO NOT output any JSON.
-- DO NOT modify the structure (pages + blocks).
-- Only enrich the content inside each block.
-- Keep everything clean, readable, and suitable for automatic conversion.
-- Avoid overlong paragraphs; use concise teaching style.
+- DO NOT output JSON.
+- DO NOT modify the page/block structure.
+- Only enrich content inside each block.
+- Keep paragraphs short and teacher-friendly.
+- The normalizer will convert this into SCORM JSON later.
 `;
 
   const response = await client.chat.completions.create({
-    model: "openai/gpt-4o-mini-tts", // Free, strong text reasoning
+    model: "Kwai-KAT-6B:free", // Free & strong at structured reasoning
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: blueprint }

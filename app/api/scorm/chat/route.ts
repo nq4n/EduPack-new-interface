@@ -1,5 +1,10 @@
 // app/api/scorm/chat/route.ts
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 export const runtime = "nodejs";
+
 import { NextRequest, NextResponse } from "next/server";
 import { runAIPipeline } from "@/lib/ai/pipeline";
 import { requireOpenRouterApiKey } from "@/lib/ai/utils/openrouter";
