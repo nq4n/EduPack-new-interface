@@ -1,7 +1,0 @@
-1:"$Sreact.fragment"
-2:I[67881,["/_next/static/chunks/1174dc0a2c3e25e0.js","/_next/static/chunks/34bda1394ab9068c.js","/_next/static/chunks/5b564594fba08a9a.js","/_next/static/chunks/437b1378397e8665.js","/_next/static/chunks/3698e85886689bc7.js"],"Button"]
-3:I[22016,["/_next/static/chunks/1174dc0a2c3e25e0.js","/_next/static/chunks/34bda1394ab9068c.js","/_next/static/chunks/5b564594fba08a9a.js","/_next/static/chunks/437b1378397e8665.js","/_next/static/chunks/3698e85886689bc7.js"],""]
-4:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
-5:"$Sreact.suspense"
-0:{"buildId":"nOaLE8XzvGExxwHCUlBB_","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"min-h-screen bg-background flex items-center justify-center py-12 px-4","children":["$","div",null,{"className":"w-full max-w-md text-center","children":[["$","h1",null,{"className":"text-3xl font-bold text-destructive mb-4","children":"Authentication Error"}],["$","p",null,{"className":"text-muted-foreground mb-6","children":"There was an error during the authentication process. This can happen if the link has expired or has already been used."}],["$","p",null,{"className":"text-muted-foreground mb-8","children":"Please try signing in again."}],["$","$L2",null,{"asChild":true,"children":["$","$L3",null,{"href":"/login","children":"Return to Login"}]}]]}]}],null,["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"loading":null,"isPartial":false}
-6:null

@@ -7,3 +7,6 @@ node_modules
 # Environment variables
 .env
 .env.local
+/.next
+.next/dev/server/chunks/\[root-of-the-server\]__154dbe7f._.js
+/.next

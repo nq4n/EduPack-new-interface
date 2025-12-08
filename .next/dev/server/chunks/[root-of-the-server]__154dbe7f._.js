@@ -55,7 +55,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$cl
 // We use OpenRouter endpoint through the OpenAI SDK
 const client = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__["default"]({
     baseURL: "https://openrouter.ai/api/v1",
-    apiKey: ("TURBOPACK compile-time value", "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")
+    apiKey: ("TURBOPACK compile-time value", "sk-proj-fkcCRyAaNso7LbtkCOeZaMWAktHHFNTrCPg3qIEJc9Mxhgjfjghjfghjghjdfg34r535325HSjHugmyeAwYfYpKyiecXoK1fwAz7ST3BlbkFJeVH-zHY-jSWXGVyQpolRLpOzhNP0PhmEg-0s_slE4e78t1k6TfpVYYq4T7wb7bzwdjAogMvZAA")
 });
 async function mentorStage(messages) {
     const systemPrompt = `
