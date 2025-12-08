@@ -1,9 +1,15 @@
 // lib/ai/agents/deepresearch.ts
 
-import { getOpenRouterClient } from "../utils/openrouter";
+import {
+  getOpenRouterClient,
+  getOpenRouterMaxTokens,
+  getOpenRouterModel,
+} from "../utils/openrouter";
 
 // Use shared OpenRouter client with required headers
 const client = getOpenRouterClient();
+const model = getOpenRouterModel();
+const maxTokens = getOpenRouterMaxTokens();
 
 /**
  * Deep Research Stage
@@ -40,12 +46,13 @@ Rules:
 `;
 
   const response = await client.chat.completions.create({
-    model: "allenai/olmo-3-32b-think:free", // Free & strong at structured reasoning
+    model,
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: blueprint }
     ],
     temperature: 0.4,
+    ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
   return response.choices[0].message.content;

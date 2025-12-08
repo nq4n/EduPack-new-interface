@@ -1,6 +1,13 @@
 // lib/ai/agents/mentor.ts
 
-import { getOpenRouterClient } from "../utils/openrouter";
+import {
+  getOpenRouterClient,
+  getOpenRouterMaxTokens,
+  getOpenRouterModel,
+} from "../utils/openrouter";
+
+const model = getOpenRouterModel();
+const maxTokens = getOpenRouterMaxTokens();
 
 /**
  * Mentor Stage
@@ -51,7 +58,7 @@ RULES:
 `;
 
   const response = await client.chat.completions.create({
-    model: "allenai/olmo-3-32b-think:free", // Free, excellent reasoning
+    model,
     messages: [
       { role: "system", content: systemPrompt },
       ...messages.map((m) => ({
@@ -60,6 +67,7 @@ RULES:
       })),
     ],
     temperature: 0.4,
+    ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
   return response.choices[0].message.content;

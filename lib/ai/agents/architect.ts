@@ -1,6 +1,13 @@
 // lib/ai/agents/architect.ts
 
-import { getOpenRouterClient } from "../utils/openrouter";
+import {
+  getOpenRouterClient,
+  getOpenRouterMaxTokens,
+  getOpenRouterModel,
+} from "../utils/openrouter";
+
+const model = getOpenRouterModel();
+const maxTokens = getOpenRouterMaxTokens();
 
 /**
  * Architect Stage
@@ -57,12 +64,13 @@ RULES:
 `;
 
   const response = await client.chat.completions.create({
-    model: "allenai/olmo-3-32b-think:free", // free, reliable structure
+    model,
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: outline }
     ],
     temperature: 0.3,
+    ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
   return response.choices[0].message.content;
