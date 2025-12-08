@@ -1,11 +1,6 @@
 // lib/ai/agents/architect.ts
 
-import OpenAI from "openai";
-
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-});
+import { getOpenRouterClient } from "../utils/openrouter";
 
 /**
  * Architect Stage
@@ -14,6 +9,8 @@ const client = new OpenAI({
  * Output: structured TEXT (not JSON!) describing pages and blocks.
  */
 export async function architectStage(outline: string) {
+  const client = getOpenRouterClient();
+
   const systemPrompt = `
 You are a SCORM lesson architect.
 

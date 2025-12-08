@@ -1,14 +1,6 @@
 // lib/ai/agents/mentor.ts
 
-import OpenAI from "openai";
-
-
-// We use OpenRouter endpoint through the OpenAI SDK
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-  
-});
+import { getOpenRouterClient } from "../utils/openrouter";
 
 /**
  * Mentor Stage
@@ -17,6 +9,8 @@ const client = new OpenAI({
  * Output: string (outline)
  */
 export async function mentorStage(messages: any[]) {
+  const client = getOpenRouterClient();
+
   const systemPrompt = `
 You are an expert instructional designer and teacher mentor.
 
