@@ -1,7 +1,9 @@
 {
+  "/(auth)/login/page": "app/(auth)/login/page.js",
   "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
+  "/(public)/features/page": "app/(public)/features/page.js",
+  "/(public)/pricing/page": "app/(public)/pricing/page.js",
   "/api/scorm/chat/route": "app/api/scorm/chat/route.js",
   "/api/scorm/package/route": "app/api/scorm/package/route.js",
-  "/page": "app/page.js",
-  "/profile/page": "app/profile/page.js"
+  "/page": "app/page.js"
 }
