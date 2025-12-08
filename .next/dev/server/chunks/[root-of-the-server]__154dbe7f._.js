@@ -55,7 +55,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$cl
 // We use OpenRouter endpoint through the OpenAI SDK
 const client = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__["default"]({
     baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY
+    apiKey: ("TURBOPACK compile-time value", "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")
 });
 async function mentorStage(messages) {
     const systemPrompt = `
@@ -118,7 +118,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$cl
 ;
 const client = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__["default"]({
     baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY
+    apiKey: ("TURBOPACK compile-time value", "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")
 });
 async function architectStage(outline) {
     const systemPrompt = `
@@ -184,7 +184,6 @@ Rules:
 "[project]/lib/ai/utils/openrouter.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-// lib/ai/utils/openrouter.ts
 __turbopack_context__.s([
     "getOpenRouterClient",
     ()=>getOpenRouterClient
@@ -195,7 +194,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$cl
 function getOpenRouterClient() {
     return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__["default"]({
         baseURL: "https://openrouter.ai/api/v1",
-        apiKey: process.env.OPENROUTER_API_KEY
+        apiKey: ("TURBOPACK compile-time value", "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"),
+        defaultHeaders: {
+            "HTTP-Referer": process.env.APP_DOMAIN || "http://localhost:3000",
+            "X-Title": "EduPack SCORM AI"
+        }
     });
 }
 }),
@@ -207,8 +210,15 @@ __turbopack_context__.s([
     "deepResearchStage",
     ()=>deepResearchStage
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/openai/index.mjs [app-route] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__ = __turbopack_context__.i("[project]/node_modules/openai/client.mjs [app-route] (ecmascript) <export OpenAI as default>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$ai$2f$utils$2f$openrouter$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/ai/utils/openrouter.ts [app-route] (ecmascript)");
 ;
+;
+const client = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$openai$2f$client$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__OpenAI__as__default$3e$__["default"]({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: ("TURBOPACK compile-time value", "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")
+});
 async function deepResearchStage(blueprint) {
     const client = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$ai$2f$utils$2f$openrouter$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getOpenRouterClient"])();
     const systemPrompt = `

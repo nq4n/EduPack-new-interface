@@ -1,61 +1,64 @@
 // lib/ai/agents/mentor.ts
 
-import OpenAI from "openai";
+import { getOpenRouterClient } from "../utils/openrouter";
 
-
-// We use OpenRouter endpoint through the OpenAI SDK
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-  
-});
+// Use the shared OpenRouter client with correct API key + headers
+const client = getOpenRouterClient();
 
 /**
  * Mentor Stage
- * Reads chat messages → Extracts educational intent → Produces a lesson outline.
- * 
- * Output: string (outline)
+ * Reads chat messages → Extracts intent → Produces a lesson outline.
+ *
+ * Output: plain text outline (NOT JSON)
  */
 export async function mentorStage(messages: any[]) {
   const systemPrompt = `
 You are an expert instructional designer and teacher mentor.
 
-Your job:
-1. Read the entire conversation history.
-2. Understand the teacher’s intent:
+Your task:
+1. Read the ENTIRE conversation history.
+2. Understand the teacher’s goal:
    - Subject
    - Grade level
-   - Learning goals
-   - Required activities
-3. Produce a very clear and clean lesson outline, with the following structure:
+   - Learning objectives
+   - Activity style
+3. Produce a clean, simple, structured lesson outline.
+
+OUTPUT FORMAT (strict):
 
 Lesson Topic: <topic>
-Grade Level: <grade or "not stated">
+
+Grade Level: <grade or "not specified">
+
 Learning Objectives:
 - Objective 1
 - Objective 2
-- ...
+- Objective 3
 
 Lesson Outline:
 1. Introduction
 2. Concept Explanation
 3. Guided Practice
 4. Independent Practice
-5. Assessment (questions or quiz)
+5. Assessment
 6. Conclusion
 
-Rules:
-- Do NOT generate any JSON.
-- Do NOT create full SCORM blocks.
-- Only produce a text outline for the architect agent to use.
-- Keep the outline simple and structured.
+RULES:
+- DO NOT output JSON.
+- DO NOT create SCORM blocks.
+- DO NOT generate IDs.
+- Keep the outline readable and teacher-friendly.
+- The architect agent will turn this into a SCORM blueprint.
 `;
 
   const response = await client.chat.completions.create({
-    model: "allenai/olmo-3-32b:think", // Free, strong reasoning
+    model: "allenai/olmo-3-32b:think", // Free, excellent reasoning
     messages: [
       { role: "system", content: systemPrompt },
-      ...messages,
+      ...messages.map((m) => ({
+        role: m.role,
+        content: m.content,
+      })),
     ],
     temperature: 0.4,
   });

@@ -1,43 +1,42 @@
 // lib/ai/agents/architect.ts
 
-import OpenAI from "openai";
+import { getOpenRouterClient } from "../utils/openrouter";
 
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY!,
-});
+// Use shared OpenRouter client
+const client = getOpenRouterClient();
 
 /**
  * Architect Stage
- * Converts the mentor outline → a structured lesson blueprint.
- * 
- * Output: structured TEXT (not JSON!) describing pages and blocks.
+ * Converts mentor outline → SCORM lesson blueprint (text only).
+ *
+ * Output: structured NATURAL LANGUAGE (NOT JSON).
  */
 export async function architectStage(outline: string) {
   const systemPrompt = `
 You are a SCORM lesson architect.
 
-Your task:
-Convert the teacher’s lesson outline into a structured SCORM lesson blueprint.
-DO NOT generate final JSON — only structured natural language that describes the project.
+Your job:
+Convert the mentor’s lesson outline into a structured SCORM lesson blueprint.
 
-The lesson blueprint must follow this structure:
+OUTPUT FORMAT (very important):
 
 Lesson Title: <title>
 
 Pages:
 - Page 1: <title>
   Blocks:
-    - Text: <introduction/overview>
+    - Text: <intro or explanation>
     - Image: <placeholder description>
+
 - Page 2: <concept section>
   Blocks:
-    - Text: <explanation>
+    - Text: <details>
     - Quiz:
         type: mcq
         question: <question>
         options: [A, B, C, D]
         answer: <letter>
+
 - Page 3: Guided Practice
   Blocks:
     - Text: <task instructions>
@@ -50,16 +49,16 @@ Pages:
   Blocks:
     - Text: <summary>
 
-Rules:
-- Keep the structure clean and organized.
-- DO NOT output JSON.
-- DO NOT add IDs. Normalizer will handle that.
-- Use placeholders like “Image: diagram of …”.
-- Use simple quiz examples.
+RULES:
+- DO NOT generate JSON.
+- DO NOT generate IDs.
+- DO NOT embed code or HTML.
+- Normalizer will convert this into structured SCORM blocks.
+- Keep blueprint clean, simple, and consistent.
 `;
 
   const response = await client.chat.completions.create({
-    model: "Kwai-KAT-6B:free", // Free + reliable at structured output
+    model: "Kwai-KAT-6B:free", // free, reliable structure
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: outline }
