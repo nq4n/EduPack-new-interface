@@ -1,19 +1,15 @@
 // app/api/scorm/chat/route.ts
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 export const fetchCache = "force-no-store";
-export const runtime = "nodejs";
+export const revalidate = 0;
+export const runtime = "nodejs"; // MUST BE NODE FOR OPENAI SDK
 
 import { NextRequest, NextResponse } from "next/server";
 import { runAIPipeline } from "@/lib/ai/pipeline";
-import { requireOpenRouterApiKey } from "@/lib/ai/utils/openrouter";
 
 export async function POST(req: NextRequest) {
   try {
-    // Fail fast with a clear message when AI credentials are missing
-    requireOpenRouterApiKey();
-
     const body = await req.json();
     const { messages } = body;
 
@@ -25,23 +21,11 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await runAIPipeline(messages);
-
-    return NextResponse.json(result, { status: 200 });
-  } catch (error: any) {
-    console.error("❌ SCORM AI Chat Error:", error);
-
-    if (error?.status === 401 || /401/.test(error?.message || "")) {
-      return NextResponse.json(
-        {
-          error:
-            "OpenRouter rejected the request. Verify OPENROUTER_API_KEY is set correctly in your .env.local and restart the dev server.",
-        },
-        { status: 401 }
-      );
-    }
-
+    return NextResponse.json(result);
+  } catch (err: any) {
+    console.error("❌ SCORM AI Chat Error:", err);
     return NextResponse.json(
-      { error: error?.message || "AI processing failed" },
+      { error: err?.message || "AI processing failed" },
       { status: 500 }
     );
   }

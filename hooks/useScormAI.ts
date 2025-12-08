@@ -37,6 +37,9 @@ export function useScormAI({
   // Public → AI allowed once only
   const [aiUsedOnce, setAiUsedOnce] = useState(false);
 
+  // NEW: UI progress step
+  const [progress, setProgress] = useState<string>("idle");
+
   // Holds the whole pipeline result
   const [pendingLesson, setPendingLesson] = useState<any | null>(null);
 
@@ -91,6 +94,7 @@ export function useScormAI({
       }
 
       setIsGenerating(true);
+      setProgress("Starting…");
 
       const userMessage: ChatMessage = {
         id: Date.now(),
@@ -102,6 +106,23 @@ export function useScormAI({
       setChatInput("");
 
       try {
+        // -------------------------
+        // UI Progress simulation
+        // -------------------------
+        setProgress("Mentor agent is analyzing your request…");
+        await new Promise((r) => setTimeout(r, 350));
+
+        setProgress("Architect agent is building lesson structure…");
+        await new Promise((r) => setTimeout(r, 350));
+
+        setProgress("Deep Research agent is expanding content…");
+        await new Promise((r) => setTimeout(r, 350));
+
+        setProgress("Finalizing SCORM-ready lesson…");
+
+        // -------------------------
+        // Real API request
+        // -------------------------
         const payloadMessages = [...messages, userMessage].map((m) => ({
           role: m.role,
           content: m.content,
@@ -120,7 +141,7 @@ export function useScormAI({
           throw new Error(json.error || "AI generation failed");
         }
 
-        console.debug("🔵 Pipeline result:", json);
+        setProgress("Almost done…");
 
         addMessage({
           id: Date.now() + 1,
@@ -133,7 +154,7 @@ export function useScormAI({
         if (project) {
           setPendingLesson(json);
 
-          // 🔥 Mark that the user used AI once
+          // Mark one-time free use consumed
           setAiUsedOnce(true);
 
           if (isInitialGeneration) {
@@ -144,6 +165,9 @@ export function useScormAI({
             }, 600);
           }
         }
+
+        setProgress("done");
+
       } catch (err: any) {
         console.error("❌ AI Error:", err);
 
@@ -152,6 +176,8 @@ export function useScormAI({
           role: "assistant",
           content: err.message || "AI failed to generate a valid response.",
         });
+
+        setProgress("error");
       } finally {
         setIsGenerating(false);
       }
@@ -164,6 +190,7 @@ export function useScormAI({
     chatInput,
     setChatInput,
     isGenerating,
+    progress,          // ← EXPOSE IT TO UI
     submitPrompt,
     pendingLesson,
     acceptPendingLesson,

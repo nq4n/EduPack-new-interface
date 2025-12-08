@@ -40,7 +40,7 @@ Rules:
 `;
 
   const response = await client.chat.completions.create({
-    model: "Kwai-KAT-6B:free", // Free & strong at structured reasoning
+    model: "allenai/olmo-3-32b-think:free", // Free & strong at structured reasoning
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: blueprint }

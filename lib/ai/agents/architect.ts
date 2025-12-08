@@ -57,7 +57,7 @@ RULES:
 `;
 
   const response = await client.chat.completions.create({
-    model: "Kwai-KAT-6B:free", // free, reliable structure
+    model: "allenai/olmo-3-32b-think:free", // free, reliable structure
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: outline }

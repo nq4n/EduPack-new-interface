@@ -51,7 +51,7 @@ RULES:
 `;
 
   const response = await client.chat.completions.create({
-    model: "allenai/olmo-3-32b:think", // Free, excellent reasoning
+    model: "allenai/olmo-3-32b-think:free", // Free, excellent reasoning
     messages: [
       { role: "system", content: systemPrompt },
       ...messages.map((m) => ({
