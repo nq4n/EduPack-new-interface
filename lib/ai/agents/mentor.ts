@@ -2,7 +2,7 @@
 
 import { getOpenRouterClient } from "../utils/openrouter";
 
-// Use the shared OpenRouter client with correct API key + headers
+// We use OpenRouter endpoint through the OpenAI SDK
 const client = getOpenRouterClient();
 
 /**

@@ -2,7 +2,6 @@
 
 import { getOpenRouterClient } from "../utils/openrouter";
 
-// Use shared OpenRouter client
 const client = getOpenRouterClient();
 
 /**

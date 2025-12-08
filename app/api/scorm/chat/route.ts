@@ -7,9 +7,13 @@ export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
 import { runAIPipeline } from "@/lib/ai/pipeline";
+import { requireOpenRouterApiKey } from "@/lib/ai/utils/openrouter";
 
 export async function POST(req: NextRequest) {
   try {
+    // Fail fast with a clear message when AI credentials are missing
+    requireOpenRouterApiKey();
+
     const body = await req.json();
     const { messages } = body;
 
