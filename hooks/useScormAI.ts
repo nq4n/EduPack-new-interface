@@ -1,5 +1,4 @@
 "use client";
-console.log("🔑 OpenRouter API Key exists:", !!process.env.OPENROUTER_API_KEY);
 import { useState, useCallback } from "react";
 import { EditorProject } from "@/lib/scorm/types";
 import {

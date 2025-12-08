@@ -1,4 +1,3 @@
 {
-  "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js",
-  "/api/scorm/chat/route": "app/api/scorm/chat/route.js"
+  "/(editor)/scorm-ai/page": "app/(editor)/scorm-ai/page.js"
 }
