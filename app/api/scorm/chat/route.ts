@@ -8,8 +8,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { messages, project } = body;
 
-    const outline = await buildLessonOutline(last.content);
-    const project = buildSCORMProject(outline);
+    if (messages.length > 1 && !project) {
+      return NextResponse.json(
+        { error: "Existing project is required when modifying a lesson." },
+        { status: 400 }
+      );
+    }
 
     if (messages.length > 1 && !project) {
       return NextResponse.json(

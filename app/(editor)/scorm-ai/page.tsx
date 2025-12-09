@@ -128,6 +128,7 @@ export default function ScormAIPage() {
   const [shareUrl, setShareUrl] = useState<string | null>(null)
   const [highlightedBlockIds, setHighlightedBlockIds] = useState<string[]>([])
   const highlightTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const chatScrollRef = useRef<HTMLDivElement | null>(null)
 
   // navbar toggle
   const [navVisible, setNavVisible] = useState(false)
@@ -167,6 +168,15 @@ export default function ScormAIPage() {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTo({
+        top: chatScrollRef.current.scrollHeight,
+        behavior: "smooth",
+      })
+    }
+  }, [messages.length])
 
   const fallbackPage: EditorPage = {
     id: "page-fallback",
@@ -1183,7 +1193,10 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         {t("scorm.ai.title")}
                       </h3>
                     </div>
-                    <div className="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                    <div
+                      ref={chatScrollRef}
+                      className="flex-1 p-4 overflow-y-auto text-sm space-y-3"
+                    >
                       {renderProgressTracker("panel")}
                       {messages.map((m) => (
                         <div
@@ -1214,7 +1227,9 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                   : ""}
                               </div>
                             )}
-                            <div>{m.content}</div>
+                            <div className="max-w-[85%] whitespace-pre-wrap break-words leading-relaxed">
+                              {m.content}
+                            </div>
                           </div>
                         </div>
                       ))}

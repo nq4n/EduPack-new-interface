@@ -109,6 +109,37 @@ function parseBlock(parts: string[]): EditorBlock | null {
     };
   }
 
+  if (type === "interactive") {
+    const variantRaw = (payload[0] || "button").toLowerCase();
+    const label = payload[1] || "Interactive element";
+    const body = payload[2] || "";
+    const url = payload[3] || "";
+    const toneRaw = (payload[4] || "").toLowerCase();
+    const openRaw = (payload[5] || "").toLowerCase();
+
+    const variantOptions = ["button", "callout", "reveal", "custom"] as const;
+    const toneOptions = ["info", "success", "warning", "danger"] as const;
+
+    const variant =
+      variantOptions.find((v) => v === variantRaw) ?? ("button" as (typeof variantOptions)[number]);
+
+    const tone = toneOptions.find((t) => t === toneRaw);
+    const initiallyOpen = openRaw
+      ? ["true", "yes", "open", "1", "on"].includes(openRaw)
+      : undefined;
+
+    return {
+      id: providedId || `block-${nanoid()}`,
+      type: "interactive",
+      variant,
+      label,
+      bodyHtml: wrapText(body),
+      url,
+      ...(tone ? { tone } : {}),
+      ...(typeof initiallyOpen === "boolean" ? { initiallyOpen } : {}),
+    };
+  }
+
   return null;
 }
 

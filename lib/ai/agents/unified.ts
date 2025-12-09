@@ -43,7 +43,9 @@ TITLE: <Lesson Title>
 PAGE: <Page Title>
 BLOCK: text | <content text>
 BLOCK: image | <description or URL>
+BLOCK: video | <url>
 BLOCK: quiz | <question> | <option1> | <option2> | <option3> | <option4> | <answer>
+BLOCK: interactive | <variant: button/callout/reveal/custom> | <label> | <body> | <url> | <tone: info/success/warning/danger> | <open:true/false>
 
 Rules:
 - Provide 3-6 pages of content.
@@ -61,6 +63,16 @@ Do NOT remove existing blocks.
 ONLY update or append blocks the user mentioned.
 Use the BLOCK: format only.
 Return only the changed pages/blocks.
+To update an existing block, include its current block ID as the first value after the block type.
+
+Supported formats:
+
+PAGE: <Page Title>
+BLOCK: text | [block-id] | <content text>
+BLOCK: image | [block-id] | <description or URL>
+BLOCK: video | [block-id] | <url>
+BLOCK: quiz | [block-id] | <question> | <option1> | <option2> | <option3> | <option4> | <answer>
+BLOCK: interactive | [block-id] | <variant: button/callout/reveal/custom> | <label> | <body> | <url> | <tone: info/success/warning/danger> | <open:true/false>
 
 Current lesson JSON:
 ${projectJson}`;
