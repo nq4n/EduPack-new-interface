@@ -1,4 +1,4 @@
-import { safeParseProject } from "./ai-schema";
+import { safeParseProject } from "./ai-scheme";
 import { nanoid } from "./utils/nanoid";
 import {
   type EditorBlock,
