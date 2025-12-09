@@ -13,6 +13,13 @@ export default function TextPanel({ block, onChange }: Props) {
   const style = block.style || {}
   const { t } = useLocale()
 
+  const alignLabels: Record<string, string> = {
+    left: t("scorm.panels.common.align.left") || "Left",
+    center: t("scorm.panels.common.align.center") || "Center",
+    right: t("scorm.panels.common.align.right") || "Right",
+    justify: t("scorm.panels.common.align.justify") || "Justify",
+  }
+
   const updateStyle = (key: string, value: any) => {
     onChange({
       ...block,
@@ -117,7 +124,7 @@ export default function TextPanel({ block, onChange }: Props) {
               }
               onClick={() => updateStyle("align", a)}
             >
-              {a}
+              {alignLabels[a] ?? a}
             </button>
           ))}
         </div>
@@ -137,7 +144,7 @@ export default function TextPanel({ block, onChange }: Props) {
             }
             onClick={() => updateStyle("direction", "ltr")}
           >
-            LTR
+            {t("scorm.panels.common.direction.ltr") || "LTR"}
           </button>
 
           <button
@@ -148,7 +155,7 @@ export default function TextPanel({ block, onChange }: Props) {
             }
             onClick={() => updateStyle("direction", "rtl")}
           >
-            RTL
+            {t("scorm.panels.common.direction.rtl") || "RTL"}
           </button>
         </div>
       </div>

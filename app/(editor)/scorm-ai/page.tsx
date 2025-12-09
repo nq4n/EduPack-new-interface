@@ -66,7 +66,7 @@ import { buildScormZip } from "@/lib/scorm/exporter"
 type Status = "draft" | "published"
 
 export default function ScormAIPage() {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const { supabase } = useSupabase()
 
   const initialProject: EditorProject = {
@@ -256,7 +256,7 @@ export default function ScormAIPage() {
         }
       >
         <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-slate-600">
-          <span>Build with AI</span>
+          <span>{t("scorm.ai.progress.title")}</span>
           {isGenerating && (
             <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
           )}
@@ -333,7 +333,7 @@ export default function ScormAIPage() {
       }
 
       if (!session?.access_token) {
-        throw new Error("User not logged in (no token from Supabase).")
+        throw new Error(t("scorm.ai.save.notLoggedIn"))
       }
 
       const response = await fetch("/api/scorm/save", {
@@ -347,7 +347,7 @@ export default function ScormAIPage() {
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => ({}))
-        const message = errorBody.error ?? "Failed to save package"
+        const message = errorBody.error ?? t("scorm.ai.save.failed")
         throw new Error(message)
       }
 
@@ -357,9 +357,9 @@ export default function ScormAIPage() {
     })()
 
     toast.promise(promise, {
-      loading: "Saving package...",
-      success: () => `Package saved successfully!`,
-      error: (error) => error.message || "Error saving package",
+      loading: t("scorm.ai.save.loading"),
+      success: () => t("scorm.ai.save.success"),
+      error: (error) => error.message || t("scorm.ai.save.error"),
     })
   }
 
@@ -411,12 +411,14 @@ export default function ScormAIPage() {
       case "interactive": {
         const interactive = block as InteractiveBlock
         if (interactive.variant === "button") {
-          return `<button>${interactive.label || "Interactive"}</button>`
+          return `<button>${
+            interactive.label || t("scorm.ai.interactive.defaultLabel")
+          }</button>`
         }
 
         if (interactive.variant === "callout") {
           return `<div><p><strong>${
-            interactive.label || "Callout"
+            interactive.label || t("scorm.ai.interactive.calloutLabel")
           }</strong></p><div>${interactive.bodyHtml || ""}</div></div>`
         }
 
@@ -424,11 +426,15 @@ export default function ScormAIPage() {
           return `<details ${
             interactive.initiallyOpen ? "open" : ""
           }><summary>${
-            interactive.label || "Show"
+            interactive.label || t("scorm.ai.interactive.revealLabel")
           }</summary><div>${interactive.bodyHtml || ""}</div></details>`
         }
 
-        return `<div>${interactive.customHtml || interactive.bodyHtml || ""}</div>`
+        return `<div>${
+          interactive.customHtml ||
+          interactive.bodyHtml ||
+          t("scorm.ai.interactive.buttonFallback")
+        }</div>`
       }
       default:
         return ""
@@ -448,7 +454,7 @@ export default function ScormAIPage() {
       .join("\n")
 
     return `<!DOCTYPE html>
-    <html lang="en" dir="${project.theme.direction}">
+    <html lang="${locale}" dir="${project.theme.direction}">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -497,24 +503,35 @@ export default function ScormAIPage() {
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-items>
-${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes available" />'}
+${
+  quizzes ||
+  `<assessmentItem identifier="placeholder" title="${t("scorm.ai.qti.noQuizzes")}" />`
+}
 </qti-assessment-items>`
   }
 
   const openPrintableReport = (role: "teacher" | "student") => {
-      const learningSummary = project.pages
-        .map((page, index) => {
-          const blockCount = (page.blocks ?? []).length
-          return `${index + 1}. ${page.title} (${blockCount} blocks)`
+    const learningSummary = project.pages
+      .map((page, index) => {
+        const blockCount = (page.blocks ?? []).length
+        return t("scorm.ai.print.pageLine", {
+          index: index + 1,
+          title: page.title,
+          blocks: blockCount,
         })
+      })
       .join("<br />")
 
+    const roleLabel =
+      role === "teacher"
+        ? t("scorm.ai.print.role.teacher")
+        : t("scorm.ai.print.role.student")
 
     const reportHtml = `<!DOCTYPE html>
-      <html lang="en">
+      <html lang="${locale}">
         <head>
           <meta charset="UTF-8" />
-          <title>${project.title} - ${role} report</title>
+          <title>${t("scorm.ai.print.title", { title: project.title, role: roleLabel })}</title>
           <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; padding: 24px; color: #111827; }
             h1 { margin-bottom: 4px; }
@@ -525,16 +542,17 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
         </head>
         <body>
           <h1>${project.title}</h1>
-          <div class="meta">Role: ${
-            role === "teacher" ? "Instructor" : "Learner"
-          } • Pages: ${project.pages.length}</div>
+          <div class="meta">${t("scorm.ai.print.meta", {
+            role: roleLabel,
+            pages: project.pages.length,
+          })}</div>
           <div class="panel">
-            <h2>Lesson outline</h2>
-            <div>${learningSummary || "No pages prepared."}</div>
+            <h2>${t("scorm.ai.print.lessonOutline")}</h2>
+            <div>${learningSummary || t("scorm.ai.print.noPages")}</div>
           </div>
           <div class="panel">
-            <h2>Notes</h2>
-            <p>This printable view can be saved as PDF from your browser's print dialog.</p>
+            <h2>${t("scorm.ai.print.notes")}</h2>
+            <p>${t("scorm.ai.print.notesHint")}</p>
           </div>
         </body>
       </html>`
@@ -582,7 +600,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
           )
           downloadBlob(blob, `${slug || "scorm-package"}.zip`)
           setStatus("published")
-          toast.success(t("scorm.ai.exportSuccess") || "Export completed")
+          toast.success(t("scorm.ai.exportSuccess"))
           break
         }
         case "xapi": {
@@ -598,7 +616,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
             }),
             `${slug || "lesson"}-xapi.json`,
           )
-          toast.success("xAPI package ready as JSON")
+          toast.success(t("scorm.ai.toast.xapiReady"))
           break
         }
         case "html5": {
@@ -607,30 +625,30 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
             new Blob([html], { type: "text/html" }),
             `${slug || "lesson"}-offline.html`,
           )
-          toast.success("HTML5 offline page downloaded")
+          toast.success(t("scorm.ai.toast.htmlReady"))
           break
         }
         case "publicLink": {
           const url = ensureShareUrl()
           window.open(url, "_blank")
-          toast.success("Opened a shareable preview link")
+          toast.success(t("scorm.ai.toast.publicLink"))
           break
         }
         case "embedCode": {
           const url = ensureShareUrl()
           const iframe = `<iframe src="${url}" width="100%" height="640" title="${project.title}"></iframe>`
           navigator.clipboard?.writeText(iframe).catch(() => null)
-          toast.success("Embed code copied to clipboard")
+          toast.success(t("scorm.ai.toast.embedCode"))
           break
         }
         case "teacherPdf": {
           openPrintableReport("teacher")
-          toast.success("Opened teacher printable view")
+          toast.success(t("scorm.ai.toast.teacherPdf"))
           break
         }
         case "studentPdf": {
           openPrintableReport("student")
-          toast.success("Opened student printable view")
+          toast.success(t("scorm.ai.toast.studentPdf"))
           break
         }
         case "json": {
@@ -640,7 +658,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
             }),
             `${slug || "lesson"}.json`,
           )
-          toast.success("Project JSON downloaded")
+          toast.success(t("scorm.ai.toast.jsonReady"))
           break
         }
         case "qti": {
@@ -649,7 +667,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
             new Blob([xml], { type: "application/xml" }),
             `${slug || "lesson"}-qti.xml`,
           )
-          toast.success("QTI export ready")
+          toast.success(t("scorm.ai.toast.qtiReady"))
           break
         }
       }
@@ -709,7 +727,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
           const label =
             raw && raw !== "scorm.ai.interactive.defaultLabel"
               ? raw
-              : "Interactive element"
+              : t("scorm.ai.interactive.buttonFallback")
 
           newBlock = {
             ...baseBlock,
@@ -751,7 +769,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
   const handlePreview = () => {
     const htmlContent = `
       <!DOCTYPE html>
-      <html dir="${project.theme.direction}">
+      <html lang="${locale}" dir="${project.theme.direction}">
       <head>
         <meta charset="UTF-8">
         <title>${t("scorm.ai.previewTitle", { title: project.title })}</title>
@@ -868,7 +886,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
 
                     if (ib.variant === "button") {
                       return `<button style="${styleString}">${
-                        ib.label || "Interactive element"
+                        ib.label || t("scorm.ai.interactive.buttonFallback")
                       }</button>`
                     }
 
@@ -881,7 +899,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         }
                         ${
                           ib.bodyHtml ||
-                          "<p style='font-size:11px;color:#6b7280;'>Add callout content from the editor.</p>"
+                          `<p style='font-size:11px;color:#6b7280;'>${t("scorm.ai.interactive.calloutPlaceholder")}</p>`
                         }
                       </div>`
                     }
@@ -891,10 +909,12 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                         <details ${
                           ib.initiallyOpen ? "open" : ""
                         } style="${styleString}">
-                          <summary>${ib.label || "Details"}</summary>
+                          <summary>${
+                            ib.label || t("scorm.ai.interactive.revealLabel")
+                          }</summary>
                           ${
                             ib.bodyHtml ||
-                            "<p style='font-size:11px;color:#6b7280;'>Add reveal content from the editor.</p>"
+                            `<p style='font-size:11px;color:#6b7280;'>${t("scorm.ai.interactive.revealPlaceholder")}</p>`
                           }
                         </details>
                       `
@@ -1212,7 +1232,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
       trimmed.startsWith("[") ||
       trimmed.includes('"project"')
     ) {
-      return "The lesson has been updated successfully."
+      return t("scorm.ai.lessonUpdated")
     }
   } catch {}
 
@@ -1322,13 +1342,13 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                             {m.agent && m.role !== "user" && (
                               <div className="text-[10px] uppercase tracking-wide text-slate-400 mb-0.5">
                                 {m.agent === "unified"
-                                  ? "AI Builder"
+                                  ? t("scorm.ai.agent.unified")
                                   : m.agent === "mentor"
-                                  ? "Mentor AI"
+                                  ? t("scorm.ai.agent.mentor")
                                   : m.agent === "contentArchitect"
-                                  ? "Content Architect"
+                                  ? t("scorm.ai.agent.contentArchitect")
                                   : m.agent === "assessmentDesigner"
-                                  ? "Assessment Designer"
+                                  ? t("scorm.ai.agent.assessmentDesigner")
                                   : ""}
                               </div>
                             )}
@@ -1342,7 +1362,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                     <div className="p-4 border-t bg-slate-50 space-y-3">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-                          {t("scorm.ai.quickInsert") || "Quick insert"}
+                          {t("scorm.ai.quickInsert")}
                         </span>
                         <Button
                           type="button"
@@ -1352,7 +1372,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={() => addBlock("text")}
                         >
                           <Type className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addText") || "Text"}
+                          {t("scorm.ai.addText")}
                         </Button>
                         <Button
                           type="button"
@@ -1362,7 +1382,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={() => addBlock("image")}
                         >
                           <Paperclip className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addImage") || "Image"}
+                          {t("scorm.ai.addImage")}
                         </Button>
                         <Button
                           type="button"
@@ -1372,7 +1392,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={() => addBlock("video")}
                         >
                           <Eye className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addVideo") || "Video"}
+                          {t("scorm.ai.addVideo")}
                         </Button>
                         <Button
                           type="button"
@@ -1382,7 +1402,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={() => addBlock("quiz")}
                         >
                           <FileQuestion className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addQuiz") || "Quiz"}
+                          {t("scorm.ai.addQuiz")}
                         </Button>
                         <Button
                           type="button"
@@ -1392,7 +1412,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={() => addBlock("interactive")}
                         >
                           <MousePointerClick className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addInteractive") || "Interactive"}
+                          {t("scorm.ai.addInteractive")}
                         </Button>
                         <Button
                           type="button"
@@ -1402,7 +1422,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           onClick={handleAddPage}
                         >
                           <LayoutDashboard className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addPage") || "Page"}
+                          {t("scorm.ai.addPage")}
                         </Button>
                       </div>
                       <form
@@ -1670,25 +1690,25 @@ function ContextMenu({ contextMenu, onAction }: any) {
         className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
         onClick={() => onAction("copy")}
       >
-        Copy
+        {useLocale().t("scorm.ai.context.copy")}
       </button>
       <button
         className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
         onClick={() => onAction("paste")}
       >
-        Paste
+        {useLocale().t("scorm.ai.context.paste")}
       </button>
       <button
         className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
         onClick={() => onAction("duplicate")}
       >
-        Duplicate
+        {useLocale().t("scorm.ai.context.duplicate")}
       </button>
       <button
         className="block px-4 py-2 hover:bg-red-100 text-red-600 w-full text-left"
         onClick={() => onAction("delete")}
       >
-        Delete
+        {useLocale().t("scorm.ai.context.delete")}
       </button>
     </div>
   )

@@ -15,6 +15,12 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
   const optionStyle = block.optionStyle || {}
   const { t } = useLocale()
 
+  const alignLabels: Record<string, string> = {
+    left: t("scorm.panels.common.align.left") || "Left",
+    center: t("scorm.panels.common.align.center") || "Center",
+    right: t("scorm.panels.common.align.right") || "Right",
+  }
+
   const updateStyle = (key: string, value: any) => {
     onChange({
       ...block,
@@ -65,9 +71,14 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
   }
 
   const addOption = () => {
+    const nextIndex = (block.options?.length || 0) + 1
+    const defaultLabel =
+      t("scorm.panels.quiz.optionLabel", { index: nextIndex }) ||
+      `Option ${nextIndex}`
+
     const newOption = {
       id: `opt-${Date.now()}`,
-      label: `Option ${(block.options?.length || 0) + 1}`,
+      label: defaultLabel,
       correct: false,
     }
     onChange({ ...block, options: [...(block.options || []), newOption] })
@@ -266,7 +277,7 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
                 }
                 onClick={() => updateOptionStyle("align", a)}
               >
-                {a}
+                {alignLabels[a] ?? a}
               </button>
             ))}
           </div>

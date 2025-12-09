@@ -13,6 +13,12 @@ export default function MediaPanel({ block, onChange }: Props) {
   const style = block.style || {}
   const { t } = useLocale()
 
+  const alignLabels: Record<string, string> = {
+    left: t("scorm.panels.common.align.left") || "Left",
+    center: t("scorm.panels.common.align.center") || "Center",
+    right: t("scorm.panels.common.align.right") || "Right",
+  }
+
   const updateStyle = (key: string, value: any) => {
     onChange({
       ...block,
@@ -101,7 +107,7 @@ export default function MediaPanel({ block, onChange }: Props) {
               }
               onClick={() => updateStyle("align", a)}
             >
-              {a}
+              {alignLabels[a] ?? a}
             </button>
           ))}
         </div>
@@ -151,7 +157,9 @@ export default function MediaPanel({ block, onChange }: Props) {
           checked={style.shadow === true}
           onChange={(e) => updateStyle("shadow", e.target.checked)}
         />
-        <label className="text-xs">Shadow</label>
+        <label className="text-xs">
+          {t("scorm.panels.media.shadow") || "Shadow"}
+        </label>
       </div>
     </div>
   )
