@@ -206,7 +206,13 @@ export default function ScormAIPage() {
 
   const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
 
-  const sensors = useSensors(useSensor(PointerSensor))
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  )
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event
@@ -1522,6 +1528,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                                   >
                                     {/* Delete button */}
                                     <button
+                                      onPointerDown={(e) => e.stopPropagation()}
                                       onClick={(e) => {
                                         e.stopPropagation()
                                         handleDeleteBlock(block.id)
