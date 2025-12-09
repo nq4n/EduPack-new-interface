@@ -244,7 +244,7 @@ export default function ScormAIPage() {
   }
 
   const {
-    messages,
+    messages: chatMessages,
     chatInput,
     setChatInput,
     isGenerating,
@@ -268,7 +268,7 @@ export default function ScormAIPage() {
         behavior: "smooth",
       })
     }
-  }, [messages.length])
+  }, [chatMessages.length])
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
@@ -1207,7 +1207,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                       className="flex-1 p-4 overflow-y-auto text-sm space-y-3"
                     >
                       {renderProgressTracker("panel")}
-                      {messages.map((m) => (
+                      {chatMessages.map((m) => (
                         <div
                           key={m.id}
                           className={`flex ${
