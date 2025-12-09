@@ -8,7 +8,7 @@ import {
 } from "@/lib/scorm/ai-types";
 
 type ProgressStatus = "idle" | "active" | "done" | "error";
-type ProgressKey = "mentor" | "architect" | "research" | "finalize";
+type ProgressKey = "builder" | "finalize";
 
 export type ProgressStep = {
   key: ProgressKey;
@@ -19,21 +19,9 @@ export type ProgressStep = {
 
 const BASE_PROGRESS_STEPS: ProgressStep[] = [
   {
-    key: "mentor",
-    label: "Mentor analysis",
-    description: "Understanding your request",
-    status: "idle",
-  },
-  {
-    key: "architect",
-    label: "Lesson blueprint",
-    description: "Structuring pages and blocks",
-    status: "idle",
-  },
-  {
-    key: "research",
-    label: "Content enrichment",
-    description: "Adding explanations, examples, and tasks",
+    key: "builder",
+    label: "AI lesson builder",
+    description: "Analyzing your request and drafting the course",
     status: "idle",
   },
   {
@@ -43,8 +31,6 @@ const BASE_PROGRESS_STEPS: ProgressStep[] = [
     status: "idle",
   },
 ];
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // -------------------------------------------
 // Extractor for NEW PIPELINE response format
@@ -141,42 +127,10 @@ export function useScormAI({
       setChatInput("");
 
       try {
-        setProgressMessage("Mentor agent is analyzing your request…");
+        setProgressMessage("AI builder is creating your lesson…");
         setProgressSteps((prev) =>
           prev.map((step) =>
-            step.key === "mentor" ? { ...step, status: "active" } : step,
-          ),
-        );
-        await sleep(350);
-
-        setProgressMessage("Architect agent is building lesson structure…");
-        setProgressSteps((prev) =>
-          prev.map((step) => {
-            if (step.key === "mentor") return { ...step, status: "done" };
-            if (step.key === "architect") return { ...step, status: "active" };
-            return step;
-          }),
-        );
-        await sleep(350);
-
-        setProgressMessage("Deep Research agent is expanding content…");
-        setProgressSteps((prev) =>
-          prev.map((step) => {
-            if (step.key === "architect") return { ...step, status: "done" };
-            if (step.key === "research") return { ...step, status: "active" };
-            return step;
-          }),
-        );
-        await sleep(350);
-
-        setProgressMessage("Finalizing SCORM-ready lesson…");
-        setProgressSteps((prev) =>
-          prev.map((step) =>
-            step.key === "research"
-              ? { ...step, status: "done" }
-              : step.key === "finalize"
-              ? { ...step, status: "active" }
-              : step,
+            step.key === "builder" ? { ...step, status: "active" } : step,
           ),
         );
 
@@ -201,12 +155,22 @@ export function useScormAI({
           throw new Error(json.error || "AI generation failed");
         }
 
-        setProgressMessage("Almost done…");
+        setProgressMessage("Finalizing SCORM-ready lesson…");
+        setProgressSteps((prev) =>
+          prev.map((step) =>
+            step.key === "builder"
+              ? { ...step, status: "done" }
+              : step.key === "finalize"
+              ? { ...step, status: "active" }
+              : step,
+          ),
+        );
 
         addMessage({
           id: Date.now() + 1,
           role: "assistant",
           content: json.content ?? "Lesson generated.",
+          agent: json.agent || "unified",
         });
 
         const project = extractProject(json);
@@ -224,11 +188,7 @@ export function useScormAI({
         }
 
         setProgressSteps((prev) =>
-          prev.map((step) =>
-            step.key === "finalize"
-              ? { ...step, status: "done" }
-              : step,
-          ),
+          prev.map((step) => ({ ...step, status: "done" })),
         );
         setProgressMessage("Lesson ready. Review and apply the changes.");
 

@@ -1,8 +1,6 @@
 // lib/ai/pipeline.ts
 
-import { mentorStage } from "./agents/mentor";
-import { architectStage } from "./agents/architect";
-import { deepResearchStage } from "./agents/deepresearch";
+import { unifiedLessonAgent } from "./agents/unified";
 import { normalizeLesson } from "./utils/normalize";
 import { sanitizeText } from "./utils/sanitize";
 import { safeParseProject } from "./ai-schema";
@@ -12,7 +10,7 @@ const uuid = () => crypto.randomUUID();
 
 /**
  * Full SCORM AI Pipeline:
- * Mentor → Architect → Deep Research → Normalize → SCORM JSON
+ * Single unified agent → Normalize → SCORM JSON
  */
 
 export async function runAIPipeline(messages: any[]) {
@@ -21,11 +19,9 @@ export async function runAIPipeline(messages: any[]) {
     content: sanitizeText(m.content),
   }));
 
-  const mentorOut = await mentorStage(cleanedMessages);
-  const architectOut = await architectStage(mentorOut);
-  const enrichedOut = await deepResearchStage(architectOut);
+  const unifiedOutput = await unifiedLessonAgent(cleanedMessages);
 
-  const normalized = normalizeLesson(enrichedOut);
+  const normalized = normalizeLesson(unifiedOutput);
 
   const projectJson = {
     id: `proj-${uuid()}`,
@@ -59,7 +55,7 @@ export async function runAIPipeline(messages: any[]) {
         type: b.type,
         html: b.type === "text" ? sanitizeText(b.content || "") : undefined,
         src: b.type === "image" ? "" : undefined,
-        question: b.type === "quiz" ? (b.content || "") : undefined,
+        question: b.type === "quiz" ? b.content || "" : undefined,
         options: b.type === "quiz" ? [] : undefined,
       })),
     })),
@@ -68,7 +64,7 @@ export async function runAIPipeline(messages: any[]) {
   const finalProject = safeParseProject(projectJson);
 
   return {
-    agent: "pipeline",
+    agent: "unified",
     content: "Lesson generated successfully.",
     project: finalProject,
     warnings: [],
