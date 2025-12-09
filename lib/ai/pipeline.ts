@@ -38,3 +38,5 @@ export async function runAIPipeline(
     mode: "modify" as const,
   };
 }
+
+export default runAIPipeline;

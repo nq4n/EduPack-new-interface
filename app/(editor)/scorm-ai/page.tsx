@@ -104,7 +104,7 @@ export default function ScormAIPage() {
   const [aiChatMode, setAiChatMode] =
     useState<"hidden" | "visible" | "animating">("hidden")
 
-  const welcomeMessages = useMemo<ChatMessage[]>(
+  const initialMessages = useMemo<ChatMessage[]>(
     () => [
       {
         id: 1,
@@ -114,14 +114,6 @@ export default function ScormAIPage() {
     ],
     [t],
   )
-
-  const [initialMessages, setInitialMessages] = useState<ChatMessage[]>(
-    welcomeMessages,
-  )
-
-  useEffect(() => {
-    setInitialMessages(welcomeMessages)
-  }, [welcomeMessages])
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
