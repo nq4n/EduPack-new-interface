@@ -11,7 +11,7 @@ import { runAIPipeline } from "@/lib/ai/pipeline";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { messages } = body;
+    const { messages, project } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -20,7 +20,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await runAIPipeline(messages);
+    if (messages.length > 1 && !project) {
+      return NextResponse.json(
+        { error: "Existing project is required when modifying a lesson." },
+        { status: 400 }
+      );
+    }
+
+    const isInitial = messages.length === 1;
+    const result = await runAIPipeline(messages, isInitial ? undefined : project);
     return NextResponse.json(result);
   } catch (err: any) {
     console.error("❌ SCORM AI Chat Error:", err);
