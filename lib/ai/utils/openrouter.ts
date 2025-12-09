@@ -1,7 +1,7 @@
 // lib/ai/utils/openrouter.ts
 import OpenAI from "openai";
 
-const DEFAULT_MODEL = "allenai/olmo-3-32b-think:free";
+const DEFAULT_MODEL = "amazon/nova-2-lite-v1:free";
 const DEFAULT_MAX_TOKENS: number | undefined = undefined;
 
 function parseTimeoutMs() {

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { EditorProject } from "@/lib/scorm/types";
 import {
   ChatMessage,
   ScormAIHookProps,
 } from "@/lib/scorm/ai-types";
+import { mergeProject } from "@/lib/ai/merge";
 
 function extractProject(result: any): EditorProject | null {
   if (!result) return null;
@@ -19,6 +20,7 @@ function extractProject(result: any): EditorProject | null {
 }
 
 export function useScormAI({
+  project,
   setProject,
   setActivePageId,
   setSelectedBlockId,
@@ -32,41 +34,18 @@ export function useScormAI({
   const [isGenerating, setIsGenerating] = useState(false);
   const [progressMessage, setProgressMessage] = useState<string>("");
 
-  const [pendingLesson, setPendingLesson] = useState<any | null>(null);
+  useEffect(() => {
+    if (initialMessages.length > 0 && messages.length === 0) {
+      setMessages(initialMessages);
+    }
+  }, [initialMessages, messages.length]);
 
   const addMessage = (msg: ChatMessage) => {
     setMessages((prev) => [...prev, msg]);
   };
 
-  const acceptPendingLesson = () => {
-    if (!pendingLesson) return;
-
-    const newProject = extractProject(pendingLesson);
-    if (!newProject) {
-      console.error("❌ No valid project in pendingLesson:", pendingLesson);
-      return;
-    }
-
-    setProject(newProject);
-
-    if (newProject.pages.length > 0) {
-      setActivePageId(newProject.pages[0].id);
-      setSelectedBlockId(null);
-
-      const ids = newProject.pages.flatMap((p) => (p.blocks ?? []).map((b) => b.id));
-
-      onLessonApplied(ids);
-    }
-
-    setPendingLesson(null);
-    setEditorMode("ai");
-    setAiChatMode("hidden");
-  };
-
-  const rejectPendingLesson = () => setPendingLesson(null);
-
   const submitPrompt = useCallback(
-    async (prompt: string, isInitialGeneration: boolean) => {
+    async (prompt: string, _isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
       setIsGenerating(true);
       setProgressMessage("Generating lesson…");
@@ -90,7 +69,7 @@ export function useScormAI({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ messages: payloadMessages }),
+          body: JSON.stringify({ messages: payloadMessages, project }),
         });
 
         const json = await response.json();
@@ -106,18 +85,31 @@ export function useScormAI({
           agent: json.agent || "unified",
         });
 
-        const project = extractProject(json);
+        const isModifyMode = json.mode === "modify";
+        const deltaProject = extractProject({ project: json.delta });
+        const aiProject = extractProject(json);
 
-        if (project) {
-          setPendingLesson(json);
+        if (aiProject) {
+          const updatedProject = isModifyMode && deltaProject
+            ? mergeProject(project, deltaProject)
+            : aiProject;
 
-          if (isInitialGeneration) {
-            setAiChatMode("animating");
-            setTimeout(() => {
-              setAiChatMode("hidden");
-              setEditorMode("ai");
-            }, 600);
-          }
+          setProject(updatedProject);
+
+          const updatedPages = updatedProject.pages ?? [];
+          const fallbackPageId = updatedPages[0]?.id ?? null;
+
+          setActivePageId((prev) => prev && updatedPages.some((p) => p.id === prev) ? prev : fallbackPageId);
+          setSelectedBlockId(null);
+
+          const changedBlockIds = (deltaProject?.pages ?? updatedPages).flatMap((p) =>
+            (p.blocks ?? []).map((b) => b.id),
+          );
+
+          onLessonApplied(changedBlockIds);
+
+          setEditorMode("ai");
+          setAiChatMode("hidden");
         }
 
         setProgressMessage("Lesson ready. Review and apply the changes.");
@@ -135,7 +127,7 @@ export function useScormAI({
         setIsGenerating(false);
       }
     },
-    [messages, setAiChatMode, setEditorMode],
+    [messages, project, setAiChatMode, setEditorMode, setProject],
   );
 
   return {
@@ -145,8 +137,5 @@ export function useScormAI({
     isGenerating,
     progressMessage,
     submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
   };
 }
