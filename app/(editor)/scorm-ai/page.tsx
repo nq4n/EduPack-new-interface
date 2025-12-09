@@ -1284,8 +1284,6 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
               </div>
             </div>
 
-            {renderProgressTracker("inline")}
-
             {/* canvas + properties side-by-side */}
             <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
               {/* Chat panel (left) */}
