@@ -1214,23 +1214,23 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           </div>
                         </div>
                       ))}
-                      {pendingLesson && pendingLesson.result?.project && (
+                      {pendingLesson && pendingLesson.project && (
                         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm">
                           <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
                             {t("scorm.ai.pendingChanges") || "Pending approval"}
                           </div>
 
                           {(() => {
-                            const proj = pendingLesson.result.project ?? pendingLesson.result
+                            const proj = pendingLesson.project ?? pendingLesson
                             const pages = proj.pages ?? []
                             const totalBlocks = pages.reduce(
                               (total, page) => total + ((page.blocks ?? []).length),
                               0,
                             )
                             const difficulty =
-                              pendingLesson.result.metadata?.predictedDifficulty ?? "n/a"
+                              pendingLesson.metadata?.predictedDifficulty ?? "n/a"
                             const tags =
-                              pendingLesson.result.metadata?.recommendedTags?.join(", ") || "n/a"
+                              pendingLesson.metadata?.recommendedTags?.join(", ") || "n/a"
 
                             return (
                               <p className="text-xs text-emerald-900">
@@ -1240,7 +1240,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           })()}
 
                           <div className="flex flex-wrap gap-1">
-                            {(pendingLesson.result.project.pages ?? [])
+                            {(pendingLesson.project.pages ?? [])
                               .slice(0, 3)
                               .map((page) => (
                                 <Badge
@@ -1253,9 +1253,9 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                               ))}
                           </div>
 
-                          {(pendingLesson.result.warnings ?? []).length > 0 && (
+                          {(pendingLesson.warnings ?? []).length > 0 && (
                             <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2">
-                              {`Warnings: ${(pendingLesson.result.warnings ?? []).join("; ")}`}
+                              {`Warnings: ${(pendingLesson.warnings ?? []).join("; ")}`}
                             </div>
                           )}
 

@@ -1,31 +1,26 @@
 // app/api/scorm/chat/route.ts
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-export const revalidate = 0;
-export const runtime = "nodejs"; // MUST BE NODE FOR OPENAI SDK
-
 import { NextRequest, NextResponse } from "next/server";
-import { runAIPipeline } from "@/lib/ai/pipeline";
+import { buildLessonOutline } from "@/lib/ai/lesson-agent";
+import { buildSCORMProject } from "@/lib/ai/builder";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { messages } = body;
+    const { messages } = await req.json();
+    const last = messages[messages.length - 1];
 
-    if (!messages || !Array.isArray(messages)) {
-      return NextResponse.json(
-        { error: "Invalid payload: messages[] is required." },
-        { status: 400 }
-      );
-    }
+    const outline = await buildLessonOutline(last.content);
+    const project = buildSCORMProject(outline);
 
-    const result = await runAIPipeline(messages);
-    return NextResponse.json(result);
+    return NextResponse.json({
+      agent: "fast-free-agent",
+      content: "Lesson generated.",
+      outline,
+      project,
+    });
   } catch (err: any) {
-    console.error("❌ SCORM AI Chat Error:", err);
+    console.error("AI Error:", err);
     return NextResponse.json(
-      { error: err?.message || "AI processing failed" },
+      { error: err.message || "AI failed" },
       { status: 500 }
     );
   }

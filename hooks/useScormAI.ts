@@ -2,11 +2,11 @@
 
 import { useState, useCallback } from "react";
 import { EditorProject } from "@/lib/scorm/types";
-import {
-  ChatMessage,
-  ScormAIHookProps,
-} from "@/lib/scorm/ai-types";
+import { ChatMessage, ScormAIHookProps } from "@/lib/scorm/ai-types";
 
+// --------------------------------------------------------
+// Extract SCORM project from pipeline result
+// --------------------------------------------------------
 function extractProject(result: any): EditorProject | null {
   if (!result) return null;
 
@@ -18,6 +18,9 @@ function extractProject(result: any): EditorProject | null {
   return null;
 }
 
+// --------------------------------------------------------
+// MAIN HOOK
+// --------------------------------------------------------
 export function useScormAI({
   setProject,
   setActivePageId,
@@ -30,7 +33,7 @@ export function useScormAI({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [chatInput, setChatInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [progressMessage, setProgressMessage] = useState<string>("");
+  const [progressMessage, setProgressMessage] = useState("");
 
   const [pendingLesson, setPendingLesson] = useState<any | null>(null);
 
@@ -38,36 +41,67 @@ export function useScormAI({
     setMessages((prev) => [...prev, msg]);
   };
 
-  const acceptPendingLesson = () => {
-    if (!pendingLesson) return;
+  // --------------------------------------------------------
+  // ACCEPT PENDING LESSON → Insert into SCORM editor
+  // --------------------------------------------------------
+ const acceptPendingLesson = () => {
+  if (!pendingLesson) return;
 
-    const newProject = extractProject(pendingLesson);
-    if (!newProject) {
-      console.error("❌ No valid project in pendingLesson:", pendingLesson);
-      return;
-    }
+  const newProject = extractProject(pendingLesson);
+  if (!newProject) {
+    console.error("❌ No valid project in pendingLesson:", pendingLesson);
+    return;
+  }
 
-    setProject(newProject);
+  // 🔥 FIX: Ensure required fields exist
+  if (!newProject.theme) {
+    newProject.theme = {
+      direction: "ltr",
+      styles: {}
+    };
+  }
 
-    if (newProject.pages.length > 0) {
-      setActivePageId(newProject.pages[0].id);
-      setSelectedBlockId(null);
+  if (!newProject.tracking) {
+    newProject.tracking = {
+      level: "standard",
+      pageViews: true,
+      quizInteractions: true,
+      media: true,
+      hints: false,
+      externalLinks: false,
+      timePerPage: true,
+      attempts: true
+    };
+  }
 
-      const ids = newProject.pages.flatMap((p) => (p.blocks ?? []).map((b) => b.id));
+  setProject(newProject);
 
-      onLessonApplied(ids);
-    }
+  if (newProject.pages.length > 0) {
+    setActivePageId(newProject.pages[0].id);
+    setSelectedBlockId(null);
 
-    setPendingLesson(null);
-    setEditorMode("ai");
-    setAiChatMode("hidden");
-  };
+    const ids = newProject.pages.flatMap((p) =>
+      (p.blocks ?? []).map((b) => b.id)
+    );
+
+    onLessonApplied(ids);
+  }
+
+  setPendingLesson(null);
+  setEditorMode("ai");
+  setAiChatMode("hidden");
+};
+
 
   const rejectPendingLesson = () => setPendingLesson(null);
 
+  // --------------------------------------------------------
+  // SEND PROMPT → API → AI AGENT
+  // --------------------------------------------------------
   const submitPrompt = useCallback(
     async (prompt: string, isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
+
       setIsGenerating(true);
       setProgressMessage("Generating lesson…");
 
@@ -103,7 +137,7 @@ export function useScormAI({
           id: Date.now() + 1,
           role: "assistant",
           content: json.content ?? "Lesson generated.",
-          agent: json.agent || "unified",
+          agent: json.agent || "fast-agent",
         });
 
         const project = extractProject(json);
@@ -120,7 +154,7 @@ export function useScormAI({
           }
         }
 
-        setProgressMessage("Lesson ready. Review and apply the changes.");
+        setProgressMessage("Lesson ready. Review and apply.");
       } catch (err: any) {
         console.error("❌ AI Error:", err);
 
@@ -130,12 +164,14 @@ export function useScormAI({
           content: err.message || "AI failed to generate a valid response.",
         });
 
-        setProgressMessage(err.message || "AI failed to generate a valid response.");
+        setProgressMessage(
+          err.message || "AI failed to generate a valid response."
+        );
       } finally {
         setIsGenerating(false);
       }
     },
-    [messages, setAiChatMode, setEditorMode],
+    [messages, setAiChatMode, setEditorMode]
   );
 
   return {
