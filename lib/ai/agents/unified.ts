@@ -6,63 +6,64 @@ import {
   getOpenRouterModel,
 } from "../utils/openrouter";
 
-const model = getOpenRouterModel();
+const model = getOpenRouterModel("amazon/nova-2-lite-v1:free");
 const maxTokens = getOpenRouterMaxTokens();
 
-/**
- * Unified SCORM lesson builder
- * Merges mentor + architect + deep research responsibilities into one call
- * to reduce latency while still producing enriched lesson content.
- */
-export async function unifiedLessonAgent(messages: any[]) {
+function coerceMessages(messages: any[]) {
+  return messages.map((m) => ({
+    role: m.role,
+    content: m.content,
+  }));
+}
+
+async function callModel(systemPrompt: string, messages: any[], temperature = 0.3) {
   const client = getOpenRouterClient();
-
-  const systemPrompt = `You are a single-step SCORM course builder.
-You will read the full teacher conversation and produce a complete lesson plan that is already enriched with explanations, examples, and practice tasks.
-
-Goals (do ALL in one pass):
-- Understand the teacher's request (subject, grade, objectives, activity style).
-- Design a SCORM-friendly lesson structure with clear pages and blocks.
-- Enrich every block with concise, teacher-friendly content.
-
-OUTPUT FORMAT (strict, plain text):
-Lesson Title: <title>
-
-- Page 1: <title>
-  Blocks:
-    - Text: <short paragraphs with explanations/examples>
-    - Image: <describe helpful illustration>
-
-- Page 2: <title>
-  Blocks:
-    - Text: <guidance or concept practice>
-    - Quiz: <short check-for-understanding prompt>
-
-- Page 3: <title>
-  Blocks:
-    - Text: <independent practice or extension>
-
-Rules:
-- DO NOT output JSON or code.
-- DO NOT create IDs.
-- Keep paragraphs short and scannable.
-- Include 3-6 pages as appropriate.
-- Use only Text, Image, or Quiz blocks.
-- Follow the exact "Page" and "Blocks" bullet structure so the normalizer can parse it.
-`;
-
   const response = await client.chat.completions.create({
     model,
-    messages: [
-      { role: "system", content: systemPrompt },
-      ...messages.map((m: any) => ({
-        role: m.role,
-        content: m.content,
-      })),
-    ],
-    temperature: 0.35,
+    messages: [{ role: "system", content: systemPrompt }, ...coerceMessages(messages)],
+    temperature,
     ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
-  return response.choices[0].message.content;
+  const content = response.choices[0]?.message?.content?.trim();
+
+  if (!content) {
+    throw new Error("AI returned an empty response");
+  }
+
+  return content;
+}
+
+export async function unifiedLessonAgent(messages: any[]) {
+  const systemPrompt = `You are generating a SCORM lesson.
+Use ONLY the following format so the parser can create pages and blocks:
+
+TITLE: <Lesson Title>
+
+PAGE: <Page Title>
+BLOCK: text | <content text>
+BLOCK: image | <description or URL>
+BLOCK: quiz | <question> | <option1> | <option2> | <option3> | <option4> | <answer>
+
+Rules:
+- Provide 3-6 pages of content.
+- Keep every page non-empty.
+- Do not add IDs or JSON.
+- Only use the BLOCK syntax above.`;
+
+  return callModel(systemPrompt, messages, 0.25);
+}
+
+export async function unifiedLessonModifyAgent(messages: any[], projectJson: string) {
+  const systemPrompt = `You are modifying an existing SCORM lesson.
+Do NOT regenerate pages unless explicitly asked.
+Do NOT remove existing blocks.
+ONLY update or append blocks the user mentioned.
+Use the BLOCK: format only.
+Return only the changed pages/blocks.
+
+Current lesson JSON:
+${projectJson}`;
+
+  return callModel(systemPrompt, messages, 0.2);
 }
