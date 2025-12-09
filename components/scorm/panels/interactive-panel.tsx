@@ -86,7 +86,9 @@ export default function InteractivePanel({ block, onChange }: InteractivePanelPr
           <input
             type="text"
             className="w-full border rounded px-2 py-1 text-xs"
-            placeholder="https://..."
+            placeholder={
+              t("scorm.panels.interactive.linkPlaceholder") || "https://..."
+            }
             value={block.url || ""}
             onChange={(e) => updateBlock({ url: e.target.value })}
           />
@@ -167,7 +169,10 @@ export default function InteractivePanel({ block, onChange }: InteractivePanelPr
           </label>
           <textarea
             className="w-full border rounded px-2 py-2 text-xs h-32 font-mono"
-            placeholder={`<div class="my-widget">\n  <!-- Your HTML here -->\n</div>`}
+            placeholder={
+              t("scorm.panels.interactive.customPlaceholder") ||
+              `<div class="my-widget">\n  <!-- Your HTML here -->\n</div>`
+            }
             value={block.customHtml || ""}
             onChange={(e) => updateBlock({ customHtml: e.target.value })}
           />
