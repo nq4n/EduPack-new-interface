@@ -261,6 +261,15 @@ export default function ScormAIPage() {
     onLessonApplied: showHighlights,
   })
 
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTo({
+        top: chatScrollRef.current.scrollHeight,
+        behavior: "smooth",
+      })
+    }
+  }, [messages.length])
+
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
     const prompt = chatInput.trim()
