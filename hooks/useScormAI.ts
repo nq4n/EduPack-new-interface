@@ -7,6 +7,31 @@ import {
   ScormAIHookProps,
 } from "@/lib/scorm/ai-types";
 
+type ProgressStatus = "idle" | "active" | "done" | "error";
+type ProgressKey = "builder" | "finalize";
+
+export type ProgressStep = {
+  key: ProgressKey;
+  label: string;
+  description: string;
+  status: ProgressStatus;
+};
+
+const BASE_PROGRESS_STEPS: ProgressStep[] = [
+  {
+    key: "builder",
+    label: "AI lesson builder",
+    description: "Analyzing your request and drafting the course",
+    status: "idle",
+  },
+  {
+    key: "finalize",
+    label: "Finalize",
+    description: "Preparing SCORM-ready output",
+    status: "idle",
+  },
+];
+
 // -------------------------------------------
 // Extractor for NEW PIPELINE response format
 // -------------------------------------------
@@ -33,12 +58,10 @@ export function useScormAI({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [chatInput, setChatInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-
-  // Public → AI allowed once only
-  const [aiUsedOnce, setAiUsedOnce] = useState(false);
-
-  // NEW: UI progress step
-  const [progress, setProgress] = useState<string>("idle");
+  const [progressMessage, setProgressMessage] = useState<string>("");
+  const [progressSteps, setProgressSteps] = useState<ProgressStep[]>(
+    BASE_PROGRESS_STEPS,
+  );
 
   // Holds the whole pipeline result
   const [pendingLesson, setPendingLesson] = useState<any | null>(null);
@@ -85,16 +108,14 @@ export function useScormAI({
   const submitPrompt = useCallback(
     async (prompt: string, isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
-
-      // 🔥 AFTER the first use → require login
-      if (aiUsedOnce) {
-        alert("Please log in to continue using AI features.");
-        window.location.href = "/login";
-        return;
-      }
-
       setIsGenerating(true);
-      setProgress("Starting…");
+      setProgressMessage("Starting build with AI…");
+      setProgressSteps(
+        BASE_PROGRESS_STEPS.map((step, index) => ({
+          ...step,
+          status: index === 0 ? "active" : "idle",
+        })),
+      );
 
       const userMessage: ChatMessage = {
         id: Date.now(),
@@ -106,19 +127,12 @@ export function useScormAI({
       setChatInput("");
 
       try {
-        // -------------------------
-        // UI Progress simulation
-        // -------------------------
-        setProgress("Mentor agent is analyzing your request…");
-        await new Promise((r) => setTimeout(r, 350));
-
-        setProgress("Architect agent is building lesson structure…");
-        await new Promise((r) => setTimeout(r, 350));
-
-        setProgress("Deep Research agent is expanding content…");
-        await new Promise((r) => setTimeout(r, 350));
-
-        setProgress("Finalizing SCORM-ready lesson…");
+        setProgressMessage("AI builder is creating your lesson…");
+        setProgressSteps((prev) =>
+          prev.map((step) =>
+            step.key === "builder" ? { ...step, status: "active" } : step,
+          ),
+        );
 
         // -------------------------
         // Real API request
@@ -141,21 +155,28 @@ export function useScormAI({
           throw new Error(json.error || "AI generation failed");
         }
 
-        setProgress("Almost done…");
+        setProgressMessage("Finalizing SCORM-ready lesson…");
+        setProgressSteps((prev) =>
+          prev.map((step) =>
+            step.key === "builder"
+              ? { ...step, status: "done" }
+              : step.key === "finalize"
+              ? { ...step, status: "active" }
+              : step,
+          ),
+        );
 
         addMessage({
           id: Date.now() + 1,
           role: "assistant",
           content: json.content ?? "Lesson generated.",
+          agent: json.agent || "unified",
         });
 
         const project = extractProject(json);
 
         if (project) {
           setPendingLesson(json);
-
-          // Mark one-time free use consumed
-          setAiUsedOnce(true);
 
           if (isInitialGeneration) {
             setAiChatMode("animating");
@@ -166,7 +187,10 @@ export function useScormAI({
           }
         }
 
-        setProgress("done");
+        setProgressSteps((prev) =>
+          prev.map((step) => ({ ...step, status: "done" })),
+        );
+        setProgressMessage("Lesson ready. Review and apply the changes.");
 
       } catch (err: any) {
         console.error("❌ AI Error:", err);
@@ -177,12 +201,21 @@ export function useScormAI({
           content: err.message || "AI failed to generate a valid response.",
         });
 
-        setProgress("error");
+        setProgressSteps((prev) =>
+          prev.map((step) =>
+            step.status === "active"
+              ? { ...step, status: "error" }
+              : step,
+          ),
+        );
+        setProgressMessage(
+          err.message || "AI failed to generate a valid response.",
+        );
       } finally {
         setIsGenerating(false);
       }
     },
-    [messages, aiUsedOnce, setAiChatMode, setEditorMode]
+    [messages, setAiChatMode, setEditorMode]
   );
 
   return {
@@ -190,7 +223,8 @@ export function useScormAI({
     chatInput,
     setChatInput,
     isGenerating,
-    progress,          // ← EXPOSE IT TO UI
+    progressMessage,
+    progressSteps,
     submitPrompt,
     pendingLesson,
     acceptPendingLesson,
