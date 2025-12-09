@@ -8,6 +8,9 @@ import {
 } from "@/lib/scorm/ai-types";
 import { mergeProject } from "@/lib/ai/merge";
 
+// --------------------------------------------------------
+// Extract SCORM project from pipeline result
+// --------------------------------------------------------
 function extractProject(result: any): EditorProject | null {
   if (!result) return null;
 
@@ -19,6 +22,9 @@ function extractProject(result: any): EditorProject | null {
   return null;
 }
 
+// --------------------------------------------------------
+// MAIN HOOK
+// --------------------------------------------------------
 export function useScormAI({
   project,
   setProject,
@@ -32,7 +38,7 @@ export function useScormAI({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [chatInput, setChatInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [progressMessage, setProgressMessage] = useState<string>("");
+  const [progressMessage, setProgressMessage] = useState("");
 
   useEffect(() => {
     if (initialMessages.length > 0 && messages.length === 0) {
@@ -47,6 +53,7 @@ export function useScormAI({
   const submitPrompt = useCallback(
     async (prompt: string, _isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
+
       setIsGenerating(true);
       setProgressMessage("Generating lesson…");
 
@@ -82,7 +89,7 @@ export function useScormAI({
           id: Date.now() + 1,
           role: "assistant",
           content: json.content ?? "Lesson generated.",
-          agent: json.agent || "unified",
+          agent: json.agent || "fast-agent",
         });
 
         const isModifyMode = json.mode === "modify";
@@ -112,7 +119,7 @@ export function useScormAI({
           setAiChatMode("hidden");
         }
 
-        setProgressMessage("Lesson ready. Review and apply the changes.");
+        setProgressMessage("Lesson ready. Review and apply.");
       } catch (err: any) {
         console.error("❌ AI Error:", err);
 
@@ -122,7 +129,9 @@ export function useScormAI({
           content: err.message || "AI failed to generate a valid response.",
         });
 
-        setProgressMessage(err.message || "AI failed to generate a valid response.");
+        setProgressMessage(
+          err.message || "AI failed to generate a valid response."
+        );
       } finally {
         setIsGenerating(false);
       }
