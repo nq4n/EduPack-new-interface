@@ -168,7 +168,7 @@ export default function ScormAIPage() {
         behavior: "smooth",
       })
     }
-  }, [messages.length])
+  },)
 
   const fallbackPage: EditorPage = {
     id: "page-fallback",
