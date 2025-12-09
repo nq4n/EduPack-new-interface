@@ -161,6 +161,15 @@ export default function ScormAIPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTo({
+        top: chatScrollRef.current.scrollHeight,
+        behavior: "smooth",
+      })
+    }
+  }, [messages.length])
+
   const fallbackPage: EditorPage = {
     id: "page-fallback",
     title: t("scorm.ai.introduction"),
