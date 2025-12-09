@@ -42,9 +42,6 @@ import {
   LayoutDashboard,
   Clock,
   Loader2,
-  CheckCircle2,
-  Circle,
-  AlertCircle,
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner"
@@ -190,8 +187,7 @@ export default function ScormAIPage() {
   const renderProgressTracker = (
     variant: "panel" | "inline" = "panel",
   ) => {
-    const showProgress =
-      isGenerating || progressSteps.some((step) => step.status !== "idle")
+    const showProgress = isGenerating || !!progressMessage
 
     if (!showProgress) return null
 
@@ -204,44 +200,13 @@ export default function ScormAIPage() {
         }
       >
         <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-slate-600">
-          <span>Build with AI progress</span>
+          <span>Build with AI</span>
           {isGenerating && (
             <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
           )}
         </div>
-        <div className="mt-2 space-y-2">
-          {progressSteps.map((step) => {
-            const icon =
-              step.status === "done" ? (
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              ) : step.status === "active" ? (
-                <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
-              ) : step.status === "error" ? (
-                <AlertCircle className="h-4 w-4 text-amber-600" />
-              ) : (
-                <Circle className="h-4 w-4 text-slate-300" />
-              )
-
-            return (
-              <div
-                key={step.key}
-                className="flex items-start gap-2 rounded-xl bg-white/80 px-2 py-1"
-              >
-                {icon}
-                <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-slate-800">
-                    {step.label}
-                  </span>
-                  <span className="text-[11px] text-slate-500">
-                    {step.description}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
         {progressMessage && (
-          <p className="mt-2 text-[11px] text-slate-500">{progressMessage}</p>
+          <p className="mt-2 text-[11px] text-slate-600">{progressMessage}</p>
         )}
       </div>
     )
@@ -268,7 +233,6 @@ export default function ScormAIPage() {
     setChatInput,
     isGenerating,
     progressMessage,
-    progressSteps,
     submitPrompt,
     pendingLesson,
     acceptPendingLesson,
