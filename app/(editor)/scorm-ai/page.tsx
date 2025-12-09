@@ -4,6 +4,7 @@ import {
   useState,
   type FormEvent,
   useEffect,
+  useMemo,
   useRef,
   useCallback,
   type ReactNode,
@@ -103,19 +104,24 @@ export default function ScormAIPage() {
   const [aiChatMode, setAiChatMode] =
     useState<"hidden" | "visible" | "animating">("hidden")
 
-  const [initialMessages, setInitialMessages] = useState<ChatMessage[]>([])
+  const welcomeMessages = useMemo<ChatMessage[]>(
+    () => [
+      {
+        id: 1,
+        role: "assistant",
+        content: t("scorm.ai.welcome"),
+      },
+    ],
+    [t],
+  )
+
+  const [initialMessages, setInitialMessages] = useState<ChatMessage[]>(
+    welcomeMessages,
+  )
 
   useEffect(() => {
-    if (initialMessages.length === 0) {
-      setInitialMessages([
-        {
-          id: 1,
-          role: "assistant",
-          content: t("scorm.ai.welcome"),
-        },
-      ])
-    }
-  }, [t, initialMessages.length])
+    setInitialMessages(welcomeMessages)
+  }, [welcomeMessages])
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -234,10 +240,8 @@ export default function ScormAIPage() {
     isGenerating,
     progressMessage,
     submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
   } = useScormAI({
+    project,
     setProject,
     setActivePageId,
     setSelectedBlockId,
@@ -1214,70 +1218,6 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           </div>
                         </div>
                       ))}
-                      {pendingLesson && pendingLesson.result?.project && (
-                        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm">
-                          <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
-                            {t("scorm.ai.pendingChanges") || "Pending approval"}
-                          </div>
-
-                          {(() => {
-                            const proj = pendingLesson.result.project ?? pendingLesson.result
-                            const pages = proj.pages ?? []
-                            const totalBlocks = pages.reduce(
-                              (total, page) => total + ((page.blocks ?? []).length),
-                              0,
-                            )
-                            const difficulty =
-                              pendingLesson.result.metadata?.predictedDifficulty ?? "n/a"
-                            const tags =
-                              pendingLesson.result.metadata?.recommendedTags?.join(", ") || "n/a"
-
-                            return (
-                              <p className="text-xs text-emerald-900">
-                                {`"${proj.title}" has ${pages.length} page(s) with ${totalBlocks} block(s). Difficulty: ${difficulty}. Tags: ${tags}.`}
-                              </p>
-                            )
-                          })()}
-
-                          <div className="flex flex-wrap gap-1">
-                            {(pendingLesson.result.project.pages ?? [])
-                              .slice(0, 3)
-                              .map((page) => (
-                                <Badge
-                                  key={page.id}
-                                  variant="secondary"
-                                  className="bg-white text-emerald-800 border-emerald-200"
-                                >
-                                  {page.title}: {(page.blocks ?? []).length} block(s)
-                                </Badge>
-                              ))}
-                          </div>
-
-                          {(pendingLesson.result.warnings ?? []).length > 0 && (
-                            <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2">
-                              {`Warnings: ${(pendingLesson.result.warnings ?? []).join("; ")}`}
-                            </div>
-                          )}
-
-                          <div className="flex items-center gap-2">
-                            <Button
-                              size="sm"
-                              className="h-8 px-3"
-                              onClick={acceptPendingLesson}
-                            >
-                              {t("scorm.ai.acceptChanges") || "Apply changes"}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 px-3"
-                              onClick={rejectPendingLesson}
-                            >
-                              {t("scorm.ai.rejectChanges") || "Discard"}
-                            </Button>
-                          </div>
-                        </div>
-                      )}
                     </div>
                     <div className="p-4 border-t bg-slate-50 space-y-3">
                       <div className="flex flex-wrap items-center gap-2">
