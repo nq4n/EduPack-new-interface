@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { EditorProject } from "@/lib/scorm/types";
 <<<<<<< HEAD
 import { ChatMessage, ScormAIHookProps } from "@/lib/scorm/ai-types";
@@ -43,6 +43,12 @@ export function useScormAI({
   const [chatInput, setChatInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [progressMessage, setProgressMessage] = useState("");
+
+  useEffect(() => {
+    if (initialMessages.length > 0 && messages.length === 0) {
+      setMessages(initialMessages);
+    }
+  }, [initialMessages, messages.length]);
 
   const addMessage = (msg: ChatMessage) => {
     setMessages((prev) => [...prev, msg]);
