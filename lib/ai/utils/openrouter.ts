@@ -1,8 +1,8 @@
 // lib/ai/utils/openrouter.ts
 import OpenAI from "openai";
 
-const DEFAULT_MODEL = "gpt-4o-mini";
-const DEFAULT_MAX_TOKENS = 900;
+const DEFAULT_MODEL = "allenai/olmo-3-32b-think:free";
+const DEFAULT_MAX_TOKENS: number | undefined = undefined;
 
 function parseTimeoutMs() {
   const raw = process.env.OPENROUTER_TIMEOUT_MS;

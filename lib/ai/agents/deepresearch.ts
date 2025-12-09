@@ -52,7 +52,7 @@ Rules:
       { role: "user", content: blueprint }
     ],
     temperature: 0.4,
-    max_tokens: maxTokens,
+    ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
   return response.choices[0].message.content;

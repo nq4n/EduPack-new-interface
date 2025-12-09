@@ -70,7 +70,7 @@ RULES:
       { role: "user", content: outline }
     ],
     temperature: 0.3,
-    max_tokens: maxTokens,
+    ...(typeof maxTokens === "number" ? { max_tokens: maxTokens } : {}),
   });
 
   return response.choices[0].message.content;
