@@ -234,10 +234,8 @@ export default function ScormAIPage() {
     isGenerating,
     progressMessage,
     submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
   } = useScormAI({
+    project,
     setProject,
     setActivePageId,
     setSelectedBlockId,
@@ -1214,6 +1212,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           </div>
                         </div>
                       ))}
+<<<<<<< HEAD
                       {pendingLesson && pendingLesson.project && (
                         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-3 space-y-2 shadow-sm">
                           <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
@@ -1278,6 +1277,8 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           </div>
                         </div>
                       )}
+=======
+>>>>>>> aea17997ec34750023d5e6007a2dad212edfe75d
                     </div>
                     <div className="p-4 border-t bg-slate-50 space-y-3">
                       <div className="flex flex-wrap items-center gap-2">

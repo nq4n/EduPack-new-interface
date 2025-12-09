@@ -19,6 +19,7 @@ export interface AISuggestion {
 }
 
 export interface ScormAIHookProps {
+  project: EditorProject
   setProject: (project: EditorProject) => void
   setActivePageId: (id: string) => void
   setSelectedBlockId: (id: string | null) => void

@@ -2,7 +2,15 @@
 
 import { useState, useCallback } from "react";
 import { EditorProject } from "@/lib/scorm/types";
+<<<<<<< HEAD
 import { ChatMessage, ScormAIHookProps } from "@/lib/scorm/ai-types";
+=======
+import {
+  ChatMessage,
+  ScormAIHookProps,
+} from "@/lib/scorm/ai-types";
+import { mergeProject } from "@/lib/ai/merge";
+>>>>>>> aea17997ec34750023d5e6007a2dad212edfe75d
 
 // --------------------------------------------------------
 // Extract SCORM project from pipeline result
@@ -22,6 +30,7 @@ function extractProject(result: any): EditorProject | null {
 // MAIN HOOK
 // --------------------------------------------------------
 export function useScormAI({
+  project,
   setProject,
   setActivePageId,
   setSelectedBlockId,
@@ -35,12 +44,11 @@ export function useScormAI({
   const [isGenerating, setIsGenerating] = useState(false);
   const [progressMessage, setProgressMessage] = useState("");
 
-  const [pendingLesson, setPendingLesson] = useState<any | null>(null);
-
   const addMessage = (msg: ChatMessage) => {
     setMessages((prev) => [...prev, msg]);
   };
 
+<<<<<<< HEAD
   // --------------------------------------------------------
   // ACCEPT PENDING LESSON → Insert into SCORM editor
   // --------------------------------------------------------
@@ -98,8 +106,10 @@ export function useScormAI({
   // --------------------------------------------------------
   // SEND PROMPT → API → AI AGENT
   // --------------------------------------------------------
+=======
+>>>>>>> aea17997ec34750023d5e6007a2dad212edfe75d
   const submitPrompt = useCallback(
-    async (prompt: string, isInitialGeneration: boolean) => {
+    async (prompt: string, _isInitialGeneration: boolean) => {
       if (!prompt.trim()) return;
 
       setIsGenerating(true);
@@ -124,7 +134,7 @@ export function useScormAI({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({ messages: payloadMessages }),
+          body: JSON.stringify({ messages: payloadMessages, project }),
         });
 
         const json = await response.json();
@@ -140,18 +150,31 @@ export function useScormAI({
           agent: json.agent || "fast-agent",
         });
 
-        const project = extractProject(json);
+        const isModifyMode = json.mode === "modify";
+        const deltaProject = extractProject({ project: json.delta });
+        const aiProject = extractProject(json);
 
-        if (project) {
-          setPendingLesson(json);
+        if (aiProject) {
+          const updatedProject = isModifyMode && deltaProject
+            ? mergeProject(project, deltaProject)
+            : aiProject;
 
-          if (isInitialGeneration) {
-            setAiChatMode("animating");
-            setTimeout(() => {
-              setAiChatMode("hidden");
-              setEditorMode("ai");
-            }, 600);
-          }
+          setProject(updatedProject);
+
+          const updatedPages = updatedProject.pages ?? [];
+          const fallbackPageId = updatedPages[0]?.id ?? null;
+
+          setActivePageId((prev) => prev && updatedPages.some((p) => p.id === prev) ? prev : fallbackPageId);
+          setSelectedBlockId(null);
+
+          const changedBlockIds = (deltaProject?.pages ?? updatedPages).flatMap((p) =>
+            (p.blocks ?? []).map((b) => b.id),
+          );
+
+          onLessonApplied(changedBlockIds);
+
+          setEditorMode("ai");
+          setAiChatMode("hidden");
         }
 
         setProgressMessage("Lesson ready. Review and apply.");
@@ -171,7 +194,11 @@ export function useScormAI({
         setIsGenerating(false);
       }
     },
+<<<<<<< HEAD
     [messages, setAiChatMode, setEditorMode]
+=======
+    [messages, project, setAiChatMode, setEditorMode, setProject],
+>>>>>>> aea17997ec34750023d5e6007a2dad212edfe75d
   );
 
   return {
@@ -181,8 +208,5 @@ export function useScormAI({
     isGenerating,
     progressMessage,
     submitPrompt,
-    pendingLesson,
-    acceptPendingLesson,
-    rejectPendingLesson,
   };
 }
