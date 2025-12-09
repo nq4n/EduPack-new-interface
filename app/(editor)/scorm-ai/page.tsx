@@ -8,7 +8,22 @@ import {
   useRef,
   useCallback,
   type ReactNode,
+  type MouseEvent,
 } from "react"
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+  useSortable,
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -99,6 +114,10 @@ export default function ScormAIPage() {
 
   const [activePageId, setActivePageId] = useState<string>(project.pages[0]?.id)
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
+  const [clipboardBlock, setClipboardBlock] = useState<EditorBlock | null>(null)
+  const [contextMenu, setContextMenu] = useState<
+    { x: number; y: number; blockId: string } | null
+  >(null)
 
   const [status, setStatus] = useState<Status>("draft")
   const [aiChatMode, setAiChatMode] =
@@ -186,6 +205,35 @@ export default function ScormAIPage() {
     (activePage.blocks ?? []).find((b) => b.id === selectedBlockId) ?? null
 
   const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  )
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+
+    setProject((prev) => ({
+      ...prev,
+      pages: prev.pages.map((p) =>
+        p.id === activePageId
+          ? {
+              ...p,
+              blocks: arrayMove(
+                p.blocks,
+                p.blocks.findIndex((b) => b.id === active.id),
+                p.blocks.findIndex((b) => b.id === over.id),
+              ),
+            }
+          : p,
+      ),
+    }))
+  }
 
   const handleBlockClick = useCallback((block: EditorBlock) => {
     setSelectedBlockId(block.id)
@@ -1015,6 +1063,47 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
     setSelectedBlockId(null)
   }
 
+  // Right-click menu open
+  const handleContextMenu = (e: MouseEvent, blockId: string) => {
+    e.preventDefault()
+    setContextMenu({ x: e.clientX, y: e.clientY, blockId })
+  }
+
+  // Delete block
+  const handleDeleteBlock = (blockId: string) => {
+    setProject((prev) => ({
+      ...prev,
+      pages: prev.pages.map((p) =>
+        p.id === activePageId
+          ? { ...p, blocks: p.blocks.filter((b) => b.id !== blockId) }
+          : p,
+      ),
+    }))
+    if (selectedBlockId === blockId) setSelectedBlockId(null)
+  }
+
+  // Duplicate block
+  const handleDuplicateBlock = (block: EditorBlock) => {
+    const cloned = { ...block, id: `block-${Date.now()}` }
+    setProject((prev) => ({
+      ...prev,
+      pages: prev.pages.map((p) =>
+        p.id === activePageId ? { ...p, blocks: [...p.blocks, cloned] } : p,
+      ),
+    }))
+  }
+
+  // Copy
+  const handleCopy = (block: EditorBlock) => {
+    setClipboardBlock(block)
+  }
+
+  // Paste
+  const handlePaste = () => {
+    if (!clipboardBlock) return
+    handleDuplicateBlock(clipboardBlock)
+  }
+
   // Render logic based on editor mode and AI chat state
   if (editorMode === "choice") {
     const start = (mode: "ai" | "blank") => {
@@ -1403,39 +1492,63 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                   </div>
 
                   <div className="max-h-[600px] overflow-auto pr-1">
-                    
                     {activePage && activeBlocks.length > 0 ? (
-                      <div className="space-y-4">
-                          {activeBlocks.map((block) => {
-                          const isSelected = selectedBlock?.id === block.id
-                          const isHighlighted =
-                            highlightedBlockIds.includes(block.id)
-                          return (
-                            <div key={block.id}>
-                              <div
-                                className={`rounded-2xl border px-4 py-3 bg-white transition-shadow cursor-pointer ${
-                                  isSelected
-                                    ? "ring-2 ring-sky-500 shadow-md"
-                                    : "hover:shadow-sm border-slate-200"
-                                } ${
-                                  isHighlighted
-                                    ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70"
-                                    : ""
-                                }`}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  handleBlockClick(block)
-                                }}
-                              >
-                                <BlockRenderer
-                                  block={block}
-                                  theme={project.theme}
-                                />
-                              </div>
-                            </div>
-                          )
-                        })}
-                      </div>
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                      >
+                        <SortableContext
+                          items={activeBlocks.map((b) => b.id)}
+                          strategy={verticalListSortingStrategy}
+                        >
+                          <div className="space-y-4">
+                            {activeBlocks.map((block) => {
+                              const isSelected = selectedBlock?.id === block.id
+                              const isHighlighted =
+                                highlightedBlockIds.includes(block.id)
+
+                              return (
+                                <SortableBlock key={block.id} id={block.id}>
+                                  <div
+                                    className={`relative rounded-2xl border px-4 py-3 bg-white transition-shadow cursor-pointer ${
+                                      isSelected
+                                        ? "ring-2 ring-sky-500 shadow-md"
+                                        : "hover:shadow-sm border-slate-200"
+                                    } ${
+                                      isHighlighted
+                                        ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70"
+                                        : ""
+                                    }`}
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      handleBlockClick(block)
+                                    }}
+                                    onContextMenu={(e) => handleContextMenu(e, block.id)}
+                                  >
+                                    {/* Delete button */}
+                                    <button
+                                      onPointerDown={(e) => e.stopPropagation()}
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleDeleteBlock(block.id)
+                                      }}
+                                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-sm"
+                                    >
+                                      ✕
+                                    </button>
+
+                                    <BlockRenderer
+                                      block={block}
+                                      theme={project.theme}
+                                    />
+                                  </div>
+                                </SortableBlock>
+                              )
+                            })}
+                          </div>
+                        </SortableContext>
+                      </DndContext>
                     ) : (
                       <div className="text-center space-y-3 py-12">
                         <h2 className="text-base sm:text-lg font-semibold text-slate-800">
@@ -1528,7 +1641,74 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
           />
         </div>
       </div>
+
+      <ContextMenu
+        contextMenu={contextMenu}
+        onAction={(action) => {
+          const block = activeBlocks.find((b) => b.id === contextMenu?.blockId)
+          if (!block) return
+
+          if (action === "copy") handleCopy(block)
+          if (action === "paste") handlePaste()
+          if (action === "duplicate") handleDuplicateBlock(block)
+          if (action === "delete") handleDeleteBlock(block.id)
+
+          setContextMenu(null)
+        }}
+      />
     </>
+  )
+}
+
+function ContextMenu({ contextMenu, onAction }: any) {
+  if (!contextMenu) return null
+
+  return (
+    <div
+      className="fixed bg-white shadow-xl border rounded-md z-[2000] text-sm"
+      style={{ top: contextMenu.y, left: contextMenu.x }}
+    >
+      <button
+        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        onClick={() => onAction("copy")}
+      >
+        Copy
+      </button>
+      <button
+        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        onClick={() => onAction("paste")}
+      >
+        Paste
+      </button>
+      <button
+        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        onClick={() => onAction("duplicate")}
+      >
+        Duplicate
+      </button>
+      <button
+        className="block px-4 py-2 hover:bg-red-100 text-red-600 w-full text-left"
+        onClick={() => onAction("delete")}
+      >
+        Delete
+      </button>
+    </div>
+  )
+}
+
+function SortableBlock({ id, children }: any) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      {children}
+    </div>
   )
 }
 
