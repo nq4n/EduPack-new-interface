@@ -41,6 +41,10 @@ import {
   Settings,
   LayoutDashboard,
   Clock,
+  Loader2,
+  CheckCircle2,
+  Circle,
+  AlertCircle,
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner"
@@ -161,21 +165,20 @@ export default function ScormAIPage() {
     }
   }, [])
 
-const fallbackPage: EditorPage = {
-  id: "page-fallback",
-  title: t("scorm.ai.introduction"),
-  blocks: [],
-}
+  const fallbackPage: EditorPage = {
+    id: "page-fallback",
+    title: t("scorm.ai.introduction"),
+    blocks: [],
+  }
 
-const activePage =
-  project.pages.find((p) => p.id === activePageId) ??
-  project.pages[0] ??
-  fallbackPage
-const activeBlocks = activePage?.blocks ?? [];
+  const activePage =
+    project.pages.find((p) => p.id === activePageId) ??
+    project.pages[0] ??
+    fallbackPage
+  const activeBlocks = activePage?.blocks ?? []
 
-const selectedBlock =
-  (activePage.blocks ?? []).find((b) => b.id === selectedBlockId) ?? null
-
+  const selectedBlock =
+    (activePage.blocks ?? []).find((b) => b.id === selectedBlockId) ?? null
 
   const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
 
@@ -183,6 +186,66 @@ const selectedBlock =
     setSelectedBlockId(block.id)
     setRightPanel("block")
   }, [])
+
+  const renderProgressTracker = (
+    variant: "panel" | "inline" = "panel",
+  ) => {
+    const showProgress =
+      isGenerating || progressSteps.some((step) => step.status !== "idle")
+
+    if (!showProgress) return null
+
+    return (
+      <div
+        className={
+          variant === "panel"
+            ? "rounded-2xl border border-slate-200 bg-slate-50 p-3"
+            : "rounded-xl border border-slate-200 bg-white/90 p-3 shadow-sm"
+        }
+      >
+        <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+          <span>Build with AI progress</span>
+          {isGenerating && (
+            <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
+          )}
+        </div>
+        <div className="mt-2 space-y-2">
+          {progressSteps.map((step) => {
+            const icon =
+              step.status === "done" ? (
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              ) : step.status === "active" ? (
+                <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
+              ) : step.status === "error" ? (
+                <AlertCircle className="h-4 w-4 text-amber-600" />
+              ) : (
+                <Circle className="h-4 w-4 text-slate-300" />
+              )
+
+            return (
+              <div
+                key={step.key}
+                className="flex items-start gap-2 rounded-xl bg-white/80 px-2 py-1"
+              >
+                {icon}
+                <div className="flex flex-col">
+                  <span className="text-xs font-semibold text-slate-800">
+                    {step.label}
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    {step.description}
+                  </span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        {progressMessage && (
+          <p className="mt-2 text-[11px] text-slate-500">{progressMessage}</p>
+        )}
+      </div>
+    )
+  }
 
   const handleBlockChange = (updatedBlock: EditorBlock) => {
     setProject((prevProject) => {
@@ -204,6 +267,8 @@ const selectedBlock =
     chatInput,
     setChatInput,
     isGenerating,
+    progressMessage,
+    progressSteps,
     submitPrompt,
     pendingLesson,
     acceptPendingLesson,
@@ -1062,11 +1127,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                 {isGenerating ? "Generating..." : "Generate"}
               </Button>
             </form>
-            {isGenerating && (
-              <div className="text-center text-sm text-slate-500 mt-4">
-                Preparing your lesson and transitioning to the editor...
-              </div>
-            )}
+            <div className="mt-4 w-full">{renderProgressTracker("inline")}</div>
           </div>
         </div>
       </div>
@@ -1138,6 +1199,8 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
               </div>
             </div>
 
+            {renderProgressTracker("inline")}
+
             {/* canvas + properties side-by-side */}
             <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
               {/* Chat panel (left) */}
@@ -1153,6 +1216,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                       </h3>
                     </div>
                     <div className="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                      {renderProgressTracker("panel")}
                       {messages.map((m) => (
                         <div
                           key={m.id}
@@ -1171,7 +1235,9 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                           >
                             {m.agent && m.role !== "user" && (
                               <div className="text-[10px] uppercase tracking-wide text-slate-400 mb-0.5">
-                                {m.agent === "mentor"
+                                {m.agent === "unified"
+                                  ? "AI Builder"
+                                  : m.agent === "mentor"
                                   ? "Mentor AI"
                                   : m.agent === "contentArchitect"
                                   ? "Content Architect"
