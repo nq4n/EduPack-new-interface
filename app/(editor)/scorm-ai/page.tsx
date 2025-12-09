@@ -1112,6 +1112,23 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
       </div>
     )
   }
+  function formatMessage(text: string) {
+  // إذا كانت الرسالة JSON أو تبدأ بـ { أو ["project"] → نخفيها
+  try {
+    const trimmed = text.trim()
+
+    // إذا كانت JSON → ما نعرضه
+    if (
+      trimmed.startsWith("{") ||
+      trimmed.startsWith("[") ||
+      trimmed.includes('"project"')
+    ) {
+      return "The lesson has been updated successfully."
+    }
+  } catch {}
+
+  return text // غير ذلك → اعرضه طبيعي
+}
 
   return (
     <>
@@ -1229,7 +1246,7 @@ ${quizzes || '<assessmentItem identifier="placeholder" title="No quizzes availab
                               </div>
                             )}
                             <div className="max-w-[85%] whitespace-pre-wrap break-words leading-relaxed">
-                              {m.content}
+                              {formatMessage(m.content)}
                             </div>
                           </div>
                         </div>

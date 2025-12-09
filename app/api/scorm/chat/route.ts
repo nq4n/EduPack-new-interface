@@ -1,35 +1,31 @@
 // app/api/scorm/chat/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { buildLessonOutline } from "@/lib/ai/lesson-agent";
-import { buildSCORMProject } from "@/lib/ai/builder";
-import{runAIPipeline}from"@/lib/ai/pipeline";
+import { NextRequest, NextResponse } from "next/server"
+import { unifiedAI } from "@/lib/ai/unified"
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { messages, project } = body;
+    const { project, messages } = await req.json()
 
-    if (messages.length > 1 && !project) {
+    if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
-        { error: "Existing project is required when modifying a lesson." },
+        { error: "messages[] is required" },
         { status: 400 }
-      );
+      )
     }
 
-    if (messages.length > 1 && !project) {
-      return NextResponse.json(
-        { error: "Existing project is required when modifying a lesson." },
-        { status: 400 }
-      );
-    }
+    // unifiedAI decides:
+    // build / edit / extend
+    const result = await unifiedAI({
+      project: project ?? null,
+      messages
+    })
 
-    const isInitial = messages.length === 1;
-    const result = await runAIPipeline(messages, isInitial ? undefined : project);
-    return NextResponse.json(result);
+    return NextResponse.json(result, { status: 200 })
   } catch (err: any) {
-    console.error("AI Error:", err);
+    console.error("❌ /api/scorm/chat error:", err)
     return NextResponse.json(
-      { error: err.message || "AI failed" },
+      { error: err.message || "AI Chat failed" },
       { status: 500 }
-    );
+    )
   }
 }

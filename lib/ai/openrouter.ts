@@ -1,17 +1,60 @@
 // lib/ai/openrouter.ts
-import OpenAI from "openai";
 
-export function getClient() {
-  if (!process.env.OPENROUTER_API_KEY) {
-    throw new Error("Missing OPENROUTER_API_KEY");
-  }
+export const openrouter = {
+  async chat(messages: { role: string; content: string }[], model = "amazon/nova-2-lite-v1:free") {
+    const apiKey = process.env.OPENROUTER_API_KEY
 
-  return new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY,
-    defaultHeaders: {
-      "HTTP-Referer": process.env.APP_DOMAIN || "http://localhost:3000",
-      "X-Title": "EduPack AI",
-    },
-  });
+    if (!apiKey) {
+      throw new Error("Missing OPENROUTER_API_KEY environment variable")
+    }
+
+    const endpoint = "https://openrouter.ai/api/v1/chat/completions"
+
+    const payload = {
+      model,
+      messages,
+      temperature: 0.2,
+      max_tokens: 4096,
+    }
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "http://localhost:3000",
+          "X-Title": "EduPack AI",
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "")
+        throw new Error(`OpenRouter API error (${res.status}): ${text}`)
+      }
+
+      const data = await res.json()
+
+      /* 
+        Expected Response Format:
+        data.choices[0].message.content
+      */
+
+      const content =
+        data?.choices?.[0]?.message?.content ||
+        data?.choices?.[0]?.content ||
+        ""
+
+      if (!content) {
+        throw new Error("OpenRouter returned empty content")
+      }
+
+      return content
+
+    } catch (err) {
+      console.error("❌ OpenRouter Chat Error:", err)
+      throw err
+    }
+  },
 }

@@ -1,29 +1,30 @@
-export const runtime = "nodejs";
+// app/api/ai/lesson/build/route.ts
+import { NextRequest, NextResponse } from "next/server"
+import { unifiedAI } from "@/lib/ai/unified"
 
-import { NextResponse } from "next/server";
-import { runAIPipeline } from "@/lib/ai/pipeline";
-
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
-    const { prompt } = body;
+    const { messages } = await req.json()
 
-    if (!prompt) {
-      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json(
+        { error: "messages[] is required" },
+        { status: 400 }
+      )
     }
 
-    // Build the lesson using the new unified pipeline
-    const result = await runAIPipeline([
-      { role: "user", content: prompt }
-    ]);
+    // Build Mode = project = null
+    const result = await unifiedAI({
+      project: null,
+      messages
+    })
 
-    return NextResponse.json(result, { status: 200 });
-
-  } catch (error: any) {
-    console.error("[API /ai/lesson/build] Error:", error);
+    return NextResponse.json(result, { status: 200 })
+  } catch (err: any) {
+    console.error("❌ /api/ai/lesson/build error:", err)
     return NextResponse.json(
-      { error: "AI lesson builder failed." },
+      { error: err.message || "AI Build failed" },
       { status: 500 }
-    );
+    )
   }
 }
