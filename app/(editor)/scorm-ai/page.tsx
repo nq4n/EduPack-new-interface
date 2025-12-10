@@ -10,6 +10,7 @@ import {
   type ReactNode,
   type MouseEvent,
 } from "react"
+import { useSearchParams } from "next/navigation"
 import {
   DndContext,
   closestCenter,
@@ -58,6 +59,7 @@ import {
   LayoutDashboard,
   Clock,
   Loader2,
+  AlertCircle,
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner"
@@ -68,6 +70,8 @@ type Status = "draft" | "published"
 export default function ScormAIPage() {
   const { t, locale } = useLocale()
   const { supabase } = useSupabase()
+  const searchParams = useSearchParams()
+  const storagePath = useMemo(() => searchParams.get("path"), [searchParams])
 
   const initialProject: EditorProject = {
     id: `proj-${Date.now()}`,
@@ -143,6 +147,8 @@ export default function ScormAIPage() {
 
   // navbar toggle
   const [navVisible, setNavVisible] = useState(false)
+  const [loadingExternalProject, setLoadingExternalProject] = useState(false)
+  const [externalLoadError, setExternalLoadError] = useState<string | null>(null)
 
   useEffect(() => {
     const nav = document.getElementById("main-navbar")
@@ -159,6 +165,46 @@ export default function ScormAIPage() {
       nav.style.display = originalDisplay || ""
     }
   }, [navVisible])
+
+  const applyLoadedProject = useCallback((loaded: EditorProject) => {
+    setProject(loaded)
+    const firstPageId = loaded.pages?.[0]?.id
+    setActivePageId(firstPageId || "")
+    setEditorMode("ai")
+  }, [])
+
+  useEffect(() => {
+    if (!storagePath) return
+
+    const loadExistingProject = async () => {
+      try {
+        setLoadingExternalProject(true)
+        setExternalLoadError(null)
+        const response = await fetch("/api/scorm/load", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path: storagePath }),
+        })
+
+        const body = await response.json().catch(() => ({}))
+
+        if (!response.ok) {
+          throw new Error(body.error || "Failed to load package")
+        }
+
+        applyLoadedProject(body.project as EditorProject)
+        toast.success(t("scorm.ai.projectLoaded"))
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Failed to load package"
+        setExternalLoadError(message)
+        toast.error(message)
+      } finally {
+        setLoadingExternalProject(false)
+      }
+    }
+
+    loadExistingProject()
+  }, [storagePath, applyLoadedProject, t])
 
   const showHighlights = useCallback((ids: string[]) => {
     if (highlightTimerRef.current) {
@@ -1265,6 +1311,22 @@ ${
         {/* editor wrapper – no max width (takes full page) */}
         <div className="w-full h-full mx-auto flex flex-col">
           <div className="flex-1 relative flex flex-col">
+            {storagePath ? (
+              <div className="mb-3">
+                {loadingExternalProject ? (
+                  <div className="flex items-center gap-2 rounded-lg border border-border bg-white/80 px-3 py-2 text-sm text-muted-foreground shadow-sm">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Loading package preview...</span>
+                  </div>
+                ) : externalLoadError ? (
+                  <div className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive shadow-sm">
+                    <AlertCircle className="h-4 w-4" />
+                    <span>{externalLoadError}</span>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
             {/* top bar */}
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
