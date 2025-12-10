@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-const BUCKET_NAME = "scorm-packages"; // ⬅️ change if your bucket is named differently
+const BUCKET_NAME = "packages";
 const TABLE_NAME = "packages";
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
-    // 1) Auth
+    // 1) AUTH
     const {
       data: { user },
       error: userError,
@@ -21,24 +21,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2) Get project from editor
+    // 2) Parse incoming project
     const project = await req.json();
-
     if (!project || !project.title) {
       return NextResponse.json(
-        { error: "Project must at least have a title." },
+        { error: "Project must have a title." },
         { status: 400 }
       );
     }
 
-    const title: string = project.title;
-    const description: string = project.description ?? "";
+    const title = project.title;
+    const description = project.description ?? "";
 
-    let packageRow: any | null = null;
+    let packageRow = null;
 
-    // 3) If package_id exists → update row, else insert new
+    // ===============================================
+    // 3) IF UPDATING AN EXISTING PACKAGE
+    // ===============================================
     if (project.package_id) {
-      // UPDATE existing
       const { data, error } = await supabase
         .from(TABLE_NAME)
         .update({
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (error) {
-        console.error("Error updating package row:", error);
+        console.error("Update package row error:", error);
         return NextResponse.json(
           { error: "Failed to update package record." },
           { status: 500 }
@@ -60,21 +60,29 @@ export async function POST(req: NextRequest) {
       }
 
       packageRow = data;
-    } else {
-      // INSERT new
+    }
+
+    // ===============================================
+    // 4) IF CREATING A NEW PACKAGE → GENERATE BEFORE INSERT
+    // ===============================================
+    if (!packageRow) {
+      const generatedId = crypto.randomUUID();
+      const storagePath = `${user.id}/${generatedId}.json`;
+
       const { data, error } = await supabase
         .from(TABLE_NAME)
         .insert({
+          package_id: generatedId,
           title,
           description,
           created_by_user_id: user.id,
-          // is_listed_in_store, created_at, updated_at use defaults
+          storage_path: storagePath, // <-- NOT NULL
         })
         .select()
         .single();
 
       if (error) {
-        console.error("Error inserting package row:", error);
+        console.error("Insert package row error:", error);
         return NextResponse.json(
           { error: "Failed to create package record." },
           { status: 500 }
@@ -82,68 +90,45 @@ export async function POST(req: NextRequest) {
       }
 
       packageRow = data;
-      project.package_id = data.package_id; // make sure editor knows the id
+      project.package_id = data.package_id;
     }
 
-    // 4) Decide storage path (if empty, generate; if exists, reuse)
-    let storagePath = packageRow.storage_path as string | null;
-
-    if (!storagePath) {
-      storagePath = `${user.id}/${packageRow.package_id}.json`;
-
-      const { error: updatePathError } = await supabase
-        .from(TABLE_NAME)
-        .update({ storage_path: storagePath })
-        .eq("package_id", packageRow.package_id)
-        .eq("created_by_user_id", user.id);
-
-      if (updatePathError) {
-        console.error("Error updating storage_path:", updatePathError);
-        return NextResponse.json(
-          { error: "Failed to update package storage path." },
-          { status: 500 }
-        );
-      }
-
-      packageRow.storage_path = storagePath;
-    }
-
-    // 5) Save full project JSON into bucket
+    // ===============================================
+    // 5) SAVE PROJECT JSON IN STORAGE
+    // ===============================================
     const fileContent = JSON.stringify(
-      {
-        ...project,
-        package_id: packageRow.package_id,
-      },
+      { ...project, package_id: packageRow.package_id },
       null,
       2
     );
 
     const { error: storageError } = await supabase.storage
       .from(BUCKET_NAME)
-      .upload(storagePath, fileContent, {
+      .upload(packageRow.storage_path, fileContent, {
         contentType: "application/json",
         upsert: true,
       });
 
     if (storageError) {
-      console.error("Error saving package file:", storageError);
+      console.error("Storage save error:", storageError);
       return NextResponse.json(
-        { error: "Failed to save package content." },
+        { error: "Failed to save package content to storage." },
         { status: 500 }
       );
     }
 
-    // 6) Return DB row to the editor
+    // ===============================================
+    // 6) RETURN TO EDITOR
+    // ===============================================
     return NextResponse.json(
-      {
-        data: packageRow,
-      },
+      { data: packageRow },
       { status: 200 }
     );
-  } catch (err: any) {
-    console.error("Unexpected error in /api/scorm/save:", err);
+
+  } catch (err) {
+    console.error("Unexpected save error:", err);
     return NextResponse.json(
-      { error: err?.message ?? "Unexpected error" },
+      { error: "Unexpected error saving package." },
       { status: 500 }
     );
   }

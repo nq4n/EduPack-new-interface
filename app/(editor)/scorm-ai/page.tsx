@@ -173,38 +173,45 @@ export default function ScormAIPage() {
     setEditorMode("ai")
   }, [])
 
-  useEffect(() => {
-    if (!storagePath) return
+const hasLoadedRef = useRef(false);
 
-    const loadExistingProject = async () => {
-      try {
-        setLoadingExternalProject(true)
-        setExternalLoadError(null)
-        const response = await fetch("/api/scorm/load", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ path: storagePath }),
-        })
+useEffect(() => {
+  if (!storagePath) return;
+  if (hasLoadedRef.current) return; // <-- STOP DOUBLE LOAD
 
-        const body = await response.json().catch(() => ({}))
+  hasLoadedRef.current = true; // <-- mark as loaded
 
-        if (!response.ok) {
-          throw new Error(body.error || "Failed to load package")
-        }
+  const loadExistingProject = async () => {
+    try {
+      setLoadingExternalProject(true);
+      setExternalLoadError(null);
 
-        applyLoadedProject(body.project as EditorProject)
-        toast.success(t("scorm.ai.projectLoaded"))
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Failed to load package"
-        setExternalLoadError(message)
-        toast.error(message)
-      } finally {
-        setLoadingExternalProject(false)
+      const response = await fetch("/api/scorm/load", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: storagePath }),
+      });
+
+      const body = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(body.error || "Failed to load package");
       }
-    }
 
-    loadExistingProject()
-  }, [storagePath, applyLoadedProject, t])
+      applyLoadedProject(body.project as EditorProject);
+      toast.success(t("scorm.ai.projectLoaded"));
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Failed to load package";
+      setExternalLoadError(message);
+      toast.error(message);
+    } finally {
+      setLoadingExternalProject(false);
+    }
+  };
+
+  loadExistingProject();
+}, [storagePath, applyLoadedProject, t]);
 
   const showHighlights = useCallback((ids: string[]) => {
     if (highlightTimerRef.current) {

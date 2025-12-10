@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import path from "path";
 
-const BUCKET_NAME = "scorm-packages";
+const BUCKET_NAME = "packages";
 
 function normalizeStoragePath(rawPath: string | null): string | null {
   if (!rawPath) return null;
@@ -23,7 +23,7 @@ function normalizeStoragePath(rawPath: string | null): string | null {
     console.warn("Unable to parse storage path URL, falling back to raw value", parseErr);
   }
 
-  cleaned = cleaned.replace(/^\/?scorm-packages\//, "").replace(/^\/+/, "");
+  cleaned = cleaned.replace(/^\/?packages\//, "").replace(/^\/+/, "");
 
   return cleaned || null;
 }
