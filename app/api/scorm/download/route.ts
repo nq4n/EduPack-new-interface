@@ -4,6 +4,30 @@ import path from "path";
 
 const BUCKET_NAME = "scorm-packages";
 
+function normalizeStoragePath(rawPath: string | null): string | null {
+  if (!rawPath) return null;
+
+  let cleaned = rawPath.trim();
+
+  try {
+    if (cleaned.startsWith("http://") || cleaned.startsWith("https://")) {
+      const url = new URL(cleaned);
+      const parts = url.pathname.split("/").filter(Boolean);
+      const objectIndex = parts.findIndex((part) => part === "object");
+
+      if (objectIndex !== -1) {
+        cleaned = parts.slice(objectIndex + 1).join("/");
+      }
+    }
+  } catch (parseErr) {
+    console.warn("Unable to parse storage path URL, falling back to raw value", parseErr);
+  }
+
+  cleaned = cleaned.replace(/^\/?scorm-packages\//, "").replace(/^\/+/, "");
+
+  return cleaned || null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
@@ -37,7 +61,7 @@ export async function POST(req: NextRequest) {
       storagePath = req.nextUrl.searchParams.get("path");
     }
 
-    const normalizedPath = storagePath?.replace(/^\/?scorm-packages\//, "");
+    const normalizedPath = normalizeStoragePath(storagePath);
 
     if (!normalizedPath) {
       return NextResponse.json({ error: "Missing file path" }, { status: 400 });

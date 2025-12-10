@@ -1,6 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+function normalizeStoragePath(rawPath: string | null): string | null {
+  if (!rawPath) return null;
+
+  let cleaned = rawPath.trim();
+
+  // Support callers that pass a full Supabase URL
+  try {
+    if (cleaned.startsWith("http://") || cleaned.startsWith("https://")) {
+      const url = new URL(cleaned);
+      const parts = url.pathname.split("/").filter(Boolean);
+      const objectIndex = parts.findIndex((part) => part === "object");
+
+      if (objectIndex !== -1) {
+        cleaned = parts.slice(objectIndex + 1).join("/");
+      }
+    }
+  } catch (parseErr) {
+    console.warn("Unable to parse storage path URL, falling back to raw value", parseErr);
+  }
+
+  cleaned = cleaned.replace(/^\/?scorm-packages\//, "").replace(/^\/+/, "");
+
+  return cleaned || null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const supabase = await createClient();
@@ -42,7 +67,7 @@ export async function POST(req: NextRequest) {
       path = req.nextUrl.searchParams.get("path");
     }
 
-    const normalizedPath = path?.replace(/^\/?scorm-packages\//, "");
+    const normalizedPath = normalizeStoragePath(path);
 
     if (!normalizedPath) {
       return NextResponse.json(
