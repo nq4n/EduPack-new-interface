@@ -6,17 +6,20 @@ import { EditorProject } from "@/lib/scorm/types"
 import { PackageViewer } from "@/components/scorm/package-viewer"
 import { Button } from "@/components/ui/button"
 import { Package, Download, Eye, Loader2, X, AlertCircle } from "lucide-react"
+import { getProfileStrings, ProfileLanguage } from "../strings"
 import { OwnedPackage } from "./types"
 
 interface OwnedPackagesClientProps {
   packages: OwnedPackage[]
+  language: ProfileLanguage
 }
 
-export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
+export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientProps) {
   const [previewPackage, setPreviewPackage] = useState<OwnedPackage | null>(null)
   const [previewProject, setPreviewProject] = useState<EditorProject | null>(null)
   const [loadingPreview, setLoadingPreview] = useState(false)
   const [previewError, setPreviewError] = useState<string | null>(null)
+  const strings = useMemo(() => getProfileStrings(language), [language])
 
   const sortedPackages = useMemo(() => {
     return [...packages].sort(
@@ -30,7 +33,7 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
     setPreviewError(null)
 
     if (!pkg.storage_path) {
-      setPreviewError("No storage path found for this package.")
+      setPreviewError(strings.packages.noPathError)
       return
     }
 
@@ -47,12 +50,12 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
       const body = await response.json().catch(() => ({}))
 
       if (!response.ok) {
-        throw new Error(body.error || "Failed to load package")
+        throw new Error(body.error || strings.packages.loadErrorFallback)
       }
 
       setPreviewProject(body.project as EditorProject)
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to load package"
+      const message = err instanceof Error ? err.message : strings.packages.loadErrorFallback
       setPreviewError(message)
     } finally {
       setLoadingPreview(false)
@@ -82,7 +85,11 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
                 )}
 
                 <p className="text-sm text-muted-foreground">
-                  Created: {new Date(pkg.created_at).toLocaleDateString()}
+                  {strings.packages.createdAt}{" "}
+                  {new Intl.DateTimeFormat(
+                    language === "ar" ? "ar-EG" : undefined,
+                    { dateStyle: "medium" },
+                  ).format(new Date(pkg.created_at))}
                 </p>
               </div>
 
@@ -91,7 +98,7 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
                   <input type="hidden" name="path" value={pkg.storage_path ?? ""} />
                   <Button variant="outline" size="sm" type="submit">
                     <Download className="mr-2 h-4 w-4" />
-                    Download
+                    {strings.packages.download}
                   </Button>
                 </form>
 
@@ -102,7 +109,7 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
                   onClick={() => handleViewPackage(pkg)}
                 >
                   <Eye className="mr-2 h-4 w-4" />
-                  View
+                  {strings.packages.view}
                 </Button>
               </div>
             </div>
@@ -111,12 +118,12 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
       ) : (
         <div className="text-center py-12">
           <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">No packages yet</h3>
-          <p className="text-muted-foreground mb-6">
-            You haven&apos;t created any packages yet. Start building your first SCORM package.
-          </p>
+          <h3 className="text-lg font-semibold text-foreground mb-2">
+            {strings.packages.noPackagesTitle}
+          </h3>
+          <p className="text-muted-foreground mb-6">{strings.packages.noPackagesBody}</p>
           <Button asChild>
-            <Link href="/editor">Create New Package</Link>
+            <Link href="/editor">{strings.packages.createPackage}</Link>
           </Button>
         </div>
       )}
@@ -128,7 +135,7 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
               type="button"
               onClick={closePreview}
               className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
-              aria-label="Close preview"
+              aria-label={strings.packages.close}
             >
               <X className="h-5 w-5" />
             </button>
@@ -144,7 +151,7 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
               {loadingPreview ? (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Loading package...</span>
+                  <span>{strings.packages.loading}</span>
                 </div>
               ) : previewError ? (
                 <div className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm">
@@ -155,24 +162,24 @@ export function OwnedPackagesClient({ packages }: OwnedPackagesClientProps) {
                 <PackageViewer project={previewProject} />
               ) : (
                 <div className="rounded-lg border border-dashed border-border p-6 text-center text-muted-foreground">
-                  Select a package to preview.
+                  {strings.packages.selectToPreview}
                 </div>
               )}
             </div>
 
             <div className="mt-6 flex justify-end gap-2">
               <Button variant="outline" onClick={closePreview} type="button">
-                Close
+                {strings.packages.close}
               </Button>
               {previewPackage.storage_path ? (
                 <Button asChild>
                   <Link href={`/scorm-ai?path=${encodeURIComponent(previewPackage.storage_path)}`}>
-                    Open in editor
+                    {strings.packages.openInEditor}
                   </Link>
                 </Button>
               ) : (
-                <Button disabled title="Package is missing a storage path">
-                  Open in editor
+                <Button disabled title={strings.packages.missingPath}>
+                  {strings.packages.openInEditor}
                 </Button>
               )}
             </div>
