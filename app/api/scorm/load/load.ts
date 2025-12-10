@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // 1) authenticate user
     const {
@@ -18,10 +18,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 2) read file path from request body
-    const { path } = await req.json();
+    // 2) read file path from request body or query
+    const contentType = req.headers.get("content-type")?.toLowerCase() ?? "";
+    let path: string | null = null;
+
+    try {
+      if (contentType.includes("application/json")) {
+        const body = await req.json();
+        path = typeof body?.path === "string" ? body.path : null;
+      } else if (
+        contentType.includes("application/x-www-form-urlencoded") ||
+        contentType.includes("multipart/form-data")
+      ) {
+        const formData = await req.formData();
+        const value = formData.get("path");
+        path = typeof value === "string" ? value : value?.toString() ?? null;
+      }
+    } catch (parseError) {
+      console.error("Failed to parse request body for load:", parseError);
+    }
 
     if (!path) {
+      path = req.nextUrl.searchParams.get("path");
+    }
+
+    const normalizedPath = path?.replace(/^\/?scorm-packages\//, "");
+
+    if (!normalizedPath) {
       return NextResponse.json(
         { error: "Missing file path" },
         { status: 400 }
@@ -31,7 +54,7 @@ export async function POST(req: NextRequest) {
     // 3) download JSON package from bucket
     const { data, error } = await supabase.storage
       .from("scorm-packages")
-      .download(path);
+      .download(normalizedPath);
 
     if (error) {
       console.error("Storage error:", error);
