@@ -10,13 +10,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getUserProfile, updateUserProfile } from "@/lib/user-profile"
 
+import { getProfileStrings, normalizeLanguage } from "./strings"
+import { usePreferredLanguage } from "./use-preferred-language"
+
 const languageOptions = [
   { label: "English", value: "en" },
   { label: "Arabic", value: "ar" },
 ]
-
-const normalizeLanguage = (language: string) =>
-  language?.toLowerCase().startsWith("ar") ? "ar" : "en"
 
 type ProfileFormState = {
   fullName: string
@@ -31,14 +31,27 @@ export default function ProfilePage() {
 function PersonalInfoPanel() {
   const { user } = useSupabase()
   const router = useRouter()
+  const { language: preferredLanguage } = usePreferredLanguage("en")
   const [form, setForm] = useState<ProfileFormState>({
     fullName: "",
     email: "",
-    preferredLanguage: "",
+    preferredLanguage: preferredLanguage,
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setForm((current) => ({
+      ...current,
+      preferredLanguage: current.preferredLanguage || preferredLanguage,
+    }))
+  }, [preferredLanguage])
+
+  const strings = useMemo(
+    () => getProfileStrings(form.preferredLanguage || preferredLanguage),
+    [form.preferredLanguage, preferredLanguage],
+  )
 
   const isLoggedOut = useMemo(() => !user, [user])
 
@@ -52,12 +65,12 @@ function PersonalInfoPanel() {
     setError(null)
     const { data: profile, error } = await getUserProfile(user.id)
     if (error) {
-      setError("Could not load your profile. Please try again.")
+      setError(strings.overview.errorLoading)
     } else if (profile) {
       initializeForm(profile)
     }
     setLoading(false)
-  }, [user])
+  }, [strings.overview.errorLoading, user])
 
   useEffect(() => {
     loadProfile()
@@ -89,7 +102,7 @@ function PersonalInfoPanel() {
 
   const handleSave = async () => {
     if (!user) {
-      setError("You must be logged in to update your profile.")
+      setError(strings.overview.mustBeLoggedIn)
       return
     }
 
@@ -104,11 +117,11 @@ function PersonalInfoPanel() {
     setSaving(false)
 
     if (error) {
-      setError("Failed to save your changes. Please try again.")
+      setError(strings.overview.errorLoading)
       return
     }
 
-    toast.success("Profile updated")
+    toast.success(strings.overview.profileUpdated)
     await loadProfile()
     router.refresh()
   }
@@ -116,10 +129,10 @@ function PersonalInfoPanel() {
   if (isLoggedOut) {
     return (
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Profile</h2>
-        <p className="text-muted-foreground">
-          Please sign in to view your profile.
-        </p>
+        <h2 className="text-2xl font-bold text-foreground">
+          {strings.overview.signInHeading}
+        </h2>
+        <p className="text-muted-foreground">{strings.overview.signInMessage}</p>
       </div>
     )
   }
@@ -127,10 +140,12 @@ function PersonalInfoPanel() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Profile</h2>
+        <h2 className="text-2xl font-bold text-foreground">
+          {strings.overview.loadingHeading}
+        </h2>
         <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Syncing your profile with the database...</span>
+          <span>{strings.overview.loadingMessage}</span>
         </div>
       </div>
     )
@@ -140,20 +155,20 @@ function PersonalInfoPanel() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-foreground mb-6">
-          Personal Information
+          {strings.overview.personalInfo}
         </h2>
 
         {/* Avatar */}
         <div className="mb-8">
           <label className="block text-sm font-semibold text-foreground mb-2">
-            Profile Picture
+            {strings.overview.profilePicture}
           </label>
           <div className="flex items-center gap-4">
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
               <User className="h-10 w-10 text-primary" />
             </div>
             <Button variant="outline" size="sm" disabled>
-              Upload Photo
+              {strings.overview.uploadPhoto}
             </Button>
           </div>
         </div>
@@ -162,7 +177,7 @@ function PersonalInfoPanel() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-foreground mb-2">
-              Full Name
+              {strings.overview.fullName}
             </label>
             <Input
               value={form.fullName}
@@ -172,13 +187,13 @@ function PersonalInfoPanel() {
           </div>
           <div>
             <label className="block text-sm font-semibold text-foreground mb-2">
-              Email
+              {strings.overview.email}
             </label>
             <Input value={form.email} type="email" disabled />
           </div>
           <div className="md:col-span-2">
             <label className="block text-sm font-semibold text-foreground mb-2">
-              Preferred Language
+              {strings.overview.preferredLanguage}
             </label>
             <select
               className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
@@ -187,9 +202,9 @@ function PersonalInfoPanel() {
               disabled={loading}
             >
               <option value="" disabled>
-                Select a language
+                {strings.overview.selectLanguage}
               </option>
-              {languageOptions.map((language) => (
+              {(strings.overview.languageOptions ?? languageOptions).map((language) => (
                 <option key={language.value} value={language.value}>
                   {language.label}
                 </option>
@@ -202,7 +217,7 @@ function PersonalInfoPanel() {
 
         <div className="pt-6">
           <Button onClick={handleSave} disabled={loading || saving}>
-            {saving ? "Saving..." : "Save Changes"}
+            {saving ? strings.overview.saving : strings.overview.saveChanges}
           </Button>
         </div>
       </div>
