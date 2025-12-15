@@ -83,12 +83,20 @@ Return ONLY JSON:
   }
 }
 
+SCORM block schema (all inserted blocks must follow one of these):
+- Text → { "id": "...", "type": "text", "html": "...", "style?": any }
+- Image → { "id": "...", "type": "image", "src": "https://...", "alt?": "..." }
+- Video → { "id": "...", "type": "video", "src": "https://..." }
+- Quiz → { "id": "...", "type": "quiz", "question": "...", "options": [{ "id": "...", "label": "...", "correct?": bool }], "questionHtml?": "...", "style?": any, "optionStyle?": any }
+- Interactive → { "id": "...", "type": "interactive", "variant": "button"|"callout"|"reveal"|"custom", "label": "...", "url?": "...", "bodyHtml?": "...", "initiallyOpen?": bool, "tone?": "info"|"success"|"warning"|"danger", "style?": any }
+
 Rules:
-- Always include id for project/pages/blocks depends on the user request.
+- Always include ids for project/pages/blocks.
 - Use multiple pages.
 - Add quizzes, examples, images if helpful.
+- Never leave html/src/question empty; fill every block field with meaningful content.
 - Do not include explanations outside JSON.
-- when you insert images use open reouse links don't make it empty
+- When you insert images use open resource links; don't make them empty.
 `
   }
 
@@ -114,6 +122,7 @@ Rules:
 - Do NOT overwrite old pages.
 - No full project output.
 - IDs must be unique.
+- Every block inside appendPage must follow the SCORM block schema listed above.
 `
   }
 
@@ -146,7 +155,8 @@ Rules:
 - ONLY modify or add.
 - Output must be pure JSON.
 - Do not include explanations outside JSON
-- when you insert images use open reouse links don't make it empty
+- When you appendBlock, the block must follow the SCORM block schema listed above and include a non-empty id and content.
+- when you insert images use open resource links don't make it empty
 
 `
 }
