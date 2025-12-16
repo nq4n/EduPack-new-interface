@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { EditorPage, EditorProject } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
 import { Button } from "@/components/ui/button"
@@ -14,20 +14,46 @@ interface PackageViewerProps {
 
 export function PackageViewer({ project, className }: PackageViewerProps) {
   const { t } = useLocale()
+  const [editableProject, setEditableProject] = useState(project)
   const [activePageId, setActivePageId] = useState<string>(
-    project.pages?.[0]?.id ?? ""
+    project.pages?.[0]?.id ?? "",
   )
 
-  const activePage: EditorPage | null = useMemo(() => {
-    return project.pages?.find((page) => page.id === activePageId) ?? null
-  }, [activePageId, project.pages])
+  useEffect(() => {
+    setEditableProject(project)
 
-  const isRtl = project.theme?.direction === "rtl"
+    setActivePageId((current) => {
+      if (project.pages?.some((page) => page.id === current)) return current
+      return project.pages?.[0]?.id ?? ""
+    })
+  }, [project])
+
+  const handleTextChange = useCallback((blockId: string, html: string) => {
+    setEditableProject((prev) => ({
+      ...prev,
+      pages:
+        prev.pages?.map((page) => ({
+          ...page,
+          blocks:
+            page.blocks?.map((block) =>
+              block.id === blockId && block.type === "text"
+                ? { ...block, html }
+                : block,
+            ) || [],
+        })) || [],
+    }))
+  }, [])
+
+  const activePage: EditorPage | null = useMemo(() => {
+    return editableProject.pages?.find((page) => page.id === activePageId) ?? null
+  }, [activePageId, editableProject.pages])
+
+  const isRtl = editableProject.theme?.direction === "rtl"
 
   return (
     <div className={className} dir={isRtl ? "rtl" : undefined}>
       <div className="flex flex-wrap items-center gap-2 mb-3">
-        {project.pages?.map((page, index) => {
+        {editableProject.pages?.map((page, index) => {
           const label = page.title || t("shop.preview.untitledPage") || t("scorm.ai.introduction")
           return (
             <Button
@@ -51,7 +77,11 @@ export function PackageViewer({ project, className }: PackageViewerProps) {
           <div className="space-y-4">
             {activePage.blocks.map((block) => (
               <div key={block.id} className="rounded-2xl border bg-background px-4 py-3">
-                <BlockRenderer block={block} theme={project.theme} />
+                <BlockRenderer
+                  block={block}
+                  theme={editableProject.theme}
+                  onTextChange={handleTextChange}
+                />
               </div>
             ))}
           </div>

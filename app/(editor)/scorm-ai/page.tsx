@@ -1595,7 +1595,7 @@ ${
                           items={activeBlocks.map((b) => b.id)}
                           strategy={verticalListSortingStrategy}
                         >
-                          <div className="flex flex-wrap gap-4">
+                          <div className="flex flex-col gap-4">
                             {activeBlocks.map((block) => {
                               const isSelected = selectedBlock?.id === block.id
                               const isHighlighted =
