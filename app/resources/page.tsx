@@ -59,18 +59,21 @@ export default function ResourcesPage() {
         icon: <FileText className="h-5 w-5" />,
         title: t("resources.reading.api.title"),
         description: t("resources.reading.api.description"),
+        content: t("resources.reading.api.content"),
         href: "https://api.edupack.app/docs"
       },
       {
         icon: <BookOpen className="h-5 w-5" />,
         title: t("resources.reading.scorm.title"),
         description: t("resources.reading.scorm.description"),
+        content: t("resources.reading.scorm.content"),
         href: "https://scorm.com/scorm-explained/technical-scorm/"
       },
       {
         icon: <FileText className="h-5 w-5" />,
         title: t("resources.reading.bestPractices.title"),
         description: t("resources.reading.bestPractices.description"),
+        content: t("resources.reading.bestPractices.content"),
         href: "https://help.edupack.app/best-practices"
       }
     ],
@@ -303,7 +306,19 @@ function GuideCard({
   )
 }
 
-function DocLink({ icon, title, description, href }: { icon: React.ReactNode; title: string; description: string; href: string }) {
+function DocLink({
+  icon,
+  title,
+  description,
+  content,
+  href,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+  content?: string
+  href: string
+}) {
   const isExternal = href.startsWith("http")
   return (
     <Link
@@ -318,6 +333,7 @@ function DocLink({ icon, title, description, href }: { icon: React.ReactNode; ti
       </div>
       <h3 className="font-semibold text-foreground mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground">{description}</p>
+      {content && <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{content}</p>}
     </Link>
   )
 }
