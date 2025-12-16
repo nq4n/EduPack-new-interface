@@ -1,15 +1,17 @@
 "use client"
 
 import React from "react"
-import { InteractiveBlock, InteractiveVariant } from "@/lib/scorm/types"
+import { EditorPage, InteractiveBlock, InteractiveVariant } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface InteractivePanelProps {
   block: InteractiveBlock
   onChange: (updated: InteractiveBlock) => void
+  pages: EditorPage[]
 }
 
-export default function InteractivePanel({ block, onChange }: InteractivePanelProps) {
+export default function InteractivePanel({ block, onChange, pages }: InteractivePanelProps) {
   const style = block.style || {}
   const { t } = useLocale()
 
@@ -80,22 +82,69 @@ export default function InteractivePanel({ block, onChange }: InteractivePanelPr
       {/* BUTTON SETTINGS */}
       {block.variant === "button" && (
         <div>
-          <label className="block mb-1 text-xs">
-            {t("scorm.panels.interactive.link") || "Link (optional)"}
+          <label className="block mb-1 text-xs font-semibold text-slate-700">
+            {t("scorm.panels.interactive.buttonAction") || "Button action"}
           </label>
-          <input
-            type="text"
-            className="w-full border rounded px-2 py-1 text-xs"
-            placeholder={
-              t("scorm.panels.interactive.linkPlaceholder") || "https://..."
+          <select
+            className="w-full border rounded px-2 py-1 text-xs mb-2"
+            value={block.action || (block.targetPageId ? "page" : "link")}
+            onChange={(e) =>
+              updateBlock({ action: e.target.value as InteractiveBlock["action"] })
             }
-            value={block.url || ""}
-            onChange={(e) => updateBlock({ url: e.target.value })}
-          />
-          <p className="text-[11px] text-slate-400 mt-1">
-            {t("scorm.panels.interactive.linkHelp") ||
-              "If you leave this empty, the button will only look clickable and not open anything."}
-          </p>
+          >
+            <option value="link">{t("scorm.panels.interactive.action.link") || "Open link"}</option>
+            <option value="page">{t("scorm.panels.interactive.action.page") || "Go to page"}</option>
+            <option value="none">{t("scorm.panels.interactive.action.none") || "Do nothing"}</option>
+          </select>
+
+          {(block.action || "link") === "link" && (
+            <div className="space-y-1">
+              <label className="block mb-1 text-xs">
+                {t("scorm.panels.interactive.link") || "Link (optional)"}
+              </label>
+              <input
+                type="text"
+                className="w-full border rounded px-2 py-1 text-xs"
+                placeholder={
+                  t("scorm.panels.interactive.linkPlaceholder") || "https://..."
+                }
+                value={block.url || ""}
+                onChange={(e) =>
+                  updateBlock({ url: e.target.value, targetPageId: undefined })
+                }
+              />
+              <p className="text-[11px] text-slate-400 mt-1">
+                {t("scorm.panels.interactive.linkHelp") ||
+                  "If you leave this empty, the button will only look clickable and not open anything."}
+              </p>
+            </div>
+          )}
+
+          {(block.action || "link") === "page" && (
+            <div className="space-y-1">
+              <label className="block mb-1 text-xs">
+                {t("scorm.panels.interactive.pageTarget") || "Choose target page"}
+              </label>
+              <select
+                className="w-full border rounded px-2 py-1 text-xs"
+                value={block.targetPageId || ""}
+                onChange={(e) =>
+                  updateBlock({ targetPageId: e.target.value, url: "" })
+                }
+              >
+                <option value="">{t("scorm.panels.interactive.pagePlaceholder") || "Select a page"}</option>
+                {pages.map((page) => (
+                  <option key={page.id} value={page.id}>
+                    {page.title}
+                  </option>
+                ))}
+              </select>
+              <p className="text-[11px] text-slate-400">
+                {t("scorm.panels.interactive.pageHelp") ||
+                  "Learners will jump directly to the selected page when they click this button."}
+              </p>
+            </div>
+          )}
         </div>
       )}
 
@@ -209,21 +258,17 @@ export default function InteractivePanel({ block, onChange }: InteractivePanelPr
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">
-          {t("scorm.panels.interactive.background") || "Background color"}
-        </label>
-        <input
-          type="color"
-          className="w-full h-8 border rounded"
-          value={
-            style.background ||
-            (block.variant === "button"
+        <ColorInput
+          label={t("scorm.panels.interactive.background") || "Background color"}
+          value={style.background || ""}
+          defaultColor={
+            block.variant === "button"
               ? "#0ea5e9"
               : block.variant === "custom"
                 ? "#ffffff"
-                : "#eef2ff")
+                : "#eef2ff"
           }
-          onChange={(e) => updateStyle("background", e.target.value)}
+          onChange={(value) => updateStyle("background", value)}
         />
 
         <div className="flex items-center gap-2 mt-1">

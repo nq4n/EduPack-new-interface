@@ -161,6 +161,7 @@ export function PropertiesPanel({
         return (
           <InteractivePanel
             block={selectedBlock as InteractiveBlock}
+            pages={project.pages}
             onChange={(updated) => onBlockChange(updated as EditorBlock)}
           />
         )

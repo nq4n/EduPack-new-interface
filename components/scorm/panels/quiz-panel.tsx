@@ -4,6 +4,7 @@ import React from "react"
 import { QuizBlock, TextBlock } from "@/lib/scorm/types"
 import TextPanel from "@/components/scorm/panels/text-panel"
 import { useLocale } from "@/hooks/use-locale"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface QuizPanelProps {
   block: QuizBlock
@@ -187,12 +188,11 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
           onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
         />
 
-        <label className="text-xs">{t("scorm.panels.quiz.background") || "Background Color"}</label>
-        <input
-          type="color"
-          className="w-full h-8 border rounded"
-          value={style.background || "#f9fafb"}
-          onChange={(e) => updateStyle("background", e.target.value)}
+        <ColorInput
+          label={t("scorm.panels.quiz.background") || "Background Color"}
+          value={style.background || ""}
+          defaultColor="#f9fafb"
+          onChange={(value) => updateStyle("background", value)}
         />
 
         <div className="flex items-center gap-2 mt-1">
@@ -284,17 +284,12 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
         </div>
 
         {/* Color */}
-        <div>
-          <p className="text-[11px] mt-1 mb-1">
-            {t("scorm.panels.quiz.color") || "Text color"}
-          </p>
-          <input
-            type="color"
-            className="w-full h-8 border rounded"
-            value={optionStyle.color || "#111827"}
-            onChange={(e) => updateOptionStyle("color", e.target.value)}
-          />
-        </div>
+        <ColorInput
+          label={t("scorm.panels.quiz.color") || "Text color"}
+          value={optionStyle.color || ""}
+          defaultColor="#111827"
+          onChange={(value) => updateOptionStyle("color", value)}
+        />
       </div>
     </div>
   )

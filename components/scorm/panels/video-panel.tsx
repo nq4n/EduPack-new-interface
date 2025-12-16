@@ -3,6 +3,7 @@
 import React from "react"
 import { VideoBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface VideoPanelProps {
   block: VideoBlock
@@ -141,14 +142,11 @@ export default function VideoPanel({ block, onChange }: VideoPanelProps) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        <label className="text-xs mt-2">
-          {t("scorm.panels.video.background") || "Background Color"}
-        </label>
-        <input
-          type="color"
-          className="w-full h-8 border rounded"
-          value={style.background || "#ffffff"}
-          onChange={(e) => updateStyle("background", e.target.value)}
+        <ColorInput
+          label={t("scorm.panels.video.background") || "Background Color"}
+          value={style.background || ""}
+          defaultColor="#ffffff"
+          onChange={(value) => updateStyle("background", value)}
         />
       </div>
 
