@@ -16,9 +16,16 @@ interface Props {
   onClick?: (b: EditorBlock) => void
   theme?: EditorProject["theme"]
   onNavigateToPage?: (pageId: string) => void
+  onTextChange?: (blockId: string, html: string) => void
 }
 
-export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props) {
+export function BlockRenderer({
+  block,
+  onClick,
+  theme,
+  onNavigateToPage,
+  onTextChange,
+}: Props) {
   const select = () => onClick?.(block)
 
   /* ========= TEXT ========= */
@@ -43,10 +50,24 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
       ...style,
     }
 
+    const handleTextInput = (
+      event: React.FormEvent<HTMLDivElement>,
+    ) => {
+      if (!onTextChange) return
+      const target = event.target as HTMLDivElement
+      onTextChange(b.id, target.innerHTML)
+    }
+
     return (
       <div
         onClick={select}
-        className="prose prose-sm max-w-none"
+        contentEditable={Boolean(onTextChange)}
+        suppressContentEditableWarning
+        onInput={handleTextInput}
+        onBlur={handleTextInput}
+        role={onTextChange ? "textbox" : undefined}
+        tabIndex={onTextChange ? 0 : undefined}
+        className={`prose prose-sm max-w-none ${onTextChange ? "cursor-text" : ""}`}
         style={styleObj}
         dangerouslySetInnerHTML={{ __html: b.html || "" }}
       />
