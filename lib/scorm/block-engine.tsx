@@ -16,15 +16,43 @@ interface Props {
   onClick?: (b: EditorBlock) => void
   theme?: EditorProject["theme"]
   onNavigateToPage?: (pageId: string) => void
+  onTextChange?: (blockId: string, html: string) => void
 }
 
-export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props) {
+const buildAnimationStyle = (style?: any): React.CSSProperties => {
+  if (!style || !style.animation || style.animation === "none") return {}
+
+  const name = style.animation === "fade" ? "scormFadeIn" : style.animation
+  return {
+    animationName: name,
+    animationDuration: style.animationDuration || "0.6s",
+    animationDelay: style.animationDelay || "0s",
+    animationFillMode: "both",
+    animationTimingFunction: "ease",
+  }
+}
+
+const stripAnimationProps = (style?: any) => {
+  if (!style) return {}
+  const { animation, animationDuration, animationDelay, ...rest } = style
+  return rest
+}
+
+export function BlockRenderer({
+  block,
+  onClick,
+  theme,
+  onNavigateToPage,
+  onTextChange,
+}: Props) {
   const select = () => onClick?.(block)
 
   /* ========= TEXT ========= */
   if (block.type === "text") {
     const b = block as TextBlock
-    const style = b.style || {}
+    const rawStyle = b.style || {}
+    const style = stripAnimationProps(rawStyle)
+    const animationStyles = buildAnimationStyle(rawStyle)
     const themeStyles = theme?.styles || {}
 
     const styleObj: React.CSSProperties = {
@@ -40,13 +68,28 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
       padding: style.padding,
       borderRadius: style.radius,
       lineHeight: style.lineHeight,
+      ...animationStyles,
       ...style,
+    }
+
+    const handleTextInput = (
+      event: React.FormEvent<HTMLDivElement>,
+    ) => {
+      if (!onTextChange) return
+      const target = event.target as HTMLDivElement
+      onTextChange(b.id, target.innerHTML)
     }
 
     return (
       <div
         onClick={select}
-        className="prose prose-sm max-w-none"
+        contentEditable={Boolean(onTextChange)}
+        suppressContentEditableWarning
+        onInput={handleTextInput}
+        onBlur={handleTextInput}
+        role={onTextChange ? "textbox" : undefined}
+        tabIndex={onTextChange ? 0 : undefined}
+        className={`prose prose-sm max-w-none ${onTextChange ? "cursor-text" : ""}`}
         style={styleObj}
         dangerouslySetInnerHTML={{ __html: b.html || "" }}
       />
@@ -56,7 +99,9 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
   /* ========= IMAGE ========= */
   if (block.type === "image") {
     const b = block as ImageBlock
-    const style = b.style || {}
+    const rawStyle = b.style || {}
+    const style = stripAnimationProps(rawStyle)
+    const animationStyles = buildAnimationStyle(rawStyle)
     const containerStyle: React.CSSProperties = {
       textAlign:
         style.align === "center"
@@ -70,6 +115,8 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
       boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
       width: style.width,
       maxWidth: style.maxWidth,
+      ...animationStyles,
+      ...style,
     }
     const mediaStyle: React.CSSProperties = {
       borderRadius: style.radius,
@@ -97,20 +144,35 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
   /* ========= VIDEO ========= */
   if (block.type === "video") {
     const b = block as VideoBlock
-    const style = b.style || {}
+    const rawStyle = b.style || {}
+    const { autoplay, controls: showControls, loop, muted, ...style } =
+      stripAnimationProps(rawStyle)
+    const animationStyles = buildAnimationStyle(rawStyle)
     const containerStyle: React.CSSProperties = {
+      textAlign:
+        style.align === "center"
+          ? "center"
+          : style.align === "right"
+            ? "right"
+            : "left",
       padding: style.padding,
       background: style.background,
       borderRadius: style.radius,
       boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
       width: style.width,
       maxWidth: style.maxWidth,
+      color: style.color,
+      ...animationStyles,
+      ...style,
     }
     return (
       <div onClick={select} style={containerStyle}>
         <video
           src={b.src}
-          controls
+          controls={showControls !== false}
+          autoPlay={autoplay === true}
+          loop={loop === true}
+          muted={muted === true}
           className="w-full rounded-xl border bg-black"
         />
       </div>
@@ -120,7 +182,9 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
   /* ========= QUIZ ========= */
   if (block.type === "quiz") {
     const b = block as QuizBlock
-    const style = b.style || {}
+    const rawStyle = b.style || {}
+    const style = stripAnimationProps(rawStyle)
+    const animationStyles = buildAnimationStyle(rawStyle)
     const optionStyle = b.optionStyle || {}
     const containerStyle: React.CSSProperties = {
       padding: style.padding || "12px",
@@ -129,6 +193,10 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
       boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
       width: style.width,
       maxWidth: style.maxWidth,
+      textAlign: style.align as React.CSSProperties["textAlign"],
+      color: style.color,
+      ...animationStyles,
+      ...style,
     }
     const optionStyleObj: React.CSSProperties = {
       fontWeight: optionStyle.bold ? "bold" : undefined,
@@ -167,7 +235,9 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
   /* ========= INTERACTIVE ========= */
   if (block.type === "interactive") {
     const b = block as InteractiveBlock
-    const style = b.style || {}
+    const rawStyle = b.style || {}
+    const style = stripAnimationProps(rawStyle)
+    const animationStyles = buildAnimationStyle(rawStyle)
 
     /* General shape */
     const styleObj: React.CSSProperties = {
@@ -186,6 +256,10 @@ export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props
       cursor: "pointer",
       width: style.width,
       maxWidth: style.maxWidth,
+      textAlign: style.align as React.CSSProperties["textAlign"],
+      color: style.color,
+      ...animationStyles,
+      ...style,
     };
 
     /* ---- BUTTON ---- */

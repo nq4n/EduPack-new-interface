@@ -5,6 +5,7 @@ import { QuizBlock, TextBlock } from "@/lib/scorm/types"
 import TextPanel from "@/components/scorm/panels/text-panel"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
+import AnimationControls from "@/components/scorm/panels/animation-controls"
 
 interface QuizPanelProps {
   block: QuizBlock
@@ -195,6 +196,13 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
           onChange={(value) => updateStyle("background", value)}
         />
 
+        <ColorInput
+          label={t("scorm.panels.quiz.textColor") || "Text color"}
+          value={style.color || ""}
+          defaultColor="#0f172a"
+          onChange={(value) => updateStyle("color", value)}
+        />
+
         <div className="flex items-center gap-2 mt-1">
           <input
             type="checkbox"
@@ -202,6 +210,27 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
             onChange={(e) => updateStyle("shadow", e.target.checked)}
           />
           <span className="text-xs">{t("scorm.panels.quiz.shadow") || "Shadow"}</span>
+        </div>
+
+        <div>
+          <p className="text-[11px] mt-1 mb-1">
+            {t("scorm.panels.quiz.alignContainer") || "Content alignment"}
+          </p>
+          <div className="flex gap-2">
+            {["left", "center", "right"].map((a) => (
+              <button
+                key={a}
+                type="button"
+                className={
+                  "px-3 py-1 rounded border text-xs capitalize " +
+                  (style.align === a ? "bg-sky-600 text-white" : "bg-white")
+                }
+                onClick={() => updateStyle("align", a)}
+              >
+                {alignLabels[a] ?? a}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -291,6 +320,8 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
           onChange={(value) => updateOptionStyle("color", value)}
         />
       </div>
+
+      <AnimationControls style={style} onChange={updateStyle} />
     </div>
   )
 }
