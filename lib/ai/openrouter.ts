@@ -1,7 +1,26 @@
 // lib/ai/openrouter.ts
 
+export const MODELS = {
+  ROUTER: "nvidia/nemotron-3-nano-30b-a3b:free", // ultra-fast router
+  MAIN: "amazon/nova-2-lite-v1:free",            // main generation model
+}
+
+type ChatMessage = {
+  role: "system" | "user" | "assistant"
+  content: string
+}
+
+type ChatOptions = {
+  model?: keyof typeof MODELS
+  temperature?: number
+  max_tokens?: number
+}
+
 export const openrouter = {
-  async chat(messages: { role: string; content: string }[], model = "amazon/nova-2-lite-v1:free") {
+  async chat(
+    messages: ChatMessage[],
+    options: ChatOptions = {}
+  ) {
     const apiKey = process.env.OPENROUTER_API_KEY
 
     if (!apiKey) {
@@ -11,10 +30,10 @@ export const openrouter = {
     const endpoint = "https://openrouter.ai/api/v1/chat/completions"
 
     const payload = {
-      model,
+      model: MODELS[options.model || "MAIN"],
       messages,
-      temperature: 0.2,
-      max_tokens: 4096,
+      temperature: options.temperature ?? 0.2,
+      max_tokens: options.max_tokens ?? 4096,
     }
 
     try {
@@ -35,11 +54,6 @@ export const openrouter = {
       }
 
       const data = await res.json()
-
-      /* 
-        Expected Response Format:
-        data.choices[0].message.content
-      */
 
       const content =
         data?.choices?.[0]?.message?.content ||
