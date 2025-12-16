@@ -73,7 +73,7 @@ import {
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner"
 import { buildScormZip } from "@/lib/scorm/exporter"
-
+import Portal from "@/components/Portal"
 type Status = "draft" | "published"
 
 const styleToInline = (style?: any) => {
@@ -1229,7 +1229,8 @@ ${
   // Central AI Chat for initial project generation
   if (aiChatMode === "visible" || aiChatMode === "animating") {
     return (
-      <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <Portal>
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm ">
         <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-4">
             How can I help you today?
@@ -1260,6 +1261,7 @@ ${
           </div>
         </div>
       </div>
+      </Portal>
     )
   }
   function formatMessage(text: string) {
