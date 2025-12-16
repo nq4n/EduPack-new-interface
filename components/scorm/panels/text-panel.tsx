@@ -3,6 +3,7 @@
 import React from "react"
 import { TextBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface Props {
   block: TextBlock
@@ -161,28 +162,20 @@ export default function TextPanel({ block, onChange }: Props) {
       </div>
 
       {/* COLORS */}
-      <div className="flex gap-4 items-center">
-        <div>
-          <p className="text-xs mb-1">
-            {t("scorm.panels.text.textColor") || "Text Color"}
-          </p>
-          <input
-            type="color"
-            value={style.color || "#000000"}
-            onChange={(e) => updateStyle("color", e.target.value)}
-          />
-        </div>
+      <div className="space-y-3">
+        <ColorInput
+          label={t("scorm.panels.text.textColor") || "Text Color"}
+          value={style.color || ""}
+          defaultColor="#000000"
+          onChange={(value) => updateStyle("color", value)}
+        />
 
-        <div>
-          <p className="text-xs mb-1">
-            {t("scorm.panels.text.background") || "Background"}
-          </p>
-          <input
-            type="color"
-            value={style.background || "#ffffff"}
-            onChange={(e) => updateStyle("background", e.target.value)}
-          />
-        </div>
+        <ColorInput
+          label={t("scorm.panels.text.background") || "Background"}
+          value={style.background || ""}
+          defaultColor="#ffffff"
+          onChange={(value) => updateStyle("background", value)}
+        />
       </div>
 
       {/* SPACING */}

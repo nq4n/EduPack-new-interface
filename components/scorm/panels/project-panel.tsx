@@ -4,6 +4,7 @@ import React from "react"
 import { EditorProject, ExportFormat, SCORMVersion } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface ProjectPanelProps {
   project: EditorProject
@@ -93,27 +94,22 @@ export default function ProjectPanel({
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
             {t("scorm.props.project.styles.title") || "Default Styles"}
           </h4>
-          <div>
-            <label className="block mb-1 text-xs font-medium">
-              {t("scorm.props.project.styles.textColor")}
-            </label>
-            <input
-              type="color"
-              className="w-full"
-              value={project.theme.styles.color || "#000000"}
-              onChange={(e) =>
-                updateProject({
-                  theme: {
-                    ...project.theme,
-                    styles: {
-                      ...project.theme.styles,
-                      color: e.target.value,
-                    },
+          <ColorInput
+            label={t("scorm.props.project.styles.textColor")}
+            value={project.theme.styles.color || ""}
+            defaultColor="#000000"
+            onChange={(value) =>
+              updateProject({
+                theme: {
+                  ...project.theme,
+                  styles: {
+                    ...project.theme.styles,
+                    color: value,
                   },
-                })
-              }
-            />
-          </div>
+                },
+              })
+            }
+          />
         </div>
 
         {/* General Tracking */}

@@ -28,6 +28,14 @@ import { CSS } from "@dnd-kit/utilities"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useLocale } from "@/hooks/use-locale"
 import { useSupabase } from "@/components/auth-provider"
 import {
@@ -60,12 +68,58 @@ import {
   Clock,
   Loader2,
   AlertCircle,
+  ChevronDown,
 } from "lucide-react"
 import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
 import { toast } from "sonner"
 import { buildScormZip } from "@/lib/scorm/exporter"
 
 type Status = "draft" | "published"
+
+const styleToInline = (style?: any) => {
+  if (!style) return ""
+  const parts: string[] = []
+  if (style.width) parts.push(`width:${style.width}`)
+  if (style.maxWidth) parts.push(`max-width:${style.maxWidth}`)
+  if (style.padding) parts.push(`padding:${style.padding}`)
+  if (style.radius) parts.push(`border-radius:${style.radius}`)
+  if (style.background) parts.push(`background:${style.background}`)
+  if (style.align)
+    parts.push(
+      `text-align:${
+        style.align === "center"
+          ? "center"
+          : style.align === "right"
+            ? "right"
+            : "left"
+      }`,
+    )
+  if (style.size) parts.push(`font-size:${style.size}`)
+  if (style.bold) parts.push("font-weight:bold")
+  if (style.italic) parts.push("font-style:italic")
+  if (style.underline) parts.push("text-decoration:underline")
+  if (style.color) parts.push(`color:${style.color}`)
+  if (style.lineHeight) parts.push(`line-height:${style.lineHeight}`)
+  if (style.direction) parts.push(`direction:${style.direction}`)
+  if (style.shadow) parts.push("box-shadow:0 12px 30px rgba(0,0,0,0.12)")
+  return parts.join(";")
+}
+
+const interactiveActionAttrs = (interactive: InteractiveBlock) => {
+  const action =
+    interactive.action ||
+    (interactive.targetPageId ? "page" : interactive.url ? "link" : "none")
+
+  if (action === "page" && interactive.targetPageId) {
+    return `data-action="page" data-target-page="${interactive.targetPageId}" aria-label="Go to ${interactive.targetPageId}"`
+  }
+
+  if (action === "link" && interactive.url) {
+    return `data-action="link" data-target-url="${interactive.url}" aria-label="Open link"`
+  }
+
+  return ""
+}
 
 export default function ScormAIPage() {
   const { t, locale } = useLocale()
@@ -288,6 +342,22 @@ useEffect(() => {
     }))
   }
 
+  const getBlockLayoutStyle = useCallback((block: EditorBlock) => {
+    const style = (block as any).style || {}
+    const width = style.width || "100%"
+    const layout: React.CSSProperties = {
+      flexBasis: width,
+      maxWidth: style.maxWidth || width,
+      width,
+    }
+
+    if (width !== "100%") {
+      layout.minWidth = "280px"
+    }
+
+    return layout
+  }, [])
+
   const handleBlockClick = useCallback((block: EditorBlock) => {
     setSelectedBlockId(block.id)
     setRightPanel("block")
@@ -431,23 +501,25 @@ useEffect(() => {
     switch (block.type) {
       case "text": {
         const textBlock = block as TextBlock
-        return `<div>${textBlock.html}</div>`
+        return `<div style="${styleToInline(textBlock.style)}">${textBlock.html}</div>`
       }
       case "image": {
         const img = block as ImageBlock
         const alt = img.alt || t("scorm.ai.placeholderImage")
-        return `<figure><img src="${img.src}" alt="${alt}" /><figcaption>${alt}</figcaption></figure>`
+        const style = styleToInline((img as any).style)
+        return `<figure style="${style}"><img style="max-width:100%;${style}" src="${img.src}" alt="${alt}" /><figcaption>${alt}</figcaption></figure>`
       }
       case "video": {
         const vid = block as VideoBlock
-        return `<video src="${vid.src}" controls></video>`
+        const style = styleToInline((vid as any).style)
+        return `<div style="${style}"><video src="${vid.src}" controls style="width:100%;${style}"></video></div>`
       }
       case "quiz": {
         const quizBlock = block as QuizBlock
         const options = (quizBlock.options || [])
           .map(
             (o) => `
-              <label style="display:block;margin-bottom:6px;">
+              <label style="display:block;margin-bottom:6px;${styleToInline((quizBlock as any).optionStyle)}">
                 <input type="radio" name="${quizBlock.id}" value="${o.id}" /> ${o.label}
               </label>
             `,
@@ -455,7 +527,7 @@ useEffect(() => {
           .join("\n")
 
         return `
-          <div>
+          <div style="${styleToInline((quizBlock as any).style)}">
             <p><strong>${quizBlock.question}</strong></p>
             <div>${options}</div>
           </div>
@@ -463,14 +535,16 @@ useEffect(() => {
       }
       case "interactive": {
         const interactive = block as InteractiveBlock
+        const actionAttrs = interactiveActionAttrs(interactive)
+        const style = styleToInline((interactive as any).style)
         if (interactive.variant === "button") {
-          return `<button>${
+          return `<button style="${style}" ${actionAttrs}>${
             interactive.label || t("scorm.ai.interactive.defaultLabel")
           }</button>`
         }
 
         if (interactive.variant === "callout") {
-          return `<div><p><strong>${
+          return `<div style="${style}"><p><strong>${
             interactive.label || t("scorm.ai.interactive.calloutLabel")
           }</strong></p><div>${interactive.bodyHtml || ""}</div></div>`
         }
@@ -478,12 +552,12 @@ useEffect(() => {
         if (interactive.variant === "reveal") {
           return `<details ${
             interactive.initiallyOpen ? "open" : ""
-          }><summary>${
+          } style="${style}"><summary>${
             interactive.label || t("scorm.ai.interactive.revealLabel")
           }</summary><div>${interactive.bodyHtml || ""}</div></details>`
         }
 
-        return `<div>${
+        return `<div style="${style}">${
           interactive.customHtml ||
           interactive.bodyHtml ||
           t("scorm.ai.interactive.buttonFallback")
@@ -498,7 +572,7 @@ useEffect(() => {
     const pagesHtml = project.pages
       .map(
         (page) => `
-        <article style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #e5e7eb;">
+        <article data-page-id="${page.id}" id="${page.id}" style="margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #e5e7eb;">
           <h2 style="margin-bottom:12px;">${page.title}</h2>
           ${page.blocks.map((block) => renderStandaloneBlock(block)).join("\n")}
         </article>
@@ -523,6 +597,23 @@ useEffect(() => {
       <body>
         <h1 style="margin-bottom:16px;">${title}</h1>
         ${pagesHtml}
+        <script>
+          document.addEventListener('click', function(event) {
+            const target = event.target.closest('[data-action]');
+            if (!target) return;
+            const action = target.getAttribute('data-action');
+            if (action === 'page') {
+              const pageId = target.getAttribute('data-target-page');
+              const destination =
+                pageId && document.querySelector('[data-page-id="' + pageId + '"]');
+              if (destination) destination.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if (action === 'link') {
+              const url = target.getAttribute('data-target-url');
+              if (url) window.open(url, '_blank');
+            }
+          });
+        </script>
       </body>
     </html>`
   }
@@ -733,6 +824,22 @@ ${
     }
   }
 
+  const exportOptions = useMemo(
+    () => [
+      { value: "1.2", label: t("scorm.projectPanel.export.scorm12") || "SCORM 1.2" },
+      { value: "2004", label: t("scorm.projectPanel.export.scorm2004") || "SCORM 2004" },
+      { value: "xapi", label: t("scorm.projectPanel.export.xapi") || "xAPI" },
+      { value: "html5", label: t("scorm.projectPanel.export.html5") || "HTML5" },
+      { value: "publicLink", label: t("scorm.projectPanel.export.publicLink") || "Public link" },
+      { value: "embedCode", label: t("scorm.projectPanel.export.embedCode") || "Embed code" },
+      { value: "teacherPdf", label: t("scorm.projectPanel.export.teacherPdf") || "Teacher PDF" },
+      { value: "studentPdf", label: t("scorm.projectPanel.export.studentPdf") || "Student PDF" },
+      { value: "json", label: t("scorm.projectPanel.export.json") || "JSON" },
+      { value: "qti", label: t("scorm.projectPanel.export.qti") || "QTI" },
+    ],
+    [t],
+  )
+
   const addBlock = (type: EditorBlock["type"], data?: Partial<EditorBlock>) => {
     let newBlock: EditorBlock
 
@@ -789,6 +896,7 @@ ${
             label,
             url: "",
             bodyHtml: "",
+            action: "link",
             style: {
               padding: "8px",
               radius: "999px",
@@ -820,6 +928,17 @@ ${
   }
 
   const handlePreview = () => {
+    const previewPages = project.pages
+      .map(
+        (page) => `
+          <article data-page-id="${page.id}" id="${page.id}">
+            <h2>${page.title}</h2>
+            ${page.blocks.map((block) => renderStandaloneBlock(block)).join("\n")}
+          </article>
+        `,
+      )
+      .join("\n")
+
     const htmlContent = `
       <!DOCTYPE html>
       <html lang="${locale}" dir="${project.theme.direction}">
@@ -840,155 +959,24 @@ ${
       </head>
       <body>
         <h1>${project.title}</h1>
-        ${project.pages
-          .map(
-            (page) => `
-          <article>
-            <h2>${page.title}</h2>
-            ${page.blocks
-              .map((block) => {
-                switch (block.type) {
-                  case "text": {
-                    const textBlock = block as TextBlock
-                    const style = textBlock.style || {}
-                    const styleString = `
-                      font-weight: ${style.bold ? "bold" : "normal"};
-                      font-style: ${style.italic ? "italic" : "normal"};
-                      text-decoration: ${style.underline ? "underline" : "none"};
-                      font-size: ${style.size || "inherit"};
-                      text-align: ${style.align || "left"};
-                      direction: ${style.direction || "ltr"};
-                      color: ${style.color || "inherit"};
-                      background: ${style.background || "transparent"};
-                      padding: ${style.padding || "0"};
-                      border-radius: ${style.radius || "0"};
-                      line-height: ${style.lineHeight || "inherit"};
-                    `
-                    return `<div style="${styleString}">${textBlock.html}</div>`
-                  }
-
-                  case "image": {
-                    const img = block as ImageBlock
-                    const alt = img.alt || t("scorm.ai.placeholderImage")
-                    return `<figure><img src="${img.src}" alt="${alt}"><figcaption>${alt}</figcaption></figure>`
-                  }
-
-                  case "video": {
-                    const vid = block as VideoBlock
-                    return `<video src="${vid.src}" controls></video>`
-                  }
-
-                  case "quiz": {
-                    const quizBlock = block as QuizBlock
-                    return `
-                      <form onsubmit="event.preventDefault();">
-                        <fieldset>
-                          <legend>${quizBlock.question}</legend>
-                          ${(quizBlock.options || [])
-                            .map(
-                              (o) => `
-                              <div>
-                                <input type="radio" id="${o.id}" name="${quizBlock.id}" value="${o.id}">
-                                <label for="${o.id}">${o.label}</label>
-                              </div>
-                            `,
-                            )
-                            .join("")}
-                        </fieldset>
-                      </form>
-                    `
-                  }
-
-                  case "interactive": {
-                    const ib = block as InteractiveBlock
-                    const style = ib.style || {}
-
-                    const styleString = `
-                      padding: ${style.padding || "10px"};
-                      border-radius: ${
-                        style.radius ||
-                        (ib.variant === "button" ? "999px" : "12px")
-                      };
-                      background: ${
-                        style.background ||
-                        (ib.variant === "button"
-                          ? "#0ea5e9"
-                          : ib.variant === "callout"
-                          ? "#eef2ff"
-                          : "#f1f5f9")
-                      };
-                      box-shadow: ${
-                        style.shadow
-                          ? "0 8px 20px rgba(0,0,0,0.15)"
-                          : "none"
-                      };
-                      color: ${
-                        style.background &&
-                        (style.background as string).startsWith("#")
-                          ? parseInt(
-                              (style.background as string).substring(1),
-                              16,
-                            ) >
-                            0xffffff / 2
-                            ? "#000"
-                            : "#fff"
-                          : "#fff"
-                      };
-                      border: none;
-                    `
-
-                    if (ib.variant === "button") {
-                      return `<button style="${styleString}">${
-                        ib.label || t("scorm.ai.interactive.buttonFallback")
-                      }</button>`
-                    }
-
-                    if (ib.variant === "callout") {
-                      return `<div style="${styleString}">
-                        ${
-                          ib.label
-                            ? `<p><strong>${ib.label}</strong></p>`
-                            : ""
-                        }
-                        ${
-                          ib.bodyHtml ||
-                          `<p style='font-size:11px;color:#6b7280;'>${t("scorm.ai.interactive.calloutPlaceholder")}</p>`
-                        }
-                      </div>`
-                    }
-
-                    if (ib.variant === "reveal") {
-                      return `
-                        <details ${
-                          ib.initiallyOpen ? "open" : ""
-                        } style="${styleString}">
-                          <summary>${
-                            ib.label || t("scorm.ai.interactive.revealLabel")
-                          }</summary>
-                          ${
-                            ib.bodyHtml ||
-                            `<p style='font-size:11px;color:#6b7280;'>${t("scorm.ai.interactive.revealPlaceholder")}</p>`
-                          }
-                        </details>
-                      `
-                    }
-
-                    if (ib.variant === "custom") {
-                      return ib.customHtml || ""
-                    }
-
-                    return ""
-                  }
-
-                  default:
-                    return ""
-                }
-              })
-              .join("")}
-          </article>
-        `,
-          )
-          .join("")}
+        ${previewPages}
+        <script>
+          document.addEventListener('click', function(event) {
+            const target = event.target.closest('[data-action]');
+            if (!target) return;
+            const action = target.getAttribute('data-action');
+            if (action === 'page') {
+              const pageId = target.getAttribute('data-target-page');
+              const destination =
+                pageId && document.querySelector('[data-page-id="' + pageId + '"]');
+              if (destination) destination.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if (action === 'link') {
+              const url = target.getAttribute('data-target-url');
+              if (url) window.open(url, '_blank');
+            }
+          });
+        </script>
       </body>
       </html>
     `
@@ -1346,15 +1334,33 @@ ${
                   <Eye className="h-4 w-4 mr-1" />
                   {t("scorm.topbar.preview")}
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full bg-white/90 border-slate-200 text-slate-700 hover:bg-slate-50"
-                  onClick={handleExport}
-                >
-                  <Download className="h-4 w-4 mr-1" />
-                  {t("scorm.topbar.export")}
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full bg-white/90 border-slate-200 text-slate-700 hover:bg-slate-50"
+                    >
+                      <Download className="h-4 w-4 mr-1" />
+                      {t("scorm.topbar.export")}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuLabel>
+                      {t("scorm.projectPanel.exportPanel") || "Export as"}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {exportOptions.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        onClick={() => handleExport(option.value as ExportFormat)}
+                      >
+                        {option.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               <div className="flex items-center gap-3 text-xs text-slate-500">
@@ -1589,7 +1595,7 @@ ${
                           items={activeBlocks.map((b) => b.id)}
                           strategy={verticalListSortingStrategy}
                         >
-                          <div className="space-y-4">
+                          <div className="flex flex-wrap gap-4">
                             {activeBlocks.map((block) => {
                               const isSelected = selectedBlock?.id === block.id
                               const isHighlighted =
@@ -1607,6 +1613,7 @@ ${
                                         ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70"
                                         : ""
                                     }`}
+                                    style={getBlockLayoutStyle(block)}
                                     onClick={(e) => {
                                       e.stopPropagation()
                                       handleBlockClick(block)

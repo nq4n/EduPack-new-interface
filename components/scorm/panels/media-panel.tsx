@@ -3,6 +3,7 @@
 import React from "react"
 import { ImageBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
+import ColorInput from "@/components/scorm/panels/color-input"
 
 interface Props {
   block: ImageBlock
@@ -139,14 +140,11 @@ export default function MediaPanel({ block, onChange }: Props) {
           onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
         />
 
-        <label className="text-xs mt-3">
-          {t("scorm.panels.media.background") || "Background Color"}
-        </label>
-        <input
-          type="color"
-          className="w-full h-8 border rounded"
-          value={style.background || "#ffffff"}
-          onChange={(e) => updateStyle("background", e.target.value)}
+        <ColorInput
+          label={t("scorm.panels.media.background") || "Background Color"}
+          value={style.background || ""}
+          defaultColor="#ffffff"
+          onChange={(value) => updateStyle("background", value)}
         />
       </div>
 

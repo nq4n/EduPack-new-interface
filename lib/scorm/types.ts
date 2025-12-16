@@ -90,12 +90,14 @@ export interface ImageBlock {
   id: string
   src: string
   alt?: string
+  style?: any
 }
 
 export interface VideoBlock {
   type: "video"
   id: string
   src: string
+  style?: any
 }
 
 export type QuizBlock = {
@@ -124,6 +126,8 @@ export type InteractiveBlock = {
   variant: InteractiveVariant
   label: string
   url?: string
+  action?: "link" | "page" | "none"
+  targetPageId?: string
   bodyHtml?: string
   initiallyOpen?: boolean
   tone?: "info" | "success" | "warning" | "danger"

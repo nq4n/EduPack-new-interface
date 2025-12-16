@@ -15,9 +15,10 @@ interface Props {
   block: EditorBlock
   onClick?: (b: EditorBlock) => void
   theme?: EditorProject["theme"]
+  onNavigateToPage?: (pageId: string) => void
 }
 
-export function BlockRenderer({ block, onClick, theme }: Props) {
+export function BlockRenderer({ block, onClick, theme, onNavigateToPage }: Props) {
   const select = () => onClick?.(block)
 
   /* ========= TEXT ========= */
@@ -54,13 +55,35 @@ export function BlockRenderer({ block, onClick, theme }: Props) {
 
   /* ========= IMAGE ========= */
   if (block.type === "image") {
-    const b = block as ImageBlock;
+    const b = block as ImageBlock
+    const style = b.style || {}
+    const containerStyle: React.CSSProperties = {
+      textAlign:
+        style.align === "center"
+          ? "center"
+          : style.align === "right"
+            ? "right"
+            : "left",
+      padding: style.padding,
+      background: style.background,
+      borderRadius: style.radius,
+      boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
+      width: style.width,
+      maxWidth: style.maxWidth,
+    }
+    const mediaStyle: React.CSSProperties = {
+      borderRadius: style.radius,
+      width: "100%",
+      maxWidth: style.maxWidth,
+      display: "inline-block",
+    }
     return (
-      <figure onClick={select} className="flex flex-col items-center">
+      <figure onClick={select} className="flex flex-col items-center" style={containerStyle}>
         <img
           src={b.src}
           alt={b.alt || ""}
           className="rounded-xl border bg-slate-50"
+          style={mediaStyle}
         />
         {b.alt && (
           <figcaption className="text-[11px] text-slate-500">
@@ -68,30 +91,58 @@ export function BlockRenderer({ block, onClick, theme }: Props) {
           </figcaption>
         )}
       </figure>
-    );
+    )
   }
 
   /* ========= VIDEO ========= */
   if (block.type === "video") {
-    const b = block as VideoBlock;
+    const b = block as VideoBlock
+    const style = b.style || {}
+    const containerStyle: React.CSSProperties = {
+      padding: style.padding,
+      background: style.background,
+      borderRadius: style.radius,
+      boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
+      width: style.width,
+      maxWidth: style.maxWidth,
+    }
     return (
-      <div onClick={select}>
+      <div onClick={select} style={containerStyle}>
         <video
           src={b.src}
           controls
           className="w-full rounded-xl border bg-black"
         />
       </div>
-    );
+    )
   }
 
   /* ========= QUIZ ========= */
   if (block.type === "quiz") {
-    const b = block as QuizBlock;
+    const b = block as QuizBlock
+    const style = b.style || {}
+    const optionStyle = b.optionStyle || {}
+    const containerStyle: React.CSSProperties = {
+      padding: style.padding || "12px",
+      borderRadius: style.radius || "12px",
+      background: style.background || "#f8fafc",
+      boxShadow: style.shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
+      width: style.width,
+      maxWidth: style.maxWidth,
+    }
+    const optionStyleObj: React.CSSProperties = {
+      fontWeight: optionStyle.bold ? "bold" : undefined,
+      fontStyle: optionStyle.italic ? "italic" : undefined,
+      textDecoration: optionStyle.underline ? "underline" : undefined,
+      fontSize: optionStyle.size,
+      color: optionStyle.color,
+      textAlign: optionStyle.align as React.CSSProperties["textAlign"],
+    }
     return (
       <div
         onClick={select}
         className="rounded-xl border bg-slate-50 p-3 space-y-2"
+        style={containerStyle}
       >
         <p className="text-sm font-semibold">{b.question}</p>
 
@@ -99,6 +150,7 @@ export function BlockRenderer({ block, onClick, theme }: Props) {
           <label
             key={o.id}
             className="flex items-center gap-2 text-xs text-slate-700"
+            style={optionStyleObj}
           >
             <input
               type="radio"
@@ -109,13 +161,13 @@ export function BlockRenderer({ block, onClick, theme }: Props) {
           </label>
         ))}
       </div>
-    );
+    )
   }
 
   /* ========= INTERACTIVE ========= */
   if (block.type === "interactive") {
-    const b = block as InteractiveBlock;
-    const style = b.style || {};
+    const b = block as InteractiveBlock
+    const style = b.style || {}
 
     /* General shape */
     const styleObj: React.CSSProperties = {
@@ -132,13 +184,28 @@ export function BlockRenderer({ block, onClick, theme }: Props) {
           : "#f1f5f9"),
       boxShadow: style.shadow ? "0 8px 20px rgba(0,0,0,0.15)" : "none",
       cursor: "pointer",
+      width: style.width,
+      maxWidth: style.maxWidth,
     };
 
     /* ---- BUTTON ---- */
     if (b.variant === "button") {
+      const handleClick = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        select()
+
+        if (onNavigateToPage && b.action === "page" && b.targetPageId) {
+          onNavigateToPage(b.targetPageId)
+        }
+
+        if (onNavigateToPage && b.action === "link" && b.url) {
+          window.open(b.url, "_blank")
+        }
+      }
+
       return (
         <button
-          onClick={select}
+          onClick={handleClick}
           style={styleObj}
           className="text-xs text-white"
         >
