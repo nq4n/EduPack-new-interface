@@ -1380,9 +1380,11 @@ ${
             </div>
 
             {/* canvas + properties side-by-side */}
-            <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-4 mt-4">
+            <div
+              className="flex-1 grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_320px] xl:grid-cols-[360px_minmax(0,1fr)_360px] items-stretch gap-4 mt-4 lg:min-h-[720px]"
+            >
               {/* Chat panel (left) */}
-              <div className="w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100">
+              <div className="w-full h-full transition-all duration-300 opacity-100">
                 <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                   <div className="flex flex-col h-full">
                     <div className="p-4 border-b flex items-center gap-2">
@@ -1435,71 +1437,6 @@ ${
                       ))}
                     </div>
                     <div className="p-4 border-t bg-slate-50 space-y-3">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-                          {t("scorm.ai.quickInsert")}
-                        </span>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={() => addBlock("text")}
-                        >
-                          <Type className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addText")}
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={() => addBlock("image")}
-                        >
-                          <Paperclip className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addImage")}
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={() => addBlock("video")}
-                        >
-                          <Eye className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addVideo")}
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={() => addBlock("quiz")}
-                        >
-                          <FileQuestion className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addQuiz")}
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={() => addBlock("interactive")}
-                        >
-                          <MousePointerClick className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addInteractive")}
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="outline"
-                          className="h-8 rounded-full"
-                          onClick={handleAddPage}
-                        >
-                          <LayoutDashboard className="h-3.5 w-3.5 mr-1.5" />
-                          {t("scorm.ai.addPage")}
-                        </Button>
-                      </div>
                       <form
                         onSubmit={handleSend}
                         className="flex items-center gap-2"
@@ -1527,7 +1464,7 @@ ${
 
               {/* Canvas (center) */}
               <div
-                className={`relative flex-1 ${
+                className={`relative flex flex-col h-full ${
                   isDragging
                     ? "border-2 border-dashed border-sky-500 bg-sky-50/20"
                     : ""
@@ -1595,7 +1532,7 @@ ${
                           items={activeBlocks.map((b) => b.id)}
                           strategy={verticalListSortingStrategy}
                         >
-                          <div className="flex flex-wrap gap-4">
+                          <div className="flex flex-col gap-4">
                             {activeBlocks.map((block) => {
                               const isSelected = selectedBlock?.id === block.id
                               const isHighlighted =
@@ -1671,7 +1608,7 @@ ${
               </div>
 
               {/* Properties panel (right) */}
-              <div className="w-full lg:w-[320px] xl:w-[360px] transition-all duration-300 opacity-100">
+              <div className="w-full h-full transition-all duration-300 opacity-100">
                 <div className="h-full rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                   <PropertiesPanel
                     project={project}

@@ -4,6 +4,7 @@ import React from "react"
 import { VideoBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
+import AnimationControls from "@/components/scorm/panels/animation-controls"
 
 interface VideoPanelProps {
   block: VideoBlock
@@ -13,6 +14,12 @@ interface VideoPanelProps {
 export default function VideoPanel({ block, onChange }: VideoPanelProps) {
   const style = block.style || {}
   const { t } = useLocale()
+
+  const alignLabels: Record<string, string> = {
+    left: t("scorm.panels.common.align.left") || "Left",
+    center: t("scorm.panels.common.align.center") || "Center",
+    right: t("scorm.panels.common.align.right") || "Right",
+  }
 
   const updateStyle = (key: string, value: any) => {
     onChange({
@@ -116,6 +123,28 @@ export default function VideoPanel({ block, onChange }: VideoPanelProps) {
         />
       </div>
 
+      {/* ALIGNMENT */}
+      <div>
+        <p className="text-xs font-semibold mb-1">
+          {t("scorm.panels.video.alignment") || "Alignment"}
+        </p>
+        <div className="flex gap-2">
+          {["left", "center", "right"].map((a) => (
+            <button
+              type="button"
+              key={a}
+              className={
+                "px-3 py-1 rounded border text-xs capitalize " +
+                (style.align === a ? "bg-sky-600 text-white" : "bg-white")
+              }
+              onClick={() => updateStyle("align", a)}
+            >
+              {alignLabels[a] ?? a}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* APPEARANCE */}
       <div>
         <p className="text-xs font-semibold mb-1">
@@ -159,6 +188,8 @@ export default function VideoPanel({ block, onChange }: VideoPanelProps) {
         />
         <span className="text-xs">{t("scorm.panels.video.shadow") || "Shadow"}</span>
       </div>
+
+      <AnimationControls style={style} onChange={updateStyle} />
     </div>
   )
 }
