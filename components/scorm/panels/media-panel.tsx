@@ -4,6 +4,7 @@ import React from "react"
 import { ImageBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
+import AnimationControls from "@/components/scorm/panels/animation-controls"
 
 interface Props {
   block: ImageBlock
@@ -159,6 +160,8 @@ export default function MediaPanel({ block, onChange }: Props) {
           {t("scorm.panels.media.shadow") || "Shadow"}
         </label>
       </div>
+
+      <AnimationControls style={style} onChange={updateStyle} />
     </div>
   )
 }

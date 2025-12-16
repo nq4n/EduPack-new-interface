@@ -4,6 +4,7 @@ import React from "react"
 import { EditorPage, InteractiveBlock, InteractiveVariant } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
+import AnimationControls from "@/components/scorm/panels/animation-controls"
 
 interface InteractivePanelProps {
   block: InteractiveBlock
@@ -14,6 +15,12 @@ interface InteractivePanelProps {
 export default function InteractivePanel({ block, onChange, pages }: InteractivePanelProps) {
   const style = block.style || {}
   const { t } = useLocale()
+
+  const alignLabels: Record<string, string> = {
+    left: t("scorm.panels.common.align.left") || "Left",
+    center: t("scorm.panels.common.align.center") || "Center",
+    right: t("scorm.panels.common.align.right") || "Right",
+  }
 
   const updateBlock = (partial: Partial<InteractiveBlock>) => {
     onChange({
@@ -232,6 +239,39 @@ export default function InteractivePanel({ block, onChange, pages }: Interactive
         </div>
       )}
 
+      <div className="space-y-2">
+        <p className="text-xs font-semibold">
+          {t("scorm.panels.interactive.text") || "Text and alignment"}
+        </p>
+
+        <ColorInput
+          label={t("scorm.panels.interactive.textColor") || "Text color"}
+          value={style.color || ""}
+          defaultColor={block.variant === "button" ? "#ffffff" : "#0f172a"}
+          onChange={(value) => updateStyle("color", value)}
+        />
+
+        <div>
+          <p className="text-[11px] mb-1">
+            {t("scorm.panels.interactive.align") || "Alignment"}
+          </p>
+          <div className="flex gap-2">
+            {["left", "center", "right"].map((a) => (
+              <button
+                key={a}
+                type="button"
+                className={`px-3 py-1 rounded border text-xs capitalize ${
+                  style.align === a ? "bg-sky-600 text-white" : "bg-white"
+                }`}
+                onClick={() => updateStyle("align", a)}
+              >
+                {alignLabels[a] ?? a}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* APPEARANCE */}
       <div className="space-y-2">
         <p className="text-xs font-semibold">
@@ -280,6 +320,8 @@ export default function InteractivePanel({ block, onChange, pages }: Interactive
           <span className="text-xs">{t("scorm.panels.interactive.shadow") || "Shadow"}</span>
         </div>
       </div>
+
+      <AnimationControls style={style} onChange={updateStyle} />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import React from "react"
 import { TextBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
+import AnimationControls from "@/components/scorm/panels/animation-controls"
 
 interface Props {
   block: TextBlock
@@ -219,6 +220,8 @@ export default function TextPanel({ block, onChange }: Props) {
           <option value="2.0">2.0</option>
         </select>
       </div>
+
+      <AnimationControls style={style} onChange={updateStyle} />
     </div>
   )
 }
