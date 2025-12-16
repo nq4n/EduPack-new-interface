@@ -3,7 +3,7 @@
 import type React from "react"
 import { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { BookOpen, FileText, Mail, MessageCircle, Sparkles, Upload, ShoppingBag, Cloud, ExternalLink } from "lucide-react"
+import { BookOpen, FileText, Mail, MessageCircle, Sparkles, Upload, ShoppingBag, Cloud, ExternalLink, HelpCircle, Link as LinkIcon } from "lucide-react"
 import Link from "next/link"
 import { useLocale } from "@/hooks/use-locale"
 import { createClient } from "@/lib/supabase/client"
@@ -80,6 +80,48 @@ export default function ResourcesPage() {
     [t]
   )
 
+  const projectResources = useMemo(
+    () => [
+      {
+        icon: <Sparkles className="h-5 w-5" />,
+        title: t("resources.project.ai.title"),
+        description: t("resources.project.ai.description"),
+        href: "/scorm-ai"
+      },
+      {
+        icon: <Upload className="h-5 w-5" />,
+        title: t("resources.project.upload.title"),
+        description: t("resources.project.upload.description"),
+        href: "/upload"
+      },
+      {
+        icon: <ShoppingBag className="h-5 w-5" />,
+        title: t("resources.project.marketplace.title"),
+        description: t("resources.project.marketplace.description"),
+        href: "/shop"
+      },
+      {
+        icon: <Cloud className="h-5 w-5" />,
+        title: t("resources.project.docs.title"),
+        description: t("resources.project.docs.description"),
+        href: "https://help.edupack.app"
+      },
+      {
+        icon: <LinkIcon className="h-5 w-5" />,
+        title: t("resources.project.api.title"),
+        description: t("resources.project.api.description"),
+        href: "https://api.edupack.app/docs"
+      },
+      {
+        icon: <HelpCircle className="h-5 w-5" />,
+        title: t("resources.project.support.title"),
+        description: t("resources.project.support.description"),
+        href: "https://edupack.app/support"
+      }
+    ],
+    [t]
+  )
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -89,6 +131,8 @@ export default function ResourcesPage() {
   const [status, setStatus] = useState<{ type: "idle" | "loading" | "success" | "error"; message?: string }>({
     type: "idle",
   })
+
+  const [isGuidanceOpen, setGuidanceOpen] = useState(false)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -134,9 +178,32 @@ export default function ResourcesPage() {
           ))}
         </div>
 
+        {/* Project Resources */}
+        <section className="mb-16">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-3xl font-bold text-foreground">{t('resources.project.title')}</h2>
+              <p className="text-muted-foreground max-w-3xl mt-2">{t('resources.project.description')}</p>
+            </div>
+            <Button variant="outline" asChild>
+              <Link href="#contact">{t('resources.project.cta')}</Link>
+            </Button>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {projectResources.map((resource) => (
+              <DocLink key={resource.title} {...resource} />
+            ))}
+          </div>
+        </section>
+
         {/* Reading Resources */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-4">{t('resources.reading.title')}</h2>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
+            <h2 className="text-3xl font-bold text-foreground">{t('resources.reading.title')}</h2>
+            <Button variant="secondary" onClick={() => setGuidanceOpen(true)}>
+              {t('resources.reading.guidance.cta')}
+            </Button>
+          </div>
           <p className="text-muted-foreground mb-8 max-w-3xl">{t('resources.reading.description')}</p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {readingResources.map((resource) => (
@@ -257,6 +324,41 @@ export default function ResourcesPage() {
           </div>
         </section>
       </div>
+
+      {isGuidanceOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm px-4">
+          <div className="bg-card border border-border rounded-2xl shadow-2xl max-w-xl w-full p-6 relative">
+            <button
+              aria-label={t('resources.reading.guidance.close')}
+              className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+              onClick={() => setGuidanceOpen(false)}
+            >
+              ×
+            </button>
+            <div className="flex items-center gap-3 mb-3 text-primary">
+              <HelpCircle className="h-5 w-5" />
+              <span className="font-semibold">{t('resources.reading.guidance.title')}</span>
+            </div>
+            <h3 className="text-xl font-bold text-foreground mb-2">{t('resources.reading.guidance.heading')}</h3>
+            <p className="text-muted-foreground mb-4">{t('resources.reading.guidance.summary')}</p>
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+              {[1, 2, 3].map((index) => (
+                <li key={index}>{t(`resources.reading.guidance.points.${index}` as const)}</li>
+              ))}
+            </ul>
+            <div className="mt-6 flex flex-col sm:flex-row sm:justify-end gap-2">
+              <Button variant="ghost" onClick={() => setGuidanceOpen(false)}>
+                {t('resources.reading.guidance.close')}
+              </Button>
+              <Button asChild>
+                <Link href="https://help.edupack.app" target="_blank" rel="noreferrer">
+                  {t('resources.reading.guidance.action')}
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
