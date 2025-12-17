@@ -1233,11 +1233,10 @@ ${
       <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm ">
         <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-4">
-            How can I help you today?
+            {t("scorm.ai.initialModal.title")}
           </h2>
           <p className="text-sm text-slate-500 mb-8">
-            Describe the lesson you want to build, and AI will generate it for
-            you.
+            {t("scorm.ai.initialModal.description")}
           </p>
           <div className="w-full">
             {/* Container for the input form */}
@@ -1245,7 +1244,7 @@ ${
               <Input
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder="E.g., 'Create a lesson on the water cycle for 5th graders'"
+                placeholder={t("scorm.ai.initialModal.placeholder")}
                 className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
                 disabled={isGenerating}
               />
@@ -1254,7 +1253,7 @@ ${
                 className="rounded-full h-12 px-6 bg-sky-600 hover:bg-sky-700 text-base"
                 disabled={isGenerating}
               >
-                {isGenerating ? "Generating..." : "Generate"}
+                {isGenerating ? t("scorm.ai.initialModal.generating") : t("scorm.ai.initialModal.generate")}
               </Button>
             </form>
             <div className="mt-4 w-full">{renderProgressTracker("inline")}</div>
@@ -1313,7 +1312,7 @@ ${
                 {loadingExternalProject ? (
                   <div className="flex items-center gap-2 rounded-lg border border-border bg-white/80 px-3 py-2 text-sm text-muted-foreground shadow-sm">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Loading package preview...</span>
+                    <span>{t("scorm.ai.loadingPackagePreview")}</span>
                   </div>
                 ) : externalLoadError ? (
                   <div className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive shadow-sm">
@@ -1350,7 +1349,7 @@ ${
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuLabel>
-                      {t("scorm.projectPanel.exportPanel") || "Export as"}
+                      {t("scorm.projectPanel.exportPanel")}
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {exportOptions.map((option) => (
@@ -1468,7 +1467,7 @@ ${
               <div
                 className={`relative flex flex-col h-full ${
                   isDragging
-                    ? "border-2 border-dashed border-sky-500 bg-sky-50/20"
+                    ? "border-2 border-dashed border-sky-980bg-sky-50/20"
                     : ""
                 }`}
                 onClick={() => {
@@ -1481,7 +1480,7 @@ ${
               >
                 <div
                   dir={project.theme.direction}
-                  className="bg-white rounded-2xl px-6 py-6 min-h-[520px]"
+                  className="bg-white rounded-2xl px-6 py-6 min-h-[980px]"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -1523,7 +1522,7 @@ ${
                     </Button>
                   </div>
 
-                  <div className="max-h-[600px] overflow-auto pr-1">
+                  <div className="max-h-[980px] overflow-auto pr-1">
                     {activePage && activeBlocks.length > 0 ? (
                       <DndContext
                         sensors={sensors}

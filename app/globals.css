@@ -133,26 +133,30 @@ body {
 [dir="rtl"] input,
 [dir="rtl"] textarea,
 [dir="rtl"] select {
-  direction: rtl;
+  
   text-align: right;
+  
 }
 
 [dir="rtl"] input::placeholder,
 [dir="rtl"] textarea::placeholder,
 [dir="rtl"] select::placeholder {
   text-align: right;
+  margin-right: auto;
 }
 
 [dir="rtl"] .flex-row {
   flex-direction: row-reverse;
+  margin-right: auto;
 }
 
 [dir="rtl"] .text-left {
-  text-align: right;
+  text-align: ;
 }
 
 [dir="rtl"] .text-right {
-  text-align: left;
+  text-align: right;
+  
 }
 
 /* Fix icon spacing in RTL */

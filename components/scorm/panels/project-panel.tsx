@@ -35,11 +35,10 @@ export default function ProjectPanel({
         <div className="flex items-center justify-between gap-2">
           <div className="space-y-1">
             <h3 className="text-sm font-semibold leading-none">
-              {t("scorm.projectPanel.title") || "Project Settings"}
+              {t("scorm.projectPanel.title")}
             </h3>
             <p className="text-[11px] text-muted-foreground">
-              {t("scorm.projectPanel.subtitle") ||
-                "Manage overall course settings."}
+              {t("scorm.projectPanel.subtitle")}
             </p>
           </div>
         </div>
@@ -49,11 +48,11 @@ export default function ProjectPanel({
         {/* General Settings */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.generalSettings") || "General"}
+            {t("scorm.projectPanel.generalSettings")}
           </h4>
           <div>
             <label className="block mb-1 text-xs font-medium">
-              {t("scorm.projectPanel.projectTitle") || "Project Title"}
+              {t("scorm.projectPanel.projectTitle")}
             </label>
             <input
               type="text"
@@ -65,7 +64,7 @@ export default function ProjectPanel({
 
           <div>
             <label className="block mb-1 text-xs font-medium">
-              {t("scorm.props.project.direction.title") || "Text Direction"}
+              {t("scorm.props.project.direction.title")}
             </label>
             <select
               className="w-full border rounded px-2 py-1 text-xs"
@@ -80,10 +79,10 @@ export default function ProjectPanel({
               }
             >
               <option value="ltr">
-                {t("scorm.props.project.direction.ltr") || "Left-to-Right"}
+                {t("scorm.props.project.direction.ltr")}
               </option>
               <option value="rtl">
-                {t("scorm.props.project.direction.rtl") || "Right-to-Left"}
+                {t("scorm.props.project.direction.rtl")}
               </option>
             </select>
           </div>
@@ -92,7 +91,7 @@ export default function ProjectPanel({
         {/* Default Styles */}
         <div className="space-y-2">
           <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.props.project.styles.title") || "Default Styles"}
+            {t("scorm.props.project.styles.title")}
           </h4>
           <ColorInput
             label={t("scorm.props.project.styles.textColor")}

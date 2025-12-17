@@ -50,12 +50,6 @@ function PersonalInfoPanel() {
   }, [locale])
 
   const isRTL = locale === "ar"
-  const direction = isRTL ? "rtl" : "ltr"
-
-  useEffect(() => {
-    document.documentElement.dir = isRTL ? "rtl" : "ltr"
-    document.documentElement.lang = locale
-  }, [isRTL, locale])
 
   const isLoggedOut = useMemo(() => !user, [user])
 
@@ -141,7 +135,7 @@ function PersonalInfoPanel() {
 
   if (isLoggedOut) {
     return (
-      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div className="space-y-4">
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.signInHeading}
         </h2>
@@ -152,11 +146,11 @@ function PersonalInfoPanel() {
 
   if (loading) {
     return (
-      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div className="space-y-4">
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.loadingHeading}
         </h2>
-        <div className={`flex items-center gap-2 text-muted-foreground ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+        <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span>{strings.overview.loadingMessage}</span>
         </div>
@@ -165,18 +159,18 @@ function PersonalInfoPanel() {
   }
 
   return (
-    <div dir={direction} className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
+    <div className="space-y-6">
       <div>
-        <h2 className={`text-2xl font-bold text-foreground mb-6 ${isRTL ? "text-right" : "text-left"}`}>
+        <h2 className="text-2xl font-bold text-foreground mb-6">
           {strings.overview.personalInfo}
         </h2>
 
         {/* Avatar */}
         <div className="mb-8">
-          <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
+          <label className="block text-sm font-semibold text-foreground mb-2">
             {strings.overview.profilePicture}
           </label>
-          <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+          <div className="flex items-center gap-4">
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
               <User className="h-10 w-10 text-primary" />
             </div>
@@ -189,39 +183,34 @@ function PersonalInfoPanel() {
         {/* Form */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
+            <label className="block text-sm font-semibold text-foreground mb-2">
               {strings.overview.fullName}
             </label>
             <Input
               value={form.fullName}
               onChange={handleInputChange("fullName")}
               disabled={loading}
-              dir={direction}
-              className={isRTL ? "text-right" : "text-left"}
             />
           </div>
           <div>
-            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
+            <label className="block text-sm font-semibold text-foreground mb-2">
               {strings.overview.email}
             </label>
             <Input
               value={form.email}
               type="email"
               disabled
-              dir={direction}
-              className={isRTL ? "text-right" : "text-left"}
             />
           </div>
           <div className="md:col-span-2">
-            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
+            <label className="block text-sm font-semibold text-foreground mb-2">
               {strings.overview.preferredLanguage}
             </label>
             <select
-              className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm ${isRTL ? "text-right" : "text-left"}`}
+              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
               value={form.preferredLanguage}
               onChange={handleSelectChange("preferredLanguage")}
               disabled={loading}
-              dir={direction}
             >
               <option value="" disabled>
                 {strings.overview.selectLanguage}
@@ -235,9 +224,9 @@ function PersonalInfoPanel() {
           </div>
         </div>
 
-        {error && <p className={`text-sm text-destructive pt-2 ${isRTL ? "text-right" : "text-left"}`}>{error}</p>}
+        {error && <p className="text-sm text-destructive pt-2">{error}</p>}
 
-        <div className={`pt-6 flex ${isRTL ? "justify-end" : "justify-start"}`}>
+        <div className="pt-6 flex justify-start">
           <Button onClick={handleSave} disabled={loading || saving}>
             {saving ? strings.overview.saving : strings.overview.saveChanges}
           </Button>

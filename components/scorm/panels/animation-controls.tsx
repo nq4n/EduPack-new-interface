@@ -14,20 +14,20 @@ export default function AnimationControls({ style, onChange }: AnimationControls
   return (
     <div className="space-y-2">
       <p className="text-xs font-semibold">
-        {t("scorm.panels.common.animation.title") || "Animation"}
+        {t("scorm.panels.common.animation.title")}
       </p>
 
       <label className="block mb-1 text-xs">
-        {t("scorm.panels.common.animation.type") || "Entrance"}
+        {t("scorm.panels.common.animation.type")}
       </label>
       <select
         className="w-full border rounded px-2 py-1 text-xs"
         value={style.animation || "none"}
         onChange={(e) => onChange("animation", e.target.value)}
       >
-        <option value="none">{t("scorm.panels.common.animation.none") || "None"}</option>
+        <option value="none">{t("scorm.panels.common.animation.none")}</option>
         <option value="fade">
-          {t("scorm.panels.common.animation.fade") || "Fade in"}
+          {t("scorm.panels.common.animation.fade")}
         </option>
       </select>
 
@@ -35,7 +35,7 @@ export default function AnimationControls({ style, onChange }: AnimationControls
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
             <label className="block mb-1 text-xs">
-              {t("scorm.panels.common.animation.duration") || "Duration (s)"}
+              {t("scorm.panels.common.animation.duration")}
             </label>
             <input
               type="number"
@@ -50,7 +50,7 @@ export default function AnimationControls({ style, onChange }: AnimationControls
           </div>
           <div>
             <label className="block mb-1 text-xs">
-              {t("scorm.panels.common.animation.delay") || "Delay (s)"}
+              {t("scorm.panels.common.animation.delay")}
             </label>
             <input
               type="number"

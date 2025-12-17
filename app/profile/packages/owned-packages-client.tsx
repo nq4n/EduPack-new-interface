@@ -31,7 +31,6 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
   const fileInputRef = useRef<HTMLInputElement>(null)
   // Use global locale instead of server-passed language
   const strings = useMemo(() => getProfileStrings(locale as "en" | "ar"), [locale])
-  const direction = locale === "ar" ? "rtl" : "ltr"
 
   const sortedPackages = useMemo(() => {
     return [...localPackages].sort(
@@ -193,19 +192,14 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
   }
 
   return (
-    <div
-      dir={direction}
-      className={`space-y-6 ${locale === "ar" ? "text-right" : "text-left"}`}
-    >
+    <div className="space-y-6">
       {/* Upload Section */}
-      <div className={`border-2 border-dashed border-border rounded-lg p-6 ${locale === "ar" ? "text-right" : "text-center"} bg-card/50 hover:bg-card transition-colors`}>
-        <div
-          className={`flex flex-col ${locale === "ar" ? "items-end" : "items-center"} justify-center gap-4 ${locale === "ar" ? "text-right" : ""}`}
-        >
+      <div className="border-2 border-dashed border-border rounded-lg p-6 bg-card/50 hover:bg-card transition-colors">
+        <div className="flex flex-col items-center justify-center gap-4">
           <Upload className="h-8 w-8 text-muted-foreground" />
-          <div className={locale === "ar" ? "text-right" : "text-center"}>
-            <h3 className={`font-semibold text-foreground mb-1 ${locale === "ar" ? "text-right" : "text-center"}`}>{strings.packages.uploadPackage}</h3>
-            <p className={`text-sm text-muted-foreground ${locale === "ar" ? "text-right" : "text-center"}`}>{strings.packages.uploadPackageHint}</p>
+          <div className="text-center">
+            <h3 className="font-semibold text-foreground mb-1">{strings.packages.uploadPackage}</h3>
+            <p className="text-sm text-muted-foreground">{strings.packages.uploadPackageHint}</p>
           </div>
           <Button
             onClick={() => fileInputRef.current?.click()}
@@ -214,12 +208,12 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
           >
             {uploading ? (
               <>
-                <Loader2 className={`${locale === "ar" ? "ml-2" : "mr-2"} h-4 w-4 animate-spin`} />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {strings.packages.uploading}
               </>
             ) : (
               <>
-                <Upload className={`${locale === "ar" ? "ml-2" : "mr-2"} h-4 w-4`} />
+                <Upload className="mr-2 h-4 w-4" />
                 {strings.packages.selectFile}
               </>
             )}
@@ -232,8 +226,8 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
             className="hidden"
           />
           {uploadError && (
-            <div className={`w-full ${locale === "ar" ? "text-right" : "text-left"} rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm`}>
-              <div className={`flex items-center gap-2 ${locale === "ar" ? "flex-row-reverse justify-end" : ""}`}>
+            <div className="w-full rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm">
+              <div className="flex items-center gap-2">
                 <AlertCircle className="h-4 w-4" />
                 <span>{uploadError}</span>
               </div>
@@ -245,13 +239,13 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
       {/* Packages List */}
       {sortedPackages && sortedPackages.length > 0 ? (
         <div className="space-y-4">
-          <h3 className={`font-semibold text-foreground ${locale === "ar" ? "text-right" : "text-left"}`}>{strings.packages.yourPackages}</h3>
+          <h3 className="font-semibold text-foreground">{strings.packages.yourPackages}</h3>
           {sortedPackages.map((pkg) => (
             <div key={pkg.package_id} className="space-y-2">
-              <div className={`flex items-center justify-between p-4 border border-border rounded-lg ${locale === "ar" ? "flex-row-reverse" : ""}`}>
-                <div className={`flex-1 ${locale === "ar" ? "text-right" : "text-left"}`}>
-                  <div className={`flex items-center gap-2 mb-2 ${locale === "ar" ? "flex-row-reverse justify-end" : ""}`}>
-                    <h3 className={`font-semibold text-foreground ${locale === "ar" ? "text-right" : "text-left"}`}>{pkg.title}</h3>
+              <div className="flex items-center justify-between p-4 border border-border rounded-lg">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="font-semibold text-foreground">{pkg.title}</h3>
                     {pkg.is_public ? (
                       <Globe className="h-4 w-4 text-blue-500" />
                     ) : (
@@ -260,10 +254,10 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   </div>
 
                   {pkg.description && (
-                    <p className={`text-sm text-muted-foreground mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>{pkg.description}</p>
+                    <p className="text-sm text-muted-foreground mb-2">{pkg.description}</p>
                   )}
 
-                  <p className={`text-sm text-muted-foreground ${locale === "ar" ? "text-right" : "text-left"}`}>
+                  <p className="text-sm text-muted-foreground">
                     {strings.packages.createdAt}{" "}
                     {new Intl.DateTimeFormat(
                       locale === "ar" ? "ar-EG" : undefined,
@@ -272,7 +266,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   </p>
                 </div>
 
-                <div className={`flex gap-2 ${locale === "ar" ? "flex-row-reverse" : ""}`}>
+                <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -300,7 +294,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   <form action={`/api/scorm/download`} method="POST">
                     <input type="hidden" name="path" value={pkg.storage_path ?? ""} />
                     <Button variant="outline" size="sm" type="submit">
-                      <Download className={`${locale === "ar" ? "ml-2" : "mr-2"} h-4 w-4`} />
+                      <Download className="mr-2 h-4 w-4" />
                       {strings.packages.download}
                     </Button>
                   </form>
@@ -311,7 +305,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                     type="button"
                     onClick={() => handleViewPackage(pkg)}
                   >
-                    <Eye className={`${locale === "ar" ? "ml-2" : "mr-2"} h-4 w-4`} />
+                    <Eye className="mr-2 h-4 w-4" />
                     {strings.packages.view}
                   </Button>
                 </div>
@@ -319,9 +313,9 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
 
               {/* Settings Panel */}
               {settingsOpen === pkg.package_id && (
-                <div className={`p-4 border border-border rounded-lg bg-card/50 space-y-4 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                <div className="p-4 border border-border rounded-lg bg-card/50 space-y-4">
                   <div>
-                    <label className={`text-sm font-semibold text-foreground block mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <label className="text-sm font-semibold text-foreground block mb-2">
                       {strings.packages.description}
                     </label>
                     <textarea
@@ -336,12 +330,12 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                         )
                       }}
                       placeholder={strings.packages.descriptionPlaceholder}
-                      className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm h-20 resize-none ${locale === "ar" ? "text-right" : "text-left"}`}
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm h-20 resize-none"
                     />
                   </div>
 
                   <div>
-                    <label className={`text-sm font-semibold text-foreground block mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <label className="text-sm font-semibold text-foreground block mb-2">
                       {strings.packages.gradeLevel}
                     </label>
                     <select
@@ -355,7 +349,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                           )
                         )
                       }}
-                      className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm ${locale === "ar" ? "text-right" : "text-left"}`}
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
                     >
                       <option value="all">All Grades</option>
                       <option value="elementary">Elementary</option>
@@ -370,7 +364,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   </div>
 
                   <div>
-                    <label className={`text-sm font-semibold text-foreground block mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <label className="text-sm font-semibold text-foreground block mb-2">
                       {strings.packages.subject}
                     </label>
                     <select
@@ -384,7 +378,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                           )
                         )
                       }}
-                      className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm ${locale === "ar" ? "text-right" : "text-left"}`}
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
                     >
                       <option value="general">General</option>
                       <option value="mathematics">Mathematics</option>
@@ -399,7 +393,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   </div>
 
                   <div>
-                    <label className={`text-sm font-semibold text-foreground block mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <label className="text-sm font-semibold text-foreground block mb-2">
                       {strings.packages.visibility}
                     </label>
                     <select
@@ -413,13 +407,13 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                           )
                         )
                       }}
-                      className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm ${locale === "ar" ? "text-right" : "text-left"}`}
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
                     >
                       <option value="draft">{strings.packages.draftNotListed}</option>
                       <option value="published">{strings.packages.publishedVisible}</option>
                       <option value="hidden">{strings.packages.hiddenPrivate}</option>
                     </select>
-                    <p className={`text-xs text-muted-foreground mt-1 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <p className="text-xs text-muted-foreground mt-1">
                       {pkg.visibility === 'draft' && strings.packages.draftDescription}
                       {pkg.visibility === 'published' && strings.packages.publishedDescription}
                       {pkg.visibility === 'hidden' && strings.packages.hiddenDescription}
@@ -427,10 +421,10 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                   </div>
 
                   <div>
-                    <label className={`text-sm font-semibold text-foreground block mb-2 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <label className="text-sm font-semibold text-foreground block mb-2">
                       {strings.packages.price}
                     </label>
-                    <div className={`flex items-center gap-2 ${locale === "ar" ? "flex-row-reverse" : ""}`}>
+                    <div className="flex items-center gap-2">
                       <Input
                         type="number"
                         value={pkg.price || 0}
@@ -444,24 +438,24 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                           )
                         }}
                         placeholder="0"
-                        className={`w-full ${locale === "ar" ? "text-right" : "text-left"}`}
+                        className="w-full"
                       />
-                      <span className={`text-sm text-muted-foreground whitespace-nowrap ${locale === "ar" ? "order-first" : ""}`}>
+                      <span className="text-sm text-muted-foreground whitespace-nowrap">
                         = ${(((pkg.price || 0) / 100).toFixed(2))}
                       </span>
                     </div>
                   </div>
 
                   {settingsError && (
-                    <div className={`rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm ${locale === "ar" ? "text-right" : "text-left"}`}>
-                      <div className={`flex items-center gap-2 ${locale === "ar" ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm">
+                      <div className="flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
                         <span>{settingsError}</span>
                       </div>
                     </div>
                   )}
 
-                  <div className={`flex gap-2 ${locale === "ar" ? "flex-row-reverse justify-start" : "justify-end"}`}>
+                  <div className="flex gap-2 justify-end">
                     <Button
                       variant="outline"
                       size="sm"
@@ -485,7 +479,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                     >
                       {savingSettings === pkg.package_id ? (
                         <>
-                          <Loader2 className={`${locale === "ar" ? "ml-2" : "mr-2"} h-4 w-4 animate-spin`} />
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                           {strings.packages.savingSettings}
                         </>
                       ) : (
@@ -499,12 +493,12 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
           ))}
         </div>
       ) : (
-        <div className={`${locale === "ar" ? "text-right" : "text-center"} py-12`}>
-          <Package className={`h-12 w-12 text-muted-foreground ${locale === "ar" ? "ml-auto mr-0" : "mx-auto"} mb-4`} />
-          <h3 className={`text-lg font-semibold text-foreground mb-2 ${locale === "ar" ? "text-right" : "text-center"}`}>
+        <div className="text-center py-12">
+          <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-foreground mb-2 text-center">
             {strings.packages.noPackagesTitle}
           </h3>
-          <p className={`text-muted-foreground mb-6 ${locale === "ar" ? "text-right" : "text-center"}`}>{strings.packages.noPackagesBody}</p>
+          <p className="text-muted-foreground mb-6 text-center">{strings.packages.noPackagesBody}</p>
           <Button asChild>
             <Link href="/editor">{strings.packages.createPackage}</Link>
           </Button>
@@ -513,16 +507,13 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
 
       {previewPackage ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div
-            dir={direction}
-            className={`relative w-full h-full max-h-screen rounded-2xl border border-border bg-card shadow-2xl flex flex-col overflow-hidden ${locale === "ar" ? "text-right" : "text-left"}`}
-          >
+          <div className="relative w-full h-full max-h-screen rounded-2xl border border-border bg-card shadow-2xl flex flex-col overflow-hidden">
             {/* Header */}
-            <div className={`flex items-center ${locale === "ar" ? "flex-row-reverse" : ""} justify-between p-6 border-b border-border`}>
+            <div className="flex items-center justify-between p-6 border-b border-border">
               <div>
-                <h3 className={`text-2xl font-semibold text-foreground ${locale === "ar" ? "text-right" : "text-left"}`}>{previewPackage.title}</h3>
+                <h3 className="text-2xl font-semibold text-foreground">{previewPackage.title}</h3>
                 {previewPackage.description && (
-                  <p className={`text-sm text-muted-foreground mt-1 ${locale === "ar" ? "text-right" : "text-left"}`}>{previewPackage.description}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{previewPackage.description}</p>
                 )}
               </div>
               <button
@@ -536,35 +527,35 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
             </div>
 
             {/* 3-Column Layout (like editor) */}
-            <div className={`flex-1 flex overflow-hidden ${locale === "ar" ? "flex-row-reverse" : ""}`}>
+            <div className="flex-1 flex overflow-hidden">
               {/* Left Sidebar - Package Info */}
-              <div className={`w-80 ${locale === "ar" ? "border-l" : "border-r"} border-border bg-card/50 p-6 overflow-y-auto`}>
+              <div className="w-80 border-r border-border bg-card/50 p-6 overflow-y-auto">
                 <div className="space-y-6">
                   <div>
-                    <h4 className={`text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                       {strings.packages.packageDetails}
                     </h4>
                     <div className="space-y-3 text-sm">
                       {previewPackage.grade && (
-                        <div className={locale === "ar" ? "text-right" : "text-left"}>
+                        <div>
                           <span className="text-xs text-muted-foreground">{strings.packages.gradeLabel}</span>
                           <p className="font-medium text-foreground">{previewPackage.grade}</p>
                         </div>
                       )}
                       {previewPackage.subject && (
-                        <div className={locale === "ar" ? "text-right" : "text-left"}>
+                        <div>
                           <span className="text-xs text-muted-foreground">{strings.packages.subjectLabel}</span>
                           <p className="font-medium text-foreground">{previewPackage.subject}</p>
                         </div>
                       )}
                       {previewPackage.visibility && (
-                        <div className={locale === "ar" ? "text-right" : "text-left"}>
+                        <div>
                           <span className="text-xs text-muted-foreground">{strings.packages.visibilityLabel}</span>
                           <p className="font-medium text-foreground capitalize">{previewPackage.visibility}</p>
                         </div>
                       )}
                       {previewPackage.price !== undefined && (
-                        <div className={locale === "ar" ? "text-right" : "text-left"}>
+                        <div>
                           <span className="text-xs text-muted-foreground">{strings.packages.priceLabel}</span>
                           <p className="font-medium text-primary">
                             {previewPackage.price ? `$${((previewPackage.price / 100).toFixed(2))}` : strings.packages.free}
@@ -572,7 +563,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
                         </div>
                       )}
                       {previewPackage.created_at && (
-                        <div className={locale === "ar" ? "text-right" : "text-left"}>
+                        <div>
                           <span className="text-xs text-muted-foreground">{strings.packages.createdLabel}</span>
                           <p className="font-medium text-foreground">
                             {new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : 'en-US', { dateStyle: 'medium' }).format(
@@ -587,22 +578,22 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
               </div>
 
               {/* Center - Content Preview */}
-              <div className={`flex-1 overflow-y-auto p-6 ${locale === "ar" ? "text-right" : "text-left"}`}>
-                <div className={`bg-white rounded-xl p-6 space-y-4 ${locale === "ar" ? "text-right" : "text-left"}`}>
+              <div className="flex-1 overflow-y-auto p-6">
+                <div className="bg-white rounded-xl p-6 space-y-4">
                   {loadingPreview ? (
-                    <div className={`flex items-center gap-2 text-muted-foreground ${locale === "ar" ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className="flex items-center gap-2 text-muted-foreground">
                       <Loader2 className="h-4 w-4 animate-spin" />
                       <span>{strings.packages.loading}</span>
                     </div>
                   ) : previewError ? (
-                    <div className={`flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm ${locale === "ar" ? "flex-row-reverse justify-end" : ""}`}>
+                    <div className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-destructive text-sm">
                       <AlertCircle className="h-4 w-4" />
                       <span>{previewError}</span>
                     </div>
                   ) : previewProject ? (
                     <PackageViewer project={previewProject} />
                   ) : (
-                    <div className={`rounded-lg border border-dashed border-border p-6 ${locale === "ar" ? "text-right" : "text-center"} text-muted-foreground`}>
+                    <div className="rounded-lg border border-dashed border-border p-6 text-center text-muted-foreground">
                       {strings.packages.selectToPreview}
                     </div>
                   )}
@@ -610,13 +601,13 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
               </div>
 
               {/* Right Sidebar - Actions */}
-              <div className={`w-80 ${locale === "ar" ? "border-r" : "border-l"} border-border bg-card/50 p-6 overflow-y-auto`}>
+              <div className="w-80 border-l border-border bg-card/50 p-6 overflow-y-auto">
                 <div className="space-y-4">
                   <div>
-                    <h4 className={`text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3 ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
                       {strings.packages.actions}
                     </h4>
-                    <div className={`space-y-2 flex flex-col ${locale === "ar" ? "text-right" : "text-left"}`}>
+                    <div className="space-y-2 flex flex-col">
                       <Button onClick={closePreview} variant="outline" type="button">
                         {strings.packages.close}
                       </Button>

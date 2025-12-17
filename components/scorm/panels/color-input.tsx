@@ -2,6 +2,7 @@
 
 import React from "react"
 import { Button } from "@/components/ui/button"
+import { useLocale } from "@/hooks/use-locale"
 
 interface ColorInputProps {
   label?: string
@@ -20,6 +21,7 @@ export function ColorInput({
   defaultColor,
   helperText,
 }: ColorInputProps) {
+  const { t } = useLocale()
   const normalized = value || ""
   const colorPickerValue =
     normalized && hexColorRegex.test(normalized.toString())
@@ -54,7 +56,7 @@ export function ColorInput({
           className="h-9 whitespace-nowrap"
           onClick={() => onChange("transparent")}
         >
-          Transparent
+          {t("scorm.colorInput.transparent")}
         </Button>
       </div>
       {helperText ? (
