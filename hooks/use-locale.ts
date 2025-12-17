@@ -29,10 +29,13 @@ export function useLocale() {
   // Get the current locale and the setter from the store
   const { locale, setLocale } = useLocaleStore()
 
+  // Determine text direction based on the current locale
+  const direction = locale === 'ar' ? 'rtl' : 'ltr'
+
   // Create a translation function that's pre-bound to the current locale
   const t = (key: TranslationKey, values?: Record<string, string | number>) =>
     translate(locale, key, values)
 
   // Return the locale, setter, and the bound translation function
-  return { locale, setLocale, t }
+  return { locale, setLocale, t, direction }
 }
