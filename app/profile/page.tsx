@@ -6,16 +6,16 @@ import { Loader2, User } from "lucide-react"
 import { toast } from "sonner"
 
 import { useSupabase } from "@/components/auth-provider"
+import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getUserProfile, updateUserProfile } from "@/lib/user-profile"
 
 import { getProfileStrings, normalizeLanguage } from "./strings"
-import { usePreferredLanguage } from "./use-preferred-language"
 
 const languageOptions = [
   { label: "English", value: "en" },
-  { label: "Arabic", value: "ar" },
+  { label: "العربية", value: "ar" },
 ]
 
 type ProfileFormState = {
@@ -31,11 +31,12 @@ export default function ProfilePage() {
 function PersonalInfoPanel() {
   const { user } = useSupabase()
   const router = useRouter()
-  const { language: preferredLanguage } = usePreferredLanguage("en")
+  const { locale, setLocale } = useLocale()
+  const strings = getProfileStrings(locale as "en" | "ar")
   const [form, setForm] = useState<ProfileFormState>({
     fullName: "",
     email: "",
-    preferredLanguage: preferredLanguage,
+    preferredLanguage: locale,
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -44,14 +45,16 @@ function PersonalInfoPanel() {
   useEffect(() => {
     setForm((current) => ({
       ...current,
-      preferredLanguage: current.preferredLanguage || preferredLanguage,
+      preferredLanguage: locale,
     }))
-  }, [preferredLanguage])
+  }, [locale])
 
-  const strings = useMemo(
-    () => getProfileStrings(form.preferredLanguage || preferredLanguage),
-    [form.preferredLanguage, preferredLanguage],
-  )
+  const isRTL = locale === "ar"
+
+  useEffect(() => {
+    document.documentElement.dir = isRTL ? "rtl" : "ltr"
+    document.documentElement.lang = locale
+  }, [isRTL, locale])
 
   const isLoggedOut = useMemo(() => !user, [user])
 
@@ -97,7 +100,13 @@ function PersonalInfoPanel() {
   const handleSelectChange =
     (field: keyof ProfileFormState) =>
     (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setForm((current) => ({ ...current, [field]: event.target.value }))
+      const value = event.target.value
+      setForm((current) => ({ ...current, [field]: value }))
+      
+      // If language is changed, update global locale immediately
+      if (field === "preferredLanguage") {
+        setLocale(value as "en" | "ar")
+      }
     }
 
   const handleSave = async () => {
@@ -108,6 +117,9 @@ function PersonalInfoPanel() {
 
     setSaving(true)
     setError(null)
+
+    // Update the selected language in global locale
+    setLocale(normalizeLanguage(form.preferredLanguage || "en") as "en" | "ar")
 
     const { error } = await updateUserProfile(user.id, {
       full_name: form.fullName,
@@ -128,7 +140,7 @@ function PersonalInfoPanel() {
 
   if (isLoggedOut) {
     return (
-      <div className="space-y-4">
+      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.signInHeading}
         </h2>
@@ -139,11 +151,11 @@ function PersonalInfoPanel() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
+      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.loadingHeading}
         </h2>
-        <div className="flex items-center gap-2 text-muted-foreground">
+        <div className={`flex items-center gap-2 text-muted-foreground ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
           <Loader2 className="h-4 w-4 animate-spin" />
           <span>{strings.overview.loadingMessage}</span>
         </div>
@@ -152,18 +164,18 @@ function PersonalInfoPanel() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-6">
+        <h2 className={`text-2xl font-bold text-foreground mb-6 ${isRTL ? "text-right" : "text-left"}`}>
           {strings.overview.personalInfo}
         </h2>
 
         {/* Avatar */}
         <div className="mb-8">
-          <label className="block text-sm font-semibold text-foreground mb-2">
+          <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
             {strings.overview.profilePicture}
           </label>
-          <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
               <User className="h-10 w-10 text-primary" />
             </div>
@@ -176,27 +188,28 @@ function PersonalInfoPanel() {
         {/* Form */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
               {strings.overview.fullName}
             </label>
             <Input
               value={form.fullName}
               onChange={handleInputChange("fullName")}
               disabled={loading}
+              className={isRTL ? "text-right" : "text-left"}
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
               {strings.overview.email}
             </label>
-            <Input value={form.email} type="email" disabled />
+            <Input value={form.email} type="email" disabled className={isRTL ? "text-right" : "text-left"} />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-semibold text-foreground mb-2">
+            <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
               {strings.overview.preferredLanguage}
             </label>
             <select
-              className="w-full px-3 py-2 rounded-lg border border-input bg-background text-sm"
+              className={`w-full px-3 py-2 rounded-lg border border-input bg-background text-sm ${isRTL ? "text-right" : "text-left"}`}
               value={form.preferredLanguage}
               onChange={handleSelectChange("preferredLanguage")}
               disabled={loading}
@@ -213,7 +226,7 @@ function PersonalInfoPanel() {
           </div>
         </div>
 
-        {error && <p className="text-sm text-destructive pt-2">{error}</p>}
+        {error && <p className={`text-sm text-destructive pt-2 ${isRTL ? "text-right" : "text-left"}`}>{error}</p>}
 
         <div className="pt-6">
           <Button onClick={handleSave} disabled={loading || saving}>

@@ -134,3 +134,128 @@
     transform: translateY(0);
   }
 }
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+/* Force all text to right-align in RTL */
+[dir="rtl"] * {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* Override specific elements that might have left alignment */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] div,
+[dir="rtl"] a,
+[dir="rtl"] button,
+[dir="rtl"] label {
+  text-align: right !important;
+}
+
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* Flexbox RTL adjustments */
+[dir="rtl"] .flex {
+  direction: rtl !important;
+}
+
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse !important;
+}
+
+[dir="rtl"] .flex-col {
+  text-align: right !important;
+}
+
+/* Grid RTL adjustments */
+[dir="rtl"] .grid {
+  direction: rtl !important;
+}
+
+/* Margin and padding adjustments for RTL */
+[dir="rtl"] .ml-auto {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .mr-auto {
+  margin-right: auto !important;
+  margin-left: 0 !important;
+}
+
+[dir="rtl"] .pl-4 {
+  padding-left: 0 !important;
+  padding-right: 1rem !important;
+}
+
+[dir="rtl"] .pr-4 {
+  padding-right: 0 !important;
+  padding-left: 1rem !important;
+}
+
+/* Button and icon adjustments */
+[dir="rtl"] button svg,
+[dir="rtl"] a svg {
+  margin-inline-start: auto !important;
+}
+
+/* Form elements */
+[dir="rtl"] .border-border {
+  border-color: var(--border);
+}
+
+/* Specific component RTL fixes */
+[dir="rtl"] .space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+[dir="rtl"] .space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+[dir="rtl"] .space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+/* Force inline elements to respect RTL */
+[dir="rtl"] span,
+[dir="rtl"] strong,
+[dir="rtl"] em,
+[dir="rtl"] i,
+[dir="rtl"] b {
+  display: inline;
+  text-align: right !important;
+}
+
+/* Link styling for RTL */
+[dir="rtl"] a {
+  text-align: right !important;
+}
+
+/* List items RTL */
+[dir="rtl"] li {
+  text-align: right !important;
+}
+
+/* Table RTL */
+[dir="rtl"] table,
+[dir="rtl"] th,
+[dir="rtl"] td {
+  text-align: right !important;
+}

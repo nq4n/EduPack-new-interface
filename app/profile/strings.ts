@@ -46,6 +46,40 @@ const profileStrings: Record<ProfileLanguage, {
     missingPath: string
     noPathError: string
     loadErrorFallback: string
+    yourPackages: string
+    uploadPackage: string
+    uploadPackageHint: string
+    selectFile: string
+    uploading: string
+    uploadFailed: string
+    settings: string
+    description: string
+    descriptionPlaceholder: string
+    gradeLevel: string
+    subject: string
+    visibility: string
+    draftNotListed: string
+    publishedVisible: string
+    hiddenPrivate: string
+    draftDescription: string
+    publishedDescription: string
+    hiddenDescription: string
+    price: string
+    priceHint: string
+    free: string
+    saveSettings: string
+    savingSettings: string
+    cancel: string
+    packageDetails: string
+    gradeLabel: string
+    subjectLabel: string
+    visibilityLabel: string
+    priceLabel: string
+    createdLabel: string
+    actions: string
+    togglePublic: string
+    makePrivate: string
+    makePublic: string
   }
   billing: {
     heading: string
@@ -119,6 +153,40 @@ const profileStrings: Record<ProfileLanguage, {
       missingPath: "Package is missing a storage path",
       noPathError: "No storage path found for this package.",
       loadErrorFallback: "Failed to load package",
+      yourPackages: "Your Packages",
+      uploadPackage: "Upload Package",
+      uploadPackageHint: "Click to select a SCORM package file",
+      selectFile: "Select File",
+      uploading: "Uploading...",
+      uploadFailed: "Upload failed",
+      settings: "Settings",
+      description: "Description",
+      descriptionPlaceholder: "Add a description for your package",
+      gradeLevel: "Grade Level",
+      subject: "Subject",
+      visibility: "Visibility",
+      draftNotListed: "Draft - Not Listed",
+      publishedVisible: "Published - Visible in Shop",
+      hiddenPrivate: "Hidden - Private Only",
+      draftDescription: "This package won't appear in the shop.",
+      publishedDescription: "This package is visible to all users.",
+      hiddenDescription: "Only people with direct link can access.",
+      price: "Price (in cents, 0 = free)",
+      priceHint: "Price in cents",
+      free: "FREE",
+      saveSettings: "Save Settings",
+      savingSettings: "Saving...",
+      cancel: "Cancel",
+      packageDetails: "Package Details",
+      gradeLabel: "Grade Level:",
+      subjectLabel: "Subject:",
+      visibilityLabel: "Visibility:",
+      priceLabel: "Price:",
+      createdLabel: "Created:",
+      actions: "Actions",
+      togglePublic: "Toggle visibility",
+      makePrivate: "Make private",
+      makePublic: "Make public (visible in shop)",
     },
     billing: {
       heading: "Subscription & Billing",
@@ -196,6 +264,40 @@ const profileStrings: Record<ProfileLanguage, {
       missingPath: "الحزمة تفتقر إلى مسار تخزين",
       noPathError: "لا يوجد مسار تخزين لهذه الحزمة.",
       loadErrorFallback: "فشل في تحميل الحزمة",
+      yourPackages: "الحزم الخاصة بك",
+      uploadPackage: "رفع حزمة",
+      uploadPackageHint: "انقر لتحديد ملف حزمة SCORM",
+      selectFile: "حدد ملف",
+      uploading: "جاري الرفع...",
+      uploadFailed: "فشل الرفع",
+      settings: "الإعدادات",
+      description: "الوصف",
+      descriptionPlaceholder: "أضف وصفًا لحزمتك",
+      gradeLevel: "مستوى الصف",
+      subject: "الموضوع",
+      visibility: "الرؤية",
+      draftNotListed: "مسودة - غير مدرجة",
+      publishedVisible: "منشورة - مرئية في المتجر",
+      hiddenPrivate: "مخفية - خاصة فقط",
+      draftDescription: "هذه الحزمة لن تظهر في المتجر.",
+      publishedDescription: "هذه الحزمة مرئية لجميع المستخدمين.",
+      hiddenDescription: "يمكن الوصول إليها فقط من خلال الرابط المباشر.",
+      price: "السعر (بالفلوس، 0 = مجاني)",
+      priceHint: "السعر بالفلوس",
+      free: "مجاني",
+      saveSettings: "حفظ الإعدادات",
+      savingSettings: "جاري الحفظ...",
+      cancel: "إلغاء",
+      packageDetails: "تفاصيل الحزمة",
+      gradeLabel: "مستوى الصف:",
+      subjectLabel: "الموضوع:",
+      visibilityLabel: "الرؤية:",
+      priceLabel: "السعر:",
+      createdLabel: "تم الإنشاء:",
+      actions: "الإجراءات",
+      togglePublic: "تبديل الرؤية",
+      makePrivate: "اجعله خاصًا",
+      makePublic: "اجعله عامًا (مرئي في المتجر)",
     },
     billing: {
       heading: "الاشتراك والفوترة",

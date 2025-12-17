@@ -95,13 +95,13 @@ export function mapRemotePackages(locale: Locale, raw: any[]): PackageRecord[] {
       description: pkg.description || t(locale, "shop.preview.loadedDescription"),
       storage_path: pkg.storage_path,
       created_at: pkg.created_at,
-      grade: t(locale, "shop.preview.pageCount", { pages: pageCount }),
-      subject: t(locale, "shop.preview.blockCount", { blocks: blockCount }),
+      grade: pkg.grade || "All Grades",
+      subject: pkg.subject || "General",
       language:
         project?.theme?.direction === "rtl"
           ? t(locale, "shop.preview.languageRtl")
           : t(locale, "shop.preview.languageLtr"),
-      price: t(locale, "shop.preview.included"),
+      price: pkg.price || 0,
       content: project,
     }
   })
