@@ -21,7 +21,7 @@ export default async function OwnedPackagesPage() {
   // ---------------------------
   const { data: packages, error } = await supabase
     .from("packages")
-    .select("package_id, title, description, created_at, storage_path")
+    .select("package_id, title, description, created_at, storage_path, is_public, grade, subject, price")
     .eq("created_by_user_id", user.id)
     .order("created_at", { ascending: false });
 

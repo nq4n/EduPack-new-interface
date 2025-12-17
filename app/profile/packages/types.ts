@@ -4,4 +4,9 @@ export type OwnedPackage = {
   description: string | null
   created_at: string
   storage_path: string | null
+  is_public?: boolean
+  grade?: string
+  subject?: string
+  price?: number
+  visibility?: 'published' | 'draft' | 'hidden'
 }

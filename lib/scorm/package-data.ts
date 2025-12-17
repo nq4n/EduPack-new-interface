@@ -14,6 +14,7 @@ export interface PackageRecord {
   price: string
   thumbnail?: string
   content?: EditorProject
+  visibility?: 'published' | 'draft' | 'hidden'
 }
 
 export function buildFallbackPackages(locale: Locale): PackageRecord[] {
@@ -108,9 +109,21 @@ export function mapRemotePackages(locale: Locale, raw: any[]): PackageRecord[] {
 
 export async function fetchPackageList(
   locale: Locale,
+  filters?: {
+    grade?: string
+    subject?: string
+    sort?: string
+    price?: string
+  }
 ): Promise<{ packages: PackageRecord[]; error?: string }> {
   try {
-    const response = await fetch("/api/scorm/package")
+    const params = new URLSearchParams()
+    if (filters?.grade) params.append("grade", filters.grade)
+    if (filters?.subject) params.append("subject", filters.subject)
+    if (filters?.sort) params.append("sort", filters.sort)
+    if (filters?.price) params.append("price", filters.price)
+
+    const response = await fetch(`/api/scorm/package?${params.toString()}`)
     const contentType = response.headers.get("content-type") || ""
     const isJson = contentType.includes("application/json")
     const body = isJson ? await response.json().catch(() => ({})) : {}
