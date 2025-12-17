@@ -50,6 +50,7 @@ function PersonalInfoPanel() {
   }, [locale])
 
   const isRTL = locale === "ar"
+  const direction = isRTL ? "rtl" : "ltr"
 
   useEffect(() => {
     document.documentElement.dir = isRTL ? "rtl" : "ltr"
@@ -140,7 +141,7 @@ function PersonalInfoPanel() {
 
   if (isLoggedOut) {
     return (
-      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.signInHeading}
         </h2>
@@ -151,7 +152,7 @@ function PersonalInfoPanel() {
 
   if (loading) {
     return (
-      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.loadingHeading}
         </h2>
@@ -164,7 +165,7 @@ function PersonalInfoPanel() {
   }
 
   return (
-    <div className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
+    <div dir={direction} className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
       <div>
         <h2 className={`text-2xl font-bold text-foreground mb-6 ${isRTL ? "text-right" : "text-left"}`}>
           {strings.overview.personalInfo}
@@ -195,6 +196,7 @@ function PersonalInfoPanel() {
               value={form.fullName}
               onChange={handleInputChange("fullName")}
               disabled={loading}
+              dir={direction}
               className={isRTL ? "text-right" : "text-left"}
             />
           </div>
@@ -202,7 +204,13 @@ function PersonalInfoPanel() {
             <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
               {strings.overview.email}
             </label>
-            <Input value={form.email} type="email" disabled className={isRTL ? "text-right" : "text-left"} />
+            <Input
+              value={form.email}
+              type="email"
+              disabled
+              dir={direction}
+              className={isRTL ? "text-right" : "text-left"}
+            />
           </div>
           <div className="md:col-span-2">
             <label className={`block text-sm font-semibold text-foreground mb-2 ${isRTL ? "text-right" : "text-left"}`}>
@@ -213,6 +221,7 @@ function PersonalInfoPanel() {
               value={form.preferredLanguage}
               onChange={handleSelectChange("preferredLanguage")}
               disabled={loading}
+              dir={direction}
             >
               <option value="" disabled>
                 {strings.overview.selectLanguage}
@@ -228,7 +237,7 @@ function PersonalInfoPanel() {
 
         {error && <p className={`text-sm text-destructive pt-2 ${isRTL ? "text-right" : "text-left"}`}>{error}</p>}
 
-        <div className="pt-6">
+        <div className={`pt-6 flex ${isRTL ? "justify-end" : "justify-start"}`}>
           <Button onClick={handleSave} disabled={loading || saving}>
             {saving ? strings.overview.saving : strings.overview.saveChanges}
           </Button>

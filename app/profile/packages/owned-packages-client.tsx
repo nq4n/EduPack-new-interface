@@ -31,6 +31,7 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
   const fileInputRef = useRef<HTMLInputElement>(null)
   // Use global locale instead of server-passed language
   const strings = useMemo(() => getProfileStrings(locale as "en" | "ar"), [locale])
+  const direction = locale === "ar" ? "rtl" : "ltr"
 
   const sortedPackages = useMemo(() => {
     return [...localPackages].sort(
@@ -192,10 +193,15 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
   }
 
   return (
-    <div className={`space-y-6 ${locale === "ar" ? "text-right" : "text-left"}`}>
+    <div
+      dir={direction}
+      className={`space-y-6 ${locale === "ar" ? "text-right" : "text-left"}`}
+    >
       {/* Upload Section */}
       <div className={`border-2 border-dashed border-border rounded-lg p-6 ${locale === "ar" ? "text-right" : "text-center"} bg-card/50 hover:bg-card transition-colors`}>
-        <div className={`flex flex-col items-center justify-center gap-4 ${locale === "ar" ? "text-right" : ""}`}>
+        <div
+          className={`flex flex-col ${locale === "ar" ? "items-end" : "items-center"} justify-center gap-4 ${locale === "ar" ? "text-right" : ""}`}
+        >
           <Upload className="h-8 w-8 text-muted-foreground" />
           <div className={locale === "ar" ? "text-right" : "text-center"}>
             <h3 className={`font-semibold text-foreground mb-1 ${locale === "ar" ? "text-right" : "text-center"}`}>{strings.packages.uploadPackage}</h3>
@@ -507,7 +513,10 @@ export function OwnedPackagesClient({ packages, language }: OwnedPackagesClientP
 
       {previewPackage ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className={`relative w-full h-full max-h-screen rounded-2xl border border-border bg-card shadow-2xl flex flex-col overflow-hidden ${locale === "ar" ? "text-right" : "text-left"}`}>
+          <div
+            dir={direction}
+            className={`relative w-full h-full max-h-screen rounded-2xl border border-border bg-card shadow-2xl flex flex-col overflow-hidden ${locale === "ar" ? "text-right" : "text-left"}`}
+          >
             {/* Header */}
             <div className={`flex items-center ${locale === "ar" ? "flex-row-reverse" : ""} justify-between p-6 border-b border-border`}>
               <div>
