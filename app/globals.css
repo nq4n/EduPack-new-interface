@@ -119,15 +119,28 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-    text-align: start;
-  }
+body {
+  @apply bg-background text-foreground;
+  text-align: start;
+}
 }
 
 /* RTL support styles for Arabic language */
 [dir="rtl"] {
   direction: rtl;
+}
+
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] input::placeholder,
+[dir="rtl"] textarea::placeholder,
+[dir="rtl"] select::placeholder {
+  text-align: right;
 }
 
 [dir="rtl"] .flex-row {

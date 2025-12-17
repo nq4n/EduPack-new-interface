@@ -33,14 +33,17 @@ export default async function OwnedPackagesPage() {
 
   const language = normalizeLanguage(profile?.preferred_language ?? "en");
   const strings = getProfileStrings(language);
+  const isRTL = language === "ar";
 
   if (error) {
     console.error("Error loading packages:", error);
   }
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground">{strings.packages.heading}</h2>
+    <div dir={isRTL ? "rtl" : "ltr"} className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
+      <h2 className={`text-2xl font-bold text-foreground ${isRTL ? "text-right" : "text-left"}`}>
+        {strings.packages.heading}
+      </h2>
 
       <OwnedPackagesClient
         packages={(packages as OwnedPackage[]) ?? []}
