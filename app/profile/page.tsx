@@ -50,6 +50,7 @@ function PersonalInfoPanel() {
   }, [locale])
 
   const isRTL = locale === "ar"
+  const direction = isRTL ? "rtl" : "ltr"
 
   useEffect(() => {
     document.documentElement.dir = isRTL ? "rtl" : "ltr"
@@ -140,7 +141,7 @@ function PersonalInfoPanel() {
 
   if (isLoggedOut) {
     return (
-      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.signInHeading}
         </h2>
@@ -151,7 +152,7 @@ function PersonalInfoPanel() {
 
   if (loading) {
     return (
-      <div className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
+      <div dir={direction} className={`space-y-4 ${isRTL ? "text-right" : "text-left"}`}>
         <h2 className="text-2xl font-bold text-foreground">
           {strings.overview.loadingHeading}
         </h2>
@@ -164,7 +165,7 @@ function PersonalInfoPanel() {
   }
 
   return (
-    <div className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
+    <div dir={direction} className={`space-y-6 ${isRTL ? "text-right" : "text-left"}`}>
       <div>
         <h2 className={`text-2xl font-bold text-foreground mb-6 ${isRTL ? "text-right" : "text-left"}`}>
           {strings.overview.personalInfo}

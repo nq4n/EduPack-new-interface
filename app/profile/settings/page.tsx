@@ -10,9 +10,10 @@ export default function SettingsPage() {
   const { locale } = useLocale()
   const strings = getProfileStrings(locale as "en" | "ar")
   const isRTL = locale === "ar"
+  const direction = isRTL ? "rtl" : "ltr"
 
   return (
-    <div className={`space-y-8 ${isRTL ? "text-right" : "text-left"}`}>
+    <div dir={direction} className={`space-y-8 ${isRTL ? "text-right" : "text-left"}`}>
       <div>
         <h2 className={`text-2xl font-bold text-foreground mb-6 ${isRTL ? "text-right" : "text-left"}`}>
           {strings.settings.heading}
