@@ -2,7 +2,7 @@
 
 export const MODELS = {
   ROUTER: "nvidia/nemotron-3-nano-30b-a3b:free", // ultra-fast router
-  MAIN: "amazon/nova-2-lite-v1:free",            // main generation model
+  MAIN: "nex-agi/deepseek-v3.1-nex-n1:free",            // main generation model
 }
 
 type ChatMessage = {

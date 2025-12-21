@@ -649,721 +649,775 @@ export const translations = {
     "scorm.props.block.quiz.label": "Quiz block",
     "scorm.props.block.interactive.label": "Interactive block",
     "scorm.props.unsupported": "This block type does not expose editable properties yet.",
-    "scorm.props.subtitle": "Adjust how this element looks and behaves in the lesson."
-,
-    "scorm.tabs.project": "Project",
-    "scorm.tabs.pages": "Pages",
-    "scorm.props.emptyTitle": "No block selected",
-    "scorm.props.block.text.label": "Text block",
-    "scorm.props.block.image.label": "Image block",
-    "scorm.props.block.video.label": "Video block",
-    "scorm.props.block.quiz.label": "Quiz block",
-    "scorm.props.block.interactive.label": "Interactive block",
-    "scorm.props.unsupported": "This block type does not expose editable properties yet.",
-    "scorm.props.subtitle": "Adjust how this element looks and behaves in the lesson."
-
-
+    "scorm.props.subtitle": "Adjust how this element looks and behaves in the lesson.",
+    "scorm.ai.initialModal.title": "Generate SCORM Package with AI",
+    "scorm.ai.initialModal.description": "Describe the SCORM package you want to create. Be as descriptive as you can.",
+    "scorm.ai.initialModal.placeholder": "e.g., A course about the solar system for 5th graders",
+    "scorm.ai.initialModal.generating": "Generating...",
+    "scorm.ai.initialModal.generate": "Generate",
+    "scorm.ai.loadingPackagePreview": "Loading package preview...",
   },
   ar: {
-    "nav.home": "الرئيسية",
-    "nav.scorm-ai": "SCORM AI",
-    "nav.features": "الميزات",
-    "nav.pricing": "الأسعار",
-    "nav.upload": "رفع",
-    "nav.login": "تسجيل الدخول",
-    "nav.register": "تسجيل",
-    "nav.account": "الحساب",
-    "nav.about": "حول",
-    "nav.resources": "المصادر",
-    "nav.privacy": "الخصوصية",
-    "nav.terms": "الشروط",
-    "nav.shop": "الباقات",
-    "hero.title": "أنشئ حزم SCORM بالذكاء الاصطناعي",
-    "hero.description":
-      "أسهل طريقة لإنشاء حزم SCORM حديثة وتفاعلية وجميلة لنظام إدارة التعلم الخاص بك. استفد من الذكاء الاصطناعي لإنشاء المحتوى والاختبارات والمزيد.",
-    "hero.cta.start": "ابدأ في الإنشاء مجانًا",
-    "hero.cta.browse": "تصفح الباقات",
-    "hero.no-card": "لا يلزم وجود بطاقة ائتمان",
-    "hero.free-trial": "تجربة مجانية لمدة 14 يومًا",
-    "preview.name": "الاسم",
-    "preview.title.name": "قم بتسمية دورتك",
-    "preview.grade": "الصف",
-    "preview.title.grade": "حدد مستوى الصف",
-    "preview.subject": "الموضوع",
-    "preview.title.subject": "اختر موضوعًا",
-    "preview.measure": "القياس",
-    "preview.title.measure": "حدد مقاييس النجاح",
-    "preview.language": "اللغة",
-    "preview.title.language": "اختر اللغة",
-    "preview.area": "هذه معاينة للمحتوى الذي يمكنك إنشاؤه.",
-    "preview.play": "تشغيل",
-    "preview.view": "عرض المحتوى",
-    "featured-packages.title": "عينات الحزم",
-    "feature.scorm.title": "SCORM 1.2 & 2004",
-    "feature.scorm.desc": "صدّر دوراتك إلى أشهر معايير SCORM.",
-    "feature.ai.title": "محتوى مدعوم بالذكاء الاصطناعي",
-    "feature.ai.desc": "أنشئ محتوى جذابًا وتفاعليًا بمساعدة الذكاء الاصطناعي.",
-    "feature.marketplace.title": "السوق",
-    "feature.marketplace.desc": "شراء وبيع حزم SCORM المعدة مسبقًا من منشئين آخرين.",
-    "feature.lms.title": "متوافق مع أي نظام إدارة تعلم",
-    "feature.lms.desc": "تعمل حزمنا مع أي نظام إدارة تعلم متوافق مع SCORM.",
-    "audience.title": "لمن هذا؟",
-    "audience.teachers.title": "المعلمين والمربين",
-    "audience.teachers.point1": "أنشئ دروسًا واختبارات جذابة.",
-    "audience.teachers.point2": "وفر الوقت في إنشاء المحتوى.",
-    "audience.teachers.point3": "شارك بسهولة مع طلابك.",
-    "audience.teachers.point4": "تتبع تقدم الطلاب وأدائهم.",
-    "audience.institutions.title": "المؤسسات والشركات",
-    "audience.institutions.point1": "توحيد المواد التدريبية الخاصة بك.",
-    "audience.institutions.point2": "نشر المحتوى عبر مؤسستك.",
-    "audience.institutions.point3": "ضمان الامتثال والاتساق.",
-    "audience.institutions.point4": "التكامل مع نظام إدارة التعلم الحالي الخاص بك.",
-    "cta.title": "هل أنت مستعد للبدء؟",
-    "cta.description": "أنشئ أول حزمة SCORM لك اليوم وشاهد مدى سهولة الأمر.",
-    "cta.button": "اشترك مجانا",
-    "footer.proudly": "صنع بفخر في 🇵🇸",
-    "footer.product": "المنتج",
-    "footer.support": "الدعم",
-    "footer.company": "الشركة",
-    "footer.about": "حول",
-    "footer.privacy": "الخصوصية",
-    "footer.terms": "الشروط",
-    "footer.rights": "جميع الحقوق محفوظة.",
-    "footer.help": "مركز المساعدة",
-    "footer.contact": "اتصل بنا",
-    "scorm.props.title": "الخصائص",
-    "scorm.props.desc": "تعديل خصائص الكتلة المحددة.",
-    "scorm.props.block.text.html": "محتوى HTML",
-    "scorm.props.block.image.src": "رابط مصدر الصورة",
-    "scorm.props.block.image.alt": "النص البديل",
-    "scorm.props.block.video.src": "رابط مصدر الفيديو",
-    "scorm.props.block.quiz.question": "السؤال",
-    "scorm.ai.untitledProject": "مشروع بدون عنوان",
-    "scorm.ai.introduction": "مقدمة",
-    "scorm.ai.notConfigured": "اتصال الذكاء الاصطناعي غير مهيأ بعد. هذا مجرد عنصر نائب لواجهة المستخدم.",
-    "scorm.ai.projectSaved": "تم حفظ المشروع في التخزين المحلي!",
-    "scorm.ai.exportFailed": "فشل التصدير",
-    "scorm.ai.exportSuccess": "تم إكمال التصدير",
-    "scorm.ai.exportError": "خطأ في تصدير المشروع. انظر وحدة التحكم للحصول على التفاصيل.",
-    "scorm.ai.newTextBlock": "<p>كتلة نصية جديدة. قم بتحريري!</p>",
-    "scorm.ai.placeholderImage": "صورة نائبة",
-    "scorm.ai.newQuestion": "سؤال جديد",
-    "scorm.ai.option1": "الخيار 1",
-    "scorm.ai.option2": "الخيار 2",
-    "scorm.ai.projectLoaded": "تم تحميل المشروع من الملف.",
-    "scorm.ai.invalidProjectFile": "ملف مشروع غير صالح.",
-    "scorm.ai.invalidJsonFormat": "تنسيق JSON غير صالح.",
-    "scorm.ai.media": "وسائط",
-    "scorm.ai.progress.title": "البناء بالذكاء الاصطناعي",
-    "scorm.ai.popupBlocked": "الرجاء السماح بالنوافذ المنبثقة لعرض المعاينة.",
-    "scorm.ai.unsupportedFileType": "نوع ملف غير مدعوم: {{type}}",
-    "scorm.ai.unsupportedMediaUrl": "عنوان وسائط غير مدعوم. يرجى تقديم رابط صورة أو فيديو صالح.",
-    "scorm.ai.save.notLoggedIn": "المستخدم غير مسجل الدخول (لا يوجد رمز من Supabase).",
-    "scorm.ai.save.failed": "فشل حفظ الحزمة",
-    "scorm.ai.save.loading": "جاري حفظ الحزمة...",
-    "scorm.ai.save.success": "تم حفظ الحزمة بنجاح!",
-    "scorm.ai.save.error": "خطأ أثناء حفظ الحزمة",
-    "scorm.ai.interactive.defaultLabel": "عنصر تفاعلي",
-    "scorm.ai.interactive.calloutLabel": "ملاحظة",
-    "scorm.ai.interactive.revealLabel": "عرض",
-    "scorm.ai.interactive.buttonFallback": "عنصر تفاعلي",
-    "scorm.ai.interactive.calloutPlaceholder": "أضف محتوى الملاحظة من المحرر.",
-    "scorm.ai.interactive.revealPlaceholder": "أضف محتوى الإظهار من المحرر.",
-    "scorm.ai.lessonUpdated": "تم تحديث الدرس بنجاح.",
-    "scorm.ai.qti.noQuizzes": "لا توجد اختبارات متاحة",
-    "scorm.ai.print.title": "{{title}} - تقرير {{role}}",
-    "scorm.ai.print.role.teacher": "معلم",
-    "scorm.ai.print.role.student": "متعلم",
-    "scorm.ai.print.meta": "الدور: {{role}} • الصفحات: {{pages}}",
-    "scorm.ai.print.lessonOutline": "مخطط الدرس",
-    "scorm.ai.print.noPages": "لا توجد صفحات جاهزة.",
-    "scorm.ai.print.notes": "ملاحظات",
-    "scorm.ai.print.notesHint": "يمكن حفظ عرض الطباعة هذا كملف PDF من نافذة طباعة المتصفح.",
-    "scorm.ai.print.pageLine": "{{index}}. {{title}} ({{blocks}} كتلة)",
-    "scorm.ai.toast.xapiReady": "تم إعداد حزمة xAPI بصيغة JSON",
-    "scorm.ai.toast.htmlReady": "تم تنزيل صفحة HTML5 للعمل دون اتصال",
-    "scorm.ai.toast.publicLink": "تم فتح رابط معاينة قابل للمشاركة",
-    "scorm.ai.toast.embedCode": "تم نسخ كود التضمين",
-    "scorm.ai.toast.teacherPdf": "تم فتح عرض الطباعة للمعلم",
-    "scorm.ai.toast.studentPdf": "تم فتح عرض الطباعة للطالب",
-    "scorm.ai.toast.jsonReady": "تم تنزيل ملف JSON للمشروع",
-    "scorm.ai.toast.qtiReady": "تم تجهيز تصدير QTI",
-    "scorm.ai.context.copy": "نسخ",
-    "scorm.ai.context.paste": "لصق",
-    "scorm.ai.context.duplicate": "تكرار",
-    "scorm.ai.context.delete": "حذف",
-    "scorm.ai.agent.unified": "منشئ الذكاء الاصطناعي",
-    "scorm.ai.agent.mentor": "مرشد الذكاء الاصطناعي",
-    "scorm.ai.agent.contentArchitect": "مهندس المحتوى",
-    "scorm.ai.agent.assessmentDesigner": "مصمم التقييم",
-    "scorm.choice.title": "إنشاء حزمة SCORM جديدة",
-    "scorm.choice.description": "اختر كيف تريد البدء في بناء حزمة التعلم الخاصة بك.",
-    "scorm.choice.aiAssistant": "البناء بمساعدة الذكاء الاصطناعي",
-    "scorm.choice.aiAssistantDesc": "دع الذكاء الاصطناعي يساعد في إنشاء محتوى الدورة التدريبية الخاصة بك.",
-    "scorm.choice.blankPage": "البدء من صفحة فارغة",
-    "scorm.choice.blankPageDesc": "بناء كل شيء يدويًا من البداية.",
-    "scorm.nav.hide": "إخفاء شريط التنقل",
-    "scorm.nav.show": "إظهار شريط التنقل",
-    "scorm.ai.close": "✕",
-    "scorm.tools.ai": "الذكاء الاصطناعي",
-    "scorm.alerts.interactiveSoon": "العناصر التفاعلية ستكون متاحة قريبًا.",
-    "scorm.alerts.settingsLater": "سيتم تصميم إعدادات الحزمة لاحقًا.",
-    "shop.title": "سوق حزم SCORM",
-    "shop.desc": "تصفح وشراء حزم SCORM عالية الجودة التي أنشأها مجتمعنا.",
-    "shop.search": "البحث عن حزم...",
-    "shop.filter.grades": "كل المستويات",
-    "shop.filter.subjects": "كل المواضيع",
-    "shop.filter.sort": "ترتيب حسب",
-    "shop.filter.free": "مجاني",
-    "shop.filter.paid": "مدفوع",
-    "shop.filter.more": " المزيد من المرشحات",
-    "shop.view": "عرض",
-    "shop.packages.1.title": "مقدمة في الكسور",
-    "shop.packages.1.grade": "الصف الخامس",
-    "shop.packages.1.subject": "الرياضيات",
-    "shop.packages.1.language": "الإنجليزية",
-    "shop.packages.1.description": "درس تفاعلي يغطي أساسيات الكسور مع مساعدات بصرية ومسابقات تدريبية",
-    "shop.packages.1.price": "مجاني",
-    "shop.packages.2.title": "مستكشف النظام الشمسي",
-    "shop.packages.2.grade": "الصف السابع",
-    "shop.packages.2.subject": "العلوم",
-    "shop.packages.2.language": "الإنجليزية",
-    "shop.packages.2.description": "رحلة عبر نظامنا الشمسي بنماذج وأنشطة تفاعلية ثلاثية الأبعاد",
-    "shop.packages.3.title": "شكسبير: روميو وجولييت",
-    "shop.packages.3.grade": "المرحلة الثانوية",
-    "shop.packages.3.subject": "الأدب",
-    "shop.packages.3.language": "الإنجليزية",
-    "shop.packages.3.description": "دليل دراسة شامل مع تحليل الشخصيات ومشاهد تفاعلية",
-    "shop.packages.4.title": "تفاعلات الكيمياء الأساسية",
-    "shop.packages.4.grade": "الصف التاسع",
-    "shop.packages.4.subject": "الكيمياء",
-    "shop.packages.4.language": "الإنجليزية",
-    "shop.packages.4.description": "تجارب معملية افتراضية توضح التفاعلات الكيميائية الأساسية بأمان",
-    "shop.packages.5.title": "اختبار الجغرافيا العالمي",
-    "shop.packages.5.grade": "الصف السادس",
-    "shop.packages.5.subject": "الجغرافيا",
-    "shop.packages.5.language": "الإنجليزية",
-    "shop.packages.5.description": "خرائط تفاعلية ومسابقات تغطي القارات والدول والعواصم",
-    "shop.packages.5.price": "مجاني",
-    "shop.packages.6.title": "أساسيات برمجة بايثون",
-    "shop.packages.6.grade": "المرحلة الثانوية",
-    "shop.packages.6.subject": "علوم الحاسوب",
-    "shop.packages.6.language": "الإنجليزية",
-    "shop.packages.6.description": "تعلم أساسيات بايثون مع تمارين ومشاريع برمجية تفاعلية",
-    "shop.preview.placeholderTitle": "معاينة الحزمة",
-    "shop.preview.samplePage": "معاينة",
-    "shop.preview.sampleIntro": "هذه معاينة سريعة لحزمتك. أضف صفحات وكتلًا في المحرر لتظهر هنا.",
-    "shop.preview.breadcrumb": "السوق · معاينة الحزمة",
-    "shop.preview.meta": "{{pages}} صفحات · {{blocks}} كتل",
-    "shop.preview.pageCount": "{{pages}} صفحات",
-    "shop.preview.blockCount": "{{blocks}} كتل",
-    "shop.preview.languageRtl": "العربية · من اليمين لليسار",
-    "shop.preview.languageLtr": "الإنجليزية · من اليسار لليمين",
-    "shop.preview.back": "رجوع",
-    "shop.preview.loading": "جاري تحميل الحزمة...",
-    "shop.preview.error": "تعذر تحميل الحزمة",
-    "shop.preview.loadedDescription": "مستوردة من محرر SCORM AI",
-    "shop.preview.included": "مضمن",
-    "shop.preview.sampleMeta": "معاينة المحتوى قريبًا",
-    "shop.preview.untitledPage": "صفحة",
-    "shop.preview.emptyPage": "لا توجد كتل في هذه الصفحة بعد",
-    "payment.back": "العودة إلى الحزم",
-    "payment.title": "الدفع",
-    "payment.subtitle": "راجع تفاصيل مشترياتك وأكمل الدفع. هذه صفحة تجريبية ولن يتم إجراء أي رسوم.",
-    "payment.status.title": "حالة الدفع",
-    "payment.status.desc": "نجهز تجربة دفع آمنة. حالياً كل شيء هنا محتوى توضيحي ثابت.",
-    "payment.progress": "في انتظار ربط بوابة الدفع",
-    "payment.progress.desc": "سيتم تفعيل المعاملات الحقيقية بمجرد إعداد بوابة الدفع.",
-    "payment.support.title": "تحتاج مساعدة؟",
-    "payment.support.desc": "تواصل مع فريق الدعم إذا كان لديك أسئلة حول الفواتير أو الإيصالات.",
-    "payment.summary.title": "ملخص الطلب",
-    "payment.summary.desc": "ستظهر أمثلة الرسوم هنا عند تفعيل معالجة الدفع.",
-    "payment.summary.item": "وصول إلى الدورة",
-    "payment.summary.price": "$12.99",
-    "payment.summary.tax": "الضريبة",
-    "payment.summary.taxValue": "$1.30",
-    "payment.summary.total": "الإجمالي",
-    "payment.summary.totalValue": "$14.29",
-    "payment.cta": "المتابعة إلى الدفع",
-    "scorm.panels.text.title": "إعدادات النص",
-    "scorm.panels.text.content": "المحتوى",
-    "scorm.panels.text.typography": "الطباعة",
-    "scorm.panels.text.alignment": "المحاذاة",
-    "scorm.panels.common.align.left": "يسار",
-    "scorm.panels.common.align.center": "وسط",
-    "scorm.panels.common.align.right": "يمين",
-    "scorm.panels.common.align.justify": "مضبوط",
-    "scorm.panels.common.direction.ltr": "من اليسار لليمين",
-    "scorm.panels.common.direction.rtl": "من اليمين لليسار",
-    "scorm.panels.text.direction": "الاتجاه",
-    "scorm.panels.text.textColor": "لون النص",
-    "scorm.panels.text.background": "الخلفية",
-    "scorm.panels.text.spacing": "التباعد",
-    "scorm.panels.text.padding": "الحشو",
-    "scorm.panels.text.radius": "نصف القطر",
-    "scorm.panels.text.lineHeight": "ارتفاع السطر",
-    "scorm.panels.media.title": "إعدادات الصورة",
-    "scorm.panels.media.url": "رابط الصورة",
-    "scorm.panels.media.alt": "نص بديل",
-    "scorm.panels.media.size": "الحجم",
-    "scorm.panels.media.width": "العرض (%)",
-    "scorm.panels.media.maxWidth": "أقصى عرض (px)",
-    "scorm.panels.media.alignment": "المحاذاة",
-    "scorm.panels.media.appearance": "المظهر",
-    "scorm.panels.media.radius": "نصف القطر (px)",
-    "scorm.panels.media.padding": "الحشو (px)",
-    "scorm.panels.media.background": "لون الخلفية",
-    "scorm.panels.media.shadow": "ظل",
-    "scorm.panels.video.title": "إعدادات الفيديو",
-    "scorm.panels.video.url": "رابط الفيديو",
-    "scorm.panels.video.player": "التشغيل",
-    "scorm.panels.video.autoplay": "تشغيل تلقائي",
-    "scorm.panels.video.loop": "تكرار الفيديو",
-    "scorm.panels.video.controls": "إظهار عناصر التحكم",
-    "scorm.panels.video.muted": "كتم الصوت",
-    "scorm.panels.video.size": "الحجم",
-    "scorm.panels.video.width": "العرض (%)",
-    "scorm.panels.video.maxWidth": "أقصى عرض (px)",
-    "scorm.panels.video.alignment": "المحاذاة",
-    "scorm.panels.video.appearance": "المظهر",
-    "scorm.panels.video.radius": "نصف القطر (px)",
-    "scorm.panels.video.padding": "الحشو (px)",
-    "scorm.panels.video.background": "لون الخلفية",
-    "scorm.panels.video.shadow": "ظل",
-    "scorm.panels.interactive.title": "عنصر تفاعلي",
-    "scorm.panels.interactive.type": "النوع",
-    "scorm.panels.interactive.button": "زر",
-    "scorm.panels.interactive.callout": "صندوق تنبيه",
-    "scorm.panels.interactive.reveal": "صندوق كشف",
-    "scorm.panels.interactive.custom": "HTML مخصص",
-    "scorm.panels.interactive.buttonText": "نص الزر",
-    "scorm.panels.interactive.revealTitle": "العنوان (ما ينقره المتعلم)",
-    "scorm.panels.interactive.titleField": "العنوان",
-    "scorm.panels.interactive.link": "رابط (اختياري)",
-    "scorm.panels.interactive.linkPlaceholder": "https://...",
-    "scorm.panels.interactive.linkHelp": "إذا تركته فارغًا سيبدو الزر قابلاً للنقر فقط دون فتح أي شيء.",
-    "scorm.panels.interactive.calloutContent": "محتوى التنبيه",
-    "scorm.panels.interactive.tone": "النغمة",
-    "scorm.panels.interactive.tones.info": "معلومة",
-    "scorm.panels.interactive.tones.success": "نجاح",
-    "scorm.panels.interactive.tones.warning": "تحذير",
-    "scorm.panels.interactive.tones.danger": "خطر",
-    "scorm.panels.interactive.revealHidden": "المحتوى المخفي (يظهر بعد النقر)",
-    "scorm.panels.interactive.open": "مفتوح افتراضيًا",
-    "scorm.panels.interactive.customHtml": "HTML مخصص",
-    "scorm.panels.interactive.customPlaceholder":
-      '<div class="my-widget">\n  <!-- ضع HTML هنا -->\n</div>',
-    "scorm.panels.interactive.customHelp": "للمستخدمين المتقدمين. تجنب استخدام وسوم <script>. يمكنك تضمين iframes أو أدوات بسيطة.",
-    "scorm.panels.interactive.appearance": "المظهر",
-    "scorm.panels.interactive.padding": "الحشو (px)",
-    "scorm.panels.interactive.radius": "نصف القطر (px)",
-    "scorm.panels.interactive.background": "لون الخلفية",
-    "scorm.panels.interactive.shadow": "ظل",
-    "scorm.panels.quiz.title": "إعدادات الاختبار",
-    "scorm.panels.quiz.question": "نص السؤال",
-    "scorm.panels.quiz.questionHelp": "نسّق السؤال مثل النص العادي (عريض، اتجاه، ألوان...)",
-    "scorm.panels.quiz.options": "الخيارات",
-    "scorm.panels.quiz.addOption": "+ إضافة خيار",
-    "scorm.panels.quiz.optionLabel": "خيار {{index}}",
-    "scorm.panels.quiz.noOptions": "لا توجد خيارات بعد. اضغط \"إضافة خيار\" للبدء.",
-    "scorm.panels.quiz.remove": "حذف",
-    "scorm.panels.quiz.correctHelp": "يمكنك تحديد خيار واحد أو أكثر كإجابة صحيحة.",
-    "scorm.panels.quiz.boxAppearance": "مظهر صندوق السؤال",
-    "scorm.panels.quiz.padding": "الحشو (px)",
-    "scorm.panels.quiz.radius": "نصف القطر (px)",
-    "scorm.panels.quiz.background": "لون الخلفية",
-    "scorm.panels.quiz.shadow": "ظل",
-    "scorm.panels.quiz.optionStyle": "تنسيق نص الخيارات",
-    "scorm.panels.quiz.align": "المحاذاة",
-    "scorm.panels.quiz.color": "لون النص",
-    "shop.filter.elementary": "ابتدائي",
-    "shop.filter.middleSchool": "إعدادي",
-    "shop.filter.highSchool": "ثانوي",
-    "shop.filter.mathematics": "الرياضيات",
-    "shop.filter.science": "العلوم",
-    "shop.filter.literature": "الأدب",
-    "shop.filter.newest": "الأحدث",
-    "shop.filter.priceLowHigh": "السعر: من الأقل إلى الأعلى",
-    "shop.filter.priceHighLow": "السعر: من الأعلى إلى الأقل",
-    "scorm.ai.previewTitle": "معاينة: {{title}}",
-    "scorm.topbar.preview": "معاينة",
-    "scorm.topbar.export": "تصدير",
-    "scorm.topbar.status.draft": "مسودة",
-    "scorm.topbar.status.published": "منشور",
-    "scorm.ai.title": "مساعد الذكاء الاصطناعي",
-    "scorm.ai.placeholder": "اطلب من الذكاء الاصطناعي إنشاء محتوى...",
-    "scorm.ai.send": "إرسال",
-    "scorm.ai.quickInsert": "إدراج سريع",
-    "scorm.ai.addText": "كتلة نصية",
-    "scorm.ai.addImage": "كتلة صورة",
-    "scorm.ai.addVideo": "كتلة فيديو",
-    "scorm.ai.addQuiz": "كتلة اختبار",
-    "scorm.ai.addInteractive": "كتلة تفاعلية",
-    "scorm.ai.addPage": "صفحة جديدة",
-    "scorm.ai.pendingChanges": "بانتظار الموافقة",
-    "scorm.ai.acceptChanges": "تطبيق التغييرات",
-    "scorm.ai.rejectChanges": "تجاهل",
-    "scorm.canvas.title": "لوحة الرسم",
-    "scorm.canvas.desc": "ابدأ في بناء دورتك بإضافة كتل.",
-    "scorm.canvas.start": "ابدأ البناء",
-    "scorm.tools.upload": "رفع",
-    "scorm.tools.interactive": "تفاعلي",
-    "scorm.tools.quiz": "اختبار",
-    "scorm.tools.pageEditor": "محرر الصفحات",
-    "scorm.tools.media": "وسائط",
-    "scorm.tools.text": "نص",
-    "scorm.tools.settings": "إعدادات",
-    "scorm.tools.mediaPrompt": "الصق رابط صورة لإدراجها كوسائط:",
-    "scorm.tools.newPage": "صفحة {{number}}",
-    "scorm.tools.history": "سجل التعديلات (قريباً)",
-    "scorm.ai.welcome": "أهلاً بك في مساعد الذكاء الاصطناعي! كيف يمكنني مساعدتك في بناء دورتك؟",
-    "scorm.projectPanel.generalTracking": "التتبع العام",
-    "scorm.projectPanel.tracking.minimal": "الحد الأدنى",
-    "scorm.projectPanel.tracking.standard": "معياري",
-    "scorm.projectPanel.tracking.advanced": "متقدم",
-    "scorm.projectPanel.advancedOptions": "خيارات متقدمة",
-    "scorm.projectPanel.tracking.pageViews": "تتبع مشاهدات الصفحة",
-    "scorm.projectPanel.tracking.quizInteractions": "تتبع تفاعلات الاختبار",
-    "scorm.projectPanel.tracking.media": "تتبع الوسائط (تشغيل/إيقاف/السعي)",
-    "scorm.projectPanel.tracking.hints": "تتبع استخدام الحلول/المساعدة",
-    "scorm.projectPanel.tracking.externalLinks": "تتبع الروابط الخارجية",
-    "scorm.projectPanel.tracking.timePerPage": "تتبع الوقت المستغرق في الصفحة",
-    "scorm.projectPanel.tracking.attempts": "تتبع المحاولات",
-    "scorm.projectPanel.xapiOptions": "خيارات xAPI فقط",
-    "scorm.projectPanel.xapi.lrsEndpoint": "نقطة نهاية LRS",
-    "scorm.projectPanel.xapi.authToken": "رمز المصادقة",
-    "scorm.projectPanel.xapi.activityIdFormat": "تنسيق معرف النشاط",
-    "scorm.projectPanel.xapi.statementExtensions": "امتدادات البيان",
-    "scorm.projectPanel.exportPanel": "خيارات التصدير",
-    "scorm.projectPanel.export.scorm12": "SCORM 1.2",
-    "scorm.projectPanel.export.scorm2004": "SCORM 2004",
-    "scorm.projectPanel.export.xapi": "xAPI/cmi5",
-    "scorm.projectPanel.export.html5": "حزمة HTML5",
-    "scorm.projectPanel.export.publicLink": "رابط عام",
-    "scorm.projectPanel.export.embedCode": "كود التضمين",
-    "scorm.projectPanel.export.teacherPdf": "ملف PDF للمعلم",
-    "scorm.projectPanel.export.studentPdf": "ملف PDF للطالب",
-    "scorm.projectPanel.export.json": "مصدر JSON",
-    "scorm.projectPanel.export.qti": "QTI/بنك أسئلة Moodle",
-    "scorm.props.project.styles.textColor": "لون النص",
-    "nav.switchLanguage": "تبديل اللغة",
-    "pricing.faq.a4": "نحن نقدم ضمان استرداد الأموال لمدة 14 يومًا على جميع خطط الاشتراك. إذا لم تكن راضيًا ، فاتصل بنا لاسترداد المبلغ بالكامل.",
-    "about.title": "حول EduPack",
-    "about.mission.title": "مهمتنا",
-    "about.mission.p1": "تم إنشاء EduPack لتيسير وتسهيل إنشاء محتوى التعليم الإلكتروني. نؤمن بأن كل معلم ، بغض النظر عن خبرته التقنية ، يجب أن يحصل على إمكانية الوصول إلى أدوات قوية لإنشاء تجارب تعليمية جذابة وتفاعلية.",
-    "about.mission.p2": "من خلال الجمع بين توليد المحتوى المدعوم بالذكاء الاصطناعي مع واجهة تأليف بديهية وسوق تعاوني ، نحن نجعل من السهل أكثر من أي وقت مضى إنشاء ومشاركة وتسييس محتوى تعليمي.",
-    "about.who.title": "من نخدمهم",
-    "about.who.teachers.title": "المعلمون والمدرسون",
-    "about.who.teachers.p": "المعلمون الفرديون الذين يسعون إلى إنشاء محتوى تعليم إلكتروني احترافي دون قضاء ساعات في إعداد تقني.",
-    "about.who.edtech.title": "فرق EdTech والمؤسسات",
-    "about.who.edtech.p": "المدارس والجامعات وأقسام التدريب بالشركات التي تسعى لتوحيد وتوسيع نطاق إنتاج محتوى التعليم الإلكتروني.",
-    "about.purpose.title": "غرضنا",
-    "about.purpose.p": "نحن نبني أكثر من مجرد برنامج - نحن ننشئ نظام بيئي حيث يمكن للمعلمين التركيز على ما يفعلونه بشكل أفضل: التعليم. من خلال التعامل مع التعقيد التقني وتوفير الأدوات التي تعزز الإبداع ، نحن نمكّن جيل المنتجين التاليين من محتوى التعليم الإلكتروني.",
-    "scorm.props.project.styles.title": "الأنماط الافتراضية",
-    "scorm.props.project.styles.desc": "تعيين أنماط النص الافتراضية للمشروع بأكمله.",
-    "scorm.props.project.direction.title": "اتجاه النص",
-    "scorm.props.project.direction.desc": "قم بتعيين اتجاه النص للصفحة بأكملها.",
-    "scorm.props.project.direction.ltr": "من اليسار إلى اليمين",
-    "scorm.props.project.direction.rtl": "من اليمين إلى اليسار",
-    "scorm.projectPanel.title": "إعدادات المشروع",
-    "scorm.projectPanel.subtitle": "إدارة إعدادات الدورة التدريبية الشاملة.",
-    "pricing.title": "أسعار مرنة لكل منشئ",
-    "pricing.description": "اختر الخطة المناسبة لك. ابدأ باستخدام الاعتمادات أو اشترك للوصول غير محدود.",
-    "pricing.tabs.credits": "اعتمادات بدفع حسب الاستخدام",
-    "pricing.tabs.subscribe": "خطط الاشتراك",
-    "pricing.credits.starter.title": "حزمة البداية",
-    "pricing.credits.starter.credits": "100 اعتمدة",
-    "pricing.credits.starter.price": "$9",
-    "pricing.credits.starter.description": "مثالية لتجربة المنصة.",
-    "pricing.credits.starter.feature1": "100 توليد محتوى بالذكاء الاصطناعي",
-    "pricing.credits.starter.feature2": "تصدير حتى 5 حزم",
-    "pricing.credits.starter.feature3": "دعم أساسي",
-    "pricing.credits.starter.feature4": "الوصول إلى السوق",
-    "pricing.credits.starter.cta": "ابدأ",
-    "pricing.credits.teacher.title": "حزمة المعلم",
-    "pricing.credits.teacher.credits": "500 اعتمدة",
-    "pricing.credits.teacher.price": "$39",
-    "pricing.credits.teacher.description": "مثالية للمعلمين الأفراد.",
-    "pricing.credits.teacher.feature1": "500 توليد محتوى بالذكاء الاصطناعي",
-    "pricing.credits.teacher.feature2": "تصدير حتى 25 حزمة",
-    "pricing.credits.teacher.feature3": "دعم ذو أولوية",
-    "pricing.credits.teacher.feature4": "الوصول إلى السوق",
-    "pricing.credits.teacher.feature5": "نشر إلى السوق",
-    "pricing.credits.teacher.cta": "اختر حزمة المعلم",
-    "pricing.credits.team.title": "حزمة الفريق",
-    "pricing.credits.team.credits": "2000 اعتمدة",
-    "pricing.credits.team.price": "$129",
-    "pricing.credits.team.description": "الأفضل للمدارس والمؤسسات.",
-    "pricing.credits.team.feature1": "2000 توليد محتوى بالذكاء الاصطناعي",
-    "pricing.credits.team.feature2": "تصدير حزم غير محدود",
-    "pricing.credits.team.feature3": "دعم مخصص",
-    "pricing.credits.team.feature4": "ميزات التعاون الجماعي",
-    "pricing.credits.team.feature5": "نشر إلى السوق",
-    "pricing.credits.team.feature6": "علامة تجارية مخصصة",
-    "pricing.credits.team.cta": "اتصل بالمبيعات",
-    "pricing.subscribe.monthly.title": "شهري",
-    "pricing.subscribe.monthly.subtitle": "جميع الميزات ، استخدام غير محدود.",
-    "pricing.subscribe.monthly.price": "$49",
-    "pricing.subscribe.monthly.period": "/ شهر",
-    "pricing.subscribe.monthly.description": "إلغاء في أي وقت.",
-    "pricing.subscribe.monthly.feature1": "توليد غير محدود بالذكاء الاصطناعي",
-    "pricing.subscribe.monthly.feature2": "تصدير حزم غير محدود",
-    "pricing.subscribe.monthly.feature3": "دعم ذو أولوية",
-    "pricing.subscribe.monthly.feature4": "التعاون الجماعي",
-    "pricing.subscribe.monthly.feature5": "نشر إلى السوق",
-    "pricing.subscribe.monthly.cta": "اشترك الآن",
-    "pricing.subscribe.semester.title": "الفصل",
-    "pricing.subscribe.semester.subtitle": "وفر 20٪ مع فواتير الفصل.",
-    "pricing.subscribe.semester.price": "$199",
-    "pricing.subscribe.semester.period": "/ 6 أشهر",
-    "pricing.subscribe.semester.description": "ادفع مرة واحدة للفصل الدراسي كله.",
-    "pricing.subscribe.semester.feature1": "توليد غير محدود بالذكاء الاصطناعي",
-    "pricing.subscribe.semester.feature2": "تصدير حزم غير محدود",
-    "pricing.subscribe.semester.feature3": "دعم ذو أولوية",
-    "pricing.subscribe.semester.feature4": "التعاون الجماعي",
-    "pricing.subscribe.semester.cta": "اختر الفصل",
-    "pricing.subscribe.yearly.title": "سنوي",
-    "pricing.subscribe.yearly.subtitle": "أفضل قيمة! شهران مجاناً.",
-    "pricing.subscribe.yearly.price": "$499",
-    "pricing.subscribe.yearly.period": "/ سنة",
-    "pricing.subscribe.yearly.description": "اجعله واتركه لمدة سنة واحدة.",
-    "pricing.subscribe.yearly.feature1": "توليد غير محدود بالذكاء الاصطناعي",
-    "pricing.subscribe.yearly.feature2": "تصدير حزم غير محدود",
-    "pricing.subscribe.yearly.feature3": "دعم مخصص",
-    "pricing.subscribe.yearly.feature4": "التعاون الجماعي",
-    "pricing.subscribe.yearly.feature5": "علامة تجارية مخصصة",
-    "pricing.subscribe.yearly.cta": "اختر السنوي",
-    "pricing.faq.title": "الأسئلة الشائعة",
-    "pricing.faq.q1": "ما هي الاعتمادات؟",
-    "pricing.faq.a1": "يتم استخدام الاعتمادات لتوليد المحتوى بالذكاء الاصطناعي. اعتمادة واحدة تساوي توليد واحد (على سبيل المثال ، فقرة من النص أو سؤال اختبار).",
-    "pricing.faq.q2": "هل تنتهي صلاحية الاعتمادات؟",
-    "pricing.faq.a2": "لا ، الاعتمادات لا تنتهي أبداً. يمكنك استخدامها متى كنت تريد.",
-    "pricing.faq.q3": "هل يمكنني الترقية أو الخفض من اشتراكي؟",
-    "pricing.faq.a3": "نعم ، يمكنك تغيير خطة اشتراكك في أي وقت. سيتم تطبيق التغييرات في دورة الفواتير التالية.",
-    "pricing.faq.q4": "ما هي سياسة الاسترجاع الخاصة بك؟",
-    "scorm.props.project.styles.desc": "تعيين أنماط النص الافتراضية للمشروع بأكمله.",
-    "scorm.props.project.direction.title": "اتجاه النص",
-    "scorm.props.project.direction.desc": "قم بتعيين اتجاه النص للصفحة بأكملها.",
-    "scorm.props.project.direction.ltr": "من اليسار إلى اليمين",
-    "scorm.props.project.direction.rtl": "من اليمين إلى اليسار",
-    "scorm.projectPanel.title": "إعدادات المشروع",
-    "scorm.projectPanel.subtitle": "إدارة إعدادات الدورة التدريبية الشاملة.",
-    "scorm.projectPanel.generalSettings": "عام",
-    "scorm.projectPanel.projectTitle": "عنوان المشروع",
-    "scorm.projectPanel.language": "اللغة",
-    "scorm.projectPanel.pageOrganization": "تنظيم الصفحات",
-    "scorm.projectPanel.addPage": "إضافة صفحة",
-    "scorm.projectPanel.deleteLastPageError": "لا يمكنك حذف الصفحة الأخيرة.",
-    "scorm.projectPanel.deleteConfirm": "هل أنت متأكد أنك تريد حذف هذه الصفحة؟",
-    "resources.title": "كيفية استخدام إديو باك",
-    "resources.description": "خطوات وإرشادات تفصيلية مع مصادر قراءة تساعدك على الاستفادة القصوى من EduPack",
-    "resources.guide1.title": "إنشاء أول حزمة باستخدام SCORM AI",
-    "resources.guide1.description": "تعرّف على كيفية استخدام أداة التأليف المدعومة بالذكاء الاصطناعي لبناء حزم SCORM تفاعلية",
-    "resources.guide1.duration": "10 دقائق قراءة",
-    "resources.guide1.level": "مبتدئ",
-    "resources.guide2.title": "رفع ونشر حزمة",
-    "resources.guide2.description": "دليل خطوة بخطوة لرفع محتوى SCORM الحالي وجعله متاحًا في السوق",
-    "resources.guide2.duration": "5 دقائق قراءة",
-    "resources.guide2.level": "مبتدئ",
-    "resources.guide3.title": "شراء وتحميل الحزم من المتجر",
-    "resources.guide3.description": "اكتشف كيفية البحث والمعاينة وشراء الحزم التعليمية الجاهزة لنظام إدارة التعلم",
-    "resources.guide3.duration": "7 دقائق قراءة",
-    "resources.guide3.level": "مبتدئ",
-    "resources.guide4.title": "ربط حزم EduPack بنظام إدارة التعلم",
-    "resources.guide4.description": "أدلة تكامل مع Moodle وCanvas وBlackboard وأنظمة التعلم الشائعة الأخرى",
-    "resources.guide4.duration": "15 دقيقة قراءة",
-    "resources.guide4.level": "متوسط",
-    "resources.project.title": "جميع موارد EduPack",
-    "resources.project.description": "روابط مباشرة لكل أجزاء المنصة لتتنقل بين البناء والرفع والبيع والدعم بكل سهولة.",
-    "resources.project.cta": "تحدث مع الدعم",
-    "resources.project.ai.title": "منشئ SCORM بالذكاء الاصطناعي",
-    "resources.project.ai.description": "ابدأ تجربة التأليف بالذكاء الاصطناعي لتصميم دوراتك أو تطويرها.",
-    "resources.project.upload.title": "وحدة الرفع",
-    "resources.project.upload.description": "أرسل حزمة SCORM جاهزة إلى EduPack وانشرها.",
-    "resources.project.marketplace.title": "المتجر",
-    "resources.project.marketplace.description": "تصفح واشترِ دروس EduPack الجاهزة للاستخدام.",
-    "resources.project.docs.title": "مركز المساعدة",
-    "resources.project.docs.description": "أسئلة شائعة، شروحات، ومقالات إعداد لكل ميزة.",
-    "resources.project.api.title": "مرجع API",
-    "resources.project.api.description": "نقاط النهاية، المصادقة، الترقيم، وأدلة الويب هوك للمطورين.",
-    "resources.project.support.title": "مكتب الدعم",
-    "resources.project.support.description": "افتح تذكرة أو ابدأ محادثة مباشرة مع فريق EduPack.",
-    "resources.videos.title": "الدروس المرئية",
-    "resources.video1.title": "البدء مع EduPack",
-    "resources.video1.duration": "8:34",
-    "resources.video2.title": "نصائح لتوليد المحتوى بالذكاء الاصطناعي",
-    "resources.video2.duration": "12:15",
-    "resources.video3.title": "تقنيات التأليف المتقدمة",
-    "resources.video3.duration": "18:47",
-    "resources.docs.title": "التوثيق",
-    "resources.doc1.title": "دليل واجهة البرمجة API",
-    "resources.doc1.description": "للمطورين الذين يدمجون EduPack",
-    "resources.doc2.title": "دليل أفضل الممارسات",
-    "resources.doc2.description": "نصائح لإنشاء محتوى فعال",
-    "resources.doc3.title": "مرجع معايير SCORM",
-    "resources.doc3.description": "فهم مواصفات SCORM",
-    "resources.reading.title": "موارد أساسية للقراءة",
-    "resources.reading.description": "استكشف روابط توثيق API ومعايير SCORM وأفضل طرق التنفيذ الموصى بها.",
-    "resources.reading.api.title": "مرجع API",
-    "resources.reading.api.description": "نقاط النهاية والمصادقة وأمثلة الاستخدام لدمج EduPack.",
-    "resources.reading.api.content": "اطلع على معاملات نقاط النهاية، ورؤوس المصادقة، وأمثلة الترقيم والتنبيهات للربط بين EduPack ونظام إدارة التعلم أو الخدمات الخلفية لديك.",
-    "resources.reading.scorm.title": "مرجع SCORM",
-    "resources.reading.scorm.description": "إرشادات موثوقة لحزم SCORM 1.2 و2004.",
-    "resources.reading.scorm.content": "تعرف على هيكل ملف manifest المطلوب، وقواعد التسلسل، ونصائح التغليف لضمان عمل الدورات بسلاسة في أي نظام متوافق.",
-    "resources.reading.bestPractices.title": "دليل التنفيذ",
-    "resources.reading.bestPractices.description": "خطوات موصى بها للنشر والاختبار ومشاركة محتوى EduPack.",
-    "resources.reading.bestPractices.content": "اتبع قائمة التحقق لإعداد مواد الدورة، والتحقق من مخرجات SCORM، وتوزيع الحزم بشكل آمن للمتعلمين.",
-    "resources.reading.guidance.cta": "إرشادات القراءة",
-    "resources.reading.guidance.title": "إرشادات القراءة",
-    "resources.reading.guidance.heading": "كيفية الاستفادة من هذه الموارد",
-    "resources.reading.guidance.summary": "اتبع قائمة التحقق السريعة هذه لتتأكد أن كل رابط يمنحك المعلومة الصحيحة لمشروعك.",
-    "resources.reading.guidance.points.1": "ابدأ بمرجع API للتحقق من المصادقة، الترقيم، وتدفقات الويب هوك قبل الربط مع نظام إدارة التعلم.",
-    "resources.reading.guidance.points.2": "استخدم مرجع SCORM للتحقق من بنية manifest وقواعد التسلسل والتوافق مع أنظمة التعلم.",
-    "resources.reading.guidance.points.3": "اختم بدليل التنفيذ لقوائم التحقق الخاصة بالنشر وضمان الجودة وأفضل ممارسات الإطلاق.",
-    "resources.reading.guidance.close": "إغلاق",
-    "resources.reading.guidance.action": "فتح مركز المساعدة الكامل",
-    "resources.help.title": "تحتاج مساعدة؟ تواصل مع فريقنا",
-    "resources.help.description": "فريق الدعم جاهز لمساعدتك على النجاح. تواصل معنا في أي وقت لطرح الأسئلة أو الملاحظات.",
-    "resources.contact1.name": "Muiayad Al HAsani",
-    "resources.contact1.role": "مطوّر الصفحة",
-    "resources.contact2.name": "Ali Al Badri",
-    "resources.contact2.role": "مصمم الصفحة",
-    "resources.help.chat": "دعم المحادثة المباشرة",
-    "resources.form.title": "أرسل لنا رسالة",
-    "resources.form.name": "اسمك",
-    "resources.form.name.placeholder": "محمد أحمد",
-    "resources.form.email": "البريد الإلكتروني",
-    "resources.form.email.placeholder": "you@example.com",
-    "resources.form.message": "الرسالة",
-    "resources.form.message.placeholder": "كيف يمكننا مساعدتك؟",
-    "resources.form.send": "إرسال الرسالة",
-    "resources.form.sending": "جاري الإرسال...",
-    "resources.form.success": "تم إرسال رسالتك إلى فريقنا!",
-    "resources.form.error": "تعذر إرسال الرسالة. يرجى المحاولة مرة أخرى.",
-    "resources.form.validation": "يرجى إدخال الاسم والبريد الإلكتروني والرسالة.",
-    "resources.guide.open": "فتح الدليل",
-    "docs.api.intro": "مرجع المطور لدمج EduPack. هذه الصفحة قالب بداية — قم بتوسيعها مع نمو API الخاص بك.",
-    "docs.api.auth": "المصادقة",
-    "docs.api.authDesc": "استخدم رمز المنصة الخاص بك (أو مصادقة Supabase) للوصول إلى نقاط النهاية المحمية. احفظ الأسرار في متغيرات البيئة ولا تفصح عنها في الواجهة الأمامية.",
-    "docs.api.endpoints": "نقاط النهاية الشائعة (مثال)",
-    "docs.api.endpointsList": "GET /api/projects|قائمة مشاريع المستخدم,POST /api/projects|إنشاء مشروع,POST /api/export/scorm|تصدير zip SCORM",
-    "docs.api.webhooks": "الويب هوك (اختياري)",
-    "docs.api.webhooksDesc": "إذا دعمت webhooks ، قم بتوثيق تنسيقات payload والتحقق من التوقيع هنا.",
-    "docs.bestPractices.intro": "قائمة تحقق عملية لبناء دروس SCORM عالية الجودة في EduPack.",
-    "docs.bestPractices.tip1": "احفظ الصفحات قصيرة",
-    "docs.bestPractices.tip1Desc": "استخدم صفحات متعددة. يجب أن تعلم كل صفحة فكرة واحدة. هذا يحسن الوضوح وقابلية استخدام SCORM.",
-    "docs.bestPractices.tip2": "امزج أنواع المحتوى",
-    "docs.bestPractices.tip2Desc": "جمع النص + الصورة + الاختبار. استخدم الكتل التفاعلية للكشف/التنبيه لزيادة المشاركة.",
-    "docs.bestPractices.tip3": "تحقق قبل النشر",
-    "docs.bestPractices.tip3Desc": "قم دائمًا بمعاينة درسك واختبر التصدير في نظام إدارة التعلم الخاص بك (Moodle/Canvas) قبل المشاركة مع المتعلمين.",
-    "docs.bestPractices.tip4": "نصائح المحتوى باللغة العربية",
-    "docs.bestPractices.tip4Desc": "استخدم الاتجاه RTL في كتل النص ، واحفظ الجمل قصيرة ، وتجنب الترقيم الثقيل. بالنسبة للاختبارات ، احفظ الخيارات متسقة وواضحة.",
-    "docs.scorm.intro": "فهم سريع لمعايير SCORM 1.2 و2004 ، وكيف تقوم EduPack بتصدير الحزم.",
-    "docs.scorm.version12": "SCORM 1.2",
-    "docs.scorm.version12Desc": "مدعوم على نطاق واسع في منصات LMS. خيار افتراضي رائع عندما تكون التوافقية الأولوية.",
-    "docs.scorm.version2004": "SCORM 2004",
-    "docs.scorm.version2004Desc": "يضيف قواعد التسلسل/الملاحة. استخدمه عندما يدعم نظام إدارة التعلم الخاص بك 2004 بالكامل وتحتاج إلى تدفقات متقدمة.",
-    "docs.scorm.manifest": "أساسيات Manifest",
-    "docs.scorm.manifestDesc": "تتضمن حزم SCORM ملف imsmanifest.xml الذي يصف تنظيم المحتوى.",
-    "docs.scorm.export": "سلوك تصدير EduPack",
-    "docs.scorm.exportDesc": "يقوم EduPack بتصدير صفحاتك والكتل إلى بنية جاهزة لـ SCORM. اختبر دائمًا في نظام إدارة التعلم المستهدف.",
-    "help.scormBasics": "أساسيات SCORM",
-    "help.scormBasicsDesc": "تعلم SCORM 1.2 / 2004 وكيفية عمل التصديرات.",
-    "help.bestPractices": "أفضل الممارسات",
-    "help.bestPracticesDesc": "قائمة تحقق لبناء دروس عالية الجودة.",
-    "help.support": "الاتصال بالدعم",
-    "help.supportDesc": "افتح تذكرة أو ابدأ محادثة.",
-    "support.intro": "هذه صفحة دعم بداية. لاحقًا يمكنك ربطها بنظام دردشة مباشرة أو تتبع التذاكر.",
-    "support.email": "البريد الإلكتروني",
-    "support.emailValue": "support@edupack.app",
-    "support.liveChat": "دردشة مباشرة",
-    "features.hero.title": "لماذا تختار EduPack؟",
-    "features.hero.description": "أقوى وأسهل منصة لتأليف SCORM للمعلمين والمؤسسات. أنشئ محتوى تعليم إلكتروني احترافي بدون تعقيد.",
-    "features.comparison.title": "EduPack مقابل الأدوات التقليدية",
-    "features.comparison.feature": "الميزة",
-    "features.comparison.traditional": "الأدوات التقليدية",
-    "features.comparison.edupack": "EduPack",
-    "features.comparison.price.feature": "السعر الأساسي",
-    "features.comparison.price.traditional": "$500-2000/سنة",
-    "features.comparison.price.edupack": "$9 (الدفع حسب الاستخدام)",
-    "features.comparison.curve.feature": "منحنى التعلم",
-    "features.comparison.curve.traditional": "أسابيع إلى أشهر",
-    "features.comparison.curve.edupack": "دقائق إلى ساعات",
-    "features.comparison.ai.feature": "مساعدة الذكاء الاصطناعي",
-    "features.comparison.ai.traditional": "لا شيء",
-    "features.comparison.ai.edupack": "توليد محتوى بالذكاء الاصطناعي المدمج",
-    "features.comparison.marketplace.feature": "السوق",
-    "features.comparison.marketplace.traditional": "منصات منفصلة",
-    "features.comparison.marketplace.edupack": "شراء وبيع متكاملة",
-    "features.comparison.support.feature": "الدعم الفني",
-    "features.comparison.support.traditional": "ساعات العمل فقط",
-    "features.comparison.support.edupack": "دعم المجتمع 24/7 + الأولوية",
-    "features.grid.title": "كل ما تحتاجه لإنشاء محتوى مذهل",
-    "features.grid.description": "ميزات قوية مصممة لجعل تأليف SCORM في متناول الجميع",
-    "features.grid.card1.title": "محتوى مدعوم بالذكاء الاصطناعي",
-    "features.grid.card1.description": "أنشئ محتوى تعليمي جذاب واختبارات وأنشطة بمساعدة اقتراحات الذكاء الاصطناعي المخصصة لموضوعك.",
-    "features.grid.card2.title": "قوالب جاهزة",
-    "features.grid.card2.description": "ابدأ بقوالب مصممة احترافيًا للدروس والدورات والتقييمات. خصصها لتطابق علامتك التجارية.",
-    "features.grid.card3.title": "تصدير عالمي",
-    "features.grid.card3.description": "صدّر إلى SCORM 1.2 أو SCORM 2004 أو xAPI بنقرة واحدة. متوافق مع جميع منصات LMS الرئيسية.",
-    "features.grid.card4.title": "التعاون الجماعي",
-    "features.grid.card4.description": "اعمل مع زملائك في الوقت الفعلي. شارك الموارد واستعرض المحتوى وحافظ على الاتساق.",
-    "features.grid.card5.title": "تحليلات مدمجة",
-    "features.grid.card5.description": "تتبع مشاركة المتعلمين والأداء باستخدام أدوات التحليلات والتقارير الشاملة.",
-    "features.grid.card6.title": "دعم متعدد اللغات",
-    "features.grid.card6.description": "أنشئ محتوى بالإنجليزية والعربية والإسبانية والفرنسية والمزيد. دعم RTL مضمن.",
-    "features.grid.card7.title": "سريع البرق",
-    "features.grid.card7.description": "بناء وتصدير الحزم في دقائق وليس أيام. سير العمل المُحسّن يبقيك منتجًا.",
-    "features.grid.card8.title": "بيع المحتوى الخاص بك",
-    "features.grid.card8.description": "استثمر خبرتك ببيع الحزم على سوقنا. حدد أسعارك الخاصة واكسب الإيرادات.",
-    "features.grid.card9.title": "اقتراحات ذكية",
-    "features.grid.card9.description": "احصل على توصيات السياق للصور والأنشطة والتقييمات أثناء البناء.",
-    "features.cta.title": "هل أنت مستعد لتجربة الفرق؟",
-    "features.cta.description": "انضم إلى آلاف المعلمين الذين سهّلوا إنشاء محتوى التعليم الإلكتروني",
-    "features.cta.start": "ابدأ مجانًا",
-    "features.cta.pricing": "عرض الأسعار",
-    "scorm.panels.common.animation.title": "الحركة",
-    "scorm.panels.common.animation.type": "النوع",
-    "scorm.panels.common.animation.none": "لا شيء",
-    "scorm.panels.common.animation.fade": "تلاشي",
-    "scorm.panels.common.animation.duration": "المدة (ثانية)",
-    "scorm.panels.common.animation.delay": "التأخير (ثانية)",
-    "scorm.colorInput.transparent": "شفاف",
-    "scorm.panels.interactive.buttonAction": "إجراء الزر",
-    "scorm.panels.interactive.action.link": "فتح رابط",
-    "scorm.panels.interactive.action.page": "اذهب إلى الصفحة",
-    "scorm.panels.interactive.action.none": "لا تفعل شيئاً",
-    "scorm.panels.interactive.pageTarget": "اختر الصفحة المستهدفة",
-    "scorm.panels.interactive.pagePlaceholder": "اختر صفحة",
-    "scorm.panels.interactive.pageHelp": "سينتقل المتعلمون مباشرة إلى الصفحة المحددة عند النقر فوق هذا الزر.",
-    "scorm.panels.interactive.text": "النص والمحاذاة",
-    "scorm.panels.interactive.textColor": "لون النص",
-    "scorm.panels.interactive.align": "المحاذاة",
-    "scorm.pagePanel.subtitle": "إدارة صفحات دورتك.",
-    "scorm.tabs.project": "المشروع",
-    "scorm.tabs.pages": "الصفحات",
-    "scorm.props.emptyTitle": "لم يتم تحديد أي كتلة",
-    "scorm.props.block.text.label": "كتلة نصية",
-    "scorm.props.block.image.label": "كتلة صورة",
-    "scorm.props.block.video.label": "كتلة فيديو",
-    "scorm.props.block.quiz.label": "كتلة اختبار",
-    "scorm.props.block.interactive.label": "كتلة تفاعلية",
-    "scorm.props.unsupported": "هذا النوع من الكتل لا يعرض خصائص قابلة للتعديل بعد.",
-    "scorm.props.subtitle": "اضبط كيف يبدو هذا العنصر ويتصرف في الدرس."
-,
-    "scorm.tabs.project": "المشروع",
-    "scorm.tabs.pages": "الصفحات",
-    "scorm.props.emptyTitle": "لم يتم تحديد أي كتلة",
-    "scorm.props.block.text.label": "كتلة نصية",
-    "scorm.props.block.image.label": "كتلة صورة",
-    "scorm.props.block.video.label": "كتلة فيديو",
-    "scorm.props.block.quiz.label": "كتلة اختبار",
-    "scorm.props.block.interactive.label": "كتلة تفاعلية",
-    "scorm.props.unsupported": "هذا النوع من الكتل لا يعرض خصائص قابلة للتعديل بعد.",
-    "scorm.props.subtitle": "اضبط كيف يبدو هذا العنصر ويتصرف في الدرس."
+  "nav.home": "الرئيسية",
+  "nav.scorm-ai": "SCORM بالذكاء الاصطناعي",
+  "nav.features": "الميزات",
+  "nav.pricing": "الأسعار",
+  "nav.upload": "رفع",
+  "nav.login": "تسجيل الدخول",
+  "nav.register": "إنشاء حساب",
+  "nav.account": "الحساب",
+  "nav.about": "حول المنصة",
+  "nav.resources": "الموارد",
+  "nav.privacy": "الخصوصية",
+  "nav.terms": "الشروط",
+  "nav.shop": "الحزم",
+  "nav.switchLanguage": "تغيير اللغة",
+
+  "hero.title": "أنشئ حزم SCORM باستخدام الذكاء الاصطناعي",
+  "hero.description":
+    "أسهل طريقة لإنشاء حزم SCORM حديثة، تفاعلية، وجميلة لأنظمة إدارة التعلم. استفد من الذكاء الاصطناعي لتوليد المحتوى والاختبارات والمزيد.",
+  "hero.cta.start": "ابدأ مجانًا",
+  "hero.cta.browse": "تصفح الحزم",
+  "hero.no-card": "لا يلزم وجود بطاقة ائتمان",
+  "hero.free-trial": "تجربة مجانية لمدة 14 يومًا",
+    // ===== SCORM UI & TOOLS =====
+"scorm.nav.hide": "إخفاء شريط التنقل",
+"scorm.nav.show": "إظهار شريط التنقل",
+"scorm.ai.close": "✕",
+"scorm.tools.ai": "الذكاء الاصطناعي",
+"scorm.alerts.interactiveSoon": "العناصر التفاعلية ستكون متاحة قريبًا.",
+"scorm.alerts.settingsLater": "سيتم إعداد إعدادات الحزمة لاحقًا.",
+
+// ===== SHOP / MARKETPLACE =====
+"shop.title": "سوق حزم SCORM",
+"shop.desc": "تصفح واشترِ حزم SCORM عالية الجودة التي أنشأها مجتمعنا.",
+"shop.search": "البحث عن حزم...",
+"shop.filter.grades": "جميع الصفوف",
+"shop.filter.subjects": "جميع المواد",
+"shop.filter.sort": "ترتيب حسب",
+"shop.filter.free": "مجاني",
+"shop.filter.paid": "مدفوع",
+"shop.filter.more": "مزيد من المرشحات",
+"shop.view": "عرض",
+
+// ===== SHOP FILTERS =====
+"shop.filter.elementary": "ابتدائي",
+"shop.filter.middleSchool": "إعدادي",
+"shop.filter.highSchool": "ثانوي",
+"shop.filter.mathematics": "الرياضيات",
+"shop.filter.science": "العلوم",
+"shop.filter.literature": "الأدب",
+"shop.filter.newest": "الأحدث",
+"shop.filter.priceLowHigh": "السعر: من الأقل إلى الأعلى",
+"shop.filter.priceHighLow": "السعر: من الأعلى إلى الأقل",
+
+// ===== SHOP PREVIEW =====
+"shop.preview.placeholderTitle": "معاينة الحزمة",
+"shop.preview.samplePage": "معاينة",
+"shop.preview.sampleIntro": "هذه معاينة سريعة للحزمة. أضف صفحات وكتلًا في المحرر لعرضها هنا.",
+"shop.preview.breadcrumb": "السوق · معاينة الحزمة",
+"shop.preview.meta": "{{pages}} صفحات · {{blocks}} كتل",
+"shop.preview.pageCount": "{{pages}} صفحات",
+"shop.preview.blockCount": "{{blocks}} كتل",
+"shop.preview.languageRtl": "العربية · من اليمين لليسار",
+"shop.preview.languageLtr": "الإنجليزية · من اليسار لليمين",
+"shop.preview.back": "رجوع",
+"shop.preview.loading": "جاري تحميل الحزمة...",
+"shop.preview.error": "تعذر تحميل الحزمة",
+"shop.preview.loadedDescription": "مستوردة من محرر SCORM بالذكاء الاصطناعي",
+"shop.preview.included": "مضمن",
+"shop.preview.sampleMeta": "معاينة المحتوى قريبًا",
+"shop.preview.untitledPage": "صفحة",
+"shop.preview.emptyPage": "لا توجد كتل في هذه الصفحة بعد",
+
+// ===== PAYMENT =====
+"payment.back": "العودة إلى الحزم",
+"payment.title": "الدفع",
+"payment.subtitle": "راجع تفاصيل الشراء وأكمل الدفع. هذه صفحة تجريبية ولن يتم خصم أي مبلغ.",
+"payment.status.title": "حالة الدفع",
+"payment.status.desc": "نجهّز تجربة دفع آمنة. المحتوى الحالي تجريبي.",
+"payment.progress": "بانتظار ربط بوابة الدفع",
+"payment.progress.desc": "سيتم تفعيل المعاملات الفعلية بعد إعداد بوابة الدفع.",
+"payment.support.title": "هل تحتاج مساعدة؟",
+"payment.support.desc": "تواصل مع فريق الدعم للاستفسارات حول الفواتير أو الإيصالات.",
+"payment.summary.title": "ملخص الطلب",
+"payment.summary.desc": "ستظهر الرسوم هنا عند تفعيل بوابة الدفع.",
+"payment.summary.item": "الوصول إلى الدورة",
+"payment.summary.price": "$12.99",
+"payment.summary.tax": "الضريبة",
+"payment.summary.taxValue": "$1.30",
+"payment.summary.total": "الإجمالي",
+"payment.summary.totalValue": "$14.29",
+"payment.cta": "المتابعة إلى الدفع",
+
+// ===== SCORM PANELS – TEXT =====
+  "scorm.panels.text.title": "إعدادات النص",
+  "scorm.panels.text.content": "المحتوى",
+  "scorm.panels.text.typography": "الطباعة",
+  "scorm.panels.text.alignment": "المحاذاة",
+  "scorm.panels.text.direction": "اتجاه النص",
+  "scorm.panels.text.textColor": "لون النص",
+  "scorm.panels.text.background": "الخلفية",
+  "scorm.panels.text.spacing": "التباعد",
+  "scorm.panels.text.padding": "الحشو",
+  "scorm.panels.text.radius": "نصف القطر",
+  "scorm.panels.text.lineHeight": "ارتفاع السطر",
+
+// ===== SCORM PANELS – MEDIA =====
+  "scorm.panels.media.title": "إعدادات الصورة",
+  "scorm.panels.media.url": "رابط الصورة",
+  "scorm.panels.media.alt": "نص بديل",
+  "scorm.panels.media.size": "الحجم",
+  "scorm.panels.media.width": "العرض (%)",
+  "scorm.panels.media.maxWidth": "أقصى عرض (px)",
+  "scorm.panels.media.alignment": "المحاذاة",
+  "scorm.panels.media.appearance": "المظهر",
+  "scorm.panels.media.radius": "نصف القطر (px)",
+  "scorm.panels.media.padding": "الحشو (px)",
+  "scorm.panels.media.background": "لون الخلفية",
+  "scorm.panels.media.shadow": "ظل",
+
+// ===== SCORM PANELS – VIDEO =====
+  "scorm.panels.video.title": "إعدادات الفيديو",
+  "scorm.panels.video.url": "رابط الفيديو",
+  "scorm.panels.video.player": "التشغيل",
+  "scorm.panels.video.autoplay": "تشغيل تلقائي",
+  "scorm.panels.video.loop": "تكرار الفيديو",
+  "scorm.panels.video.controls": "إظهار عناصر التحكم",
+  "scorm.panels.video.muted": "كتم الصوت",
+  "scorm.panels.video.size": "الحجم",
+  "scorm.panels.video.width": "العرض (%)",
+  "scorm.panels.video.maxWidth": "أقصى عرض (px)",
+  "scorm.panels.video.alignment": "المحاذاة",
+  "scorm.panels.video.appearance": "المظهر",
+  "scorm.panels.video.radius": "نصف القطر (px)",
+  "scorm.panels.video.padding": "الحشو (px)",
+  "scorm.panels.video.background": "لون الخلفية",
+  "scorm.panels.video.shadow": "ظل",
+
+// ===== SCORM PANELS – QUIZ =====
+  "scorm.panels.quiz.title": "إعدادات الاختبار",
+  "scorm.panels.quiz.question": "نص السؤال",
+  "scorm.panels.quiz.questionHelp": "نسّق السؤال مثل النص العادي (عريض، اتجاه، ألوان...)",
+  "scorm.panels.quiz.options": "الخيارات",
+  "scorm.panels.quiz.addOption": "+ إضافة خيار",
+  "scorm.panels.quiz.optionLabel": "خيار {{index}}",
+  "scorm.panels.quiz.noOptions": "لا توجد خيارات بعد.",
+  "scorm.panels.quiz.remove": "حذف",
+  "scorm.panels.quiz.correctHelp": "يمكن تحديد خيار واحد أو أكثر كإجابة صحيحة.",
+  "scorm.panels.quiz.boxAppearance": "مظهر صندوق السؤال",
+  "scorm.panels.quiz.optionStyle": "تنسيق نص الخيارات",
+  "scorm.panels.quiz.align": "المحاذاة",
+  "scorm.panels.quiz.color": "لون النص",
+  "preview.name": "الاسم",
+  "preview.title.name": "سمِّ دورتك",
+  "preview.grade": "الصف",
+  "preview.title.grade": "تحديد المستوى الدراسي",
+  "preview.subject": "المادة",
+  "preview.title.subject": "اختر المادة",
+  "preview.measure": "مؤشرات النجاح",
+  "preview.title.measure": "تحديد معايير النجاح",
+  "preview.language": "اللغة",
+  "preview.title.language": "اختر اللغة",
+  "preview.area": "هذه معاينة للمحتوى الذي يمكنك إنشاؤه.",
+  "preview.play": "تشغيل",
+  "preview.view": "عرض المحتوى",
+  "scorm.ai.media": "وسائط",
+  "scorm.ai.progress.title": "الإنشاء بالذكاء الاصطناعي",
+  "scorm.ai.popupBlocked": "يرجى السماح بالنوافذ المنبثقة لمعاينة الدورة.",
+  "scorm.ai.unsupportedFileType": "نوع ملف غير مدعوم: {{type}}",
+  "scorm.ai.unsupportedMediaUrl": "رابط وسائط غير مدعوم. يرجى إدخال رابط صورة أو فيديو صالح.",
+  "scorm.ai.save.notLoggedIn": "المستخدم غير مسجل الدخول (لا يوجد رمز من Supabase).",
+  "scorm.ai.save.failed": "فشل حفظ الحزمة",
+  "scorm.ai.save.loading": "جاري حفظ الحزمة...",
+  "scorm.ai.save.success": "تم حفظ الحزمة بنجاح!",
+  "scorm.ai.save.error": "حدث خطأ أثناء حفظ الحزمة",
+  "scorm.ai.lessonUpdated": "تم تحديث الدرس بنجاح.",
+  "scorm.ai.qti.noQuizzes": "لا توجد اختبارات متاحة",
+  "scorm.canvas.title": "لوحة العمل",
+  "scorm.canvas.desc": "ابدأ ببناء دورتك عن طريق إضافة كتل.",
+  "scorm.canvas.start": "ابدأ البناء",
+  "featured-packages.title": "نماذج من الحزم",
+  "scorm.ai.print.title": "{{title}} - تقرير {{role}}",
+  "scorm.ai.print.role.teacher": "معلم",
+  "scorm.ai.print.role.student": "متعلم",
+  "scorm.ai.print.meta": "الدور: {{role}} • الصفحات: {{pages}}",
+  "scorm.ai.print.lessonOutline": "مخطط الدرس",
+  "scorm.ai.print.noPages": "لا توجد صفحات جاهزة.",
+  "scorm.ai.print.notes": "ملاحظات",
+  "scorm.ai.print.notesHint": "يمكن حفظ هذا العرض كملف PDF من نافذة الطباعة.",
+  "scorm.ai.print.pageLine": "{{index}}. {{title}} ({{blocks}} كتل)",
+  "scorm.ai.toast.xapiReady": "تم تجهيز حزمة xAPI بصيغة JSON",
+  "scorm.ai.toast.htmlReady": "تم تنزيل صفحة HTML5 للعمل دون اتصال",
+  "scorm.ai.toast.publicLink": "تم فتح رابط معاينة قابل للمشاركة",
+  "scorm.ai.toast.embedCode": "تم نسخ كود التضمين",
+  "scorm.ai.toast.teacherPdf": "تم فتح عرض الطباعة للمعلم",
+  "scorm.ai.toast.studentPdf": "تم فتح عرض الطباعة للطالب",
+  "scorm.ai.toast.jsonReady": "تم تنزيل ملف JSON للمشروع",
+  "scorm.ai.toast.qtiReady": "تم تجهيز تصدير QTI",
+  "scorm.panels.common.align.left": "يسار",
+  "scorm.panels.common.align.center": "وسط",
+  "scorm.panels.common.align.right": "يمين",
+  "scorm.panels.common.align.justify": "مضبوط",
+  "scorm.panels.common.direction.ltr": "من اليسار لليمين",
+  "scorm.panels.common.direction.rtl": "من اليمين لليسار",
+  "scorm.panels.interactive.title": "عنصر تفاعلي",
+  "scorm.panels.interactive.type": "النوع",
+  "scorm.panels.interactive.button": "زر",
+  "scorm.panels.interactive.callout": "صندوق تنبيه",
+  "scorm.panels.interactive.reveal": "صندوق كشف",
+  "scorm.panels.interactive.custom": "HTML مخصص",
+  "scorm.panels.interactive.buttonText": "نص الزر",
+  "scorm.panels.interactive.revealTitle": "العنوان (ما ينقره المتعلم)",
+  "scorm.panels.interactive.titleField": "العنوان",
+  "scorm.panels.interactive.link": "رابط (اختياري)",
+  "scorm.panels.interactive.linkPlaceholder": "https://...",
+  "scorm.panels.interactive.linkHelp": "إذا تُرك فارغًا سيبدو الزر قابلاً للنقر فقط دون فتح شيء.",
+  "scorm.panels.interactive.calloutContent": "محتوى التنبيه",
+  "scorm.panels.interactive.tone": "النغمة",
+  "scorm.panels.interactive.tones.info": "معلومة",
+  "scorm.panels.interactive.tones.success": "نجاح",
+  "scorm.panels.interactive.tones.warning": "تحذير",
+  "scorm.panels.interactive.tones.danger": "خطر",
+  "scorm.panels.interactive.revealHidden": "المحتوى المخفي (يظهر بعد النقر)",
+  "scorm.panels.interactive.open": "مفتوح افتراضيًا",
+  "scorm.panels.interactive.customHtml": "HTML مخصص",
+  "scorm.panels.interactive.customPlaceholder": "<div class=\"my-widget\">\n  <!-- ضع HTML هنا -->\n</div>",
+  "scorm.panels.interactive.customHelp": "للمستخدمين المتقدمين. تجنب استخدام وسوم <script>.",
+  "scorm.panels.interactive.appearance": "المظهر",
+  "scorm.panels.interactive.padding": "الحشو (px)",
+  "scorm.panels.interactive.radius": "نصف القطر (px)",
+  "scorm.panels.interactive.background": "لون الخلفية",
+  "scorm.panels.interactive.shadow": "ظل",
+  "scorm.panels.interactive.buttonAction": "إجراء الزر",
+  "scorm.panels.interactive.action.link": "فتح رابط",
+  "scorm.panels.interactive.action.page": "الانتقال إلى صفحة",
+  "scorm.panels.interactive.action.none": "عدم تنفيذ أي إجراء",
+  "scorm.panels.interactive.pageTarget": "اختر الصفحة المستهدفة",
+  "scorm.panels.interactive.pagePlaceholder": "اختر صفحة",
+  "scorm.panels.interactive.pageHelp": "سيتم الانتقال مباشرة إلى الصفحة المحددة عند النقر.",
+  "scorm.panels.interactive.text": "النص والمحاذاة",
+  "scorm.panels.interactive.textColor": "لون النص",
+  "scorm.panels.interactive.align": "المحاذاة",
+  "scorm.tools.upload": "رفع",
+  "scorm.tools.interactive": "تفاعلي",
+  "scorm.tools.quiz": "اختبار",
+  "scorm.tools.pageEditor": "محرر الصفحات",
+  "scorm.tools.media": "وسائط",
+  "scorm.tools.text": "نص",
+  "scorm.tools.settings": "الإعدادات",
+  "scorm.tools.mediaPrompt": "الصق رابط صورة لإدراجها:",
+  "scorm.tools.newPage": "صفحة {{number}}",
+  "scorm.tools.history": "سجل التعديلات (قريبًا)",
+    "feature.scorm.title": "SCORM 1.2 و SCORM 2004",
+  "feature.scorm.desc": "تصدير الدورات وفق أشهر معايير SCORM.",
+  "feature.ai.title": "محتوى مدعوم بالذكاء الاصطناعي",
+  "feature.ai.desc": "إنشاء محتوى تعليمي تفاعلي وجذاب بمساعدة الذكاء الاصطناعي.",
+  "feature.marketplace.title": "السوق",
+  "feature.marketplace.desc": "شراء وبيع حزم SCORM الجاهزة من منشئين آخرين.",
+  "feature.lms.title": "متوافق مع جميع أنظمة LMS",
+  "feature.lms.desc": "تعمل الحزم مع أي نظام إدارة تعلم متوافق مع SCORM.",
+
+  "audience.title": "لمن هذه المنصة؟",
+  "audience.teachers.title": "المعلمون والمربون",
+  "audience.teachers.point1": "إنشاء دروس واختبارات تفاعلية.",
+  "audience.teachers.point2": "توفير الوقت في إعداد المحتوى.",
+  "audience.teachers.point3": "مشاركة المحتوى بسهولة مع الطلاب.",
+  "audience.teachers.point4": "متابعة تقدم الطلاب وأدائهم.",
+
+  "audience.institutions.title": "المؤسسات والشركات",
+  "audience.institutions.point1": "توحيد المواد التدريبية.",
+  "audience.institutions.point2": "نشر المحتوى عبر المؤسسة.",
+  "audience.institutions.point3": "ضمان الجودة والالتزام.",
+  "audience.institutions.point4": "التكامل مع نظام إدارة التعلم الحالي.",
+
+  "cta.title": "هل أنت جاهز للبدء؟",
+  "cta.description": "أنشئ أول حزمة SCORM اليوم واكتشف مدى سهولة العملية.",
+  "cta.button": "سجّل مجانًا",
+
+  "footer.proudly": "صُنع بفخر في 🇵🇸",
+  "footer.product": "المنتج",
+  "footer.support": "الدعم",
+  "footer.company": "الشركة",
+  "footer.about": "حول",
+  "footer.privacy": "الخصوصية",
+  "footer.terms": "الشروط",
+  "footer.rights": "جميع الحقوق محفوظة",
+  "footer.help": "مركز المساعدة",
+  "footer.contact": "تواصل معنا",
+
+  "scorm.props.title": "الخصائص",
+  "scorm.props.desc": "تعديل خصائص العنصر المحدد.",
+
+  "scorm.ai.untitledProject": "مشروع بدون عنوان",
+  "scorm.ai.introduction": "مقدمة",
+  "scorm.ai.notConfigured": "لم يتم إعداد اتصال الذكاء الاصطناعي بعد. هذا مجرد عنصر واجهة.",
+  "scorm.ai.projectSaved": "تم حفظ المشروع محليًا.",
+  "scorm.ai.exportFailed": "فشل التصدير",
+  "scorm.ai.exportSuccess": "تم التصدير بنجاح",
+  "scorm.ai.exportError": "حدث خطأ أثناء التصدير. راجع وحدة التحكم.",
+
+  "scorm.ai.newTextBlock": "<p>كتلة نصية جديدة. قم بتحريرها!</p>",
+  "scorm.ai.placeholderImage": "صورة افتراضية",
+  "scorm.ai.newQuestion": "سؤال جديد",
+  "scorm.ai.option1": "الخيار 1",
+  "scorm.ai.option2": "الخيار 2",
+
+  "scorm.ai.context.copy": "نسخ",
+  "scorm.ai.context.paste": "لصق",
+  "scorm.ai.context.duplicate": "تكرار",
+  "scorm.ai.context.delete": "حذف",
+
+  "scorm.ai.agent.unified": "منشئ الذكاء الاصطناعي",
+  "scorm.ai.agent.mentor": "المرشد الذكي",
+  "scorm.ai.agent.contentArchitect": "مهندس المحتوى",
+  "scorm.ai.agent.assessmentDesigner": "مصمم التقييم",
+
+  "scorm.choice.title": "إنشاء حزمة SCORM جديدة",
+  "scorm.choice.description": "اختر طريقة البدء في بناء الحزمة التعليمية.",
+  "scorm.choice.aiAssistant": "الإنشاء بمساعدة الذكاء الاصطناعي",
+  "scorm.choice.aiAssistantDesc": "دع الذكاء الاصطناعي يساعدك في إنشاء المحتوى.",
+  "scorm.choice.blankPage": "البدء من صفحة فارغة",
+  "scorm.choice.blankPageDesc": "إنشاء المحتوى يدويًا من البداية.",
+
+  "scorm.projectPanel.generalTracking": "التتبع العام",
+  "scorm.projectPanel.tracking.minimal": "أساسي",
+  "scorm.projectPanel.tracking.standard": "معياري",
+  "scorm.projectPanel.tracking.advanced": "متقدم",
+  "scorm.projectPanel.tracking.pageViews": "تتبع مشاهدات الصفحات",
+  "scorm.projectPanel.tracking.quizInteractions": "تتبع تفاعلات الاختبارات",
+  "scorm.projectPanel.tracking.media": "تتبع الوسائط (تشغيل/إيقاف/تقديم)",
+  "scorm.projectPanel.tracking.hints": "تتبع استخدام التلميحات",
+  "scorm.projectPanel.tracking.externalLinks": "تتبع الروابط الخارجية",
+  "scorm.projectPanel.tracking.timePerPage": "تتبع الوقت لكل صفحة",
+  "scorm.projectPanel.tracking.attempts": "تتبع المحاولات",
+
+  "scorm.projectPanel.xapiOptions": "خيارات xAPI فقط",
+  "scorm.projectPanel.xapi.lrsEndpoint": "عنوان LRS",
+  "scorm.projectPanel.xapi.authToken": "رمز المصادقة",
+  "scorm.projectPanel.xapi.activityIdFormat": "تنسيق معرف النشاط",
+  "scorm.projectPanel.xapi.statementExtensions": "امتدادات البيان",
+
+  "scorm.projectPanel.exportPanel": "خيارات التصدير",
+  "scorm.projectPanel.export.scorm12": "SCORM 1.2",
+  "scorm.projectPanel.export.scorm2004": "SCORM 2004",
+  "scorm.projectPanel.export.xapi": "xAPI / cmi5",
+  "scorm.projectPanel.export.html5": "حزمة HTML5",
+  "scorm.projectPanel.export.publicLink": "رابط عام",
+  "scorm.projectPanel.export.embedCode": "كود التضمين",
+  "scorm.projectPanel.export.teacherPdf": "ملف PDF للمعلم",
+  "scorm.projectPanel.export.studentPdf": "ملف PDF للطالب",
+  "scorm.projectPanel.export.json": "مصدر JSON",
+  "scorm.projectPanel.export.qti": "QTI / بنك أسئلة Moodle",
+
+  "scorm.panels.common.animation.title": "الحركة",
+  "scorm.panels.common.animation.type": "النوع",
+  "scorm.panels.common.animation.none": "بدون",
+  "scorm.panels.common.animation.fade": "تلاشي",
+  "scorm.panels.common.animation.duration": "المدة (ثانية)",
+  "scorm.panels.common.animation.delay": "التأخير (ثانية)",
+  "scorm.colorInput.transparent": "شفاف",
+
+  "scorm.tabs.project": "المشروع",
+  "scorm.tabs.pages": "الصفحات",
+  "scorm.pagePanel.subtitle": "إدارة صفحات الدورة.",
+  "scorm.props.emptyTitle": "لم يتم تحديد أي عنصر",
+  "scorm.props.unsupported": "هذا النوع من العناصر لا يدعم التعديل حاليًا.",
+  "scorm.props.subtitle": "تحكم في مظهر هذا العنصر وسلوكه داخل الدرس.",
+
+  "scorm.ai.initialModal.title": "إنشاء حزمة SCORM بالذكاء الاصطناعي",
+  "scorm.ai.initialModal.description": "صف الحزمة التعليمية التي ترغب في إنشائها بأكبر قدر ممكن من التفاصيل.",
+  "scorm.ai.initialModal.placeholder": "مثال: دورة عن النظام الشمسي لطلاب الصف الخامس",
+  "scorm.ai.initialModal.generating": "جاري الإنشاء...",
+  "scorm.ai.initialModal.generate": "إنشاء",
+  "scorm.ai.loadingPackagePreview": "جاري تحميل معاينة الحزمة...",
+  "scorm.props.block.text.html": "محتوى HTML",
+  "scorm.props.block.image.src": "رابط الصورة",
+  "scorm.props.block.image.alt": "نص بديل",
+  "scorm.props.block.video.src": "رابط الفيديو",
+  "scorm.props.block.quiz.question": "السؤال",
+  "scorm.ai.projectLoaded": "تم تحميل المشروع من الملف.",
+"scorm.ai.invalidProjectFile": "ملف المشروع غير صالح.",
+"scorm.ai.invalidJsonFormat": "تنسيق JSON غير صالح.",
+"scorm.ai.interactive.defaultLabel": "تفاعلي",
+"scorm.ai.interactive.calloutLabel": "تنبيه",
+"scorm.ai.interactive.revealLabel": "إظهار",
+"scorm.ai.interactive.buttonFallback": "عنصر تفاعلي",
+"scorm.ai.interactive.calloutPlaceholder": "أضف محتوى التنبيه من المحرر.",
+"scorm.ai.interactive.revealPlaceholder": "أضف المحتوى المخفي من المحرر.",
+"scorm.ai.title": "مساعد الذكاء الاصطناعي",
+"scorm.ai.placeholder": "اطلب من الذكاء الاصطناعي إنشاء محتوى...",
+"scorm.ai.send": "إرسال",
+"scorm.ai.quickInsert": "إدراج سريع",
+"scorm.ai.addText": "كتلة نص",
+"scorm.ai.addImage": "كتلة صورة",
+"scorm.ai.addVideo": "كتلة فيديو",
+"scorm.ai.addQuiz": "كتلة اختبار",
+"scorm.ai.addInteractive": "كتلة تفاعلية",
+"scorm.ai.addPage": "صفحة جديدة",
+"scorm.ai.pendingChanges": "بانتظار الموافقة",
+"scorm.ai.acceptChanges": "تطبيق التغييرات",
+"scorm.ai.rejectChanges": "تجاهل",
+"scorm.projectPanel.title": "إعدادات المشروع",
+"scorm.projectPanel.subtitle": "إدارة الإعدادات العامة للدورة.",
+"scorm.projectPanel.generalSettings": "عام",
+"scorm.projectPanel.projectTitle": "عنوان المشروع",
+"scorm.projectPanel.language": "اللغة",
+"scorm.projectPanel.pageOrganization": "تنظيم الصفحات",
+"scorm.projectPanel.addPage": "إضافة صفحة",
+"scorm.projectPanel.deleteLastPageError": "لا يمكن حذف آخر صفحة.",
+"scorm.projectPanel.deleteConfirm": "هل أنت متأكد من حذف هذه الصفحة؟",
+"scorm.projectPanel.advancedOptions": "خيارات متقدمة",
+"shop.packages.1.title": "مقدمة في الكسور",
+"shop.packages.1.grade": "الصف الخامس",
+"shop.packages.1.subject": "الرياضيات",
+"shop.packages.1.language": "الإنجليزية",
+"shop.packages.1.description": "درس تفاعلي يشرح أساسيات الكسور.",
+"shop.packages.1.price": "مجاني",
+
+"shop.packages.2.title": "استكشاف النظام الشمسي",
+"shop.packages.2.grade": "الصف السابع",
+"shop.packages.2.subject": "العلوم",
+"shop.packages.2.language": "الإنجليزية",
+"shop.packages.2.description": "رحلة تفاعلية عبر النظام الشمسي.",
+
+"shop.packages.3.title": "شكسبير: روميو وجولييت",
+"shop.packages.3.grade": "المرحلة الثانوية",
+"shop.packages.3.subject": "الأدب",
+"shop.packages.3.language": "الإنجليزية",
+"shop.packages.3.description": "دليل دراسي شامل مع مشاهد تفاعلية.",
+
+"shop.packages.4.title": "أساسيات التفاعلات الكيميائية",
+"shop.packages.4.grade": "الصف التاسع",
+"shop.packages.4.subject": "الكيمياء",
+"shop.packages.4.language": "الإنجليزية",
+"shop.packages.4.description": "تجارب مخبرية افتراضية للتفاعلات الكيميائية.",
+
+"shop.packages.5.title": "اختبار الجغرافيا العالمية",
+"shop.packages.5.grade": "الصف السادس",
+"shop.packages.5.subject": "الجغرافيا",
+"shop.packages.5.language": "الإنجليزية",
+"shop.packages.5.description": "خرائط واختبارات تفاعلية.",
+"shop.packages.5.price": "مجاني",
+
+"shop.packages.6.title": "أساسيات برمجة بايثون",
+"shop.packages.6.grade": "المرحلة الثانوية",
+"shop.packages.6.subject": "علوم الحاسب",
+"shop.packages.6.language": "الإنجليزية",
+"shop.packages.6.description": "تعلم أساسيات Python من خلال تمارين تفاعلية.",
+"pricing.title": "أسعار مرنة لكل منشئ محتوى",
+"pricing.description": "اختر الخطة المناسبة لك وابدأ فورًا.",
+
+"pricing.tabs.credits": "الدفع حسب الاستخدام",
+"pricing.tabs.subscribe": "خطط الاشتراك",
+
+"pricing.faq.title": "الأسئلة الشائعة",
+"pricing.faq.q1": "ما هي النقاط؟",
+"pricing.faq.a1": "تُستخدم النقاط لتوليد المحتوى بالذكاء الاصطناعي.",
+"about.title": "حول EduPack",
+"about.mission.title": "رسالتنا",
+"about.mission.p1": "تم إنشاء EduPack لتسهيل إنشاء المحتوى التعليمي الرقمي.",
+"about.mission.p2": "نجمع بين الذكاء الاصطناعي وسهولة الاستخدام.",
+
+"about.who.title": "من نخدم",
+"about.who.teachers.title": "المعلمون والمدربون",
+"about.who.teachers.p": "للمعلمين الراغبين بإنشاء محتوى احترافي بسهولة.",
+
+"about.who.edtech.title": "فرق التعليم والمؤسسات",
+"about.who.edtech.p": "للمدارس والجامعات والشركات.",
+
+"about.purpose.title": "هدفنا",
+"about.purpose.p": "تمكين المعلمين للتركيز على التعليم بدل التعقيد التقني.",
+"scorm.ai.previewTitle": "معاينة: {{title}}",
+
+"scorm.topbar.preview": "معاينة",
+"scorm.topbar.export": "تصدير",
+"scorm.topbar.status.draft": "مسودة",
+"scorm.topbar.status.published": "منشور",
+
+"scorm.panels.quiz.padding": "الحشو (px)",
+"scorm.panels.quiz.radius": "نصف القطر (px)",
+"scorm.panels.quiz.background": "لون الخلفية",
+"scorm.panels.quiz.shadow": "ظل",
+
+"scorm.ai.welcome": "مرحبًا بك في مساعد الذكاء الاصطناعي! كيف يمكنني مساعدتك في بناء دورتك؟",
+
+"scorm.props.project.styles.title": "الأنماط الافتراضية",
+"scorm.props.project.styles.desc": "تعيين أنماط النص الافتراضية للمشروع بالكامل.",
+
+"scorm.props.project.direction.title": "اتجاه النص",
+"scorm.props.project.direction.desc": "تحديد اتجاه النص لجميع الصفحات.",
+"scorm.props.project.direction.ltr": "من اليسار إلى اليمين",
+"scorm.props.project.direction.rtl": "من اليمين إلى اليسار",
+
+"resources.title": "كيفية استخدام EduPack",
+"resources.description": "أدلة خطوة بخطوة وموارد تعليمية لمساعدتك على الاستفادة القصوى من EduPack",
+
+"resources.guide1.title": "إنشاء أول حزمة باستخدام SCORM AI",
+"resources.guide1.description": "تعرّف على كيفية استخدام أداة التأليف المدعومة بالذكاء الاصطناعي",
+"resources.guide1.duration": "10 دقائق قراءة",
+"resources.guide1.level": "مبتدئ",
+
+"resources.guide2.title": "رفع ونشر حزمة تعليمية",
+"resources.guide2.description": "دليل خطوة بخطوة لرفع محتوى SCORM ونشره في السوق",
+"resources.guide2.duration": "5 دقائق قراءة",
+"resources.guide2.level": "مبتدئ",
+
+"resources.guide3.title": "شراء وتنزيل الحزم من السوق",
+"resources.guide3.description": "كيفية البحث والمعاينة وشراء الحزم الجاهزة",
+"resources.guide3.duration": "7 دقائق قراءة",
+"resources.guide3.level": "مبتدئ",
+
+"resources.guide4.title": "ربط الحزم مع نظام LMS",
+"resources.guide4.description": "أدلة التكامل مع Moodle وCanvas وأنظمة LMS الأخرى",
+"resources.guide4.duration": "15 دقيقة قراءة",
+"resources.guide4.level": "متوسط",
+
+"resources.project.title": "موارد EduPack الكاملة",
+"resources.project.description": "روابط مباشرة لجميع أقسام المنصة",
+"resources.project.cta": "تواصل مع الدعم",
+
+"resources.project.ai.title": "منشئ SCORM بالذكاء الاصطناعي",
+"resources.project.ai.description": "ابدأ تجربة التأليف الذكي",
+
+"resources.project.upload.title": "لوحة الرفع",
+"resources.project.upload.description": "رفع حزم SCORM ونشرها",
+
+"resources.project.marketplace.title": "السوق",
+"resources.project.marketplace.description": "تصفح وشراء الدروس الجاهزة",
+
+"resources.project.docs.title": "مركز المساعدة",
+"resources.project.docs.description": "الأسئلة الشائعة والأدلة",
+
+"resources.project.api.title": "مرجع API",
+"resources.project.api.description": "توثيق المطورين وواجهات البرمجة",
+
+"resources.project.support.title": "الدعم الفني",
+"resources.project.support.description": "فتح تذكرة أو بدء محادثة مباشرة",
+
+"resources.videos.title": "الدروس المرئية",
+
+"resources.video1.title": "البدء باستخدام EduPack",
+"resources.video1.duration": "8:34",
+
+"resources.video2.title": "نصائح إنشاء المحتوى بالذكاء الاصطناعي",
+"resources.video2.duration": "12:15",
+
+"resources.video3.title": "تقنيات تأليف متقدمة",
+"resources.video3.duration": "18:47",
+
+"resources.docs.title": "التوثيق",
+
+"resources.doc1.title": "توثيق API",
+"resources.doc1.description": "للمطورين",
+
+"resources.doc2.title": "دليل أفضل الممارسات",
+"resources.doc2.description": "نصائح لإنشاء محتوى فعّال",
+
+"resources.doc3.title": "مرجع معايير SCORM",
+"resources.doc3.description": "فهم مواصفات SCORM",
+
+"resources.reading.title": "موارد أساسية للقراءة",
+"resources.reading.description": "روابط مفيدة لفهم المنصة والمعايير",
+
+"resources.reading.api.title": "مرجع API",
+"resources.reading.api.description": "التوثيق والاستخدام",
+"resources.reading.api.content": "تفاصيل نقاط النهاية والمصادقة",
+
+"resources.reading.scorm.title": "مرجع SCORM",
+"resources.reading.scorm.description": "إرشادات رسمية لمعايير SCORM",
+"resources.reading.scorm.content": "بنية الحزمة والتسلسل",
+
+"resources.reading.bestPractices.title": "دليل التنفيذ",
+"resources.reading.bestPractices.description": "أفضل خطوات النشر",
+"resources.reading.bestPractices.content": "قائمة التحقق وضمان الجودة",
+
+"resources.reading.guidance.cta": "إرشادات القراءة",
+"resources.reading.guidance.title": "إرشادات القراءة",
+"resources.reading.guidance.heading": "كيفية استخدام هذه الموارد",
+"resources.reading.guidance.summary": "اتبع هذه الخطوات للحصول على أفضل فائدة",
+"resources.reading.guidance.points.1": "ابدأ بمرجع API",
+"resources.reading.guidance.points.2": "تحقق من معايير SCORM",
+"resources.reading.guidance.points.3": "اتبع دليل التنفيذ",
+"resources.reading.guidance.close": "إغلاق",
+"resources.reading.guidance.action": "فتح مركز المساعدة",
+
+"resources.help.title": "هل تحتاج مساعدة؟",
+"resources.help.description": "فريق الدعم جاهز لمساعدتك",
+
+"resources.contact1.name": "معياد الحوسني",
+"resources.contact1.role": "مطور الواجهة",
+
+"resources.contact2.name": "علي البدري",
+"resources.contact2.role": "مصمم الواجهة",
+
+"resources.help.chat": "دعم المحادثة المباشرة",
+
+"resources.form.title": "أرسل لنا رسالة",
+"resources.form.name": "الاسم",
+"resources.form.name.placeholder": "الاسم الكامل",
+"resources.form.email": "البريد الإلكتروني",
+"resources.form.email.placeholder": "example@email.com",
+"resources.form.message": "الرسالة",
+"resources.form.message.placeholder": "كيف يمكننا مساعدتك؟",
+"resources.form.send": "إرسال",
+"resources.form.sending": "جاري الإرسال...",
+"resources.form.success": "تم إرسال رسالتك بنجاح!",
+"resources.form.error": "حدث خطأ أثناء الإرسال",
+"resources.form.validation": "يرجى تعبئة جميع الحقول",
+
+"resources.guide.open": "فتح الدليل",
+
+"features.hero.title": "لماذا EduPack؟",
+"features.hero.description": "منصة قوية وسهلة لإنشاء محتوى SCORM",
+
+"features.comparison.title": "EduPack مقابل الأدوات التقليدية",
+"features.comparison.feature": "الميزة",
+"features.comparison.traditional": "أدوات تقليدية",
+"features.comparison.edupack": "EduPack",
+
+"features.comparison.price.feature": "السعر",
+"features.comparison.price.traditional": "$500–2000 سنويًا",
+"features.comparison.price.edupack": "$9 حسب الاستخدام",
+
+"features.comparison.curve.feature": "منحنى التعلم",
+"features.comparison.curve.traditional": "أسابيع إلى أشهر",
+"features.comparison.curve.edupack": "دقائق إلى ساعات",
+
+"features.comparison.ai.feature": "الذكاء الاصطناعي",
+"features.comparison.ai.traditional": "غير متوفر",
+"features.comparison.ai.edupack": "مدمج",
+
+"features.comparison.marketplace.feature": "السوق",
+"features.comparison.marketplace.traditional": "منصات منفصلة",
+"features.comparison.marketplace.edupack": "مدمج",
+
+"features.comparison.support.feature": "الدعم",
+"features.comparison.support.traditional": "ساعات عمل محدودة",
+"features.comparison.support.edupack": "دعم مجتمعي + أولوية",
+
+"features.grid.title": "كل ما تحتاجه لإنشاء محتوى رائع",
+"features.grid.description": "ميزات قوية مصممة للمربين",
+
+"features.grid.card1.title": "محتوى ذكي",
+"features.grid.card1.description": "إنشاء محتوى واختبارات بالذكاء الاصطناعي",
+
+"features.grid.card2.title": "قوالب جاهزة",
+"features.grid.card2.description": "ابدأ بقوالب احترافية",
+
+"features.grid.card3.title": "تصدير شامل",
+"features.grid.card3.description": "SCORM و xAPI بضغطة زر",
+
+"features.grid.card4.title": "تعاون الفريق",
+"features.grid.card4.description": "العمل الجماعي بسهولة",
+
+"features.grid.card5.title": "تحليلات مدمجة",
+"features.grid.card5.description": "تتبع أداء المتعلمين",
+
+"features.grid.card6.title": "دعم متعدد اللغات",
+"features.grid.card6.description": "RTL و LTR",
+
+"features.grid.card7.title": "سريع جدًا",
+"features.grid.card7.description": "أنشئ الحزم خلال دقائق",
+
+"features.grid.card8.title": "بيع المحتوى",
+"features.grid.card8.description": "حقق دخلًا من خبرتك",
+
+"features.grid.card9.title": "اقتراحات ذكية",
+"features.grid.card9.description": "توصيات أثناء البناء",
+
+"features.cta.title": "ابدأ الآن",
+"features.cta.description": "انضم إلى آلاف المربين",
+"features.cta.start": "ابدأ مجانًا",
+"features.cta.pricing": "عرض الأسعار",
+
+"scorm.props.project.styles.textColor": "لون النص",
+
+"pricing.faq.q2": "هل تنتهي صلاحية الرصيد؟",
+"pricing.faq.a2": "لا، الرصيد لا تنتهي صلاحيته.",
+
+"pricing.faq.q3": "هل يمكن تغيير الاشتراك؟",
+"pricing.faq.a3": "نعم، يمكنك التغيير في أي وقت.",
+
+"pricing.faq.q4": "ما سياسة الاسترجاع؟",
+"pricing.faq.a4": "ضمان استرجاع لمدة 14 يومًا.",
+
+"scorm.props.block.text.label": "كتلة نصية",
+"scorm.props.block.image.label": "كتلة صورة",
+"scorm.props.block.video.label": "كتلة فيديو",
+"scorm.props.block.quiz.label": "كتلة اختبار",
+"scorm.props.block.interactive.label": "كتلة تفاعلية",
+"pricing.credits.starter.title": "حزمة البداية",
+"pricing.credits.starter.credits": "100 رصيد",
+"pricing.credits.starter.price": "$9",
+"pricing.credits.starter.description": "مثالية لتجربة المنصة.",
+"pricing.credits.starter.feature1": "100 عملية توليد محتوى بالذكاء الاصطناعي",
+"pricing.credits.starter.feature2": "تصدير حتى 5 حزم",
+"pricing.credits.starter.feature3": "دعم أساسي",
+"pricing.credits.starter.feature4": "الوصول إلى السوق",
+"pricing.credits.starter.cta": "ابدأ الآن",
+
+"pricing.credits.teacher.title": "حزمة المعلم",
+"pricing.credits.teacher.credits": "500 رصيد",
+"pricing.credits.teacher.price": "$39",
+"pricing.credits.teacher.description": "مناسبة للمعلمين الأفراد.",
+"pricing.credits.teacher.feature1": "500 عملية توليد محتوى",
+"pricing.credits.teacher.feature2": "تصدير حتى 25 حزمة",
+"pricing.credits.teacher.feature3": "دعم أولوية",
+"pricing.credits.teacher.feature4": "الوصول إلى السوق",
+"pricing.credits.teacher.feature5": "النشر في السوق",
+"pricing.credits.teacher.cta": "اختر حزمة المعلم",
+
+"pricing.credits.team.title": "حزمة الفريق",
+"pricing.credits.team.credits": "2000 رصيد",
+"pricing.credits.team.price": "$129",
+"pricing.credits.team.description": "مثالية للمدارس والمؤسسات.",
+"pricing.credits.team.feature1": "2000 عملية توليد محتوى",
+"pricing.credits.team.feature2": "تصدير غير محدود",
+"pricing.credits.team.feature3": "دعم مخصص",
+"pricing.credits.team.feature4": "ميزات العمل الجماعي",
+"pricing.credits.team.feature5": "النشر في السوق",
+"pricing.credits.team.feature6": "علامة تجارية مخصصة",
+"pricing.credits.team.cta": "تواصل مع المبيعات",
+
+"pricing.subscribe.monthly.title": "شهري",
+"pricing.subscribe.monthly.subtitle": "جميع الميزات – استخدام غير محدود",
+"pricing.subscribe.monthly.price": "$49",
+"pricing.subscribe.monthly.period": "/ شهر",
+"pricing.subscribe.monthly.description": "إلغاء في أي وقت.",
+"pricing.subscribe.monthly.feature1": "توليد غير محدود بالذكاء الاصطناعي",
+"pricing.subscribe.monthly.feature2": "تصدير غير محدود",
+"pricing.subscribe.monthly.feature3": "دعم أولوية",
+"pricing.subscribe.monthly.feature4": "تعاون الفريق",
+"pricing.subscribe.monthly.feature5": "النشر في السوق",
+"pricing.subscribe.monthly.cta": "اشترك الآن",
+
+"pricing.subscribe.semester.title": "فصل دراسي",
+"pricing.subscribe.semester.subtitle": "وفّر 20٪ مع الدفع الفصلي",
+"pricing.subscribe.semester.price": "$199",
+"pricing.subscribe.semester.period": "/ 6 أشهر",
+"pricing.subscribe.semester.description": "دفعة واحدة للفصل كاملًا.",
+"pricing.subscribe.semester.feature1": "توليد غير محدود",
+"pricing.subscribe.semester.feature2": "تصدير غير محدود",
+"pricing.subscribe.semester.feature3": "دعم أولوية",
+"pricing.subscribe.semester.feature4": "تعاون الفريق",
+"pricing.subscribe.semester.cta": "اختر الخطة",
+
+"pricing.subscribe.yearly.title": "سنوي",
+"pricing.subscribe.yearly.subtitle": "أفضل قيمة – شهران مجانًا",
+"pricing.subscribe.yearly.price": "$499",
+"pricing.subscribe.yearly.period": "/ سنة",
+"pricing.subscribe.yearly.description": "راحة كاملة لمدة عام.",
+"pricing.subscribe.yearly.feature1": "توليد غير محدود",
+"pricing.subscribe.yearly.feature2": "تصدير غير محدود",
+"pricing.subscribe.yearly.feature3": "دعم مخصص",
+"pricing.subscribe.yearly.feature4": "تعاون الفريق",
+"pricing.subscribe.yearly.feature5": "علامة تجارية مخصصة",
+"pricing.subscribe.yearly.cta": "اختر الخطة السنوية"
+
+}
 
 
-  }
 } as const
 
 export type TranslationKey = keyof typeof translations.en
@@ -1380,4 +1434,57 @@ export function t(
     })
   }
   return translation
+}
+
+// ===============================
+// Translation self-check (DEV)
+// ===============================
+
+type Locale = keyof typeof translations
+
+function checkMissingTranslations(
+  base: Locale,
+  target: Locale,
+) {
+  const baseKeys = Object.keys(translations[base])
+  const targetKeys = Object.keys(translations[target])
+
+  const missing = baseKeys.filter(
+    (key) => !(key in translations[target]),
+  )
+
+  const extra = targetKeys.filter(
+    (key) => !(key in translations[base]),
+  )
+
+  if (missing.length > 0) {
+    console.warn(
+      `\n⚠️ Missing translation keys in "${target}":`,
+    )
+    missing.forEach((key) => {
+      console.log(`"${key}": ""`)
+    })
+    console.log(`Total missing: ${missing.length}\n`)
+  }
+
+  if (extra.length > 0) {
+    console.warn(
+      `\n⚠️ Extra keys in "${target}" (not in "${base}"):\n`,
+    )
+    extra.forEach((key) => {
+      console.log(`"${key}"`)
+    })
+    console.log(`Total extra: ${extra.length}\n`)
+  }
+
+  if (missing.length === 0 && extra.length === 0) {
+    console.log(
+      `✅ "${target}" translations are perfectly in sync with "${base}"`,
+    )
+  }
+}
+
+// ⚠️ شغّله فقط في وضع التطوير
+if (process.env.NODE_ENV !== "production") {
+  checkMissingTranslations("en", "ar")
 }
