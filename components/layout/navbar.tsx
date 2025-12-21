@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { useLocale } from "@/hooks/use-locale"
 import { t } from "@/lib/translations"
 import { LanguageSwitcher } from "./language-switcher"
+import { ThemeToggle } from "./theme-toggle"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,7 +50,7 @@ export function Navbar() {
   return (
     <nav
       id="main-navbar"
-      className="bg-white border-b border-border sticky top-0 z-50"
+      className="bg-white dark:bg-slate-950 border-b border-border sticky top-0 z-50 transition-colors"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -79,7 +80,8 @@ export function Navbar() {
           </div>
 
           {/* Right Side */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle />
             <LanguageSwitcher />
             {user ? (
               <DropdownMenu>
@@ -124,26 +126,31 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-white">
+        <div className="md:hidden bg-white dark:bg-slate-950 transition-colors">
           <div className="px-4 py-4 space-y-3">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setIsOpen(false)}
                 className="block text-foreground hover:text-primary"
               >
                 {item.label}
               </Link>
             ))}
+            <div className="flex gap-2 pt-2 items-center border-t border-border">
+              <ThemeToggle />
+              <LanguageSwitcher />
+            </div>
             {!user && (
               <div className="flex gap-2 pt-4">
                 <Link href="/login" className="flex-1">
-                  <Button variant="ghost" className="w-full">
+                  <Button variant="ghost" className="w-full" onClick={() => setIsOpen(false)}>
                     {t(locale, "nav.login")}
                   </Button>
                 </Link>
                 <Link href="/register" className="flex-1">
-                  <Button className="w-full">{t(locale, "nav.register")}</Button>
+                  <Button className="w-full" onClick={() => setIsOpen(false)}>{t(locale, "nav.register")}</Button>
                 </Link>
               </div>
             )}

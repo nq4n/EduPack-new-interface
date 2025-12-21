@@ -1478,9 +1478,7 @@ function checkMissingTranslations(
   }
 
   if (missing.length === 0 && extra.length === 0) {
-    console.log(
-      `✅ "${target}" translations are perfectly in sync with "${base}"`,
-    )
+    return
   }
 }
 

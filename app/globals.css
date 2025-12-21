@@ -128,6 +128,7 @@ body {
 /* RTL support styles for Arabic language */
 [dir="rtl"] {
   direction: rtl;
+  font-family: var(--font-ar), system-ui, sans-serif;
 }
 
 [dir="rtl"] input,
@@ -198,45 +199,123 @@ body {
 /* =========================
    SCORM Animated Background
    ========================= */
-
-/* =========================
-   SCORM Animated Background
-   ========================= */
 .scorm-block {
-  position: absolute;
-  bottom: -120px;
+  position: fixed;
+  bottom: auto;
+  top: 100vh;
   width: 160px;
   height: 90px;
   border-radius: 16px;
+  pointer-events: none;
+  z-index: 0;
 
   background: linear-gradient(
     135deg,
-    rgba(0, 120, 255, 0.22),
-    rgba(0, 120, 255, 0.06)
+    rgba(19, 59, 92, 0.15),
+    rgba(247, 216, 124, 0.08)
   );
 
-  box-shadow: 0 8px 24px rgba(0, 120, 255, 0.12);
+  border: 1px solid rgba(19, 59, 92, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(19, 59, 92, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
-  animation: scorm-float cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  backdrop-filter: blur(8px);
+
+  animation: scorm-float-smooth cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite,
+             scorm-wave ease-in-out infinite,
+             scorm-pulse ease-in-out 6s infinite;
+  
+  will-change: transform, opacity;
+  transform-origin: center;
 }
 
+/* Different sizes for variety */
+.scorm-block-sm {
+  width: 100px;
+  height: 60px;
+  animation-duration: calc(var(--animation-duration, 8s) * 0.8);
+}
 
-@keyframes scorm-float {
+.scorm-block-md {
+  width: 160px;
+  height: 90px;
+  animation-duration: var(--animation-duration, 8s);
+}
+
+.scorm-block-lg {
+  width: 200px;
+  height: 110px;
+  animation-duration: calc(var(--animation-duration, 8s) * 1.2);
+}
+
+/* Smooth floating animation with randomized path */
+@keyframes scorm-float-smooth {
   0% {
-    transform: translateY(0);
+    top: 100vh;
     opacity: 0;
   }
 
-  15% {
-    opacity: 0.6;
+  10% {
+    opacity: 0.5;
   }
 
-  85% {
+  50% {
     opacity: 1;
   }
 
+  90% {
+    opacity: 0.6;
+  }
+
   100% {
-    transform: translateY(-250vh);
+    top: -200px;
     opacity: 0;
   }
+}
+
+/* Gentle wave motion for X axis */
+@keyframes scorm-wave {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+
+  25% {
+    transform: translateX(20px);
+  }
+
+  75% {
+    transform: translateX(-20px);
+  }
+}
+
+/* Subtle pulse for depth */
+@keyframes scorm-pulse {
+  0%, 100% {
+    filter: brightness(1);
+    box-shadow: 
+      0 8px 32px rgba(19, 59, 92, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  50% {
+    filter: brightness(1.1);
+    box-shadow: 
+      0 12px 40px rgba(19, 59, 92, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Dark mode adjustments */
+.dark .scorm-block {
+  background: linear-gradient(
+    135deg,
+    rgba(152, 195, 235, 0.12),
+    rgba(247, 216, 124, 0.05)
+  );
+
+  border: 1px solid rgba(152, 195, 235, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(19, 59, 92, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
