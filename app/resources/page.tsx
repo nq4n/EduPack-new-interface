@@ -333,10 +333,10 @@ export default function ResourcesPage() {
     try {
       setStatus({ type: "loading" })
       const supabase = createClient()
-      const { error } = await supabase.from("team_messages").insert({
-        message_name: formData.name,
-        message_email: formData.email,
-        message_text: formData.message,
+      const { error } = await supabase.from("messages").insert({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
       })
       if (error) throw error
 

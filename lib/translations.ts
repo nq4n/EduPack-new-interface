@@ -1245,7 +1245,7 @@ export const translations = {
 "resources.help.title": "هل تحتاج مساعدة؟",
 "resources.help.description": "فريق الدعم جاهز لمساعدتك",
 
-"resources.contact1.name": "معياد الحوسني",
+"resources.contact1.name": "مؤيد الحسني",
 "resources.contact1.role": "مطور الواجهة",
 
 "resources.contact2.name": "علي البدري",
