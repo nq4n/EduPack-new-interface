@@ -1,5 +1,7 @@
 // lib/env.ts
 
+export const DEFAULT_OPENROUTER_MODEL = "google/gemma-4-31b-it:free"
+
 const missingEnvMessage = (key: string) =>
   `${key} is not set. Add it to your environment (see .env.example) so the app can reach Supabase and AI providers.`
 
@@ -26,7 +28,7 @@ export function getOpenRouterConfig() {
 
   return {
     apiKey,
-    model: process.env.OPENROUTER_MODEL || "allenai/olmo-3-32b-think:free",
+    model: process.env.OPENROUTER_MODEL || DEFAULT_OPENROUTER_MODEL,
   }
 }
 

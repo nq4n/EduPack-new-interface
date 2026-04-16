@@ -9,7 +9,14 @@ import {
   VideoBlock,
   QuizBlock,
   InteractiveBlock,
+  SvgBlock,
 } from "@/lib/scorm/types"
+import {
+  extractSvgTextNodes,
+  getSvgCaption,
+  sanitizeSvgMarkup,
+  updateSvgTextNode,
+} from "@/lib/scorm/svg"
 
 interface Props {
   block: EditorBlock
@@ -17,6 +24,145 @@ interface Props {
   theme?: EditorProject["theme"]
   onNavigateToPage?: (pageId: string) => void
   onTextChange?: (blockId: string, html: string) => void
+  onSvgChange?: (blockId: string, svg: string) => void
+  isSelected?: boolean
+}
+
+function SvgRenderer({
+  block,
+  onSelect,
+  onSvgChange,
+  isSelected,
+}: {
+  block: SvgBlock
+  onSelect: () => void
+  onSvgChange?: (blockId: string, svg: string) => void
+  isSelected?: boolean
+}) {
+  const rawStyle = block.style || {}
+  const [activeTextId, setActiveTextId] = React.useState<string | null>(null)
+  const [draftText, setDraftText] = React.useState("")
+  const style = stripAnimationProps(rawStyle)
+  const {
+    width,
+    maxWidth,
+    align,
+    padding,
+    background,
+    radius,
+    shadow,
+    ...restStyle
+  } = style
+  const animationStyles = buildAnimationStyle(rawStyle)
+  const textNodes = React.useMemo(() => extractSvgTextNodes(block.svg), [block.svg])
+  const containerStyle: React.CSSProperties = {
+    textAlign:
+      align === "center" ? "center" : align === "right" ? "right" : "left",
+    padding,
+    background,
+    borderRadius: radius,
+    boxShadow: shadow ? "0 12px 30px rgba(0,0,0,0.12)" : undefined,
+    ...animationStyles,
+    ...restStyle,
+  }
+  const canvasStyle: React.CSSProperties = {
+    width: width || "100%",
+    maxWidth,
+    display: "inline-block",
+    verticalAlign: "top",
+  }
+  const caption = getSvgCaption(block)
+  const activeTextNode =
+    textNodes.find((node) => node.id === activeTextId) ?? null
+
+  React.useEffect(() => {
+    if (!isSelected) {
+      setActiveTextId(null)
+      setDraftText("")
+    }
+  }, [isSelected])
+
+  React.useEffect(() => {
+    if (!activeTextNode) return
+    setDraftText(activeTextNode.text)
+  }, [activeTextNode?.id, activeTextNode?.text])
+
+  const handleSvgClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    onSelect()
+
+    if (!onSvgChange) return
+
+    const target = event.target
+    if (!(target instanceof Element)) return
+
+    const textElement = target.closest("text")
+    if (!(textElement instanceof Element)) return
+
+    const svgRoot = textElement.ownerSVGElement
+    if (!svgRoot) return
+
+    const textElements = Array.from(svgRoot.querySelectorAll("text"))
+    const index = textElements.indexOf(textElement)
+    if (index < 0) return
+
+    setActiveTextId(`text-${index}`)
+    setDraftText(textElement.textContent ?? "")
+  }
+
+  const commitSvgText = (value: string) => {
+    if (!activeTextId || !onSvgChange) return
+    onSvgChange(block.id, updateSvgTextNode(block.svg, activeTextId, value))
+  }
+
+  return (
+    <figure onClick={onSelect} style={containerStyle}>
+      <div
+        className="[&_svg]:block [&_svg]:h-auto [&_svg]:max-w-full [&_svg]:w-full [&_text]:cursor-text"
+        style={canvasStyle}
+        onClick={handleSvgClick}
+        dangerouslySetInnerHTML={{ __html: sanitizeSvgMarkup(block.svg) }}
+      />
+      {isSelected && onSvgChange && textNodes.length > 0 ? (
+        <div className="mt-3 rounded-2xl border border-sky-100 bg-sky-50/70 p-3">
+          {activeTextNode ? (
+            <div className="space-y-2">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-sky-700">
+                Editing SVG label
+              </p>
+              <input
+                type="text"
+                className="w-full rounded-xl border border-sky-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm outline-none ring-0"
+                value={draftText}
+                onChange={(event) => {
+                  const value = event.target.value
+                  setDraftText(value)
+                  commitSvgText(value)
+                }}
+                onClick={(event) => event.stopPropagation()}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setActiveTextId(null)
+                    setDraftText("")
+                  }
+                }}
+                autoFocus
+              />
+            </div>
+          ) : (
+            <p className="text-[11px] text-sky-700">
+              Click any label inside the SVG to edit it live.
+            </p>
+          )}
+        </div>
+      ) : null}
+      {caption ? (
+        <figcaption className="mt-2 text-[11px] text-slate-500">
+          {caption}
+        </figcaption>
+      ) : null}
+    </figure>
+  )
 }
 
 const buildAnimationStyle = (style?: any): React.CSSProperties => {
@@ -44,6 +190,8 @@ export function BlockRenderer({
   theme,
   onNavigateToPage,
   onTextChange,
+  onSvgChange,
+  isSelected,
 }: Props) {
   const select = () => onClick?.(block)
 
@@ -229,6 +377,18 @@ export function BlockRenderer({
           </label>
         ))}
       </div>
+    )
+  }
+
+  /* ========= SVG ========= */
+  if (block.type === "svg") {
+    return (
+      <SvgRenderer
+        block={block as SvgBlock}
+        onSelect={select}
+        onSvgChange={onSvgChange}
+        isSelected={isSelected}
+      />
     )
   }
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import JSZip from 'jszip';
 import { EditorProject } from '@/lib/scorm/types';
+import { sanitizeSvgMarkup } from '@/lib/scorm/svg';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -130,6 +131,24 @@ a {
 }
 
 .block-image figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.block-svg .svg-canvas {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.block-svg svg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.block-svg figcaption {
   margin-top: 10px;
   color: var(--muted);
   font-size: 14px;
@@ -360,6 +379,22 @@ const PLAYER_JS = `(() => {
       return wrapper;
     }
 
+    if (block.type === 'svg') {
+      const fig = document.createElement('figure');
+      const canvas = document.createElement('div');
+      canvas.className = 'svg-canvas';
+      canvas.innerHTML = block.svg || '';
+      fig.appendChild(canvas);
+      if (block.caption) {
+        const caption = document.createElement('figcaption');
+        caption.textContent = block.caption;
+        fig.appendChild(caption);
+      }
+      wrapper.classList.add('block-svg');
+      wrapper.appendChild(fig);
+      return wrapper;
+    }
+
     if (block.type === 'quiz') {
       const question = document.createElement('p');
       question.className = 'quiz-question';
@@ -498,6 +533,14 @@ async function getTemplateFile(filePath: string): Promise<string> {
 export async function POST(req: NextRequest) {
   try {
     const project = await req.json() as EditorProject;
+    const sanitizedPages = project.pages.map((page) => ({
+      ...page,
+      blocks: page.blocks.map((block) =>
+        block.type === 'svg'
+          ? { ...block, svg: sanitizeSvgMarkup(block.svg) }
+          : block
+      ),
+    }));
 
     const zip = new JSZip();
 
@@ -533,7 +576,7 @@ export async function POST(req: NextRequest) {
 
     const htmlContent = `
       <!DOCTYPE html>
-      <html lang="${project.language || 'en'}">
+      <html lang="${project.theme?.direction === 'rtl' ? 'ar' : 'en'}">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -580,14 +623,14 @@ export async function POST(req: NextRequest) {
       </html>
     `;
 
-    blocksFolder.file('pages.json', JSON.stringify(project.pages, null, 2));
+    blocksFolder.file('pages.json', JSON.stringify(sanitizedPages, null, 2));
     stylesFolder.file('theme.css', THEME_CSS);
     scriptsFolder.file('player.js', PLAYER_JS);
     zip.file('index.html', htmlContent);
 
     const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' });
 
-    return new NextResponse(zipBuffer, {
+    return new NextResponse(new Uint8Array(zipBuffer), {
       status: 200,
       headers: {
         'Content-Type': 'application/zip',

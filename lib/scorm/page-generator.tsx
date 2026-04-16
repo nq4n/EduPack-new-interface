@@ -1,6 +1,7 @@
 // lib/scorm/page-generator.ts
 
-import type { EditorBlock, EditorPage, SCORMVersion } from "./types"
+import type { EditorBlock, EditorPage, SCORMVersion, SvgBlock } from "./types"
+import { getSvgCaption, sanitizeSvgMarkup } from "./svg"
 
 export function generatePageHTML(page: EditorPage, version: SCORMVersion = "1.2"): string {
   const blocksHtml = page.blocks.map((b) => renderBlockHtml(b)).join("\n")
@@ -104,6 +105,42 @@ function renderBlockHtml(block: EditorBlock): string {
       `.trim()
     }
 
+    case "svg": {
+      const svgBlock = block as SvgBlock
+      const style = (svgBlock as any).style || {}
+      const caption = getSvgCaption(svgBlock)
+      const alignStyle =
+        style.align === "center"
+          ? "text-align:center;"
+          : style.align === "right"
+            ? "text-align:right;"
+            : "text-align:left;"
+      const wrapperStyle = [
+        style.padding ? `padding:${style.padding}` : "",
+        style.radius ? `border-radius:${style.radius}` : "",
+        style.background ? `background:${style.background}` : "",
+        style.shadow ? "box-shadow:0 12px 30px rgba(0,0,0,0.12)" : "",
+        alignStyle,
+      ]
+        .filter(Boolean)
+        .join(";")
+      const canvasStyle = [
+        `width:${style.width || "100%"}`,
+        style.maxWidth ? `max-width:${style.maxWidth}` : "",
+        "display:inline-block",
+        "vertical-align:top",
+      ]
+        .filter(Boolean)
+        .join(";")
+
+      return `
+        <figure class="block block-svg" data-block-id="${block.id}" style="${wrapperStyle}">
+          <div class="svg-canvas" style="${canvasStyle}">${sanitizeSvgMarkup(svgBlock.svg)}</div>
+          ${caption ? `<figcaption>${caption}</figcaption>` : ""}
+        </figure>
+      `.trim()
+    }
+
     case "quiz": {
       const options = (block.options || [])
         .map(
@@ -169,7 +206,7 @@ function renderBlockHtml(block: EditorBlock): string {
     }
 
     default:
-      return `<div class="block" data-block-id="${block.id}"></div>`
+      return `<div class="block"></div>`
   }
 }
 

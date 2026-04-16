@@ -38,6 +38,24 @@ body {
   margin: 0 auto;
 }
 
+.block-svg .svg-canvas {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.block-svg svg {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.block-svg figcaption {
+  margin-top: 0.65rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
 .block-video video {
   max-width: 100%;
   border-radius: 12px;

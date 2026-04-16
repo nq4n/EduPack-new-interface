@@ -4,6 +4,25 @@ import { useState, useCallback, useEffect } from "react"
 import { EditorProject } from "@/lib/scorm/types"
 import { ChatMessage, ScormAIHookProps } from "@/lib/scorm/ai-types"
 
+const OFFLINE_MESSAGE =
+  "Browser is offline. Reconnect or disable DevTools Offline mode, then try again."
+
+function getAiErrorMessage(err: unknown) {
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    return OFFLINE_MESSAGE
+  }
+
+  if (err instanceof TypeError && /Failed to fetch/i.test(err.message)) {
+    return "Could not reach the AI service. Check your connection or confirm the local dev server is still running."
+  }
+
+  if (err instanceof Error && err.message) {
+    return err.message
+  }
+
+  return "AI failed"
+}
+
 // --------------------------------------------------------
 // NORMALIZE PROJECT (prevents undefined.style.direction errors)
 // --------------------------------------------------------
@@ -13,17 +32,18 @@ function normalizeProject(project: EditorProject): EditorProject {
   return {
     id: project.id || `proj-${Date.now()}`,
     title: project.title || "Untitled Lesson",
-    version: project.version || "1.0",
+    version: project.version || "1.2",
 
     // 🔥 FIX #1 — Always include theme
     theme: {
+      ...(project.theme || {}),
       direction: "ltr",
       styles: {},
-      ...(project.theme || {})
     },
 
     // 🔥 FIX #2 — Always include tracking
     tracking: {
+      ...(project.tracking || {}),
       level: "standard",
       pageViews: true,
       quizInteractions: true,
@@ -32,16 +52,15 @@ function normalizeProject(project: EditorProject): EditorProject {
       externalLinks: false,
       timePerPage: true,
       attempts: true,
-      ...(project.tracking || {})
     },
 
     // 🔥 FIX #3 — Always include xapi
     xapi: {
+      ...(project.xapi || {}),
       lrsEndpoint: "",
       authToken: "",
       activityIdFormat: "iri",
       statementExtensions: "{}",
-      ...(project.xapi || {})
     },
 
     // Pages + Blocks normalization
@@ -55,8 +74,8 @@ function normalizeProject(project: EditorProject): EditorProject {
 
         // 🔥 FIX #5 — Always include style
         style: {
+          ...(block.style || {}),
           direction: "ltr",
-          ...(block.style || {})
         }
       }))
     }))
@@ -114,6 +133,25 @@ function applyAppendPage(project: EditorProject, payload: any): EditorProject {
   })
 }
 
+function applyReplacePage(project: EditorProject, payload: any): EditorProject {
+  const nextPage = payload.page || payload
+  const pageExists = project.pages.some((page) => page.id === payload.pageId)
+
+  return normalizeProject({
+    ...project,
+    pages: pageExists
+      ? project.pages.map((page) =>
+          page.id === payload.pageId ? nextPage : page
+        )
+      : [...project.pages, nextPage],
+  })
+}
+
+function applyReplaceProject(payload: any): EditorProject {
+  const nextProject = payload.project || payload
+  return normalizeProject(nextProject)
+}
+
 // --------------------------------------------------------
 // EXTRACT PROJECT FROM BUILD RESPONSE
 // --------------------------------------------------------
@@ -133,6 +171,7 @@ export function useScormAI({
   setEditorMode,
   setAiChatMode,
   initialMessages,
+  selection,
   onLessonApplied,
 }: ScormAIHookProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages)
@@ -170,6 +209,10 @@ export function useScormAI({
       setChatInput("")
 
       try {
+        if (typeof navigator !== "undefined" && navigator.onLine === false) {
+          throw new Error(OFFLINE_MESSAGE)
+        }
+
         // 1) Build payload for AI
         let rawMessages = [...messages, userMsg]
 
@@ -190,6 +233,7 @@ export function useScormAI({
           body: JSON.stringify({
             messages: payloadMessages,
             project,
+            selection,
           }),
         })
 
@@ -210,6 +254,7 @@ export function useScormAI({
         // ------------------------------------------
         let updatedProject = project
         let highlight: string[] = []
+        let nextActivePageId = project.pages[0]?.id || null
 
         // BUILD MODE
         if (json.project) {
@@ -217,6 +262,7 @@ export function useScormAI({
           highlight = updatedProject.pages.flatMap((p) =>
             p.blocks.map((b) => b.id)
           )
+          nextActivePageId = updatedProject.pages[0]?.id || null
 
           setEditorMode("ai")
           setAiChatMode("hidden")
@@ -226,18 +272,38 @@ export function useScormAI({
         else if (json.patch) {
           updatedProject = applyPatch(project, json.patch)
           highlight = [json.patch.target.blockId]
+          nextActivePageId = json.patch.target.pageId
         }
 
         // EXTEND - BLOCK
         else if (json.appendBlock) {
           updatedProject = applyAppendBlock(project, json.appendBlock)
           highlight = [json.appendBlock.block.id]
+          nextActivePageId = json.appendBlock.pageId
         }
 
         // EXTEND - PAGE
         else if (json.appendPage) {
           updatedProject = applyAppendPage(project, json.appendPage)
-          highlight = json.appendPage.page.blocks.map((b) => b.id)
+          highlight = json.appendPage.page.blocks.map((b: any) => b.id)
+          nextActivePageId = json.appendPage.page.id
+        }
+
+        else if (json.replacePage) {
+          updatedProject = applyReplacePage(project, json.replacePage)
+          highlight = (json.replacePage.page?.blocks || []).map((b: any) => b.id)
+          nextActivePageId = json.replacePage.pageId
+        }
+
+        else if (json.replaceProject) {
+          updatedProject = applyReplaceProject(json.replaceProject)
+          highlight = updatedProject.pages.flatMap((p) =>
+            p.blocks.map((b) => b.id)
+          )
+          nextActivePageId = updatedProject.pages[0]?.id || null
+
+          setEditorMode("ai")
+          setAiChatMode("hidden")
         }
 
         else {
@@ -250,26 +316,28 @@ export function useScormAI({
         setSelectedBlockId(null)
 
         // Set page
-        const firstPage = updatedProject.pages[0]?.id
-        if (firstPage) setActivePageId(firstPage)
+        if (nextActivePageId) setActivePageId(nextActivePageId)
 
         onLessonApplied(highlight)
         setProgressMessage("Done!")
       } catch (err: any) {
         console.error("❌ Unified AI error:", err)
 
+        const message = getAiErrorMessage(err)
+
         addMessage({
           id: Date.now() + 99,
           role: "assistant",
-          content: err.message || "AI failed",
+          content: message,
         })
 
-        setProgressMessage("Error")
+        setChatInput(prompt)
+        setProgressMessage(message)
       } finally {
         setIsGenerating(false)
       }
     },
-    [messages, project]
+    [messages, project, selection]
   )
 
   // --------------------------------------------------------

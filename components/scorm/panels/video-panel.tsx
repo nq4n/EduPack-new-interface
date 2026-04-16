@@ -5,10 +5,27 @@ import { VideoBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
 import AnimationControls from "@/components/scorm/panels/animation-controls"
+import {
+  PanelLabel,
+  PanelSection,
+  SegmentedOption,
+  ToggleCard,
+  panelFieldClassName,
+} from "@/components/scorm/panels/panel-ui"
 
 interface VideoPanelProps {
   block: VideoBlock
   onChange: (updated: VideoBlock) => void
+}
+
+function readNumber(value: unknown, fallback: number) {
+  const numeric =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? parseFloat(value)
+        : Number.NaN
+  return Number.isNaN(numeric) ? fallback : numeric
 }
 
 export default function VideoPanel({ block, onChange }: VideoPanelProps) {
@@ -32,162 +49,121 @@ export default function VideoPanel({ block, onChange }: VideoPanelProps) {
   }
 
   return (
-    <div className="p-4 space-y-4 text-sm">
-      <p className="font-semibold text-slate-700">
-        {t("scorm.panels.video.title") || "Video Settings"}
-      </p>
-
-      {/* VIDEO URL */}
-      <div>
-        <label className="block mb-1 text-xs">
-          {t("scorm.panels.video.url") || "Video URL"}
-        </label>
+    <div className="space-y-4 pb-2 text-sm">
+      <PanelSection title={t("scorm.panels.video.title") || "Video Settings"}>
+        <PanelLabel>{t("scorm.panels.video.url") || "Video URL"}</PanelLabel>
         <input
           type="text"
-          className="w-full border rounded px-2 py-1 text-xs"
+          className={panelFieldClassName}
           value={block.src}
           onChange={(e) => onChange({ ...block, src: e.target.value })}
         />
-      </div>
+      </PanelSection>
 
-      {/* PLAYER BEHAVIOR */}
-      <div>
-        <p className="text-xs font-semibold mb-1">
-          {t("scorm.panels.video.player") || "Playback"}
-        </p>
-        <div className="space-y-1 text-xs">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={style.autoplay === true}
-              onChange={(e) => updateStyle("autoplay", e.target.checked)}
-            />
-            <span>{t("scorm.panels.video.autoplay") || "Autoplay"}</span>
-          </label>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={style.controls !== false}
-              onChange={(e) => updateStyle("controls", e.target.checked)}
-            />
-            <span>{t("scorm.panels.video.controls") || "Show controls"}</span>
-          </label>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={style.loop === true}
-              onChange={(e) => updateStyle("loop", e.target.checked)}
-            />
-            <span>{t("scorm.panels.video.loop") || "Loop video"}</span>
-          </label>
-
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={style.muted === true}
-              onChange={(e) => updateStyle("muted", e.target.checked)}
-            />
-            <span>{t("scorm.panels.video.muted") || "Muted"}</span>
-          </label>
+      <PanelSection title={t("scorm.panels.video.player") || "Playback"}>
+        <div className="grid gap-2">
+          <ToggleCard
+            checked={style.autoplay === true}
+            label={t("scorm.panels.video.autoplay") || "Autoplay"}
+            onChange={(checked) => updateStyle("autoplay", checked)}
+          />
+          <ToggleCard
+            checked={style.controls !== false}
+            label={t("scorm.panels.video.controls") || "Show controls"}
+            onChange={(checked) => updateStyle("controls", checked)}
+          />
+          <ToggleCard
+            checked={style.loop === true}
+            label={t("scorm.panels.video.loop") || "Loop video"}
+            onChange={(checked) => updateStyle("loop", checked)}
+          />
+          <ToggleCard
+            checked={style.muted === true}
+            label={t("scorm.panels.video.muted") || "Muted"}
+            onChange={(checked) => updateStyle("muted", checked)}
+          />
         </div>
-      </div>
+      </PanelSection>
 
-      {/* SIZE */}
-      <div>
-        <p className="text-xs font-semibold mb-1">
-          {t("scorm.panels.video.size") || "Size"}
-        </p>
+      <PanelSection title={t("scorm.panels.video.size") || "Size"}>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <PanelLabel>{t("scorm.panels.video.width") || "Width (%)"}</PanelLabel>
+            <input
+              type="number"
+              className={panelFieldClassName}
+              value={readNumber(style.width, 100)}
+              min={10}
+              max={100}
+              onChange={(e) => updateStyle("width", `${e.target.value}%`)}
+            />
+          </div>
 
-        <label className="text-xs">
-          {t("scorm.panels.video.width") || "Width (%)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.width || "100")}
-          min={10}
-          max={100}
-          onChange={(e) => updateStyle("width", `${e.target.value}%`)}
-        />
-
-        <label className="text-xs mt-2">
-          {t("scorm.panels.video.maxWidth") || "Max Width (px)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.maxWidth || "800")}
-          onChange={(e) => updateStyle("maxWidth", `${e.target.value}px`)}
-        />
-      </div>
-
-      {/* ALIGNMENT */}
-      <div>
-        <p className="text-xs font-semibold mb-1">
-          {t("scorm.panels.video.alignment") || "Alignment"}
-        </p>
-        <div className="flex gap-2">
-          {["left", "center", "right"].map((a) => (
-            <button
-              type="button"
-              key={a}
-              className={
-                "px-3 py-1 rounded border text-xs capitalize " +
-                (style.align === a ? "bg-sky-600 text-white" : "bg-white")
-              }
-              onClick={() => updateStyle("align", a)}
-            >
-              {alignLabels[a] ?? a}
-            </button>
-          ))}
+          <div>
+            <PanelLabel>{t("scorm.panels.video.maxWidth") || "Max Width (px)"}</PanelLabel>
+            <input
+              type="number"
+              className={panelFieldClassName}
+              value={readNumber(style.maxWidth, 800)}
+              onChange={(e) => updateStyle("maxWidth", `${e.target.value}px`)}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* APPEARANCE */}
-      <div>
-        <p className="text-xs font-semibold mb-1">
-          {t("scorm.panels.video.appearance") || "Appearance"}
-        </p>
+        <div className="mt-3">
+          <PanelLabel>{t("scorm.panels.video.alignment") || "Alignment"}</PanelLabel>
+          <div className="grid grid-cols-3 gap-2">
+            {["left", "center", "right"].map((alignment) => (
+              <SegmentedOption
+                key={alignment}
+                active={(style.align || "center") === alignment}
+                onClick={() => updateStyle("align", alignment)}
+              >
+                {alignLabels[alignment] ?? alignment}
+              </SegmentedOption>
+            ))}
+          </div>
+        </div>
+      </PanelSection>
 
-        <label className="text-xs">
-          {t("scorm.panels.video.radius") || "Border Radius (px)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.radius || "0")}
-          onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
-        />
+      <PanelSection title={t("scorm.panels.video.appearance") || "Appearance"}>
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <PanelLabel>{t("scorm.panels.video.radius") || "Border Radius (px)"}</PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(style.radius, 0)}
+                onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
+              />
+            </div>
 
-        <label className="text-xs mt-2">
-          {t("scorm.panels.video.padding") || "Padding (px)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.padding || "0")}
-          onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
-        />
+            <div>
+              <PanelLabel>{t("scorm.panels.video.padding") || "Padding (px)"}</PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(style.padding, 0)}
+                onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
+              />
+            </div>
+          </div>
 
-        <ColorInput
-          label={t("scorm.panels.video.background") || "Background Color"}
-          value={style.background || ""}
-          defaultColor="#ffffff"
-          onChange={(value) => updateStyle("background", value)}
-        />
-      </div>
+          <ColorInput
+            label={t("scorm.panels.video.background") || "Background Color"}
+            value={style.background || ""}
+            defaultColor="#ffffff"
+            onChange={(value) => updateStyle("background", value)}
+          />
 
-      {/* SHADOW */}
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={style.shadow === true}
-          onChange={(e) => updateStyle("shadow", e.target.checked)}
-        />
-        <span className="text-xs">{t("scorm.panels.video.shadow") || "Shadow"}</span>
-      </div>
+          <ToggleCard
+            checked={style.shadow === true}
+            label={t("scorm.panels.video.shadow") || "Shadow"}
+            onChange={(checked) => updateStyle("shadow", checked)}
+          />
+        </div>
+      </PanelSection>
 
       <AnimationControls style={style} onChange={updateStyle} />
     </div>

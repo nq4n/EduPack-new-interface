@@ -1,4 +1,4 @@
-import { EditorProject } from "./types"
+import { EditorBlock, EditorProject } from "./types"
 
 export interface ChatMessage {
   id: number | string
@@ -18,6 +18,16 @@ export interface AISuggestion {
   }
 }
 
+export type AiSelectionScope = "selection" | "page" | "lesson"
+
+export interface AiSelectionContext {
+  scope: AiSelectionScope
+  pageId?: string | null
+  pageTitle?: string | null
+  blockId?: string | null
+  blockType?: EditorBlock["type"] | null
+}
+
 export interface ScormAIHookProps {
   project: EditorProject
   setProject: (project: EditorProject) => void
@@ -26,5 +36,6 @@ export interface ScormAIHookProps {
   setEditorMode: (mode: "choice" | "ai" | "blank") => void
   setAiChatMode: (mode: "hidden" | "visible" | "animating") => void
   initialMessages: ChatMessage[]
+  selection: AiSelectionContext
   onLessonApplied: (blockIds: string[]) => void
 }

@@ -1,47 +1,38 @@
 import { extractJSON } from "./utils-json"
 import { nanoid } from "./nanoid"
 import { openrouter } from "./openrouter"
-
-/* -----------------------------------------------------
-   TYPES
------------------------------------------------------ */
+import { AiSelectionContext } from "../scorm/ai-types"
 
 export interface UnifiedInput {
   project: any | null
-  messages: { role: "user" | "assistant" | "system", content: string }[]
+  messages: { role: "user" | "assistant" | "system"; content: string }[]
+  selection?: AiSelectionContext | null
 }
 
 type Mode = "build" | "extend" | "edit"
 
-/* -----------------------------------------------------
-   MAIN ENTRY
------------------------------------------------------ */
+type SelectionSnapshot = {
+  scope: "selection" | "page" | "lesson"
+  page: any | null
+  block: any | null
+}
 
-export async function unifiedAI({ project, messages }: UnifiedInput) {
+export async function unifiedAI({ project, messages, selection }: UnifiedInput) {
   const cleanMessages = sanitizeMessages([...messages])
-
-  // 1️⃣ FAST AI ROUTER
-  const mode = await detectModeAI(project, cleanMessages)
-
-  // 2️⃣ HARD-CODED SYSTEM PROMPT
-  const systemPrompt = buildSystemPrompt(mode, project)
+  const selectionSnapshot = resolveSelection(project, selection)
+  const mode = await detectModeAI(project, cleanMessages, selectionSnapshot)
+  const systemPrompt = buildSystemPrompt(mode, project, selectionSnapshot)
 
   const llmMessages = [
     { role: "system", content: systemPrompt },
-    ...cleanMessages
+    ...cleanMessages,
   ]
 
-  // 3️⃣ MAIN MODEL CALL
   const raw = await openrouter.chat(llmMessages, { model: "MAIN" })
   const json = extractJSON(raw)
 
-  // 4️⃣ NORMALIZE OUTPUT
-  return normalizeOutput(mode, json)
+  return normalizeOutput(json)
 }
-
-/* -----------------------------------------------------
-   MESSAGE SANITIZER
------------------------------------------------------ */
 
 function sanitizeMessages(messages: any[]) {
   while (messages.length > 0 && messages[0].role === "assistant") {
@@ -50,32 +41,97 @@ function sanitizeMessages(messages: any[]) {
   return messages
 }
 
-/* -----------------------------------------------------
-   AI MODE ROUTER (ULTRA FAST)
------------------------------------------------------ */
+function resolveSelection(
+  project: any | null,
+  selection?: AiSelectionContext | null
+): SelectionSnapshot {
+  const pages = Array.isArray(project?.pages) ? project.pages : []
+  const page =
+    pages.find((candidate: any) => candidate.id === selection?.pageId) ||
+    pages[0] ||
+    null
+  const block =
+    page?.blocks?.find((candidate: any) => candidate.id === selection?.blockId) ||
+    null
 
-async function detectModeAI(project: any | null, messages: any[]): Promise<Mode> {
+  const scope =
+    selection?.scope === "selection" && block
+      ? "selection"
+      : selection?.scope === "lesson" || !page
+        ? "lesson"
+        : "page"
+
+  return { scope, page, block }
+}
+
+function buildSelectionSummary(selection: SelectionSnapshot) {
+  return JSON.stringify(
+    {
+      scope: selection.scope,
+      pageId: selection.page?.id || null,
+      pageTitle: selection.page?.title || null,
+      blockId: selection.block?.id || null,
+      blockType: selection.block?.type || null,
+    },
+    null,
+    2
+  )
+}
+
+function buildEditingContext(project: any | null, selection: SelectionSnapshot) {
+  if (!project) {
+    return "No existing project."
+  }
+
+  if (selection.scope === "selection" && selection.page && selection.block) {
+    return JSON.stringify(
+      {
+        page: {
+          id: selection.page.id,
+          title: selection.page.title,
+        },
+        block: selection.block,
+      },
+      null,
+      2
+    )
+  }
+
+  if (selection.scope === "page" && selection.page) {
+    return JSON.stringify(selection.page, null, 2)
+  }
+
+  return JSON.stringify(project, null, 2)
+}
+
+async function detectModeAI(
+  project: any | null,
+  messages: any[],
+  selection: SelectionSnapshot
+): Promise<Mode> {
   const userText = messages[messages.length - 1]?.content || ""
 
   const routerPrompt = `
 You are a mode router for EduPack.
 
-Decide the correct mode based on the user message and project state.
+Choose the best mode for the user's request.
 
 Modes:
-- build → create a full lesson from scratch
-- extend → add new pages or sections
-- edit → modify existing content
+- build: create a lesson from scratch
+- extend: add new content such as a block, section, or page
+- edit: modify, restyle, rewrite, reorganize, or regenerate existing content
 
 Rules:
-- Respond with ONLY ONE WORD
-- Lowercase only
-- No punctuation
-- No explanation
+- Respond with exactly one word.
 - Output must be one of: build, extend, edit
+- Use edit for redesigns, rewrites, page-level refreshes, and targeted changes.
+- Use extend only when the main intent is adding new material.
 
 Project state:
 ${project ? "Project exists" : "No project"}
+
+Current selection:
+${buildSelectionSummary(selection)}
 
 User message:
 ${userText}
@@ -92,23 +148,38 @@ ${userText}
     return mode
   }
 
-  // Safe fallback
-  return "edit"
+  return project ? "edit" : "build"
 }
 
-/* -----------------------------------------------------
-   SYSTEM PROMPTS
------------------------------------------------------ */
+function buildSystemPrompt(
+  mode: Mode,
+  project: any | null,
+  selection: SelectionSnapshot
+) {
+  const selectionSummary = buildSelectionSummary(selection)
+  const editingContext = buildEditingContext(project, selection)
 
-function buildSystemPrompt(mode: Mode, project: any) {
+  const sharedSchema = `
+SCORM block schema:
+- Text -> { "id": "...", "type": "text", "html": "...", "style?": any }
+- Image -> { "id": "...", "type": "image", "src": "https://...", "alt?": "..." }
+- Video -> { "id": "...", "type": "video", "src": "https://..." }
+- SVG -> { "id": "...", "type": "svg", "svg": "<svg viewBox='...'>...</svg>", "caption?": "...", "style?": any }
+- Quiz -> { "id": "...", "type": "quiz", "question": "...", "options": [{ "id": "...", "label": "...", "correct?": bool }], "questionHtml?": "...", "style?": any, "optionStyle?": any }
+- Interactive -> { "id": "...", "type": "interactive", "variant": "button"|"callout"|"reveal"|"custom", "label": "...", "url?": "...", "action?": "link"|"page"|"none", "targetPageId?": "...", "bodyHtml?": "...", "initiallyOpen?": bool, "tone?": "info"|"success"|"warning"|"danger", "style?": any, "customHtml?": "..." }
+
+Always keep IDs stable when updating existing content unless you are creating a new block or page.
+Never leave html/src/question empty.
+Use open resource links for images/videos.
+Return pure JSON only.
+`
 
   if (mode === "build") {
     return `
 You are EduPack Unified Builder AI.
-Your job: generate a complete SCORM-ready lesson.
+Create a complete SCORM-ready lesson.
 
 Return ONLY JSON:
-
 {
   "project": {
     "id": "proj-...",
@@ -125,30 +196,37 @@ Return ONLY JSON:
   }
 }
 
-SCORM block schema:
-- Text → { "id": "...", "type": "text", "html": "...", "style?": any }
-- Image → { "id": "...", "type": "image", "src": "https://...", "alt?": "..." }
-- Video → { "id": "...", "type": "video", "src": "https://..." }
-- Quiz → { "id": "...", "type": "quiz", "question": "...", "options": [{ "id": "...", "label": "...", "correct?": bool }], "questionHtml?": "...", "style?": any, "optionStyle?": any }
-- Interactive → { "id": "...", "type": "interactive", "variant": "button"|"callout"|"reveal"|"custom", "label": "...", "url?": "...", "bodyHtml?": "...", "initiallyOpen?": bool, "tone?": "info"|"success"|"warning"|"danger", "style?": any }
+${sharedSchema}
 
 Rules:
-- Always include ids for project/pages/blocks.
-- Use multiple pages.
-- Add quizzes, examples, images if helpful.
-- Never leave html/src/question empty.
-- Use open resource links for images/videos.
+- Use multiple pages when the topic benefits from it.
+- Add quizzes, examples, images, and interactions when useful.
 - Do not include explanations outside JSON.
 `
   }
 
   if (mode === "extend") {
     return `
-You are EduPack Lesson EXTENDER AI.
-User wants to add NEW pages or sections to the existing project.
+You are EduPack Lesson Extender AI.
+Add new content to the lesson without removing or rewriting existing content.
 
-Return ONLY JSON like:
+Current target:
+${selectionSummary}
 
+Relevant lesson context:
+${editingContext}
+
+Allowed outputs:
+
+1) Append block to an existing page:
+{
+  "appendBlock": {
+    "pageId": "...",
+    "block": { ... }
+  }
+}
+
+2) Append page:
 {
   "appendPage": {
     "page": {
@@ -159,22 +237,28 @@ Return ONLY JSON like:
   }
 }
 
+${sharedSchema}
+
 Rules:
-- Do NOT overwrite or modify existing pages.
-- No full project output.
-- IDs must be unique.
-- All blocks must follow the SCORM block schema.
+- Prefer appendBlock when the user is adding to the current page.
+- Use appendPage only when the user explicitly wants a new page or the content clearly needs a new page.
+- Do not overwrite existing blocks or pages in extend mode.
 `
   }
 
-  // EDIT MODE
   return `
 You are EduPack Lesson Editor AI.
-Modify ONLY what the user requested.
+Edit the lesson precisely against the current target and current lesson context.
 
-Allowed outputs ONLY:
+Current target:
+${selectionSummary}
 
-1) Patch block:
+Relevant lesson context:
+${editingContext}
+
+Allowed outputs:
+
+1) Patch an existing block:
 {
   "patch": {
     "target": { "pageId": "...", "blockId": "..." },
@@ -182,7 +266,7 @@ Allowed outputs ONLY:
   }
 }
 
-2) Append new block:
+2) Append a new block:
 {
   "appendBlock": {
     "pageId": "...",
@@ -190,59 +274,102 @@ Allowed outputs ONLY:
   }
 }
 
+3) Replace an entire page:
+{
+  "replacePage": {
+    "pageId": "...",
+    "page": {
+      "id": "...",
+      "title": "...",
+      "blocks": [...]
+    }
+  }
+}
+
+4) Replace the full lesson:
+{
+  "replaceProject": {
+    "project": {
+      "id": "...",
+      "title": "...",
+      "pages": [...]
+    }
+  }
+}
+
+${sharedSchema}
+
 Rules:
-- NEVER send entire project unless explicitly asked.
-- NEVER delete content unless explicitly asked.
-- ONLY modify or add.
-- Output must be pure JSON.
-- All blocks must follow the SCORM block schema.
-- Use open resource links for images/videos.
+- If the target scope is selection, prefer patch or appendBlock unless the user explicitly asks to redesign the whole page or lesson.
+- If the target scope is page, use replacePage for full-page redesigns or restructures.
+- Use replaceProject only for whole-lesson changes spanning multiple pages or the overall structure/theme.
+- Never delete content unless the user explicitly asks for deletion or replacement.
 `
 }
 
-/* -----------------------------------------------------
-   OUTPUT NORMALIZER
------------------------------------------------------ */
-
-function normalizeOutput(mode: Mode, json: any) {
-
-  if (mode === "build") {
-    if (!json.project) {
-      throw new Error("AI did not return project in build mode.")
-    }
-    return json
+function ensureBlock(block: any) {
+  return {
+    ...block,
+    id: block?.id || `block-${nanoid()}`,
   }
-
-  if (mode === "extend") {
-    if (!json.appendPage) {
-      throw new Error("AI did not return appendPage.")
-    }
-
-    json.appendPage.page.id ||= `page-${nanoid()}`
-    json.appendPage.page.blocks ||= []
-
-    json.appendPage.page.blocks.forEach((b: any) => {
-      b.id ||= `block-${nanoid()}`
-    })
-
-    return json
-  }
-
-  // edit
-  if (json.patch) return json
-
-  if (json.appendBlock) {
-    json.appendBlock.block.id ||= `block-${nanoid()}`
-    return json
-  }
-
-  throw new Error("AI did not return patch or appendBlock in edit mode.")
 }
 
-/* -----------------------------------------------------
-   EXPORT
------------------------------------------------------ */
+function ensurePage(page: any, fallbackId?: string) {
+  return {
+    ...page,
+    id: page?.id || fallbackId || `page-${nanoid()}`,
+    blocks: Array.isArray(page?.blocks) ? page.blocks.map(ensureBlock) : [],
+  }
+}
+
+function ensureProject(project: any) {
+  return {
+    ...project,
+    id: project?.id || `proj-${nanoid()}`,
+    pages: Array.isArray(project?.pages) ? project.pages.map((page: any) => ensurePage(page)) : [],
+  }
+}
+
+function normalizeOutput(json: any) {
+  if (json.project) {
+    json.project = ensureProject(json.project)
+    return json
+  }
+
+  if (json.replaceProject?.project) {
+    json.replaceProject.project = ensureProject(json.replaceProject.project)
+    return json
+  }
+
+  if (json.replacePage?.page) {
+    const pageId = json.replacePage.pageId || json.replacePage.page.id || `page-${nanoid()}`
+    json.replacePage.pageId = pageId
+    json.replacePage.page = ensurePage(
+      { ...json.replacePage.page, id: pageId },
+      pageId
+    )
+    return json
+  }
+
+  if (json.appendPage?.page) {
+    json.appendPage.page = ensurePage(json.appendPage.page)
+    return json
+  }
+
+  if (json.appendBlock?.block) {
+    json.appendBlock.block = ensureBlock(json.appendBlock.block)
+    return json
+  }
+
+  if (json.patch) {
+    return json
+  }
+
+  throw new Error(
+    "AI did not return a supported action. Expected project, patch, appendBlock, appendPage, replacePage, or replaceProject."
+  )
+}
 
 export default {
-  unifiedAI
+  unifiedAI,
 }

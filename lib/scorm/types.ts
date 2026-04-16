@@ -76,7 +76,13 @@ export interface EditorPage {
   blocks: EditorBlock[]
 }
 
-export type EditorBlock = TextBlock | ImageBlock | VideoBlock | QuizBlock | InteractiveBlock
+export type EditorBlock =
+  | TextBlock
+  | ImageBlock
+  | VideoBlock
+  | QuizBlock
+  | InteractiveBlock
+  | SvgBlock
 
 export interface TextBlock {
   type: "text"
@@ -97,6 +103,14 @@ export interface VideoBlock {
   type: "video"
   id: string
   src: string
+  style?: any
+}
+
+export interface SvgBlock {
+  type: "svg"
+  id: string
+  svg: string
+  caption?: string
   style?: any
 }
 
@@ -129,6 +143,7 @@ export type InteractiveBlock = {
   action?: "link" | "page" | "none"
   targetPageId?: string
   bodyHtml?: string
+  customHtml?: string
   initiallyOpen?: boolean
   tone?: "info" | "success" | "warning" | "danger"
 

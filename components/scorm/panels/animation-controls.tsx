@@ -2,6 +2,11 @@
 
 import React from "react"
 import { useLocale } from "@/hooks/use-locale"
+import {
+  PanelLabel,
+  PanelSection,
+  panelFieldClassName,
+} from "@/components/scorm/panels/panel-ui"
 
 interface AnimationControlsProps {
   style: any
@@ -10,59 +15,69 @@ interface AnimationControlsProps {
 
 export default function AnimationControls({ style, onChange }: AnimationControlsProps) {
   const { t } = useLocale()
+  const animationType = style.animation || "none"
+  const durationValue = parseFloat(style.animationDuration || "0.6")
+  const delayValue = parseFloat(style.animationDelay || "0")
 
   return (
-    <div className="space-y-2">
-      <p className="text-xs font-semibold">
-        {t("scorm.panels.common.animation.title")}
-      </p>
-
-      <label className="block mb-1 text-xs">
-        {t("scorm.panels.common.animation.type")}
-      </label>
-      <select
-        className="w-full border rounded px-2 py-1 text-xs"
-        value={style.animation || "none"}
-        onChange={(e) => onChange("animation", e.target.value)}
-      >
-        <option value="none">{t("scorm.panels.common.animation.none")}</option>
-        <option value="fade">
-          {t("scorm.panels.common.animation.fade")}
-        </option>
-      </select>
-
-      {style.animation && style.animation !== "none" && (
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div>
-            <label className="block mb-1 text-xs">
-              {t("scorm.panels.common.animation.duration")}
-            </label>
-            <input
-              type="number"
-              className="w-full border rounded px-2 py-1 text-xs"
-              value={parseFloat(style.animationDuration || "0.6")}
-              min={0.1}
-              step={0.1}
-              onChange={(e) =>
-                onChange("animationDuration", `${e.target.value || 0.6}s`)
-              }
-            />
-          </div>
-          <div>
-            <label className="block mb-1 text-xs">
-              {t("scorm.panels.common.animation.delay")}
-            </label>
-            <input
-              type="number"
-              className="w-full border rounded px-2 py-1 text-xs"
-              value={parseFloat(style.animationDelay || "0")}
-              min={0}
-              step={0.1}
-              onChange={(e) => onChange("animationDelay", `${e.target.value || 0}s`)}
-            />
-          </div>
+    <PanelSection
+      title={t("scorm.panels.common.animation.title") || "Animation"}
+      description="Add a simple entrance effect without overwhelming the lesson."
+    >
+      <div className="space-y-3">
+        <div>
+          <PanelLabel>
+            {t("scorm.panels.common.animation.type") || "Type"}
+          </PanelLabel>
+          <select
+            className={panelFieldClassName}
+            value={animationType}
+            onChange={(e) => onChange("animation", e.target.value)}
+          >
+            <option value="none">
+              {t("scorm.panels.common.animation.none") || "None"}
+            </option>
+            <option value="fade">
+              {t("scorm.panels.common.animation.fade") || "Fade"}
+            </option>
+          </select>
         </div>
-      )}
-    </div>
+
+        {animationType !== "none" ? (
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.common.animation.duration") || "Duration"}
+              </PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={Number.isNaN(durationValue) ? 0.6 : durationValue}
+                min={0.1}
+                step={0.1}
+                onChange={(e) =>
+                  onChange("animationDuration", `${e.target.value || 0.6}s`)
+                }
+              />
+            </div>
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.common.animation.delay") || "Delay"}
+              </PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={Number.isNaN(delayValue) ? 0 : delayValue}
+                min={0}
+                step={0.1}
+                onChange={(e) =>
+                  onChange("animationDelay", `${e.target.value || 0}s`)
+                }
+              />
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </PanelSection>
   )
 }

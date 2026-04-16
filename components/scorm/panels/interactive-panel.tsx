@@ -5,6 +5,14 @@ import { EditorPage, InteractiveBlock, InteractiveVariant } from "@/lib/scorm/ty
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
 import AnimationControls from "@/components/scorm/panels/animation-controls"
+import {
+  PanelLabel,
+  PanelSection,
+  SegmentedOption,
+  ToggleCard,
+  panelFieldClassName,
+  panelTextAreaClassName,
+} from "@/components/scorm/panels/panel-ui"
 
 interface InteractivePanelProps {
   block: InteractiveBlock
@@ -12,7 +20,21 @@ interface InteractivePanelProps {
   pages: EditorPage[]
 }
 
-export default function InteractivePanel({ block, onChange, pages }: InteractivePanelProps) {
+function readNumber(value: unknown, fallback: number) {
+  const numeric =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? parseFloat(value)
+        : Number.NaN
+  return Number.isNaN(numeric) ? fallback : numeric
+}
+
+export default function InteractivePanel({
+  block,
+  onChange,
+  pages,
+}: InteractivePanelProps) {
   const style = block.style || {}
   const { t } = useLocale()
 
@@ -40,286 +62,303 @@ export default function InteractivePanel({ block, onChange, pages }: Interactive
   }
 
   const handleVariantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const variant = e.target.value as InteractiveVariant
-    updateBlock({ variant })
+    updateBlock({ variant: e.target.value as InteractiveVariant })
   }
 
   return (
-    <div className="p-4 space-y-4 text-sm">
-      <p className="font-semibold text-slate-700">
-        {t("scorm.panels.interactive.title") || "Interactive element"}
-      </p>
+    <div className="space-y-4 pb-2 text-sm">
+      <PanelSection title={t("scorm.panels.interactive.title") || "Interactive element"}>
+        <div className="space-y-3">
+          <div>
+            <PanelLabel>{t("scorm.panels.interactive.type") || "Type"}</PanelLabel>
+            <select
+              className={panelFieldClassName}
+              value={block.variant}
+              onChange={handleVariantChange}
+            >
+              <option value="button">{t("scorm.panels.interactive.button") || "Button"}</option>
+              <option value="callout">{t("scorm.panels.interactive.callout") || "Callout box"}</option>
+              <option value="reveal">{t("scorm.panels.interactive.reveal") || "Reveal box"}</option>
+              <option value="custom">{t("scorm.panels.interactive.custom") || "Custom HTML"}</option>
+            </select>
+          </div>
 
-      {/* TYPE SELECT */}
-      <div>
-        <label className="block mb-1 text-xs">
-          {t("scorm.panels.interactive.type") || "Type"}
-        </label>
-        <select
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={block.variant}
-          onChange={handleVariantChange}
-        >
-          <option value="button">{t("scorm.panels.interactive.button") || "Button"}</option>
-          <option value="callout">{t("scorm.panels.interactive.callout") || "Callout box"}</option>
-          <option value="reveal">{t("scorm.panels.interactive.reveal") || "Reveal box"}</option>
-          <option value="custom">{t("scorm.panels.interactive.custom") || "Custom HTML"}</option>
-        </select>
-      </div>
-
-      {/* SHARED LABEL */}
-      {block.variant !== "custom" && (
-        <div>
-          <label className="block mb-1 text-xs">
-            {block.variant === "button"
-              ? t("scorm.panels.interactive.buttonText") || "Button text"
-              : block.variant === "reveal"
-                ? t("scorm.panels.interactive.revealTitle") || "Title (what learner clicks)"
-                : t("scorm.panels.interactive.titleField") || "Title"}
-          </label>
-          <input
-            type="text"
-            className="w-full border rounded px-2 py-1 text-xs"
-            value={block.label}
-            onChange={(e) => updateBlock({ label: e.target.value })}
-          />
-        </div>
-      )}
-
-      {/* BUTTON SETTINGS */}
-      {block.variant === "button" && (
-        <div>
-          <label className="block mb-1 text-xs font-semibold text-slate-700">
-            {t("scorm.panels.interactive.buttonAction") || "Button action"}
-          </label>
-          <select
-            className="w-full border rounded px-2 py-1 text-xs mb-2"
-            value={block.action || (block.targetPageId ? "page" : "link")}
-            onChange={(e) =>
-              updateBlock({ action: e.target.value as InteractiveBlock["action"] })
-            }
-          >
-            <option value="link">{t("scorm.panels.interactive.action.link") || "Open link"}</option>
-            <option value="page">{t("scorm.panels.interactive.action.page") || "Go to page"}</option>
-            <option value="none">{t("scorm.panels.interactive.action.none") || "Do nothing"}</option>
-          </select>
-
-          {(block.action || "link") === "link" && (
-            <div className="space-y-1">
-              <label className="block mb-1 text-xs">
-                {t("scorm.panels.interactive.link") || "Link (optional)"}
-              </label>
+          {block.variant !== "custom" ? (
+            <div>
+              <PanelLabel>
+                {block.variant === "button"
+                  ? t("scorm.panels.interactive.buttonText") || "Button text"
+                  : block.variant === "reveal"
+                    ? t("scorm.panels.interactive.revealTitle") ||
+                      "Title (what learner clicks)"
+                    : t("scorm.panels.interactive.titleField") || "Title"}
+              </PanelLabel>
               <input
                 type="text"
-                className="w-full border rounded px-2 py-1 text-xs"
-                placeholder={
-                  t("scorm.panels.interactive.linkPlaceholder") || "https://..."
-                }
-                value={block.url || ""}
-                onChange={(e) =>
-                  updateBlock({ url: e.target.value, targetPageId: undefined })
-                }
+                className={panelFieldClassName}
+                value={block.label}
+                onChange={(e) => updateBlock({ label: e.target.value })}
               />
-              <p className="text-[11px] text-slate-400 mt-1">
-                {t("scorm.panels.interactive.linkHelp") ||
-                  "If you leave this empty, the button will only look clickable and not open anything."}
-              </p>
             </div>
-          )}
+          ) : null}
+        </div>
+      </PanelSection>
 
-          {(block.action || "link") === "page" && (
-            <div className="space-y-1">
-              <label className="block mb-1 text-xs">
-                {t("scorm.panels.interactive.pageTarget") || "Choose target page"}
-              </label>
+      {block.variant === "button" ? (
+        <PanelSection
+          title={t("scorm.panels.interactive.buttonAction") || "Button action"}
+        >
+          <div className="space-y-3">
+            <div>
+              <PanelLabel>{t("scorm.panels.interactive.buttonAction") || "Button action"}</PanelLabel>
               <select
-                className="w-full border rounded px-2 py-1 text-xs"
-                value={block.targetPageId || ""}
+                className={panelFieldClassName}
+                value={block.action || (block.targetPageId ? "page" : "link")}
                 onChange={(e) =>
-                  updateBlock({ targetPageId: e.target.value, url: "" })
+                  updateBlock({
+                    action: e.target.value as InteractiveBlock["action"],
+                  })
                 }
               >
-                <option value="">{t("scorm.panels.interactive.pagePlaceholder") || "Select a page"}</option>
-                {pages.map((page) => (
-                  <option key={page.id} value={page.id}>
-                    {page.title}
-                  </option>
-                ))}
+                <option value="link">
+                  {t("scorm.panels.interactive.action.link") || "Open link"}
+                </option>
+                <option value="page">
+                  {t("scorm.panels.interactive.action.page") || "Go to page"}
+                </option>
+                <option value="none">
+                  {t("scorm.panels.interactive.action.none") || "Do nothing"}
+                </option>
               </select>
-              <p className="text-[11px] text-slate-400">
-                {t("scorm.panels.interactive.pageHelp") ||
-                  "Learners will jump directly to the selected page when they click this button."}
-              </p>
             </div>
-          )}
-        </div>
-      )}
 
-      {/* CALLOUT SETTINGS */}
-      {block.variant === "callout" && (
-        <div>
-          <label className="block mb-1 text-xs">
-            {t("scorm.panels.interactive.calloutContent") || "Callout content"}
-          </label>
-          <textarea
-            className="w-full border rounded px-2 py-2 text-xs h-24"
-            value={block.bodyHtml || ""}
-            onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
-          />
-          <label className="block mb-1 mt-2 text-xs">
-            {t("scorm.panels.interactive.tone") || "Tone"}
-          </label>
-          <select
-            className="w-full border rounded px-2 py-1 text-xs"
-            value={block.tone || "info"}
-            onChange={(e) =>
-              updateBlock({ tone: e.target.value as InteractiveBlock["tone"] })
-            }
-          >
-            <option value="info">{t("scorm.panels.interactive.tones.info") || "Info"}</option>
-            <option value="success">{t("scorm.panels.interactive.tones.success") || "Success"}</option>
-            <option value="warning">{t("scorm.panels.interactive.tones.warning") || "Warning"}</option>
-            <option value="danger">{t("scorm.panels.interactive.tones.danger") || "Danger"}</option>
-          </select>
-        </div>
-      )}
+            {(block.action || "link") === "link" ? (
+              <div>
+                <PanelLabel>{t("scorm.panels.interactive.link") || "Link (optional)"}</PanelLabel>
+                <input
+                  type="text"
+                  className={panelFieldClassName}
+                  placeholder={
+                    t("scorm.panels.interactive.linkPlaceholder") || "https://..."
+                  }
+                  value={block.url || ""}
+                  onChange={(e) =>
+                    updateBlock({ url: e.target.value, targetPageId: undefined })
+                  }
+                />
+                <p className="mt-2 text-[11px] leading-5 text-slate-500">
+                  {t("scorm.panels.interactive.linkHelp") ||
+                    "If this is empty, the button stays visual only."}
+                </p>
+              </div>
+            ) : null}
 
-      {/* REVEAL SETTINGS */}
-      {block.variant === "reveal" && (
-        <div className="space-y-2">
-          <label className="block mb-1 text-xs">
-            {t("scorm.panels.interactive.revealTitle") || "Title (clickable text)"}
-          </label>
-          <input
-            type="text"
-            className="w-full border rounded px-2 py-1 text-xs"
-            value={block.label}
-            onChange={(e) => updateBlock({ label: e.target.value })}
-          />
+            {(block.action || "link") === "page" ? (
+              <div>
+                <PanelLabel>
+                  {t("scorm.panels.interactive.pageTarget") || "Choose target page"}
+                </PanelLabel>
+                <select
+                  className={panelFieldClassName}
+                  value={block.targetPageId || ""}
+                  onChange={(e) =>
+                    updateBlock({ targetPageId: e.target.value, url: "" })
+                  }
+                >
+                  <option value="">
+                    {t("scorm.panels.interactive.pagePlaceholder") || "Select a page"}
+                  </option>
+                  {pages.map((page) => (
+                    <option key={page.id} value={page.id}>
+                      {page.title}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-2 text-[11px] leading-5 text-slate-500">
+                  {t("scorm.panels.interactive.pageHelp") ||
+                    "Learners jump directly to the selected page."}
+                </p>
+              </div>
+            ) : null}
+          </div>
+        </PanelSection>
+      ) : null}
 
-          <label className="block mb-1 text-xs">
-            {t("scorm.panels.interactive.revealHidden") ||
-              "Hidden content (shown after learner clicks)"}
-          </label>
-          <textarea
-            className="w-full border rounded px-2 py-2 text-xs h-24"
-            value={block.bodyHtml || ""}
-            onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
-          />
-          <label className="inline-flex items-center gap-2 text-xs mt-1">
-            <input
-              type="checkbox"
-              checked={block.initiallyOpen === true}
-              onChange={(e) => updateBlock({ initiallyOpen: e.target.checked })}
-            />
-            <span>{t("scorm.panels.interactive.open") || "Open by default"}</span>
-          </label>
-        </div>
-      )}
-
-      {/* CUSTOM HTML SETTINGS */}
-      {block.variant === "custom" && (
-        <div className="space-y-1">
-          <label className="block mb-1 text-xs">
-            {t("scorm.panels.interactive.customHtml") || "Custom HTML"}
-          </label>
-          <textarea
-            className="w-full border rounded px-2 py-2 text-xs h-32 font-mono"
-            placeholder={
-              t("scorm.panels.interactive.customPlaceholder") ||
-              `<div class="my-widget">\n  <!-- Your HTML here -->\n</div>`
-            }
-            value={block.customHtml || ""}
-            onChange={(e) => updateBlock({ customHtml: e.target.value })}
-          />
-          <p className="text-[11px] text-slate-400">
-            {t("scorm.panels.interactive.customHelp") ||
-              "For advanced users. Avoid using <script> tags. You can embed iframes, H5P, simple widgets, etc."}
-          </p>
-        </div>
-      )}
-
-      <div className="space-y-2">
-        <p className="text-xs font-semibold">
-          {t("scorm.panels.interactive.text") || "Text and alignment"}
-        </p>
-
-        <ColorInput
-          label={t("scorm.panels.interactive.textColor") || "Text color"}
-          value={style.color || ""}
-          defaultColor={block.variant === "button" ? "#ffffff" : "#0f172a"}
-          onChange={(value) => updateStyle("color", value)}
-        />
-
-        <div>
-          <p className="text-[11px] mb-1">
-            {t("scorm.panels.interactive.align") || "Alignment"}
-          </p>
-          <div className="flex gap-2">
-            {["left", "center", "right"].map((a) => (
-              <button
-                key={a}
-                type="button"
-                className={`px-3 py-1 rounded border text-xs capitalize ${
-                  style.align === a ? "bg-sky-600 text-white" : "bg-white"
-                }`}
-                onClick={() => updateStyle("align", a)}
+      {block.variant === "callout" ? (
+        <PanelSection title={t("scorm.panels.interactive.callout") || "Callout box"}>
+          <div className="space-y-3">
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.interactive.calloutContent") || "Callout content"}
+              </PanelLabel>
+              <textarea
+                className={`${panelTextAreaClassName} min-h-[120px] resize-y`}
+                value={block.bodyHtml || ""}
+                onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
+              />
+            </div>
+            <div>
+              <PanelLabel>{t("scorm.panels.interactive.tone") || "Tone"}</PanelLabel>
+              <select
+                className={panelFieldClassName}
+                value={block.tone || "info"}
+                onChange={(e) =>
+                  updateBlock({
+                    tone: e.target.value as InteractiveBlock["tone"],
+                  })
+                }
               >
-                {alignLabels[a] ?? a}
-              </button>
-            ))}
+                <option value="info">
+                  {t("scorm.panels.interactive.tones.info") || "Info"}
+                </option>
+                <option value="success">
+                  {t("scorm.panels.interactive.tones.success") || "Success"}
+                </option>
+                <option value="warning">
+                  {t("scorm.panels.interactive.tones.warning") || "Warning"}
+                </option>
+                <option value="danger">
+                  {t("scorm.panels.interactive.tones.danger") || "Danger"}
+                </option>
+              </select>
+            </div>
+          </div>
+        </PanelSection>
+      ) : null}
+
+      {block.variant === "reveal" ? (
+        <PanelSection title={t("scorm.panels.interactive.reveal") || "Reveal box"}>
+          <div className="space-y-3">
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.interactive.revealTitle") || "Title (clickable text)"}
+              </PanelLabel>
+              <input
+                type="text"
+                className={panelFieldClassName}
+                value={block.label}
+                onChange={(e) => updateBlock({ label: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.interactive.revealHidden") ||
+                  "Hidden content (shown after learner clicks)"}
+              </PanelLabel>
+              <textarea
+                className={`${panelTextAreaClassName} min-h-[120px] resize-y`}
+                value={block.bodyHtml || ""}
+                onChange={(e) => updateBlock({ bodyHtml: e.target.value })}
+              />
+            </div>
+
+            <ToggleCard
+              checked={block.initiallyOpen === true}
+              label={t("scorm.panels.interactive.open") || "Open by default"}
+              onChange={(checked) => updateBlock({ initiallyOpen: checked })}
+            />
+          </div>
+        </PanelSection>
+      ) : null}
+
+      {block.variant === "custom" ? (
+        <PanelSection title={t("scorm.panels.interactive.custom") || "Custom HTML"}>
+          <div className="space-y-3">
+            <div>
+              <PanelLabel>{t("scorm.panels.interactive.customHtml") || "Custom HTML"}</PanelLabel>
+              <textarea
+                className={`${panelTextAreaClassName} min-h-[180px] resize-y font-mono text-xs`}
+                placeholder={
+                  t("scorm.panels.interactive.customPlaceholder") ||
+                  `<div class="my-widget">\n  <!-- Your HTML here -->\n</div>`
+                }
+                value={block.customHtml || ""}
+                onChange={(e) => updateBlock({ customHtml: e.target.value })}
+              />
+            </div>
+            <p className="text-[11px] leading-5 text-slate-500">
+              {t("scorm.panels.interactive.customHelp") ||
+                "Avoid script tags. Use simple widgets, iframes, or embedded HTML."}
+            </p>
+          </div>
+        </PanelSection>
+      ) : null}
+
+      <PanelSection title={t("scorm.panels.interactive.text") || "Text and alignment"}>
+        <div className="space-y-3">
+          <ColorInput
+            label={t("scorm.panels.interactive.textColor") || "Text color"}
+            value={style.color || ""}
+            defaultColor={block.variant === "button" ? "#ffffff" : "#0f172a"}
+            onChange={(value) => updateStyle("color", value)}
+          />
+
+          <div>
+            <PanelLabel>{t("scorm.panels.interactive.align") || "Alignment"}</PanelLabel>
+            <div className="grid grid-cols-3 gap-2">
+              {["left", "center", "right"].map((alignment) => (
+                <SegmentedOption
+                  key={alignment}
+                  active={(style.align || "left") === alignment}
+                  onClick={() => updateStyle("align", alignment)}
+                >
+                  {alignLabels[alignment] ?? alignment}
+                </SegmentedOption>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </PanelSection>
 
-      {/* APPEARANCE */}
-      <div className="space-y-2">
-        <p className="text-xs font-semibold">
-          {t("scorm.panels.interactive.appearance") || "Appearance"}
-        </p>
+      <PanelSection title={t("scorm.panels.interactive.appearance") || "Appearance"}>
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <PanelLabel>{t("scorm.panels.interactive.padding") || "Padding (px)"}</PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(style.padding, 8)}
+                onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
+              />
+            </div>
+            <div>
+              <PanelLabel>
+                {t("scorm.panels.interactive.radius") || "Border radius (px)"}
+              </PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(
+                  style.radius,
+                  block.variant === "button" ? 999 : 10
+                )}
+                onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
+              />
+            </div>
+          </div>
 
-        <label className="text-xs">
-          {t("scorm.panels.interactive.padding") || "Padding (px)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.padding || "8")}
-          onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
-        />
-
-        <label className="text-xs">
-          {t("scorm.panels.interactive.radius") || "Border radius (px)"}
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.radius || (block.variant === "button" ? "999" : "10"))}
-          onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
-        />
-
-        <ColorInput
-          label={t("scorm.panels.interactive.background") || "Background color"}
-          value={style.background || ""}
-          defaultColor={
-            block.variant === "button"
-              ? "#0ea5e9"
-              : block.variant === "custom"
-                ? "#ffffff"
-                : "#eef2ff"
-          }
-          onChange={(value) => updateStyle("background", value)}
-        />
-
-        <div className="flex items-center gap-2 mt-1">
-          <input
-            type="checkbox"
-            checked={style.shadow === true}
-            onChange={(e) => updateStyle("shadow", e.target.checked)}
+          <ColorInput
+            label={t("scorm.panels.interactive.background") || "Background color"}
+            value={style.background || ""}
+            defaultColor={
+              block.variant === "button"
+                ? "#0ea5e9"
+                : block.variant === "custom"
+                  ? "#ffffff"
+                  : "#eef2ff"
+            }
+            onChange={(value) => updateStyle("background", value)}
           />
-          <span className="text-xs">{t("scorm.panels.interactive.shadow") || "Shadow"}</span>
+
+          <ToggleCard
+            checked={style.shadow === true}
+            label={t("scorm.panels.interactive.shadow") || "Shadow"}
+            onChange={(checked) => updateStyle("shadow", checked)}
+          />
         </div>
-      </div>
+      </PanelSection>
 
       <AnimationControls style={style} onChange={updateStyle} />
     </div>

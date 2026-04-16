@@ -49,9 +49,11 @@ import {
   VideoBlock,
   QuizBlock,
   InteractiveBlock,
+  SvgBlock,
 } from "@/lib/scorm/types"
 import { BlockRenderer } from "@/lib/scorm/block-engine"
 import { PropertiesPanel } from "@/components/scorm/properties-panel"
+import { getDefaultSvgMarkup, getSvgCaption, sanitizeSvgMarkup } from "@/lib/scorm/svg"
 import {
   Save,
   Eye,
@@ -67,14 +69,20 @@ import {
   LayoutDashboard,
   Clock,
   Loader2,
+  Menu,
   AlertCircle,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  X,
 } from "lucide-react"
-import { useScormAI, type ChatMessage } from "@/hooks/useScormAI"
+import { useScormAI } from "@/hooks/useScormAI"
+import { type AiSelectionScope, type ChatMessage } from "@/lib/scorm/ai-types"
 import { toast } from "sonner"
 import { buildScormZip } from "@/lib/scorm/exporter"
 import Portal from "@/components/Portal"
 type Status = "draft" | "published"
+type WorkspacePanel = "chat" | "inspector" | null
 
 const styleToInline = (style?: any) => {
   if (!style) return ""
@@ -130,7 +138,7 @@ export default function ScormAIPage() {
   const initialProject: EditorProject = {
     id: `proj-${Date.now()}`,
     title: t("scorm.ai.untitledProject"),
-    version: "1.0",
+    version: "1.2",
     theme: {
       direction: "ltr",
       styles: {},
@@ -307,11 +315,38 @@ useEffect(() => {
     project.pages[0] ??
     fallbackPage
   const activeBlocks = activePage?.blocks ?? []
+  const activePageIndex = Math.max(
+    project.pages.findIndex((p) => p.id === activePage.id),
+    0,
+  )
 
   const selectedBlock =
     (activePage.blocks ?? []).find((b) => b.id === selectedBlockId) ?? null
 
   const [rightPanel, setRightPanel] = useState<"block" | "project">("project")
+  const [workspacePanel, setWorkspacePanel] = useState<WorkspacePanel>(null)
+  const [aiScope, setAiScope] = useState<AiSelectionScope>("page")
+
+  const resolvedAiScope: AiSelectionScope =
+    aiScope === "selection" && !selectedBlock ? "page" : aiScope
+
+  const aiSelection = useMemo(
+    () => ({
+      scope: resolvedAiScope,
+      pageId: activePage?.id ?? null,
+      pageTitle: activePage?.title ?? null,
+      blockId: selectedBlock?.id ?? null,
+      blockType: selectedBlock?.type ?? null,
+    }),
+    [resolvedAiScope, activePage?.id, activePage?.title, selectedBlock?.id, selectedBlock?.type],
+  )
+
+  const aiTargetLabel =
+    resolvedAiScope === "selection" && selectedBlock
+      ? `Selected ${selectedBlock.type} block`
+      : resolvedAiScope === "lesson"
+      ? "Whole lesson"
+      : `Page ${activePageIndex + 1}`
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -361,6 +396,8 @@ useEffect(() => {
   const handleBlockClick = useCallback((block: EditorBlock) => {
     setSelectedBlockId(block.id)
     setRightPanel("block")
+    setAiScope("selection")
+    setWorkspacePanel("inspector")
   }, [])
 
   const renderProgressTracker = (
@@ -421,6 +458,7 @@ useEffect(() => {
     setEditorMode,
     setAiChatMode,
     initialMessages,
+    selection: aiSelection,
     onLessonApplied: showHighlights,
   })
 
@@ -432,6 +470,12 @@ useEffect(() => {
       })
     }
   }, [chatMessages.length])
+
+  useEffect(() => {
+    if (aiScope === "selection" && !selectedBlockId) {
+      setAiScope("page")
+    }
+  }, [aiScope, selectedBlockId])
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
@@ -514,6 +558,35 @@ useEffect(() => {
         const style = styleToInline((vid as any).style)
         return `<div style="${style}"><video src="${vid.src}" controls style="width:100%;${style}"></video></div>`
       }
+      case "svg": {
+        const svgBlock = block as SvgBlock
+        const style = (svgBlock as any).style || {}
+        const caption = getSvgCaption(svgBlock)
+        const wrapperStyle = [
+          style.padding ? `padding:${style.padding}` : "",
+          style.radius ? `border-radius:${style.radius}` : "",
+          style.background ? `background:${style.background}` : "",
+          style.shadow ? "box-shadow:0 12px 30px rgba(0,0,0,0.12)" : "",
+          style.align === "center"
+            ? "text-align:center"
+            : style.align === "right"
+              ? "text-align:right"
+              : "text-align:left",
+        ]
+          .filter(Boolean)
+          .join(";")
+        const canvasStyle = [
+          `width:${style.width || "100%"}`,
+          style.maxWidth ? `max-width:${style.maxWidth}` : "",
+          "display:inline-block",
+          "vertical-align:top",
+        ]
+          .filter(Boolean)
+          .join(";")
+        return `<figure class="block-svg" style="${wrapperStyle}"><div class="svg-canvas" style="${canvasStyle}">${sanitizeSvgMarkup(
+          svgBlock.svg,
+        )}</div>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`
+      }
       case "quiz": {
         const quizBlock = block as QuizBlock
         const options = (quizBlock.options || [])
@@ -591,6 +664,8 @@ useEffect(() => {
           img, video { max-width: 100%; border-radius: 8px; }
           figure { margin: 0 0 12px 0; }
           figcaption { font-size: 12px; color: #4b5563; text-align: center; }
+          .block-svg .svg-canvas { display: inline-block; max-width: 100%; }
+          .block-svg svg { display: block; width: 100%; max-width: 100%; height: auto; }
           button { padding: 8px 14px; border-radius: 999px; background: #0ea5e9; color: white; border: none; cursor: pointer; }
         </style>
       </head>
@@ -906,6 +981,22 @@ ${
           } as EditorBlock
           break
         }
+        case "svg":
+          newBlock = {
+            ...baseBlock,
+            type: "svg",
+            svg: getDefaultSvgMarkup(),
+            caption: "Concept diagram",
+            style: {
+              width: "100%",
+              maxWidth: "840px",
+              align: "center",
+              padding: "8px",
+              radius: "18px",
+              background: "#ffffff",
+            },
+          }
+          break
         default:
           return
       }
@@ -1108,6 +1199,67 @@ ${
 
   const handleProjectChange = (updatedProject: EditorProject) => {
     setProject(updatedProject)
+    if (!updatedProject.pages.some((page) => page.id === activePageId)) {
+      setActivePageId(updatedProject.pages[0]?.id || "")
+    }
+
+    if (
+      selectedBlockId &&
+      !updatedProject.pages.some((page) =>
+        page.blocks.some((block) => block.id === selectedBlockId),
+      )
+    ) {
+      setSelectedBlockId(null)
+    }
+  }
+
+  const handleNavigatePage = (direction: "prev" | "next") => {
+    const nextIndex =
+      direction === "prev" ? activePageIndex - 1 : activePageIndex + 1
+
+    if (nextIndex < 0 || nextIndex >= project.pages.length) return
+
+    setActivePageId(project.pages[nextIndex].id)
+    setSelectedBlockId(null)
+    if (aiScope === "selection") {
+      setAiScope("page")
+    }
+  }
+
+  const handleTextBlockChange = (blockId: string, html: string) => {
+    setProject((prevProject) => ({
+      ...prevProject,
+      pages: prevProject.pages.map((page) =>
+        page.id === activePageId
+          ? {
+              ...page,
+              blocks: page.blocks.map((block) =>
+                block.id === blockId && block.type === "text"
+                  ? { ...block, html }
+                  : block,
+              ),
+            }
+          : page,
+      ),
+    }))
+  }
+
+  const handleSvgBlockChange = (blockId: string, svg: string) => {
+    setProject((prevProject) => ({
+      ...prevProject,
+      pages: prevProject.pages.map((page) =>
+        page.id === activePageId
+          ? {
+              ...page,
+              blocks: page.blocks.map((block) =>
+                block.id === blockId && block.type === "svg"
+                  ? { ...block, svg }
+                  : block,
+              ),
+            }
+          : page,
+      ),
+    }))
   }
 
   const handleAddPage = () => {
@@ -1122,6 +1274,7 @@ ${
     }))
     setActivePageId(newPage.id)
     setSelectedBlockId(null)
+    setAiScope("page")
   }
 
   // Right-click menu open
@@ -1280,6 +1433,569 @@ ${
 
   return text // غير ذلك → اعرضه طبيعي
 }
+
+  if (editorMode === "ai" || editorMode === "blank") {
+    return (
+      <>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*,video/*,application/json,text/csv"
+          className="hidden"
+          onChange={handleFileInputChange}
+        />
+
+        <button
+          type="button"
+          onClick={() => setNavVisible((v) => !v)}
+          className="fixed left-4 top-4 z-[1200] flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white shadow-lg hover:bg-slate-800"
+          title={navVisible ? t("scorm.nav.hide") : t("scorm.nav.show")}
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+
+        <div className="min-h-screen bg-[#f7fafc] px-3 pb-24 pt-20 sm:px-5">
+          <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-4">
+            {storagePath ? (
+              <div>
+                {loadingExternalProject ? (
+                  <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/85 px-4 py-3 text-sm text-muted-foreground shadow-sm backdrop-blur">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>{t("scorm.ai.loadingPackagePreview")}</span>
+                  </div>
+                ) : externalLoadError ? (
+                  <div className="flex items-center gap-2 rounded-2xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive shadow-sm">
+                    <AlertCircle className="h-4 w-4" />
+                    <span>{externalLoadError}</span>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  onClick={handlePreview}
+                >
+                  <Eye className="mr-1 h-4 w-4" />
+                  {t("scorm.topbar.preview")}
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                    >
+                      <Download className="mr-1 h-4 w-4" />
+                      {t("scorm.topbar.export")}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuLabel>
+                      {t("scorm.projectPanel.exportPanel")}
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {exportOptions.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        onClick={() => handleExport(option.value as ExportFormat)}
+                      >
+                        {option.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  onClick={() => setWorkspacePanel("chat")}
+                >
+                  <MessageCircle className="mr-1 h-4 w-4" />
+                  AI Chat
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  onClick={() => {
+                    setWorkspacePanel("inspector")
+                    setRightPanel(selectedBlock ? "block" : "project")
+                  }}
+                >
+                  <Settings className="mr-1 h-4 w-4" />
+                  Inspector
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                <Badge
+                  variant={status === "draft" ? "secondary" : "default"}
+                  className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] text-slate-700"
+                >
+                  {status === "draft"
+                    ? t("scorm.topbar.status.draft")
+                    : t("scorm.topbar.status.published")}
+                </Badge>
+                <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 px-3 py-2 shadow-sm">
+                  <Clock className="h-4 w-4" />
+                  <span>{aiTargetLabel}</span>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  onClick={handleSave}
+                >
+                  <Save className="mr-1 h-4 w-4" />
+                  Save
+                </Button>
+              </div>
+            </div>
+
+            <div
+              className={`rounded-[32px] border border-slate-200 bg-white p-3 shadow-[0_24px_60px_rgba(15,23,42,0.08)] ${
+                isDragging ? "ring-2 ring-sky-300" : ""
+              }`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <div className="rounded-[28px] bg-[#fbfdff] p-3 sm:p-4">
+                <div
+                  className="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)]"
+                  onClick={() => {
+                    setSelectedBlockId(null)
+                    if (aiScope === "selection") {
+                      setAiScope("page")
+                    }
+                  }}
+                >
+                  <div className="border-b border-slate-200/80 px-4 py-4 sm:px-6">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                          <span>SCORM View</span>
+                          <span className="h-1 w-1 rounded-full bg-slate-300" />
+                          <span>{project.title}</span>
+                        </div>
+                        <h2 className="text-xl font-semibold text-slate-900">
+                          {activePage.title}
+                        </h2>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded-full border-slate-200 bg-white"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleNavigatePage("prev")
+                          }}
+                          disabled={activePageIndex === 0}
+                        >
+                          <ChevronLeft className="mr-1 h-4 w-4" />
+                          Prev
+                        </Button>
+                        <div className="min-w-[112px] rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-center text-xs font-semibold text-slate-600">
+                          {activePageIndex + 1} / {project.pages.length}
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded-full border-slate-200 bg-white"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleNavigatePage("next")
+                          }}
+                          disabled={activePageIndex >= project.pages.length - 1}
+                        >
+                          Next
+                          <ChevronRight className="ml-1 h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="rounded-full border-slate-200 bg-white"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleAddPage()
+                          }}
+                        >
+                          <FilePlus className="mr-1 h-4 w-4" />
+                          Add Page
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="max-h-[calc(100vh-270px)] overflow-y-auto">
+                    <div
+                      dir={project.theme.direction}
+                      className="mx-auto w-full max-w-[940px] px-4 py-6 sm:px-8 sm:py-8"
+                    >
+                      {activePage && activeBlocks.length > 0 ? (
+                        <DndContext
+                          sensors={sensors}
+                          collisionDetection={closestCenter}
+                          onDragEnd={handleDragEnd}
+                        >
+                          <SortableContext
+                            items={activeBlocks.map((b) => b.id)}
+                            strategy={verticalListSortingStrategy}
+                          >
+                            <div className="flex flex-col gap-3">
+                              {activeBlocks.map((block) => {
+                                const isSelected = selectedBlock?.id === block.id
+                                const isHighlighted =
+                                  highlightedBlockIds.includes(block.id)
+
+                                return (
+                                  <SortableBlock key={block.id} id={block.id}>
+                                  <div
+                                      className={`relative overflow-hidden rounded-[24px] border bg-white px-4 py-4 transition-all ${
+                                        isSelected
+                                          ? "border-sky-300 ring-2 ring-sky-200 shadow-[0_16px_36px_rgba(14,165,233,0.15)]"
+                                          : "border-slate-200 hover:border-slate-300 hover:shadow-sm"
+                                      } ${
+                                        isHighlighted
+                                          ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70"
+                                          : ""
+                                      }`}
+                                      style={getBlockLayoutStyle(block)}
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleBlockClick(block)
+                                      }}
+                                      onContextMenu={(e) =>
+                                        handleContextMenu(e, block.id)
+                                      }
+                                    >
+                                      <button
+                                        onPointerDown={(e) => e.stopPropagation()}
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          handleDeleteBlock(block.id)
+                                        }}
+                                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                                      >
+                                        <X className="h-4 w-4" />
+                                      </button>
+
+                                      <BlockRenderer
+                                        block={block}
+                                        theme={project.theme}
+                                        isSelected={isSelected}
+                                        onClick={handleBlockClick}
+                                        onNavigateToPage={(pageId) => {
+                                          setActivePageId(pageId)
+                                          setSelectedBlockId(null)
+                                          if (aiScope === "selection") {
+                                            setAiScope("page")
+                                          }
+                                        }}
+                                        onTextChange={handleTextBlockChange}
+                                        onSvgChange={handleSvgBlockChange}
+                                      />
+                                    </div>
+                                  </SortableBlock>
+                                )
+                              })}
+                            </div>
+                          </SortableContext>
+                        </DndContext>
+                      ) : (
+                        <div className="flex min-h-[420px] flex-col items-center justify-center rounded-[24px] border border-dashed border-slate-300 bg-white px-6 text-center">
+                          <h2 className="text-lg font-semibold text-slate-800">
+                            {t("scorm.canvas.title")}
+                          </h2>
+                          <p className="mt-2 max-w-md text-sm text-slate-500">
+                            {t("scorm.canvas.desc")}
+                          </p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              addBlock("text")
+                            }}
+                            className="mt-5 rounded-full border-sky-500 text-sky-700 hover:bg-sky-50"
+                          >
+                            <MousePointerClick className="mr-2 h-4 w-4" />
+                            {t("scorm.canvas.start")}
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {workspacePanel ? (
+          <Portal>
+            <div className="fixed inset-0 z-[1100]">
+              <button
+                type="button"
+                aria-label="Close workspace panel"
+                className="absolute inset-0 bg-transparent"
+                onClick={() => setWorkspacePanel(null)}
+              />
+
+              <div className="absolute bottom-6 right-3 top-20 flex w-[min(430px,calc(100vw-24px))] flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.22)]">
+                <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+                  <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1">
+                    <button
+                      type="button"
+                      onClick={() => setWorkspacePanel("chat")}
+                      className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                        workspacePanel === "chat"
+                          ? "bg-white text-slate-900 shadow-sm"
+                          : "text-slate-500 hover:text-slate-700"
+                      }`}
+                    >
+                      Chat
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWorkspacePanel("inspector")}
+                      className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                        workspacePanel === "inspector"
+                          ? "bg-white text-slate-900 shadow-sm"
+                          : "text-slate-500 hover:text-slate-700"
+                      }`}
+                    >
+                      Inspector
+                    </button>
+                  </div>
+
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-9 w-9 rounded-full"
+                    onClick={() => setWorkspacePanel(null)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                {workspacePanel === "chat" ? (
+                  <div className="flex h-full flex-col">
+                    <div className="border-b border-slate-200 px-4 py-4">
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-100">
+                          <MessageCircle className="h-5 w-5 text-sky-700" />
+                        </span>
+                        <div>
+                          <h3 className="text-sm font-semibold text-slate-900">
+                            {t("scorm.ai.title")}
+                          </h3>
+                          <p className="text-xs text-slate-500">
+                            Target: {aiTargetLabel}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setAiScope("selection")}
+                          disabled={!selectedBlock}
+                          className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                            resolvedAiScope === "selection"
+                              ? "bg-sky-600 text-white"
+                              : "bg-slate-100 text-slate-600"
+                          } disabled:cursor-not-allowed disabled:opacity-50`}
+                        >
+                          Selection
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAiScope("page")}
+                          className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                            resolvedAiScope === "page"
+                              ? "bg-sky-600 text-white"
+                              : "bg-slate-100 text-slate-600"
+                          }`}
+                        >
+                          Page
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAiScope("lesson")}
+                          className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                            resolvedAiScope === "lesson"
+                              ? "bg-sky-600 text-white"
+                              : "bg-slate-100 text-slate-600"
+                          }`}
+                        >
+                          Lesson
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      ref={chatScrollRef}
+                      className="flex-1 space-y-3 overflow-y-auto p-4 text-sm"
+                    >
+                      {renderProgressTracker("panel")}
+                      {chatMessages.map((m) => (
+                        <div
+                          key={m.id}
+                          className={`flex ${
+                            m.role === "user" ? "justify-end" : "justify-start"
+                          }`}
+                        >
+                          <div
+                            className={
+                              m.role === "user"
+                                ? "inline-block max-w-[88%] rounded-2xl rounded-br-sm bg-sky-600 px-3 py-2 text-white"
+                                : "inline-block max-w-[88%] rounded-2xl rounded-bl-sm border border-slate-100 bg-white px-3 py-2 text-slate-800"
+                            }
+                          >
+                            {m.agent && m.role !== "user" && (
+                              <div className="mb-0.5 text-[10px] uppercase tracking-wide text-slate-400">
+                                {m.agent === "unified"
+                                  ? t("scorm.ai.agent.unified")
+                                  : m.agent === "mentor"
+                                    ? t("scorm.ai.agent.mentor")
+                                    : m.agent === "contentArchitect"
+                                      ? t("scorm.ai.agent.contentArchitect")
+                                      : m.agent === "assessmentDesigner"
+                                        ? t("scorm.ai.agent.assessmentDesigner")
+                                        : ""}
+                              </div>
+                            )}
+                            <div className="whitespace-pre-wrap break-words leading-relaxed">
+                              {formatMessage(m.content)}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="border-t border-slate-200 bg-slate-50 p-4">
+                      <form
+                        onSubmit={handleSend}
+                        className="flex items-center gap-2"
+                      >
+                        <Input
+                          value={chatInput}
+                          onChange={(e) => setChatInput(e.target.value)}
+                          placeholder={t("scorm.ai.placeholder")}
+                          className="h-10 flex-1 rounded-full border-slate-200 bg-white"
+                          disabled={isGenerating}
+                        />
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="h-10 rounded-full bg-sky-600 px-4 hover:bg-sky-700"
+                          disabled={isGenerating}
+                        >
+                          {t("scorm.ai.send")}
+                        </Button>
+                      </form>
+                    </div>
+                  </div>
+                ) : (
+                  <PropertiesPanel
+                    project={project}
+                    onProjectChange={handleProjectChange}
+                    selectedBlock={selectedBlock}
+                    onBlockChange={handleBlockChange}
+                    panelType={rightPanel}
+                    onAddPage={handleAddPage}
+                    onExport={handleExport}
+                  />
+                )}
+              </div>
+            </div>
+          </Portal>
+        ) : null}
+
+        <div className="fixed bottom-6 left-1/2 z-[999] -translate-x-1/2">
+          <div className="inline-flex items-center gap-0.5 rounded-full border border-slate-200 bg-white/95 px-2.5 py-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.18)] backdrop-blur-md">
+            <IconToolButton
+              onClick={handleUploadClick}
+              icon={<Upload className="h-4 w-4" />}
+              label="scorm.tools.upload"
+            />
+            <IconToolButton
+              onClick={() => setWorkspacePanel("chat")}
+              icon={<MessageCircle className="h-4 w-4" />}
+              label="scorm.ai.title"
+            />
+            <IconToolButton
+              onClick={() => {
+                setWorkspacePanel("inspector")
+                setRightPanel(selectedBlock ? "block" : "project")
+              }}
+              icon={<Settings className="h-4 w-4" />}
+              label="scorm.tools.settings"
+            />
+            <IconToolButton
+              onClick={() => addBlock("interactive")}
+              icon={<MousePointerClick className="h-4 w-4" />}
+              label="scorm.tools.interactive"
+            />
+            <IconToolButton
+              onClick={() => addBlock("quiz")}
+              icon={<FileQuestion className="h-4 w-4" />}
+              label="scorm.tools.quiz"
+            />
+            <IconToolButton
+              onClick={() => {
+                setWorkspacePanel("inspector")
+                setRightPanel("project")
+                setSelectedBlockId(null)
+              }}
+              icon={<LayoutDashboard className="h-4 w-4" />}
+              label="scorm.tools.pageEditor"
+            />
+            <IconToolButton
+              onClick={handleAddMedia}
+              icon={<Paperclip className="h-4 w-4" />}
+              label="scorm.tools.media"
+            />
+            <IconToolButton
+              onClick={() => addBlock("text")}
+              icon={<Type className="h-4 w-4" />}
+              label="scorm.tools.text"
+            />
+            <IconToolButton
+              onClick={() => addBlock("svg")}
+              icon={<span className="text-[10px] font-semibold">SVG</span>}
+              label="scorm.tools.svg"
+            />
+          </div>
+        </div>
+
+        <ContextMenu
+          contextMenu={contextMenu}
+          onAction={(action: string) => {
+            const block = activeBlocks.find((b) => b.id === contextMenu?.blockId)
+            if (!block) return
+
+            if (action === "copy") handleCopy(block)
+            if (action === "paste") handlePaste()
+            if (action === "duplicate") handleDuplicateBlock(block)
+            if (action === "delete") handleDeleteBlock(block.id)
+
+            setContextMenu(null)
+          }}
+        />
+      </>
+    )
+  }
 
   return (
     <>
@@ -1676,7 +2392,7 @@ ${
 
       <ContextMenu
         contextMenu={contextMenu}
-        onAction={(action) => {
+        onAction={(action: string) => {
           const block = activeBlocks.find((b) => b.id === contextMenu?.blockId)
           if (!block) return
 

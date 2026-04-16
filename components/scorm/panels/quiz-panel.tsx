@@ -6,10 +6,27 @@ import TextPanel from "@/components/scorm/panels/text-panel"
 import { useLocale } from "@/hooks/use-locale"
 import ColorInput from "@/components/scorm/panels/color-input"
 import AnimationControls from "@/components/scorm/panels/animation-controls"
+import {
+  PanelLabel,
+  PanelSection,
+  SegmentedOption,
+  ToggleCard,
+  panelFieldClassName,
+} from "@/components/scorm/panels/panel-ui"
 
 interface QuizPanelProps {
   block: QuizBlock
   onChange: (updated: QuizBlock) => void
+}
+
+function readNumber(value: unknown, fallback: number) {
+  const numeric =
+    typeof value === "number"
+      ? value
+      : typeof value === "string"
+        ? parseFloat(value)
+        : Number.NaN
+  return Number.isNaN(numeric) ? fallback : numeric
 }
 
 export default function QuizPanel({ block, onChange }: QuizPanelProps) {
@@ -43,7 +60,6 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
     })
   }
 
-  // 🔗 Question as a fake TextBlock to reuse TextPanel
   const questionTextBlock: TextBlock = {
     id: `${block.id}-question`,
     type: "text",
@@ -54,9 +70,9 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
   const handleQuestionChange = (updatedText: TextBlock) => {
     onChange({
       ...block,
-      question: updatedText.html,       // fallback
-      questionHtml: updatedText.html,   // rich html
-      questionStyle: updatedText.style, // style for question
+      question: updatedText.html,
+      questionHtml: updatedText.html,
+      questionStyle: updatedText.style,
     })
   }
 
@@ -78,12 +94,17 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
       t("scorm.panels.quiz.optionLabel", { index: nextIndex }) ||
       `Option ${nextIndex}`
 
-    const newOption = {
-      id: `opt-${Date.now()}`,
-      label: defaultLabel,
-      correct: false,
-    }
-    onChange({ ...block, options: [...(block.options || []), newOption] })
+    onChange({
+      ...block,
+      options: [
+        ...(block.options || []),
+        {
+          id: `opt-${Date.now()}`,
+          label: defaultLabel,
+          correct: false,
+        },
+      ],
+    })
   }
 
   const removeOption = (index: number) => {
@@ -93,233 +114,200 @@ export default function QuizPanel({ block, onChange }: QuizPanelProps) {
   }
 
   return (
-    <div className="p-4 space-y-4 text-sm">
-      <p className="font-semibold text-slate-700">
-        {t("scorm.panels.quiz.title") || "Quiz Settings"}
-      </p>
-
-      {/* 🔗 Question editor using TextPanel */}
-      <div className="border rounded-lg overflow-hidden">
-        <div className="px-3 pt-2 pb-1 border-b bg-slate-50">
-          <p className="text-xs font-semibold text-slate-700">
-            {t("scorm.panels.quiz.question") || "Question text"}
-          </p>
-          <p className="text-[11px] text-slate-500">
-            {t("scorm.panels.quiz.questionHelp") ||
-              "Format the question like normal text (bold, RTL, colors…)"}
-          </p>
-        </div>
+    <div className="space-y-4 pb-2 text-sm">
+      <PanelSection
+        title={t("scorm.panels.quiz.question") || "Question text"}
+        description={
+          t("scorm.panels.quiz.questionHelp") ||
+          "Format the question like normal lesson text."
+        }
+      >
         <TextPanel block={questionTextBlock} onChange={handleQuestionChange} />
-      </div>
+      </PanelSection>
 
-      {/* OPTIONS LIST */}
-      <div>
-        <div className="flex items-center justify-between mb-1">
-          <p className="text-xs font-semibold">
-            {t("scorm.panels.quiz.options") || "Options"}
-          </p>
-          <button
-            type="button"
-            className="text-xs px-2 py-1 rounded border border-slate-300 hover:bg-slate-50"
-            onClick={addOption}
-          >
-            {t("scorm.panels.quiz.addOption") || "+ Add option"}
-          </button>
-        </div>
-
-        <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-          {(block.options || []).length === 0 && (
-            <p className="text-[11px] text-slate-400">
-              {t("scorm.panels.quiz.noOptions") ||
-                "No options yet. Click “Add option” to create choices."}
+      <PanelSection title={t("scorm.panels.quiz.options") || "Options"}>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-[11px] leading-5 text-slate-500">
+              {t("scorm.panels.quiz.correctHelp") ||
+                "Mark one or more answers as correct."}
             </p>
-          )}
-
-          {(block.options || []).map((opt, index) => (
-            <div
-              key={opt.id}
-              className="flex items-center gap-2 border rounded px-2 py-1 bg-slate-50"
+            <button
+              type="button"
+              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+              onClick={addOption}
             >
-              <input
-                type="checkbox"
-                checked={!!opt.correct}
-                onChange={() => toggleOptionCorrect(index)}
-              />
-              <input
-                type="text"
-                className="flex-1 border rounded px-2 py-1 text-xs"
-                value={opt.label}
-                onChange={(e) => updateOptionLabel(index, e.target.value)}
-              />
-              <button
-                type="button"
-                className="text-[11px] text-red-500 hover:underline"
-                onClick={() => removeOption(index)}
+              {t("scorm.panels.quiz.addOption") || "+ Add option"}
+            </button>
+          </div>
+
+          <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
+            {(block.options || []).length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/70 px-4 py-5 text-center text-[11px] leading-5 text-slate-500">
+                {t("scorm.panels.quiz.noOptions") ||
+                  "No options yet. Add choices for the learner."}
+              </div>
+            ) : null}
+
+            {(block.options || []).map((option, index) => (
+              <div
+                key={option.id}
+                className={`rounded-2xl border px-3 py-3 ${
+                  option.correct
+                    ? "border-sky-200 bg-sky-50/70"
+                    : "border-slate-200 bg-white"
+                }`}
               >
-                {t("scorm.panels.quiz.remove") || "Remove"}
-              </button>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={!!option.correct}
+                    onChange={() => toggleOptionCorrect(index)}
+                    className="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+                  />
+                  <input
+                    type="text"
+                    className={`${panelFieldClassName} h-11 flex-1`}
+                    value={option.label}
+                    onChange={(e) => updateOptionLabel(index, e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
+                    onClick={() => removeOption(index)}
+                  >
+                    {t("scorm.panels.quiz.remove") || "Remove"}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </PanelSection>
+
+      <PanelSection
+        title={t("scorm.panels.quiz.boxAppearance") || "Question box appearance"}
+      >
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <PanelLabel>{t("scorm.panels.quiz.padding") || "Padding (px)"}</PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(style.padding, 12)}
+                onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
+              />
             </div>
-          ))}
-        </div>
+            <div>
+              <PanelLabel>{t("scorm.panels.quiz.radius") || "Border Radius (px)"}</PanelLabel>
+              <input
+                type="number"
+                className={panelFieldClassName}
+                value={readNumber(style.radius, 8)}
+                onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
+              />
+            </div>
+          </div>
 
-        <p className="text-[11px] text-slate-400 mt-1">
-          {t("scorm.panels.quiz.correctHelp") || "You can mark one or more options as correct."}
-        </p>
-      </div>
-
-      {/* APPEARANCE (container) */}
-      <div className="space-y-2">
-        <p className="text-xs font-semibold">
-          {t("scorm.panels.quiz.boxAppearance") || "Question box appearance"}
-        </p>
-
-        <label className="text-xs">{t("scorm.panels.quiz.padding") || "Padding (px)"}</label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.padding || "12")}
-          onChange={(e) => updateStyle("padding", `${e.target.value}px`)}
-        />
-
-        <label className="text-xs">{t("scorm.panels.quiz.radius") || "Border Radius (px)"}</label>
-        <input
-          type="number"
-          className="w-full border rounded px-2 py-1 text-xs"
-          value={parseInt(style.radius || "8")}
-          onChange={(e) => updateStyle("radius", `${e.target.value}px`)}
-        />
-
-        <ColorInput
-          label={t("scorm.panels.quiz.background") || "Background Color"}
-          value={style.background || ""}
-          defaultColor="#f9fafb"
-          onChange={(value) => updateStyle("background", value)}
-        />
-
-        <ColorInput
-          label={t("scorm.panels.quiz.textColor") || "Text color"}
-          value={style.color || ""}
-          defaultColor="#0f172a"
-          onChange={(value) => updateStyle("color", value)}
-        />
-
-        <div className="flex items-center gap-2 mt-1">
-          <input
-            type="checkbox"
-            checked={style.shadow === true}
-            onChange={(e) => updateStyle("shadow", e.target.checked)}
+          <ColorInput
+            label={t("scorm.panels.quiz.background") || "Background Color"}
+            value={style.background || ""}
+            defaultColor="#f9fafb"
+            onChange={(value) => updateStyle("background", value)}
           />
-          <span className="text-xs">{t("scorm.panels.quiz.shadow") || "Shadow"}</span>
-        </div>
 
-        <div>
-          <p className="text-[11px] mt-1 mb-1">
-            {t("scorm.panels.quiz.alignContainer") || "Content alignment"}
-          </p>
-          <div className="flex gap-2">
-            {["left", "center", "right"].map((a) => (
-              <button
-                key={a}
-                type="button"
-                className={
-                  "px-3 py-1 rounded border text-xs capitalize " +
-                  (style.align === a ? "bg-sky-600 text-white" : "bg-white")
-                }
-                onClick={() => updateStyle("align", a)}
-              >
-                {alignLabels[a] ?? a}
-              </button>
-            ))}
+          <ColorInput
+            label={t("scorm.panels.quiz.color") || "Text color"}
+            value={style.color || ""}
+            defaultColor="#0f172a"
+            onChange={(value) => updateStyle("color", value)}
+          />
+
+          <div>
+            <PanelLabel>
+              {"Content alignment"}
+            </PanelLabel>
+            <div className="grid grid-cols-3 gap-2">
+              {["left", "center", "right"].map((alignment) => (
+                <SegmentedOption
+                  key={alignment}
+                  active={(style.align || "left") === alignment}
+                  onClick={() => updateStyle("align", alignment)}
+                >
+                  {alignLabels[alignment] ?? alignment}
+                </SegmentedOption>
+              ))}
+            </div>
           </div>
+
+          <ToggleCard
+            checked={style.shadow === true}
+            label={t("scorm.panels.quiz.shadow") || "Shadow"}
+            onChange={(checked) => updateStyle("shadow", checked)}
+          />
         </div>
-      </div>
+      </PanelSection>
 
-      {/* OPTION APPEARANCE */}
-      <div className="space-y-2">
-        <p className="text-xs font-semibold">
-          {t("scorm.panels.quiz.optionStyle") || "Options text style"}
-        </p>
-
-        <div className="flex items-center gap-2">
-          {/* Bold */}
-          <button
-            type="button"
-            className={
-              "px-2 py-1 rounded border text-xs " +
-              (optionStyle.bold ? "bg-sky-600 text-white" : "bg-white")
-            }
-            onClick={() => updateOptionStyle("bold", !optionStyle.bold)}
-          >
-            B
-          </button>
-
-          {/* Italic */}
-          <button
-            type="button"
-            className={
-              "px-2 py-1 rounded border text-xs italic " +
-              (optionStyle.italic ? "bg-sky-600 text-white" : "bg-white")
-            }
-            onClick={() => updateOptionStyle("italic", !optionStyle.italic)}
-          >
-            I
-          </button>
-
-          {/* Underline */}
-          <button
-            type="button"
-            className={
-              "px-2 py-1 rounded border text-xs underline " +
-              (optionStyle.underline ? "bg-sky-600 text-white" : "bg-white")
-            }
-            onClick={() => updateOptionStyle("underline", !optionStyle.underline)}
-          >
-            U
-          </button>
-
-          {/* Size */}
-          <select
-            className="border rounded px-2 py-1 text-xs"
-            value={optionStyle.size || "14px"}
-            onChange={(e) => updateOptionStyle("size", e.target.value)}
-          >
-            <option value="12px">12</option>
-            <option value="14px">14</option>
-            <option value="16px">16</option>
-            <option value="18px">18</option>
-          </select>
-        </div>
-
-        {/* Align */}
-        <div>
-          <p className="text-[11px] mt-1 mb-1">
-            {t("scorm.panels.quiz.align") || "Alignment"}
-          </p>
-          <div className="flex gap-2">
-            {["left", "center", "right"].map((a) => (
-              <button
-                key={a}
-                type="button"
-                className={
-                  "px-3 py-1 rounded border text-xs capitalize " +
-                  (optionStyle.align === a ? "bg-sky-600 text-white" : "bg-white")
-                }
-                onClick={() => updateOptionStyle("align", a)}
+      <PanelSection title={t("scorm.panels.quiz.optionStyle") || "Options text style"}>
+        <div className="space-y-3">
+          <div>
+            <PanelLabel>{t("scorm.panels.text.typography") || "Typography"}</PanelLabel>
+            <div className="flex flex-wrap items-center gap-2">
+              <SegmentedOption
+                active={!!optionStyle.bold}
+                onClick={() => updateOptionStyle("bold", !optionStyle.bold)}
               >
-                {alignLabels[a] ?? a}
-              </button>
-            ))}
+                <span className="font-bold">B</span>
+              </SegmentedOption>
+              <SegmentedOption
+                active={!!optionStyle.italic}
+                onClick={() => updateOptionStyle("italic", !optionStyle.italic)}
+              >
+                <span className="italic">I</span>
+              </SegmentedOption>
+              <SegmentedOption
+                active={!!optionStyle.underline}
+                onClick={() => updateOptionStyle("underline", !optionStyle.underline)}
+              >
+                <span className="underline">U</span>
+              </SegmentedOption>
+              <select
+                className={`${panelFieldClassName} w-24 min-w-[96px]`}
+                value={optionStyle.size || "14px"}
+                onChange={(e) => updateOptionStyle("size", e.target.value)}
+              >
+                <option value="12px">12</option>
+                <option value="14px">14</option>
+                <option value="16px">16</option>
+                <option value="18px">18</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        {/* Color */}
-        <ColorInput
-          label={t("scorm.panels.quiz.color") || "Text color"}
-          value={optionStyle.color || ""}
-          defaultColor="#111827"
-          onChange={(value) => updateOptionStyle("color", value)}
-        />
-      </div>
+          <div>
+            <PanelLabel>{t("scorm.panels.quiz.align") || "Alignment"}</PanelLabel>
+            <div className="grid grid-cols-3 gap-2">
+              {["left", "center", "right"].map((alignment) => (
+                <SegmentedOption
+                  key={alignment}
+                  active={(optionStyle.align || "left") === alignment}
+                  onClick={() => updateOptionStyle("align", alignment)}
+                >
+                  {alignLabels[alignment] ?? alignment}
+                </SegmentedOption>
+              ))}
+            </div>
+          </div>
+
+          <ColorInput
+            label={t("scorm.panels.quiz.color") || "Text color"}
+            value={optionStyle.color || ""}
+            defaultColor="#111827"
+            onChange={(value) => updateOptionStyle("color", value)}
+          />
+        </div>
+      </PanelSection>
 
       <AnimationControls style={style} onChange={updateStyle} />
     </div>

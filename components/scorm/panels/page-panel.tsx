@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { EditorProject, EditorPage } from "@/lib/scorm/types"
+import { EditorProject } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
 import { Button } from "@/components/ui/button"
 import { Plus, ArrowUp, ArrowDown, Trash2 } from "lucide-react"
@@ -12,12 +12,19 @@ interface PagePanelProps {
   onAddPage: () => void
 }
 
-export default function PagePanel({ project, onChange, onAddPage }: PagePanelProps) {
+const inputClassName =
+  "h-10 w-full rounded-xl border border-slate-200 bg-slate-50/90 px-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+
+export default function PagePanel({
+  project,
+  onChange,
+  onAddPage,
+}: PagePanelProps) {
   const { t } = useLocale()
 
   const handlePageTitleChange = (pageId: string, newTitle: string) => {
     const updatedPages = project.pages.map((p) =>
-      p.id === pageId ? { ...p, title: newTitle } : p
+      p.id === pageId ? { ...p, title: newTitle } : p,
     )
     onChange({ ...project, pages: updatedPages })
   }
@@ -38,69 +45,108 @@ export default function PagePanel({ project, onChange, onAddPage }: PagePanelPro
 
   const handleDeletePage = (pageId: string) => {
     if (project.pages.length <= 1) {
-      alert(t("scorm.projectPanel.deleteLastPageError") || "You cannot delete the last page.")
+      alert(
+        t("scorm.projectPanel.deleteLastPageError") ||
+          "You cannot delete the last page.",
+      )
       return
     }
-    if (window.confirm(t("scorm.projectPanel.deleteConfirm") || "Are you sure you want to delete this page?")) {
+
+    if (
+      window.confirm(
+        t("scorm.projectPanel.deleteConfirm") ||
+          "Are you sure you want to delete this page?",
+      )
+    ) {
       const updatedPages = project.pages.filter((p) => p.id !== pageId)
       onChange({ ...project, pages: updatedPages })
     }
   }
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="px-4 pt-4 pb-3">
-        <div className="flex items-center justify-between gap-2">
+    <div className="flex h-full flex-col">
+      <div className="px-4 pb-3 pt-4">
+        <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
-            <h3 className="text-sm font-semibold leading-none">
-              {t('scorm.projectPanel.pageOrganization') || 'Page Organization'}
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+              Lesson Flow
+            </p>
+            <h3 className="text-base font-semibold text-slate-900">
+              {t("scorm.projectPanel.pageOrganization") || "Page Organization"}
             </h3>
-            <p className="text-[11px] text-muted-foreground">
-              {t('scorm.pagePanel.subtitle') || 'Manage your course pages.'}
+            <p className="text-[11px] leading-5 text-slate-500">
+              {t("scorm.pagePanel.subtitle") || "Manage your course pages."}
             </p>
           </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={onAddPage}
+            className="rounded-full border-sky-200 bg-sky-50 px-3 text-sky-700 hover:bg-sky-100 hover:text-sky-800"
+          >
+            <Plus className="mr-1.5 h-3.5 w-3.5" />
+            {t("scorm.projectPanel.addPage") || "Add Page"}
+          </Button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-3 text-xs space-y-4">
-        {/* Page Organization */}
-        <div className="space-y-2">
-            <div className="flex items-center justify-between">
-                 <h4 className="font-semibold text-slate-700 text-xs">
-                    {t('scorm.projectPanel.pageOrganization') || 'Page Organization'}
-                </h4>
-                <Button size="sm" variant="outline" onClick={onAddPage} className="h-6 px-2 text-xs">
-                    <Plus className="h-3 w-3 mr-1" />
-                    {t('scorm.projectPanel.addPage') || 'Add Page'}
+      <div className="flex-1 space-y-3 overflow-y-auto px-4 pb-5">
+        {project.pages.map((page, index) => (
+          <div
+            key={page.id}
+            className="rounded-[24px] border border-slate-200 bg-white/95 p-3 shadow-[0_14px_32px_rgba(15,23,42,0.06)]"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-semibold text-slate-600">
+                {index + 1}
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                  {t("scorm.tools.newPage", { number: index + 1 })}
+                </label>
+                <input
+                  type="text"
+                  className={inputClassName}
+                  value={page.title}
+                  onChange={(e) =>
+                    handlePageTitleChange(page.id, e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="flex shrink-0 items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                  onClick={() => handleMovePage(page.id, "up")}
+                  disabled={index === 0}
+                >
+                  <ArrowUp className="h-4 w-4" />
                 </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+                  onClick={() => handleMovePage(page.id, "down")}
+                  disabled={index === project.pages.length - 1}
+                >
+                  <ArrowDown className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-xl text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                  onClick={() => handleDeletePage(page.id)}
+                  disabled={project.pages.length <= 1}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <div className="space-y-2">
-                {project.pages.map((page, index) => (
-                    <div key={page.id} className="flex items-center gap-2 p-2 rounded-md bg-slate-50 border border-slate-100">
-                        <div className="flex-1">
-                             <input
-                                type="text"
-                                className="w-full border-transparent bg-transparent rounded px-1 py-0.5 text-xs focus:bg-white focus:border-slate-300"
-                                value={page.title}
-                                onChange={(e) => handlePageTitleChange(page.id, e.target.value)}
-                                />
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleMovePage(page.id, 'up')} disabled={index === 0}>
-                                <ArrowUp className="h-3 w-3" />
-                            </Button>
-                             <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => handleMovePage(page.id, 'down')} disabled={index === project.pages.length - 1}>
-                                <ArrowDown className="h-3 w-3" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="h-6 w-6 text-red-500 hover:text-red-600" onClick={() => handleDeletePage(page.id)} disabled={project.pages.length <= 1}>
-                                <Trash2 className="h-3 w-3" />
-                            </Button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )

@@ -12,6 +12,49 @@ interface ProjectPanelProps {
   onExport?: (format: ExportFormat | SCORMVersion) => void
 }
 
+const fieldClassName =
+  "h-11 w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+
+const textAreaClassName =
+  "w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+
+const sectionClassName =
+  "rounded-[24px] border border-slate-200 bg-white/95 p-4 shadow-[0_14px_32px_rgba(15,23,42,0.06)]"
+
+function Section({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string
+  subtitle?: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className={sectionClassName}>
+      <div className="mb-4 space-y-1">
+        <h4 className="text-sm font-semibold text-slate-900">{title}</h4>
+        {subtitle ? (
+          <p className="text-[11px] leading-5 text-slate-500">{subtitle}</p>
+        ) : null}
+      </div>
+      {children}
+    </section>
+  )
+}
+
+function FieldLabel({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+      {children}
+    </label>
+  )
+}
+
 export default function ProjectPanel({
   project,
   onChange,
@@ -26,445 +69,295 @@ export default function ProjectPanel({
     })
   }
 
+  const updateTracking = (
+    partial: Partial<EditorProject["tracking"]>,
+  ) => {
+    updateProject({
+      tracking: {
+        ...project.tracking,
+        ...partial,
+      },
+    })
+  }
+
+  const updateXapi = (partial: Partial<EditorProject["xapi"]>) => {
+    updateProject({
+      xapi: {
+        ...project.xapi,
+        ...partial,
+      },
+    })
+  }
+
   const exportDisabled = !onExport
 
+  const trackingLevels = [
+    { value: "minimal", label: t("scorm.projectPanel.tracking.minimal") },
+    { value: "standard", label: t("scorm.projectPanel.tracking.standard") },
+    { value: "advanced", label: t("scorm.projectPanel.tracking.advanced") },
+  ] as const
+
+  const trackingToggles = [
+    { key: "pageViews", label: t("scorm.projectPanel.tracking.pageViews") },
+    {
+      key: "quizInteractions",
+      label: t("scorm.projectPanel.tracking.quizInteractions"),
+    },
+    { key: "media", label: t("scorm.projectPanel.tracking.media") },
+    { key: "hints", label: t("scorm.projectPanel.tracking.hints") },
+    {
+      key: "externalLinks",
+      label: t("scorm.projectPanel.tracking.externalLinks"),
+    },
+    {
+      key: "timePerPage",
+      label: t("scorm.projectPanel.tracking.timePerPage"),
+    },
+    { key: "attempts", label: t("scorm.projectPanel.tracking.attempts") },
+  ] as const
+
+  const exportOptions: Array<{
+    value: ExportFormat | SCORMVersion
+    label: string
+  }> = [
+    { value: "1.2", label: t("scorm.projectPanel.export.scorm12") },
+    { value: "2004", label: t("scorm.projectPanel.export.scorm2004") },
+    { value: "xapi", label: t("scorm.projectPanel.export.xapi") },
+    { value: "html5", label: t("scorm.projectPanel.export.html5") },
+    { value: "publicLink", label: t("scorm.projectPanel.export.publicLink") },
+    { value: "embedCode", label: t("scorm.projectPanel.export.embedCode") },
+    { value: "teacherPdf", label: t("scorm.projectPanel.export.teacherPdf") },
+    { value: "studentPdf", label: t("scorm.projectPanel.export.studentPdf") },
+    { value: "json", label: t("scorm.projectPanel.export.json") },
+    { value: "qti", label: t("scorm.projectPanel.export.qti") },
+  ]
+
   return (
-    <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="px-4 pt-4 pb-3">
-        <div className="flex items-center justify-between gap-2">
-          <div className="space-y-1">
-            <h3 className="text-sm font-semibold leading-none">
-              {t("scorm.projectPanel.title")}
-            </h3>
-            <p className="text-[11px] text-muted-foreground">
-              {t("scorm.projectPanel.subtitle")}
-            </p>
-          </div>
+    <div className="flex h-full flex-col">
+      <div className="px-4 pb-3 pt-4">
+        <div className="space-y-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+            Course Setup
+          </p>
+          <h3 className="text-base font-semibold text-slate-900">
+            {t("scorm.projectPanel.title")}
+          </h3>
+          <p className="text-[11px] leading-5 text-slate-500">
+            {t("scorm.projectPanel.subtitle")}
+          </p>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-3 text-xs space-y-4">
-        {/* General Settings */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.generalSettings")}
-          </h4>
-          <div>
-            <label className="block mb-1 text-xs font-medium">
-              {t("scorm.projectPanel.projectTitle")}
-            </label>
-            <input
-              type="text"
-              className="w-full border rounded px-2 py-1 text-xs"
-              value={project.title}
-              onChange={(e) => updateProject({ title: e.target.value })}
-            />
-          </div>
+      <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-5 text-xs">
+        <Section
+          title={t("scorm.projectPanel.generalSettings")}
+          subtitle="Core lesson identity, writing direction, and theme defaults."
+        >
+          <div className="space-y-4">
+            <div>
+              <FieldLabel>{t("scorm.projectPanel.projectTitle")}</FieldLabel>
+              <input
+                type="text"
+                className={fieldClassName}
+                value={project.title}
+                onChange={(e) => updateProject({ title: e.target.value })}
+              />
+            </div>
 
-          <div>
-            <label className="block mb-1 text-xs font-medium">
-              {t("scorm.props.project.direction.title")}
-            </label>
-            <select
-              className="w-full border rounded px-2 py-1 text-xs"
-              value={project.theme.direction}
-              onChange={(e) =>
+            <div>
+              <FieldLabel>{t("scorm.props.project.direction.title")}</FieldLabel>
+              <select
+                className={fieldClassName}
+                value={project.theme.direction}
+                onChange={(e) =>
+                  updateProject({
+                    theme: {
+                      ...project.theme,
+                      direction: e.target.value as "ltr" | "rtl",
+                    },
+                  })
+                }
+              >
+                <option value="ltr">
+                  {t("scorm.props.project.direction.ltr")}
+                </option>
+                <option value="rtl">
+                  {t("scorm.props.project.direction.rtl")}
+                </option>
+              </select>
+            </div>
+
+            <ColorInput
+              label={t("scorm.props.project.styles.textColor")}
+              value={project.theme.styles.color || ""}
+              defaultColor="#0f172a"
+              helperText="This becomes the default text color across newly generated lesson content."
+              onChange={(value) =>
                 updateProject({
                   theme: {
                     ...project.theme,
-                    direction: e.target.value as "ltr" | "rtl",
+                    styles: {
+                      ...project.theme.styles,
+                      color: value,
+                    },
                   },
                 })
               }
-            >
-              <option value="ltr">
-                {t("scorm.props.project.direction.ltr")}
-              </option>
-              <option value="rtl">
-                {t("scorm.props.project.direction.rtl")}
-              </option>
-            </select>
+            />
           </div>
-        </div>
+        </Section>
 
-        {/* Default Styles */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.props.project.styles.title")}
-          </h4>
-          <ColorInput
-            label={t("scorm.props.project.styles.textColor")}
-            value={project.theme.styles.color || ""}
-            defaultColor="#000000"
-            onChange={(value) =>
-              updateProject({
-                theme: {
-                  ...project.theme,
-                  styles: {
-                    ...project.theme.styles,
-                    color: value,
-                  },
-                },
-              })
-            }
-          />
-        </div>
+        <Section
+          title={t("scorm.projectPanel.generalTracking")}
+          subtitle="Choose the analytics depth and the exact learner events to record."
+        >
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {trackingLevels.map((option) => {
+                const active = project.tracking?.level === option.value
 
-        {/* General Tracking */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.generalTracking")}
-          </h4>
-          <div className="flex items-center gap-4">
-            <label className="flex items-center space-x-2 text-xs">
-              <input
-                type="radio"
-                name="trackingLevel"
-                value="minimal"
-                checked={project.tracking?.level === "minimal"}
-                onChange={() =>
-                  updateProject({
-                    tracking: { ...project.tracking, level: "minimal" },
-                  })
-                }
-                className="form-radio h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.minimal")}</span>
-            </label>
-            <label className="flex items-center space-x-2 text-xs">
-              <input
-                type="radio"
-                name="trackingLevel"
-                value="standard"
-                checked={project.tracking?.level === "standard"}
-                onChange={() =>
-                  updateProject({
-                    tracking: { ...project.tracking, level: "standard" },
-                  })
-                }
-                className="form-radio h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.standard")}</span>
-            </label>
-            <label className="flex items-center space-x-2 text-xs">
-              <input
-                type="radio"
-                name="trackingLevel"
-                value="advanced"
-                checked={project.tracking?.level === "advanced"}
-                onChange={() =>
-                  updateProject({
-                    tracking: { ...project.tracking, level: "advanced" },
-                  })
-                }
-                className="form-radio h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.advanced")}</span>
-            </label>
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => updateTracking({ level: option.value })}
+                    className={`rounded-2xl border px-3 py-3 text-left transition ${
+                      active
+                        ? "border-sky-200 bg-sky-50 shadow-[0_10px_24px_rgba(14,165,233,0.12)]"
+                        : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                    }`}
+                  >
+                    <div className="mb-1 flex items-center gap-2">
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full ${
+                          active ? "bg-sky-500" : "bg-slate-300"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm font-semibold ${
+                          active ? "text-sky-700" : "text-slate-800"
+                        }`}
+                      >
+                        {option.label}
+                      </span>
+                    </div>
+                    <p className="text-[11px] leading-5 text-slate-500">
+                      {option.value === "minimal"
+                        ? "Capture only essential progress signals."
+                        : option.value === "standard"
+                          ? "Balanced tracking for normal LMS usage."
+                          : "Record richer behavior and attempt detail."}
+                    </p>
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="space-y-2">
+              <FieldLabel>{t("scorm.projectPanel.advancedOptions")}</FieldLabel>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                {trackingToggles.map((item) => {
+                  const checked = Boolean(project.tracking?.[item.key])
+
+                  return (
+                    <label
+                      key={item.key}
+                      className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-3 py-3 transition ${
+                        checked
+                          ? "border-sky-200 bg-sky-50/70"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={(e) =>
+                          updateTracking({ [item.key]: e.target.checked })
+                        }
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+                      />
+                      <span className="text-xs font-medium leading-5 text-slate-700">
+                        {item.label}
+                      </span>
+                    </label>
+                  )
+                })}
+              </div>
+            </div>
           </div>
-        </div>
+        </Section>
 
-        {/* Advanced Options */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.advancedOptions")}
-          </h4>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.pageViews}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      pageViews: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.pageViews")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.quizInteractions}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      quizInteractions: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.quizInteractions")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.media}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      media: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.media")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.hints}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      hints: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.hints")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.externalLinks}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      externalLinks: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.externalLinks")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.timePerPage}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      timePerPage: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.timePerPage")}</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={project.tracking?.attempts}
-                onChange={(e) =>
-                  updateProject({
-                    tracking: {
-                      ...project.tracking,
-                      attempts: e.target.checked,
-                    },
-                  })
-                }
-                className="form-checkbox h-3 w-3 text-blue-600"
-              />
-              <span>{t("scorm.projectPanel.tracking.attempts")}</span>
-            </label>
-          </div>
-        </div>
-
-        {/* xAPI Only Options */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.xapiOptions")}
-          </h4>
-          <div className="space-y-2">
+        <Section
+          title={t("scorm.projectPanel.xapiOptions")}
+          subtitle="Optional LRS and statement settings for teams using xAPI or cmi5 flows."
+        >
+          <div className="space-y-4">
             <div>
-              <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.lrsEndpoint")}
-              </label>
+              <FieldLabel>{t("scorm.projectPanel.xapi.lrsEndpoint")}</FieldLabel>
               <input
                 type="text"
-                className="w-full border rounded px-2 py-1 text-xs"
+                className={fieldClassName}
                 value={project.xapi?.lrsEndpoint || ""}
-                onChange={(e) =>
-                  updateProject({
-                    xapi: {
-                      ...project.xapi,
-                      lrsEndpoint: e.target.value,
-                    },
-                  })
-                }
+                onChange={(e) => updateXapi({ lrsEndpoint: e.target.value })}
               />
             </div>
+
             <div>
-              <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.authToken")}
-              </label>
+              <FieldLabel>{t("scorm.projectPanel.xapi.authToken")}</FieldLabel>
               <input
-                type="text"
-                className="w-full border rounded px-2 py-1 text-xs"
+                type="password"
+                className={fieldClassName}
                 value={project.xapi?.authToken || ""}
-                onChange={(e) =>
-                  updateProject({
-                    xapi: {
-                      ...project.xapi,
-                      authToken: e.target.value,
-                    },
-                  })
-                }
+                onChange={(e) => updateXapi({ authToken: e.target.value })}
               />
             </div>
+
             <div>
-              <label className="block mb-1 text-xs font-medium">
-                {t("scorm.projectPanel.xapi.activityIdFormat")}
-              </label>
+              <FieldLabel>{t("scorm.projectPanel.xapi.activityIdFormat")}</FieldLabel>
               <input
                 type="text"
-                className="w-full border rounded px-2 py-1 text-xs"
+                className={fieldClassName}
                 value={project.xapi?.activityIdFormat || ""}
                 onChange={(e) =>
-                  updateProject({
-                    xapi: {
-                      ...project.xapi,
-                      activityIdFormat: e.target.value,
-                    },
-                  })
+                  updateXapi({ activityIdFormat: e.target.value })
                 }
               />
             </div>
+
             <div>
-              <label className="block mb-1 text-xs font-medium">
+              <FieldLabel>
                 {t("scorm.projectPanel.xapi.statementExtensions")}
-              </label>
+              </FieldLabel>
               <textarea
-                className="w-full border rounded px-2 py-1 text-xs"
-                rows={3}
+                className={`${textAreaClassName} min-h-[112px] font-mono text-xs`}
                 value={project.xapi?.statementExtensions || ""}
                 onChange={(e) =>
-                  updateProject({
-                    xapi: {
-                      ...project.xapi,
-                      statementExtensions: e.target.value,
-                    },
-                  })
+                  updateXapi({ statementExtensions: e.target.value })
                 }
               />
             </div>
           </div>
-        </div>
+        </Section>
 
-        {/* Export Panel */}
-        <div className="space-y-2">
-          <h4 className="font-semibold text-slate-700 text-xs mt-2">
-            {t("scorm.projectPanel.exportPanel")}
-          </h4>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("1.2")}
-            >
-              {t("scorm.projectPanel.export.scorm12")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("2004")}
-            >
-              {t("scorm.projectPanel.export.scorm2004")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("xapi")}
-            >
-              {t("scorm.projectPanel.export.xapi")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("html5")}
-            >
-              {t("scorm.projectPanel.export.html5")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("publicLink")}
-            >
-              {t("scorm.projectPanel.export.publicLink")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("embedCode")}
-            >
-              {t("scorm.projectPanel.export.embedCode")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("teacherPdf")}
-            >
-              {t("scorm.projectPanel.export.teacherPdf")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("studentPdf")}
-            >
-              {t("scorm.projectPanel.export.studentPdf")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("json")}
-            >
-              {t("scorm.projectPanel.export.json")}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7"
-              disabled={exportDisabled}
-              onClick={() => onExport?.("qti")}
-            >
-              {t("scorm.projectPanel.export.qti")}
-            </Button>
+        <Section
+          title={t("scorm.projectPanel.exportPanel")}
+          subtitle="Fast access to every package format without leaving the inspector."
+        >
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {exportOptions.map((option) => (
+              <Button
+                key={option.value}
+                variant="outline"
+                size="sm"
+                className="h-auto min-h-[46px] rounded-2xl border-slate-200 bg-white px-4 py-3 text-left text-xs font-semibold text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+                disabled={exportDisabled}
+                onClick={() => onExport?.(option.value)}
+              >
+                {option.label}
+              </Button>
+            ))}
           </div>
-        </div>
+        </Section>
       </div>
     </div>
   )
