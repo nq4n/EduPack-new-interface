@@ -1,6 +1,6 @@
 import { extractJSON } from "./utils-json"
 import { nanoid } from "./nanoid"
-import { openrouter } from "./openrouter"
+import { openai } from "./openai"
 import { AiSelectionContext } from "../scorm/ai-types"
 
 export interface UnifiedInput {
@@ -28,7 +28,7 @@ export async function unifiedAI({ project, messages, selection }: UnifiedInput) 
     ...cleanMessages,
   ]
 
-  const raw = await openrouter.chat(llmMessages, { model: "MAIN" })
+  const raw = await openai.chat(llmMessages, { maxTokens: 4096 })
   const json = extractJSON(raw)
 
   return normalizeOutput(json, selectionSnapshot, project)
@@ -137,9 +137,9 @@ User message:
 ${userText}
 `
 
-  const raw = await openrouter.chat(
+  const raw = await openai.chat(
     [{ role: "system", content: routerPrompt }],
-    { model: "ROUTER" }
+    { maxTokens: 32 },
   )
 
   const mode = raw.trim().toLowerCase()

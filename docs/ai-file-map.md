@@ -20,7 +20,7 @@ This document lists the files that participate in the SCORM AI experience and ho
 - `lib/ai/utils/normalize.ts`: Converts agent output into normalized lesson structures (referenced by the pipeline).
 
 ## Agent implementations
-- `lib/ai/agents/unified.ts`: Single-step OpenRouter agent that analyzes chat history, drafts lesson structure, and enriches content in one response.
+- `lib/ai/unified.ts`: Single-step OpenAI-backed agent that analyzes chat history, drafts lesson structure, and enriches content in one response.
 
 ## SCORM block typing
 - `lib/scorm/types.ts`: Editor block definitions that include AI-generated text blocks (noting HTML sanitized from the editor or AI).

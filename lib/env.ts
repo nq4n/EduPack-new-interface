@@ -1,6 +1,6 @@
 // lib/env.ts
 
-export const DEFAULT_OPENROUTER_MODEL = "google/gemma-4-31b-it:free"
+export const DEFAULT_OPENAI_MODEL = "gpt-5-mini"
 
 const missingEnvMessage = (key: string) =>
   `${key} is not set. Add it to your environment (see .env.example) so the app can reach Supabase and AI providers.`
@@ -20,21 +20,9 @@ export function getSupabaseConfig() {
   return { supabaseUrl, supabaseAnonKey }
 }
 
-export function getOpenRouterConfig() {
-  const apiKey = process.env.OPENROUTER_API_KEY
-  if (!apiKey) {
-    throw new Error(missingEnvMessage("OPENROUTER_API_KEY"))
-  }
-
-  return {
-    apiKey,
-    model: process.env.OPENROUTER_MODEL || DEFAULT_OPENROUTER_MODEL,
-  }
-}
-
 export function getOpenAiConfig() {
   return {
     apiKey: process.env.OPENAI_API_KEY,
-    model: process.env.OPENAI_MODEL || "gpt-5 Mini",
+    model: process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL,
   }
 }

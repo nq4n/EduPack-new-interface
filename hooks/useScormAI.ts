@@ -243,7 +243,7 @@ export function useScormAI({
         // 1) Build payload for AI
         let rawMessages = [...messages, userMsg]
 
-        // Remove assistant messages at the top (OpenRouter/Nova rule)
+        // Keep the provider request valid by starting with the latest user context.
         while (rawMessages.length > 0 && rawMessages[0].role === "assistant") {
           rawMessages.shift()
         }
