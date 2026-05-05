@@ -29,6 +29,24 @@ function getAiErrorMessage(err: unknown) {
 function normalizeProject(project: EditorProject): EditorProject {
   if (!project) return project
 
+  const defaultTracking = {
+    level: "standard" as const,
+    pageViews: true,
+    quizInteractions: true,
+    media: true,
+    hints: false,
+    externalLinks: false,
+    timePerPage: true,
+    attempts: true,
+  }
+
+  const defaultXapi = {
+    lrsEndpoint: "",
+    authToken: "",
+    activityIdFormat: "iri",
+    statementExtensions: "{}",
+  }
+
   return {
     id: project.id || `proj-${Date.now()}`,
     title: project.title || "Untitled Lesson",
@@ -36,36 +54,25 @@ function normalizeProject(project: EditorProject): EditorProject {
 
     // 🔥 FIX #1 — Always include theme
     theme: {
-      ...(project.theme || {}),
-      direction: "ltr",
-      styles: {},
+      direction: project.theme?.direction || "ltr",
+      styles: project.theme?.styles || {},
     },
 
     // 🔥 FIX #2 — Always include tracking
     tracking: {
+      ...defaultTracking,
       ...(project.tracking || {}),
-      level: "standard",
-      pageViews: true,
-      quizInteractions: true,
-      media: true,
-      hints: false,
-      externalLinks: false,
-      timePerPage: true,
-      attempts: true,
     },
 
     // 🔥 FIX #3 — Always include xapi
     xapi: {
+      ...defaultXapi,
       ...(project.xapi || {}),
-      lrsEndpoint: "",
-      authToken: "",
-      activityIdFormat: "iri",
-      statementExtensions: "{}",
     },
 
     // Pages + Blocks normalization
     pages: (project.pages || []).map((page) => ({
-      id: page.id,
+      id: page.id || `page-${Date.now()}`,
       title: page.title || "Untitled Page",
 
       // 🔥 FIX #4 — Always include blocks array
@@ -73,10 +80,7 @@ function normalizeProject(project: EditorProject): EditorProject {
         ...block,
 
         // 🔥 FIX #5 — Always include style
-        style: {
-          ...(block.style || {}),
-          direction: "ltr",
-        }
+        style: block.style || {},
       }))
     }))
   }
@@ -88,7 +92,18 @@ function normalizeProject(project: EditorProject): EditorProject {
 // APPLY PATCH
 // --------------------------------------------------------
 function applyPatch(project: EditorProject, patch: any): EditorProject {
-  const { pageId, blockId } = patch.target
+  const { pageId, blockId } = patch?.target || {}
+
+  if (!pageId || !blockId) {
+    throw new Error("AI patch did not include a valid pageId and blockId.")
+  }
+
+  const targetPage = project.pages.find((page) => page.id === pageId)
+  const targetBlock = targetPage?.blocks.find((block) => block.id === blockId)
+
+  if (!targetPage || !targetBlock) {
+    throw new Error("AI patch targeted a block that does not exist in this lesson.")
+  }
 
   return normalizeProject({
     ...project,
@@ -113,6 +128,14 @@ function applyPatch(project: EditorProject, patch: any): EditorProject {
 function applyAppendBlock(project: EditorProject, payload: any): EditorProject {
   const { pageId, block } = payload
 
+  if (!pageId || !project.pages.some((page) => page.id === pageId)) {
+    throw new Error("AI appendBlock targeted a page that does not exist in this lesson.")
+  }
+
+  if (!block?.id || !block?.type) {
+    throw new Error("AI appendBlock did not include a valid block.")
+  }
+
   return normalizeProject({
     ...project,
     pages: project.pages.map((page) =>
@@ -136,6 +159,10 @@ function applyAppendPage(project: EditorProject, payload: any): EditorProject {
 function applyReplacePage(project: EditorProject, payload: any): EditorProject {
   const nextPage = payload.page || payload
   const pageExists = project.pages.some((page) => page.id === payload.pageId)
+
+  if (!payload.pageId || !nextPage?.id) {
+    throw new Error("AI replacePage did not include a valid page.")
+  }
 
   return normalizeProject({
     ...project,
@@ -255,6 +282,7 @@ export function useScormAI({
         let updatedProject = project
         let highlight: string[] = []
         let nextActivePageId = project.pages[0]?.id || null
+        let nextSelectedBlockId: string | null = null
 
         // BUILD MODE
         if (json.project) {
@@ -273,6 +301,7 @@ export function useScormAI({
           updatedProject = applyPatch(project, json.patch)
           highlight = [json.patch.target.blockId]
           nextActivePageId = json.patch.target.pageId
+          nextSelectedBlockId = json.patch.target.blockId
         }
 
         // EXTEND - BLOCK
@@ -280,6 +309,7 @@ export function useScormAI({
           updatedProject = applyAppendBlock(project, json.appendBlock)
           highlight = [json.appendBlock.block.id]
           nextActivePageId = json.appendBlock.pageId
+          nextSelectedBlockId = json.appendBlock.block.id
         }
 
         // EXTEND - PAGE
@@ -311,9 +341,8 @@ export function useScormAI({
         }
 
         // Update project state
-        console.log("🔥 DEBUG PROJECT BEFORE SET:", JSON.stringify(updatedProject, null, 2))
         setProject(updatedProject)
-        setSelectedBlockId(null)
+        setSelectedBlockId(nextSelectedBlockId)
 
         // Set page
         if (nextActivePageId) setActivePageId(nextActivePageId)

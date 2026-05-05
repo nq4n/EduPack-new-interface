@@ -3,6 +3,7 @@
 import React from "react"
 import { TextBlock } from "@/lib/scorm/types"
 import { useLocale } from "@/hooks/use-locale"
+import { Switch } from "@/components/ui/switch"
 import ColorInput from "@/components/scorm/panels/color-input"
 import AnimationControls from "@/components/scorm/panels/animation-controls"
 import {
@@ -28,9 +29,51 @@ function readNumber(value: unknown, fallback: number) {
   return Number.isNaN(numeric) ? fallback : numeric
 }
 
+function decodeHtmlEntities(value: string) {
+  if (typeof document === "undefined") {
+    return value
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+  }
+
+  const textarea = document.createElement("textarea")
+  textarea.innerHTML = value
+  return textarea.value
+}
+
+function htmlToPlainText(html: string) {
+  return decodeHtmlEntities(
+    html
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/(p|div|h[1-6]|li)>/gi, "\n")
+      .replace(/<[^>]*>/g, "")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim(),
+  )
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+}
+
+function plainTextToHtml(text: string) {
+  return escapeHtml(text).replace(/\r?\n/g, "<br />")
+}
+
 export default function TextPanel({ block, onChange }: Props) {
   const style = block.style || {}
   const { t } = useLocale()
+  const [showHtmlTags, setShowHtmlTags] = React.useState(false)
+  const contentValue = showHtmlTags ? block.html : htmlToPlainText(block.html || "")
 
   const alignLabels: Record<string, string> = {
     left: t("scorm.panels.common.align.left") || "Left",
@@ -52,14 +95,25 @@ export default function TextPanel({ block, onChange }: Props) {
   return (
     <div className="space-y-4 pb-2 text-sm">
       <PanelSection title={t("scorm.panels.text.title") || "Text Settings"}>
-        <PanelLabel>{t("scorm.panels.text.content") || "Content"}</PanelLabel>
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <PanelLabel>{t("scorm.panels.text.content") || "Content"}</PanelLabel>
+          <label className="flex items-center gap-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <span>HTML</span>
+            <Switch checked={showHtmlTags} onCheckedChange={setShowHtmlTags} />
+          </label>
+        </div>
         <textarea
           className={`${panelTextAreaClassName} min-h-[160px] resize-y`}
-          value={block.html}
+          dir={showHtmlTags ? "ltr" : "auto"}
+          style={{
+            direction: showHtmlTags ? "ltr" : undefined,
+            textAlign: showHtmlTags ? "left" : undefined,
+          }}
+          value={contentValue}
           onChange={(e) =>
             onChange({
               ...block,
-              html: e.target.value,
+              html: showHtmlTags ? e.target.value : plainTextToHtml(e.target.value),
             })
           }
         />

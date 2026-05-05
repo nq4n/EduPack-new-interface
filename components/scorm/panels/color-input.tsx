@@ -32,29 +32,29 @@ export function ColorInput({
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-xs font-medium text-slate-700">
+        <label className="block text-xs font-medium text-slate-700 dark:text-slate-200">
           {label}
         </label>
       )}
-      <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-sm">
+      <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:shadow-none">
         <div className="relative">
           <div
             className={`absolute inset-0 rounded-xl ${
               isTransparent
-                ? "bg-[linear-gradient(45deg,#e2e8f0_25%,transparent_25%,transparent_50%,#e2e8f0_50%,#e2e8f0_75%,transparent_75%,transparent)] bg-[length:10px_10px]"
+                ? "bg-[linear-gradient(45deg,#e2e8f0_25%,transparent_25%,transparent_50%,#e2e8f0_50%,#e2e8f0_75%,transparent_75%,transparent)] bg-[length:10px_10px] dark:bg-[linear-gradient(45deg,#475569_25%,transparent_25%,transparent_50%,#475569_50%,#475569_75%,transparent_75%,transparent)]"
                 : ""
             }`}
           />
           <input
             type="color"
-            className="relative h-10 w-12 cursor-pointer rounded-xl border border-slate-200 bg-white p-1 shadow-sm"
+            className="relative h-10 w-12 cursor-pointer rounded-xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-950"
             value={colorPickerValue}
             onChange={(e) => onChange(e.target.value)}
           />
         </div>
         <input
           type="text"
-          className="h-10 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+          className="h-10 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-sky-500 dark:focus:bg-slate-950 dark:focus:ring-sky-500/20"
           value={normalized}
           placeholder={defaultColor}
           onChange={(e) => onChange(e.target.value)}
@@ -66,7 +66,7 @@ export function ColorInput({
           className={`h-10 rounded-xl border-slate-200 px-4 whitespace-nowrap ${
             isTransparent
               ? "bg-slate-900 text-white hover:bg-slate-800 hover:text-white"
-              : "bg-white text-slate-600 hover:bg-slate-100"
+              : "bg-white text-slate-600 hover:bg-slate-100 dark:bg-slate-950 dark:text-slate-200 dark:hover:bg-slate-800"
           }`}
           onClick={() => onChange("transparent")}
         >
@@ -74,7 +74,7 @@ export function ColorInput({
         </Button>
       </div>
       {helperText ? (
-        <p className="text-[11px] leading-5 text-slate-500">{helperText}</p>
+        <p className="text-[11px] leading-5 text-slate-500 dark:text-slate-400">{helperText}</p>
       ) : null}
     </div>
   )

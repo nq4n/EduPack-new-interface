@@ -13,13 +13,13 @@ interface ProjectPanelProps {
 }
 
 const fieldClassName =
-  "h-11 w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+  "h-11 w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-sky-500 dark:focus:bg-slate-950 dark:focus:ring-sky-500/20"
 
 const textAreaClassName =
-  "w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100"
+  "w-full rounded-2xl border border-slate-200 bg-slate-50/90 px-3 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition focus:border-sky-300 focus:bg-white focus:ring-2 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-sky-500 dark:focus:bg-slate-950 dark:focus:ring-sky-500/20"
 
 const sectionClassName =
-  "rounded-[24px] border border-slate-200 bg-white/95 p-4 shadow-[0_14px_32px_rgba(15,23,42,0.06)]"
+  "rounded-[24px] border border-slate-200 bg-white/95 p-4 shadow-[0_14px_32px_rgba(15,23,42,0.06)] dark:border-slate-700 dark:bg-slate-900/95 dark:shadow-none"
 
 function Section({
   title,
@@ -33,9 +33,9 @@ function Section({
   return (
     <section className={sectionClassName}>
       <div className="mb-4 space-y-1">
-        <h4 className="text-sm font-semibold text-slate-900">{title}</h4>
+        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{title}</h4>
         {subtitle ? (
-          <p className="text-[11px] leading-5 text-slate-500">{subtitle}</p>
+          <p className="text-[11px] leading-5 text-slate-500 dark:text-slate-400">{subtitle}</p>
         ) : null}
       </div>
       {children}
@@ -49,7 +49,7 @@ function FieldLabel({
   children: React.ReactNode
 }) {
   return (
-    <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+    <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
       {children}
     </label>
   )
@@ -133,22 +133,22 @@ export default function ProjectPanel({
   ]
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="px-4 pb-3 pt-4">
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="shrink-0 px-4 pb-3 pt-4">
         <div className="space-y-1">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
             Course Setup
           </p>
-          <h3 className="text-base font-semibold text-slate-900">
+          <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">
             {t("scorm.projectPanel.title")}
           </h3>
-          <p className="text-[11px] leading-5 text-slate-500">
+          <p className="text-[11px] leading-5 text-slate-500 dark:text-slate-400">
             {t("scorm.projectPanel.subtitle")}
           </p>
         </div>
       </div>
 
-      <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-5 text-xs">
+      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-12 text-xs">
         <Section
           title={t("scorm.projectPanel.generalSettings")}
           subtitle="Core lesson identity, writing direction, and theme defaults."
@@ -223,25 +223,25 @@ export default function ProjectPanel({
                     onClick={() => updateTracking({ level: option.value })}
                     className={`rounded-2xl border px-3 py-3 text-left transition ${
                       active
-                        ? "border-sky-200 bg-sky-50 shadow-[0_10px_24px_rgba(14,165,233,0.12)]"
-                        : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                        ? "border-sky-200 bg-sky-50 shadow-[0_10px_24px_rgba(14,165,233,0.12)] dark:border-sky-500/40 dark:bg-sky-500/15 dark:shadow-none"
+                        : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:hover:border-slate-600 dark:hover:bg-slate-800"
                     }`}
                   >
                     <div className="mb-1 flex items-center gap-2">
                       <span
                         className={`h-2.5 w-2.5 rounded-full ${
-                          active ? "bg-sky-500" : "bg-slate-300"
+                          active ? "bg-sky-500" : "bg-slate-300 dark:bg-slate-600"
                         }`}
                       />
                       <span
                         className={`text-sm font-semibold ${
-                          active ? "text-sky-700" : "text-slate-800"
+                          active ? "text-sky-700 dark:text-sky-200" : "text-slate-800 dark:text-slate-100"
                         }`}
                       >
                         {option.label}
                       </span>
                     </div>
-                    <p className="text-[11px] leading-5 text-slate-500">
+                    <p className="text-[11px] leading-5 text-slate-500 dark:text-slate-400">
                       {option.value === "minimal"
                         ? "Capture only essential progress signals."
                         : option.value === "standard"
@@ -264,8 +264,8 @@ export default function ProjectPanel({
                       key={item.key}
                       className={`flex cursor-pointer items-start gap-3 rounded-2xl border px-3 py-3 transition ${
                         checked
-                          ? "border-sky-200 bg-sky-50/70"
-                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                          ? "border-sky-200 bg-sky-50/70 dark:border-sky-500/40 dark:bg-sky-500/15"
+                          : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:hover:border-slate-600 dark:hover:bg-slate-800"
                       }`}
                     >
                       <input
@@ -274,9 +274,9 @@ export default function ProjectPanel({
                         onChange={(e) =>
                           updateTracking({ [item.key]: e.target.checked })
                         }
-                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200 dark:border-slate-600 dark:bg-slate-950 dark:focus:ring-sky-500/30"
                       />
-                      <span className="text-xs font-medium leading-5 text-slate-700">
+                      <span className="text-xs font-medium leading-5 text-slate-700 dark:text-slate-200">
                         {item.label}
                       </span>
                     </label>
@@ -349,7 +349,7 @@ export default function ProjectPanel({
                 key={option.value}
                 variant="outline"
                 size="sm"
-                className="h-auto min-h-[46px] rounded-2xl border-slate-200 bg-white px-4 py-3 text-left text-xs font-semibold text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+                className="h-auto min-h-[46px] rounded-2xl border-slate-200 bg-white px-4 py-3 text-left text-xs font-semibold text-slate-700 hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:border-sky-500/50 dark:hover:bg-sky-500/15 dark:hover:text-sky-200"
                 disabled={exportDisabled}
                 onClick={() => onExport?.(option.value)}
               >

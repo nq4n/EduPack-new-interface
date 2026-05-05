@@ -411,18 +411,18 @@ useEffect(() => {
       <div
         className={
           variant === "panel"
-            ? "rounded-2xl border border-slate-200 bg-slate-50 p-3"
-            : "rounded-xl border border-slate-200 bg-white/90 p-3 shadow-sm"
+            ? "rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900"
+            : "rounded-xl border border-slate-200 bg-white/90 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:shadow-none"
         }
       >
-        <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-slate-600">
+        <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
           <span>{t("scorm.ai.progress.title")}</span>
           {isGenerating && (
             <Loader2 className="h-4 w-4 animate-spin text-sky-600" />
           )}
         </div>
         {progressMessage && (
-          <p className="mt-2 text-[11px] text-slate-600">{progressMessage}</p>
+          <p className="mt-2 text-[11px] text-slate-600 dark:text-slate-300">{progressMessage}</p>
         )}
       </div>
     )
@@ -1333,12 +1333,12 @@ ${
     }
 
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] bg-slate-50">
-        <div className="text-center w-full max-w-2xl bg-white/80 border border-slate-200 rounded-3xl shadow-sm px-4 sm:px-8 py-10">
-          <h1 className="text-3xl font-semibold tracking-tight mb-2">
+      <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center bg-slate-50 dark:bg-slate-950">
+        <div className="w-full max-w-2xl rounded-3xl border border-slate-200 bg-white/80 px-4 py-10 text-center shadow-sm dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-none sm:px-8">
+          <h1 className="mb-2 text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
             {t("scorm.choice.title")}
           </h1>
-          <p className="text-sm text-slate-500 mb-8">
+          <p className="mb-8 text-sm text-slate-500 dark:text-slate-400">
             {t("scorm.choice.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -1361,14 +1361,14 @@ ${
               size="lg"
               variant="outline"
               onClick={() => start("blank")}
-              className="h-auto py-4 rounded-2xl px-6 bg-white"
+              className="h-auto rounded-2xl bg-white px-6 py-4 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800"
             >
               <div className="flex flex-col items-center gap-1">
                 <FilePlus className="h-6 w-6 mb-1" />
                 <span className="font-semibold text-sm">
                   {t("scorm.choice.blankPage")}
                 </span>
-                <span className="font-normal text-xs text-slate-500">
+                <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
                   {t("scorm.choice.blankPageDesc")}
                 </span>
               </div>
@@ -1384,11 +1384,11 @@ ${
     return (
       <Portal>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 backdrop-blur-sm ">
-        <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center justify-center">
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">
+        <div className="flex w-full max-w-xl flex-col items-center justify-center rounded-2xl bg-white p-8 shadow-lg dark:border dark:border-slate-700 dark:bg-slate-900 dark:shadow-[0_24px_70px_rgba(0,0,0,0.45)]">
+          <h2 className="mb-4 text-2xl font-bold text-slate-800 dark:text-slate-100">
             {t("scorm.ai.initialModal.title")}
           </h2>
-          <p className="text-sm text-slate-500 mb-8">
+          <p className="mb-8 text-sm text-slate-500 dark:text-slate-400">
             {t("scorm.ai.initialModal.description")}
           </p>
           <div className="w-full">
@@ -1398,7 +1398,7 @@ ${
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 placeholder={t("scorm.ai.initialModal.placeholder")}
-                className="flex-1 h-12 rounded-full bg-white border-slate-300 text-base px-5"
+                className="h-12 flex-1 rounded-full border-slate-300 bg-white px-5 text-base dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:placeholder:text-slate-500"
                 disabled={isGenerating}
               />
               <Button
@@ -1454,12 +1454,12 @@ ${
           <Menu className="h-5 w-5" />
         </button>
 
-        <div className="min-h-screen bg-[#f7fafc] px-3 pb-24 pt-20 sm:px-5">
+        <div className="min-h-screen bg-[#f7fafc] px-3 pb-24 pt-20 text-slate-900 dark:bg-slate-950 dark:text-slate-100 sm:px-5">
           <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-4">
             {storagePath ? (
               <div>
                 {loadingExternalProject ? (
-                  <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/85 px-4 py-3 text-sm text-muted-foreground shadow-sm backdrop-blur">
+                  <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/85 px-4 py-3 text-sm text-muted-foreground shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/85 dark:text-slate-300">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     <span>{t("scorm.ai.loadingPackagePreview")}</span>
                   </div>
@@ -1477,7 +1477,7 @@ ${
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
                   onClick={handlePreview}
                 >
                   <Eye className="mr-1 h-4 w-4" />
@@ -1488,7 +1488,7 @@ ${
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                      className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
                     >
                       <Download className="mr-1 h-4 w-4" />
                       {t("scorm.topbar.export")}
@@ -1513,7 +1513,7 @@ ${
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
                   onClick={() => setWorkspacePanel("chat")}
                 >
                   <MessageCircle className="mr-1 h-4 w-4" />
@@ -1522,7 +1522,7 @@ ${
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
                   onClick={() => {
                     setWorkspacePanel("inspector")
                     setRightPanel(selectedBlock ? "block" : "project")
@@ -1533,23 +1533,23 @@ ${
                 </Button>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-300">
                 <Badge
                   variant={status === "draft" ? "secondary" : "default"}
-                  className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] text-slate-700"
+                  className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                 >
                   {status === "draft"
                     ? t("scorm.topbar.status.draft")
                     : t("scorm.topbar.status.published")}
                 </Badge>
-                <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 px-3 py-2 shadow-sm">
+                <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:shadow-none">
                   <Clock className="h-4 w-4" />
                   <span>{aiTargetLabel}</span>
                 </div>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50"
+                  className="rounded-full border-slate-200 bg-white/90 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
                   onClick={handleSave}
                 >
                   <Save className="mr-1 h-4 w-4" />
@@ -1559,16 +1559,16 @@ ${
             </div>
 
             <div
-              className={`rounded-[32px] border border-slate-200 bg-white p-3 shadow-[0_24px_60px_rgba(15,23,42,0.08)] ${
+              className={`rounded-[32px] border border-slate-200 bg-white p-3 shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-none ${
                 isDragging ? "ring-2 ring-sky-300" : ""
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
-              <div className="rounded-[28px] bg-[#fbfdff] p-3 sm:p-4">
+              <div className="rounded-[28px] bg-[#fbfdff] p-3 dark:bg-slate-950 sm:p-4">
                 <div
-                  className="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)]"
+                  className="overflow-hidden rounded-[26px] border border-slate-200 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)] dark:border-slate-700 dark:bg-slate-900 dark:shadow-none"
                   onClick={() => {
                     setSelectedBlockId(null)
                     if (aiScope === "selection") {
@@ -1576,15 +1576,15 @@ ${
                     }
                   }}
                 >
-                  <div className="border-b border-slate-200/80 px-4 py-4 sm:px-6">
+                  <div className="border-b border-slate-200/80 px-4 py-4 dark:border-slate-700 sm:px-6">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+                        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
                           <span>SCORM View</span>
-                          <span className="h-1 w-1 rounded-full bg-slate-300" />
+                          <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-600" />
                           <span>{project.title}</span>
                         </div>
-                        <h2 className="text-xl font-semibold text-slate-900">
+                        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                           {activePage.title}
                         </h2>
                       </div>
@@ -1593,7 +1593,7 @@ ${
                         <Button
                           variant="outline"
                           size="sm"
-                          className="rounded-full border-slate-200 bg-white"
+                          className="rounded-full border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800"
                           onClick={(e) => {
                             e.stopPropagation()
                             handleNavigatePage("prev")
@@ -1603,13 +1603,13 @@ ${
                           <ChevronLeft className="mr-1 h-4 w-4" />
                           Prev
                         </Button>
-                        <div className="min-w-[112px] rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-center text-xs font-semibold text-slate-600">
+                        <div className="min-w-[112px] rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-center text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300">
                           {activePageIndex + 1} / {project.pages.length}
                         </div>
                         <Button
                           variant="outline"
                           size="sm"
-                          className="rounded-full border-slate-200 bg-white"
+                          className="rounded-full border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800"
                           onClick={(e) => {
                             e.stopPropagation()
                             handleNavigatePage("next")
@@ -1622,7 +1622,7 @@ ${
                         <Button
                           variant="outline"
                           size="sm"
-                          className="rounded-full border-slate-200 bg-white"
+                          className="rounded-full border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800"
                           onClick={(e) => {
                             e.stopPropagation()
                             handleAddPage()
@@ -1659,13 +1659,13 @@ ${
                                 return (
                                   <SortableBlock key={block.id} id={block.id}>
                                   <div
-                                      className={`relative overflow-hidden rounded-[24px] border bg-white px-4 py-4 transition-all ${
+                                      className={`relative overflow-hidden rounded-[24px] border bg-white px-4 py-4 text-slate-900 transition-all ${
                                         isSelected
-                                          ? "border-sky-300 ring-2 ring-sky-200 shadow-[0_16px_36px_rgba(14,165,233,0.15)]"
-                                          : "border-slate-200 hover:border-slate-300 hover:shadow-sm"
+                                          ? "border-sky-300 ring-2 ring-sky-200 shadow-[0_16px_36px_rgba(14,165,233,0.15)] dark:border-sky-500 dark:ring-sky-500/40 dark:shadow-none"
+                                          : "border-slate-200 hover:border-slate-300 hover:shadow-sm dark:border-slate-700 dark:hover:border-slate-600 dark:hover:shadow-none"
                                       } ${
                                         isHighlighted
-                                          ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70"
+                                          ? "bg-emerald-50 border-emerald-200 ring-2 ring-emerald-300/70 dark:bg-emerald-500/15 dark:border-emerald-500/40 dark:ring-emerald-500/30"
                                           : ""
                                       }`}
                                       style={getBlockLayoutStyle(block)}
@@ -1683,7 +1683,7 @@ ${
                                           e.stopPropagation()
                                           handleDeleteBlock(block.id)
                                         }}
-                                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-red-50 hover:text-red-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-red-500/15 dark:hover:text-red-300"
                                       >
                                         <X className="h-4 w-4" />
                                       </button>
@@ -1711,11 +1711,11 @@ ${
                           </SortableContext>
                         </DndContext>
                       ) : (
-                        <div className="flex min-h-[420px] flex-col items-center justify-center rounded-[24px] border border-dashed border-slate-300 bg-white px-6 text-center">
-                          <h2 className="text-lg font-semibold text-slate-800">
+                        <div className="flex min-h-[420px] flex-col items-center justify-center rounded-[24px] border border-dashed border-slate-300 bg-white px-6 text-center dark:border-slate-700 dark:bg-slate-950">
+                          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                             {t("scorm.canvas.title")}
                           </h2>
-                          <p className="mt-2 max-w-md text-sm text-slate-500">
+                          <p className="mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400">
                             {t("scorm.canvas.desc")}
                           </p>
                           <Button
@@ -1726,7 +1726,7 @@ ${
                               e.stopPropagation()
                               addBlock("text")
                             }}
-                            className="mt-5 rounded-full border-sky-500 text-sky-700 hover:bg-sky-50"
+                            className="mt-5 rounded-full border-sky-500 text-sky-700 hover:bg-sky-50 dark:text-sky-200 dark:hover:bg-sky-500/15"
                           >
                             <MousePointerClick className="mr-2 h-4 w-4" />
                             {t("scorm.canvas.start")}
@@ -1751,16 +1751,16 @@ ${
                 onClick={() => setWorkspacePanel(null)}
               />
 
-              <div className="absolute bottom-6 right-3 top-20 flex w-[min(430px,calc(100vw-24px))] flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.22)]">
-                <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-                  <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1">
+              <div className="absolute bottom-6 right-3 top-20 flex min-h-0 w-[min(430px,calc(100vw-24px))] flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.22)] dark:border-slate-700 dark:bg-slate-900 dark:shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+                <div className="shrink-0 flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+                  <div className="flex items-center gap-1 rounded-full bg-slate-100 p-1 dark:bg-slate-950">
                     <button
                       type="button"
                       onClick={() => setWorkspacePanel("chat")}
                       className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                         workspacePanel === "chat"
-                          ? "bg-white text-slate-900 shadow-sm"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-white text-slate-900 shadow-sm dark:bg-sky-500/15 dark:text-sky-200 dark:shadow-none"
+                          : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-100"
                       }`}
                     >
                       Chat
@@ -1770,8 +1770,8 @@ ${
                       onClick={() => setWorkspacePanel("inspector")}
                       className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                         workspacePanel === "inspector"
-                          ? "bg-white text-slate-900 shadow-sm"
-                          : "text-slate-500 hover:text-slate-700"
+                          ? "bg-white text-slate-900 shadow-sm dark:bg-sky-500/15 dark:text-sky-200 dark:shadow-none"
+                          : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-100"
                       }`}
                     >
                       Inspector
@@ -1789,17 +1789,17 @@ ${
                 </div>
 
                 {workspacePanel === "chat" ? (
-                  <div className="flex h-full flex-col">
-                    <div className="border-b border-slate-200 px-4 py-4">
+                  <div className="flex min-h-0 flex-1 flex-col">
+                    <div className="shrink-0 border-b border-slate-200 px-4 py-4 dark:border-slate-700">
                       <div className="flex items-center gap-2">
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-100">
-                          <MessageCircle className="h-5 w-5 text-sky-700" />
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-100 dark:bg-sky-500/15">
+                          <MessageCircle className="h-5 w-5 text-sky-700 dark:text-sky-200" />
                         </span>
                         <div>
-                          <h3 className="text-sm font-semibold text-slate-900">
+                          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
                             {t("scorm.ai.title")}
                           </h3>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
                             Target: {aiTargetLabel}
                           </p>
                         </div>
@@ -1813,7 +1813,7 @@ ${
                           className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                             resolvedAiScope === "selection"
                               ? "bg-sky-600 text-white"
-                              : "bg-slate-100 text-slate-600"
+                              : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
                           } disabled:cursor-not-allowed disabled:opacity-50`}
                         >
                           Selection
@@ -1824,7 +1824,7 @@ ${
                           className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                             resolvedAiScope === "page"
                               ? "bg-sky-600 text-white"
-                              : "bg-slate-100 text-slate-600"
+                              : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
                           }`}
                         >
                           Page
@@ -1835,7 +1835,7 @@ ${
                           className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                             resolvedAiScope === "lesson"
                               ? "bg-sky-600 text-white"
-                              : "bg-slate-100 text-slate-600"
+                              : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
                           }`}
                         >
                           Lesson
@@ -1845,7 +1845,7 @@ ${
 
                     <div
                       ref={chatScrollRef}
-                      className="flex-1 space-y-3 overflow-y-auto p-4 text-sm"
+                      className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4 pb-8 text-sm"
                     >
                       {renderProgressTracker("panel")}
                       {chatMessages.map((m) => (
@@ -1859,11 +1859,11 @@ ${
                             className={
                               m.role === "user"
                                 ? "inline-block max-w-[88%] rounded-2xl rounded-br-sm bg-sky-600 px-3 py-2 text-white"
-                                : "inline-block max-w-[88%] rounded-2xl rounded-bl-sm border border-slate-100 bg-white px-3 py-2 text-slate-800"
+                                : "inline-block max-w-[88%] rounded-2xl rounded-bl-sm border border-slate-100 bg-white px-3 py-2 text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                             }
                           >
                             {m.agent && m.role !== "user" && (
-                              <div className="mb-0.5 text-[10px] uppercase tracking-wide text-slate-400">
+                              <div className="mb-0.5 text-[10px] uppercase tracking-wide text-slate-400 dark:text-slate-500">
                                 {m.agent === "unified"
                                   ? t("scorm.ai.agent.unified")
                                   : m.agent === "mentor"
@@ -1883,7 +1883,7 @@ ${
                       ))}
                     </div>
 
-                    <div className="border-t border-slate-200 bg-slate-50 p-4">
+                    <div className="shrink-0 border-t border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950">
                       <form
                         onSubmit={handleSend}
                         className="flex items-center gap-2"
@@ -1892,7 +1892,7 @@ ${
                           value={chatInput}
                           onChange={(e) => setChatInput(e.target.value)}
                           placeholder={t("scorm.ai.placeholder")}
-                          className="h-10 flex-1 rounded-full border-slate-200 bg-white"
+                          className="h-10 flex-1 rounded-full border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
                           disabled={isGenerating}
                         />
                         <Button
@@ -1923,7 +1923,7 @@ ${
         ) : null}
 
         <div className="fixed bottom-6 left-1/2 z-[999] -translate-x-1/2">
-          <div className="inline-flex items-center gap-0.5 rounded-full border border-slate-200 bg-white/95 px-2.5 py-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.18)] backdrop-blur-md">
+          <div className="inline-flex items-center gap-0.5 rounded-full border border-slate-200 bg-white/95 px-2.5 py-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.18)] backdrop-blur-md dark:border-slate-700 dark:bg-slate-900/95 dark:shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
             <IconToolButton
               onClick={handleUploadClick}
               icon={<Upload className="h-4 w-4" />}
@@ -2413,29 +2413,29 @@ function ContextMenu({ contextMenu, onAction }: any) {
 
   return (
     <div
-      className="fixed bg-white shadow-xl border rounded-md z-[2000] text-sm"
+      className="fixed z-[2000] rounded-md border bg-white text-sm text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
       style={{ top: contextMenu.y, left: contextMenu.x }}
     >
       <button
-        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        className="block w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800"
         onClick={() => onAction("copy")}
       >
         {useLocale().t("scorm.ai.context.copy")}
       </button>
       <button
-        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        className="block w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800"
         onClick={() => onAction("paste")}
       >
         {useLocale().t("scorm.ai.context.paste")}
       </button>
       <button
-        className="block px-4 py-2 hover:bg-slate-100 w-full text-left"
+        className="block w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-800"
         onClick={() => onAction("duplicate")}
       >
         {useLocale().t("scorm.ai.context.duplicate")}
       </button>
       <button
-        className="block px-4 py-2 hover:bg-red-100 text-red-600 w-full text-left"
+        className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-100 dark:text-red-300 dark:hover:bg-red-500/15"
         onClick={() => onAction("delete")}
       >
         {useLocale().t("scorm.ai.context.delete")}
@@ -2479,8 +2479,10 @@ function IconToolButton({
       type="button"
       title={translatedLabel}
       className={
-        "flex h-9 w-9 items-center justify-center rounded-full text-slate-700 transition-colors " +
-        (emphasis ? "bg-sky-600 text-white hover:bg-sky-700" : "hover:bg-slate-100")
+        "flex h-9 w-9 items-center justify-center rounded-full text-slate-700 transition-colors dark:text-slate-200 " +
+        (emphasis
+          ? "bg-sky-600 text-white hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-400"
+          : "hover:bg-slate-100 dark:hover:bg-slate-800")
       }
       disabled={!onClick}
     >

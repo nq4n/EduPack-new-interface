@@ -184,6 +184,55 @@ const stripAnimationProps = (style?: any) => {
   return rest
 }
 
+function EditableTextBlock({
+  block,
+  style,
+  onSelect,
+  onTextChange,
+}: {
+  block: TextBlock
+  style: React.CSSProperties
+  onSelect: () => void
+  onTextChange?: (blockId: string, html: string) => void
+}) {
+  const ref = React.useRef<HTMLDivElement | null>(null)
+  const isEditingRef = React.useRef(false)
+
+  React.useEffect(() => {
+    if (!ref.current || isEditingRef.current) return
+    ref.current.innerHTML = block.html || ""
+  }, [block.html])
+
+  const commitText = () => {
+    isEditingRef.current = false
+    if (!onTextChange || !ref.current) return
+
+    const html = ref.current.innerHTML
+    if (html !== (block.html || "")) {
+      onTextChange(block.id, html)
+    }
+  }
+
+  return (
+    <div
+      ref={ref}
+      onClick={onSelect}
+      contentEditable={Boolean(onTextChange)}
+      suppressContentEditableWarning
+      onFocus={() => {
+        isEditingRef.current = true
+      }}
+      onBlur={commitText}
+      role={onTextChange ? "textbox" : undefined}
+      tabIndex={onTextChange ? 0 : undefined}
+      dir="auto"
+      className={`prose prose-sm max-w-none ${onTextChange ? "cursor-text" : ""}`}
+      style={style}
+      dangerouslySetInnerHTML={{ __html: block.html || "" }}
+    />
+  )
+}
+
 export function BlockRenderer({
   block,
   onClick,
@@ -216,30 +265,17 @@ export function BlockRenderer({
       padding: style.padding,
       borderRadius: style.radius,
       lineHeight: style.lineHeight,
+      unicodeBidi: "plaintext",
       ...animationStyles,
       ...style,
     }
 
-    const handleTextInput = (
-      event: React.FormEvent<HTMLDivElement>,
-    ) => {
-      if (!onTextChange) return
-      const target = event.target as HTMLDivElement
-      onTextChange(b.id, target.innerHTML)
-    }
-
     return (
-      <div
-        onClick={select}
-        contentEditable={Boolean(onTextChange)}
-        suppressContentEditableWarning
-        onInput={handleTextInput}
-        onBlur={handleTextInput}
-        role={onTextChange ? "textbox" : undefined}
-        tabIndex={onTextChange ? 0 : undefined}
-        className={`prose prose-sm max-w-none ${onTextChange ? "cursor-text" : ""}`}
+      <EditableTextBlock
+        block={b}
         style={styleObj}
-        dangerouslySetInnerHTML={{ __html: b.html || "" }}
+        onSelect={select}
+        onTextChange={onTextChange}
       />
     )
   }

@@ -31,7 +31,7 @@ export async function unifiedAI({ project, messages, selection }: UnifiedInput) 
   const raw = await openrouter.chat(llmMessages, { model: "MAIN" })
   const json = extractJSON(raw)
 
-  return normalizeOutput(json)
+  return normalizeOutput(json, selectionSnapshot, project)
 }
 
 function sanitizeMessages(messages: any[]) {
@@ -301,8 +301,9 @@ ${sharedSchema}
 
 Rules:
 - If the target scope is selection, prefer patch or appendBlock unless the user explicitly asks to redesign the whole page or lesson.
-- If the target scope is page, use replacePage for full-page redesigns or restructures.
-- Use replaceProject only for whole-lesson changes spanning multiple pages or the overall structure/theme.
+- If the target scope is selection, patch.target.pageId MUST equal the selected pageId and patch.target.blockId MUST equal the selected blockId.
+- If the target scope is page, appendBlock.pageId and replacePage.pageId MUST equal the selected pageId.
+- If the target scope is lesson, use replaceProject only for whole-lesson changes spanning multiple pages or the overall structure/theme.
 - Never delete content unless the user explicitly asks for deletion or replacement.
 `
 }
@@ -330,7 +331,19 @@ function ensureProject(project: any) {
   }
 }
 
-function normalizeOutput(json: any) {
+function pageExists(project: any | null, pageId: string | undefined | null) {
+  return Array.isArray(project?.pages) && project.pages.some((page: any) => page.id === pageId)
+}
+
+function blockExists(project: any | null, pageId: string | undefined | null, blockId: string | undefined | null) {
+  const page = Array.isArray(project?.pages)
+    ? project.pages.find((candidate: any) => candidate.id === pageId)
+    : null
+
+  return Array.isArray(page?.blocks) && page.blocks.some((block: any) => block.id === blockId)
+}
+
+function normalizeOutput(json: any, selection: SelectionSnapshot, project: any | null) {
   if (json.project) {
     json.project = ensureProject(json.project)
     return json
@@ -342,7 +355,11 @@ function normalizeOutput(json: any) {
   }
 
   if (json.replacePage?.page) {
-    const pageId = json.replacePage.pageId || json.replacePage.page.id || `page-${nanoid()}`
+    const pageId =
+      selection.scope !== "lesson" && selection.page?.id
+        ? selection.page.id
+        : json.replacePage.pageId || json.replacePage.page.id || `page-${nanoid()}`
+
     json.replacePage.pageId = pageId
     json.replacePage.page = ensurePage(
       { ...json.replacePage.page, id: pageId },
@@ -357,11 +374,35 @@ function normalizeOutput(json: any) {
   }
 
   if (json.appendBlock?.block) {
+    if (selection.page?.id) {
+      json.appendBlock.pageId = selection.page.id
+    }
+
+    if (!pageExists(project, json.appendBlock.pageId)) {
+      throw new Error("AI returned appendBlock for a page outside the selected lesson context.")
+    }
+
     json.appendBlock.block = ensureBlock(json.appendBlock.block)
     return json
   }
 
   if (json.patch) {
+    if (selection.scope === "selection") {
+      if (!selection.page?.id || !selection.block?.id) {
+        throw new Error("AI returned a selection patch without an active selected block.")
+      }
+
+      json.patch.target = {
+        ...(json.patch.target || {}),
+        pageId: selection.page.id,
+        blockId: selection.block.id,
+      }
+    }
+
+    if (!blockExists(project, json.patch.target?.pageId, json.patch.target?.blockId)) {
+      throw new Error("AI returned a patch for a block outside the selected lesson context.")
+    }
+
     return json
   }
 

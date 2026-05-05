@@ -51,23 +51,23 @@ export function PropertiesPanel({
 
   if (panelType === "project") {
     return (
-      <div className="flex h-full flex-col bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)]">
-        <div className="border-b border-slate-200/90 bg-white/95 px-3 py-3 backdrop-blur">
+      <div className="flex h-full min-h-0 flex-col bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] dark:bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)]">
+        <div className="shrink-0 border-b border-slate-200/90 bg-white/95 px-3 py-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
           <div className="mb-2 space-y-1 px-1">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
               Inspector
             </p>
-            <h3 className="text-sm font-semibold text-slate-900">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
               {t("scorm.props.title") || "Properties"}
             </h3>
           </div>
-          <div className="flex w-full items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100/90 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]">
+          <div className="flex w-full items-center gap-1 rounded-2xl border border-slate-200 bg-slate-100/90 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] dark:border-slate-700 dark:bg-slate-950 dark:shadow-none">
             <button
               onClick={() => setActiveTab("project")}
               className={`w-full rounded-xl px-3 py-2 text-xs font-semibold transition-all ${
                 activeTab === "project"
-                  ? "bg-white text-sky-700 shadow-[0_10px_24px_rgba(14,165,233,0.12)] ring-1 ring-sky-100"
-                  : "bg-transparent text-slate-500 hover:bg-white/70 hover:text-slate-700"
+                  ? "bg-white text-sky-700 shadow-[0_10px_24px_rgba(14,165,233,0.12)] ring-1 ring-sky-100 dark:bg-sky-500/15 dark:text-sky-200 dark:ring-sky-500/30 dark:shadow-none"
+                  : "bg-transparent text-slate-500 hover:bg-white/70 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
               }`}
             >
               {t("scorm.tabs.project") || "Project"}
@@ -76,8 +76,8 @@ export function PropertiesPanel({
               onClick={() => setActiveTab("page")}
               className={`w-full rounded-xl px-3 py-2 text-xs font-semibold transition-all ${
                 activeTab === "page"
-                  ? "bg-white text-sky-700 shadow-[0_10px_24px_rgba(14,165,233,0.12)] ring-1 ring-sky-100"
-                  : "bg-transparent text-slate-500 hover:bg-white/70 hover:text-slate-700"
+                  ? "bg-white text-sky-700 shadow-[0_10px_24px_rgba(14,165,233,0.12)] ring-1 ring-sky-100 dark:bg-sky-500/15 dark:text-sky-200 dark:ring-sky-500/30 dark:shadow-none"
+                  : "bg-transparent text-slate-500 hover:bg-white/70 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
               }`}
             >
               {t("scorm.tabs.pages") || "Pages"}
@@ -85,7 +85,7 @@ export function PropertiesPanel({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-hidden">
           {activeTab === "project" ? (
             <ProjectPanel project={project} onChange={onProjectChange} onExport={onExport} />
           ) : (
@@ -104,19 +104,19 @@ export function PropertiesPanel({
 
   if (!selectedBlock) {
     return (
-      <div className="flex h-full flex-col items-center justify-center px-5 py-8 text-center">
+      <div className="flex h-full min-h-0 flex-col items-center justify-center overflow-y-auto px-5 py-8 text-center dark:bg-slate-950">
         <div className="mb-3">
           <Badge
             variant="outline"
-            className="rounded-full border-slate-200 bg-white px-2.5 py-0.5 text-[11px] text-slate-600"
+            className="rounded-full border-slate-200 bg-white px-2.5 py-0.5 text-[11px] text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
           >
             {t("scorm.props.title") || "Properties"}
           </Badge>
         </div>
-        <p className="mb-1 text-sm font-medium text-slate-900">
+        <p className="mb-1 text-sm font-medium text-slate-900 dark:text-slate-100">
           {t("scorm.props.emptyTitle") || "No block selected"}
         </p>
-        <p className="max-w-xs text-[11px] leading-5 text-slate-500">
+        <p className="max-w-xs text-[11px] leading-5 text-slate-500 dark:text-slate-400">
           {t("scorm.props.desc") ||
             "Click on any element in the canvas to view and edit its properties here."}
         </p>
@@ -201,35 +201,35 @@ export function PropertiesPanel({
   // --- Main layout ----------------------------------------------------------
 
   return (
-    <div className="flex h-full flex-col bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)]">
+    <div className="flex h-full min-h-0 flex-col bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] dark:bg-[linear-gradient(180deg,#0f172a_0%,#020617_100%)]">
       {/* Header */}
-      <div className="border-b border-slate-200/90 bg-white/95 px-4 pb-3 pt-4 backdrop-blur">
+      <div className="shrink-0 border-b border-slate-200/90 bg-white/95 px-4 pb-3 pt-4 backdrop-blur dark:border-slate-700 dark:bg-slate-900/95">
         <div className="flex items-center justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400 dark:text-slate-500">
               Inspector
             </p>
-            <h3 className="text-sm font-semibold leading-none text-slate-900">
+            <h3 className="text-sm font-semibold leading-none text-slate-900 dark:text-slate-100">
               {t("scorm.props.title") || "Block properties"}
             </h3>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               {t("scorm.props.subtitle") ||
                 "Adjust how this element looks and behaves in the lesson."}
             </p>
           </div>
           <Badge
             variant="secondary"
-            className="rounded-full border border-sky-100 bg-sky-50 px-2.5 py-0.5 text-[10px] text-sky-700"
+            className="rounded-full border border-sky-100 bg-sky-50 px-2.5 py-0.5 text-[10px] text-sky-700 dark:border-sky-500/40 dark:bg-sky-500/15 dark:text-sky-200"
           >
             {typeLabelMap[selectedBlock.type] ?? selectedBlock.type}
           </Badge>
         </div>
       </div>
 
-      <Separator className="bg-slate-200/80" />
+      <Separator className="shrink-0 bg-slate-200/80 dark:bg-slate-700" />
 
       {/* Body */}
-      <div className="flex-1 overflow-y-auto px-3 pb-4 pt-3 text-xs">
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-10 pt-3 text-xs">
         {renderBody()}
       </div>
     </div>
